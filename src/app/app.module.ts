@@ -35,7 +35,7 @@ import { DialogAddItemComponent } from './components/add-items/add-items.compone
 import { RetailerComponent } from './pages/retailer/retailer.component';
 import { ItemsComponent } from './pages/items/items.component';
 import { TransactionsComponent } from './pages/transactions/transactions.component';
-import { LoginComponent } from './pages/login/login.component';
+import { LoginComponent, ForgotPasswordDialog } from './pages/login/login.component';
 import { AuthGuard } from './guards/auth/auth.guard';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDividerModule} from '@angular/material/divider';
@@ -69,6 +69,7 @@ import { AddItemsComponent } from './components/add-items/add-items.component';
     FeedbacksComponent,
     FeedbackCardComponent,
     AddItemsComponent,
+    ForgotPasswordDialog
   ],
   entryComponents: [
     DialogComponent
@@ -99,6 +100,8 @@ import { AddItemsComponent } from './components/add-items/add-items.component';
     MatDatepickerModule,
     MatNativeDateModule,
     ReactiveFormsModule,
+    MatDialogModule
+
   ],
   providers: [
     [AuthGuard, FilterPipe],

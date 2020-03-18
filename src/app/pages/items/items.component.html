@@ -1,18 +1,12 @@
 <div class="outer">
     <mat-card [ngClass]="{'is-side-panel-expanded': isSidePanelExpanded}">
         <h2>Items:</h2>
-<<<<<<< HEAD
-        <div class="input">
-            <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="&#61442;  Start searching for item by name or by item description">
-        </div>
-=======
         <div class="items-top-search-container">
             <app-add-items></app-add-items>
             <div class="input">
                 <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="Start searching for item by name ">
             </div>
-        </div>      
->>>>>>> added feedback and add items modal
+        </div>
         <div class="item-cards" *ngFor="let item of items |filter:searchText">
             <mat-card class="inner-item-mat-card">
                 <app-item-card  [item]="item"></app-item-card>

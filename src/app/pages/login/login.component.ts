@@ -1,14 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, OnInit, Inject } from '@angular/core';
 import {
   FormControl,
   FormGroupDirective,
   NgForm,
   Validators,
-  FormBuilder
+  FormBuilder,
+
 } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { Router } from '@angular/router';
+
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
@@ -22,6 +25,9 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
       (control.dirty || control.touched || isSubmitted)
     );
   }
+}
+export interface DialogData {
+  emailID: string;
 }
 
 @Component({
@@ -41,11 +47,13 @@ export class LoginComponent implements OnInit {
   registerBtn = 'Register';
   loginBtn = 'Sign in';
   hide = true;
+  emailID: string;
 
   constructor(
     private authService: AuthService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public dialog: MatDialog
     // protected commonUtil: CommonUtil
   ) {
     this.loginForm = this.fb.group({
@@ -70,6 +78,16 @@ export class LoginComponent implements OnInit {
     if (!this.role) {
       this.existingLogin();
     }
+  }
+  openDialog(): void{
+    const dialogRef = this.dialog.open(ForgotPasswordDialog, {
+      width: '700px',height: '200px',
+      data:{mail:this.emailID}
+    });
+
+    dialogRef.afterClosed().subscribe(result=>{
+      this.emailID=result;
+    })
   }
 
   public existingLogin() {
@@ -148,4 +166,23 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/dashboard']);
     }
   }
+}
+
+@Component({
+  selector: 'app-forgot-password',
+  templateUrl : './forgotPasswordDialog.component.html',
+  styleUrls: ['./forgotPasswordDialog.component.scss']
+})
+
+// tslint:disable-next-line: component-class-suffix
+export class ForgotPasswordDialog implements OnInit{
+  constructor(
+    public dialogRef: MatDialogRef<ForgotPasswordDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  ngOnInit(){}
 }

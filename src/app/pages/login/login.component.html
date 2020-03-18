@@ -3,7 +3,7 @@
       <div class="inner-container" [ngClass]="{'flex-row-reverse': isRegister}">
         <div class="left-container" [ngClass]="{'left-half-border-radius': !isRegister , 'right-half-border-radius': isRegister}">
           LOGO
-          <div class="login-welocme">
+          <div class="login-welcome">
             <h1>Welcome!</h1>
           </div>
           <button class="login-btn left-btn" (click)="registerClicked()">{{registerBtn}}</button>
@@ -31,7 +31,12 @@
                   </button>
                 </mat-form-field>
               </div>
-              <button class="login-btn right-btn" (click)="login()">{{loginBtn}}</button>
+              <div>
+                <button class="login-btn right-btn" (click)="login()">{{loginBtn}}</button>  
+              </div>
+              <div>
+                <button class="login-btn right-btn"(click)="openDialog()" >Forgot Password?</button>
+              </div>
             </form>
           </div>
   
