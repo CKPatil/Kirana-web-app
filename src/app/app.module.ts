@@ -43,13 +43,14 @@ import { AnalyticContainerComponent } from './components/analytic-container/anal
 import { RecentOrdersComponent } from './components/recent-orders/recent-orders.component';
 import { HttpClientModule } from '@angular/common/http';
 import { InviteRequestComponent } from './components/invite-request/invite-request.component';
-import { ItemCardComponent } from './components/item-card/item-card.component';
+import { ItemCardComponent, SelectVarietyDialog } from './components/item-card/item-card.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { FeedbacksComponent } from './pages/feedbacks/feedbacks.component';
 import { FeedbackCardComponent } from './components/feedback-card/feedback-card.component';
 import { AddItemsComponent } from './components/add-items/add-items.component';
 import { SharedService } from './services/shared.service';
+import { UpdateItemComponent, UpdateItemModal } from './components/update-item/update-item.component';
 
 
 @NgModule({
@@ -71,6 +72,9 @@ import { SharedService } from './services/shared.service';
     FeedbacksComponent,
     FeedbackCardComponent,
     AddItemsComponent,
+    SelectVarietyDialog,
+    UpdateItemComponent,
+    UpdateItemModal
   ],
   entryComponents: [
     DialogComponent
