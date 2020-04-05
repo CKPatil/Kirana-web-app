@@ -61,7 +61,7 @@
                     <p>Order date : {{ item.OrderDetails.OrderDate }} </p>
                     <div class="lastLine">
                       <p>Vendor name : {{ item.Retailer.Name }}</p>
-                      <p class="status" [ngClass]='setStatusColor(item.Status)'>{{ item.Status }}</p>
+                      <div onclick="openDialog()"><p class="status" [ngClass]='setStatusColor(item.Status)'>{{ item.Status }}</p></div>
                     </div>
                   </mat-card>
             </div>

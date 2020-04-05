@@ -1,5 +1,5 @@
 
-import { OnChanges } from '@angular/core';
+import { OnChanges, Inject } from '@angular/core';
 // import { Component, OnInit } from '@angular/core';
 // import { InteractionService } from 'src/app/services/interaction.service';
 
@@ -16,8 +16,9 @@ import {
 } from 'src/app/services/transaction.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { formatDate } from '@angular/common';
-import { MatDatepickerInputEvent } from '@angular/material';
+import { MatDatepickerInputEvent, MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { SharedService } from "../../services/shared.service";
+import { DialogData } from 'src/app/components/add-items/add-items.component';
 
 @Component({
   selector: 'app-transactions',
@@ -26,6 +27,7 @@ import { SharedService } from "../../services/shared.service";
 })
 export class TransactionsComponent implements OnInit, OnChanges {
 
+  statusChange:any;
   searchRetail:any;
   searchStatus:any;
   searchDate1:any;
@@ -98,7 +100,7 @@ export class TransactionsComponent implements OnInit, OnChanges {
   comp1val: string;
   comp2val: string;
 
-  constructor(private interaction: InteractionService, private transaction: TransactionService,private sharedService: SharedService) {
+  constructor(private interaction: InteractionService, private transaction: TransactionService,private sharedService: SharedService,public dialog: MatDialog) {
     this.filters = ['Retailer', 'Status', 'Date'];
     this.isSidePanelExpanded = this.interaction.getExpandedStatus();
   }
@@ -131,9 +133,39 @@ export class TransactionsComponent implements OnInit, OnChanges {
       console.log(res);
     });
   }
+  openDialog(): void{
+    const dialogRef = this.dialog.open(StatusChangeDialog, {
+      width: '250px',height: '250px',
+      data: {statusChange: this.statusChange}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.statusChange=result;
+    });
+  }
 
   setStatusColor(status) {
     return status;
   }
 
+}
+
+@Component({
+  selector: 'app-status-change',
+  templateUrl : './statusChange.component.html',
+  styleUrls: ['./statusChange.component.scss']
+})
+
+// tslint:disable-next-line: component-class-suffix
+export class StatusChangeDialog implements OnInit{
+  constructor(
+    public dialogRef: MatDialogRef<StatusChangeDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  ngOnInit(){}
 }
