@@ -101,7 +101,6 @@ export class TransactionsComponent implements OnInit, OnChanges {
   constructor(private interaction: InteractionService, private transaction: TransactionService,private sharedService: SharedService) {
     this.filters = ['Retailer', 'Status', 'Date'];
     this.isSidePanelExpanded = this.interaction.getExpandedStatus();
-
   }
 
   ngOnInit() {
@@ -132,7 +131,6 @@ export class TransactionsComponent implements OnInit, OnChanges {
       console.log(res);
     });
   }
-
 
   setStatusColor(status) {
     return status;
