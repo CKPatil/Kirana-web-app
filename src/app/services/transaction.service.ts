@@ -12,17 +12,18 @@ import { throwError } from 'rxjs/internal/observable/throwError';
 export class TransactionService {
   getAllTransactionsURL: any;
   httpOptions;
-  buildURLS() {
-    this.getAllTransactionsURL = environment.backend_end_point + environment.orders;
+  orderType;
+  buildURLS(param: string) {
+    this.getAllTransactionsURL = environment.backend_end_point + environment.orders+param;
   }
 
   constructor(private http: HttpClient) {
     const token = localStorage.getItem('access');
     this.httpOptions = new HttpHeaders({ 'Content-Type': 'application/json', Authorization: 'Bearer ' + token});
-    this.buildURLS();
   }
 
   getAllOrders() {
+    console.log();
     return this.http.get(this.getAllTransactionsURL,  {
       headers: this.httpOptions,
       observe: 'response'

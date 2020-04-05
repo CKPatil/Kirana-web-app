@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { InteractionService } from 'src/app/services/interaction.service';
 import { analytics } from './../../constants/mockup-data';
+import { TransactionService } from './../../services/transaction.service';
 
 
 @Component({
@@ -11,8 +12,11 @@ import { analytics } from './../../constants/mockup-data';
 export class DashboardComponent implements OnInit {
   isSidePanelExpanded: boolean;
   analytics: { name: string; count: number; }[];
-
-  constructor(private interaction: InteractionService) {
+  allTransactions:any;
+  packedOrders:any;
+  orderStatus: any = 'Packed';
+  orderStatusPacked: boolean;
+  constructor(private interaction: InteractionService,private transactionService: TransactionService) {
     this.isSidePanelExpanded = this.interaction.getExpandedStatus();
   }
 
@@ -20,6 +24,27 @@ export class DashboardComponent implements OnInit {
     this.analytics = analytics;
     this.interaction.expandedStatus$.subscribe( (res) => {
       this.isSidePanelExpanded = res;
+    });
+    this.getTransactions("?order=listall");
+    this.transactionService.buildURLS("?order=delivered");
+    this.transactionService.getAllOrders().subscribe((res) => {
+      this.allTransactions.push(res.body);
+      console.log("Dashboard component");
+    });
+    this.transactionService.buildURLS("?order=cancelled");
+    this.transactionService.getAllOrders().subscribe((res) => {
+      this.allTransactions.push(res.body)
+      console.log(this.allTransactions);
+      console.log("Dashboard component");
+    });
+
+  }
+  getTransactions(orderType:string){
+    this.transactionService.buildURLS(orderType);
+    this.transactionService.getAllOrders().subscribe((res) => {
+      this.allTransactions = res.body;
+      console.log(this.allTransactions);
+      console.log("Dashboard component");
     });
   }
 }
