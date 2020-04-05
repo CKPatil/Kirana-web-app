@@ -14,7 +14,7 @@
           <mat-card>
             <h5><b>Packed Orders</b></h5>
             <app-recent-orders></app-recent-orders>
-            
+
         </mat-card>
         </div>
         <div class="urgent-orders-container">
@@ -36,9 +36,11 @@
           <mat-card>
             <h5><b>Invite Requests</b></h5>
             <div class="invite-requests">
-              <app-invite-request></app-invite-request>
-              <app-invite-request></app-invite-request>
-              <app-invite-request></app-invite-request>
+              <div *ngFor="let i of inviteRequests">
+                <app-invite-request [inviteRequest]="i"></app-invite-request>
+              </div>
+              <!-- <app-invite-request></app-invite-request>
+              <app-invite-request></app-invite-request> -->
             </div>
         </mat-card>
         </div>

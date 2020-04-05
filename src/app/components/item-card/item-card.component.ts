@@ -68,16 +68,22 @@ export class ItemCardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result && result.value.image) {
-        let imageData = result.value;
-        imageData.type = "products";
-        imageData.category = this.item.category;
-        imageData.sub_category = this.item.sub_category;
-        imageData.brand = this.item.brand;
+        console.log(result);
+        let formData = new FormData();
 
-        console.log(imageData);
-        this.productService.uploadImage(imageData).subscribe((result) => {
-          console.log(result);
+        formData.append("type", "products");
+        formData.append("category", this.item.category);
+        formData.append("sub_category", this.item.sub_category);
+        formData.append("brand", this.item.brand);
+        formData.append("image", result.value.image);
+
+        this.productService.uploadImage(formData).subscribe((result) => {
           alert("Image Uploaded");
+          this.router
+            .navigateByUrl("/login", { skipLocationChange: true })
+            .then(() => {
+              this.router.navigate(["/items"]);
+            });
         });
       }
     });
@@ -116,11 +122,7 @@ export class SelectImageDialog {
   ) {}
 
   picUploadForm = this.fb.group({
-    type: [""],
-    category: [""],
     image: [""],
-    sub_category: [""],
-    brand: [""],
   });
 
   onClick() {

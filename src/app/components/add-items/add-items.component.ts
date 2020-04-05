@@ -47,21 +47,20 @@ export class AddItemsComponent implements OnInit {
       console.log(result);
       let variant_details = result.variant_details;
       result["variants"] = [];
-      result["quantities"] = [];
+      result["quantites"] = [];
       variant_details.forEach((val) => {
         result["variants"].push(val.variant);
-        result["quantities"].push(val.quantity);
+        result["quantites"].push(val.quantity);
       });
       delete result.variant_details;
       console.log(result);
       this.productService.addProduct(result).subscribe((res) => {
-        alert("Product Added");
-        console.log(res);
-        // this.router
-        //   .navigateByUrl("/login", { skipLocationChange: true })
-        //   .then(() => {
-        //     this.router.navigate(["/items"]);
-        //   });
+        alert("Product Saved");
+        this.router
+          .navigateByUrl("/login", { skipLocationChange: true })
+          .then(() => {
+            this.router.navigate(["/items"]);
+          });
       });
     });
   }
