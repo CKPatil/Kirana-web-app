@@ -6,6 +6,7 @@ import {
 } from "@angular/material/dialog";
 import { ProductsService } from "src/app/services/products.service";
 import { Router } from "@angular/router";
+import { FormBuilder, Validators } from "@angular/forms";
 
 @Component({
   selector: "app-item-card",
@@ -58,6 +59,29 @@ export class ItemCardComponent implements OnInit {
       }
     });
   }
+
+  openSelectImageDialog() {
+    const dialogRef = this.dialog.open(SelectImageDialog, {
+      width: "20em",
+      data: this.item,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result && result.value.image) {
+        let imageData = result.value;
+        imageData.type = "products";
+        imageData.category = this.item.category;
+        imageData.sub_category = this.item.sub_category;
+        imageData.brand = this.item.brand;
+
+        console.log(imageData);
+        this.productService.uploadImage(imageData).subscribe((result) => {
+          console.log(result);
+          alert("Image Uploaded");
+        });
+      }
+    });
+  }
   ngOnInit() {}
 }
 
@@ -73,6 +97,64 @@ export class SelectVarietyDialog {
   ) {}
 
   selectedValue;
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+// ///////////// Select the Image Modal
+@Component({
+  selector: "selectImageDialog",
+  templateUrl: "selectImageDialog.html",
+})
+export class SelectImageDialog {
+  constructor(
+    public dialogRef: MatDialogRef<SelectVarietyDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private fb: FormBuilder
+  ) {}
+
+  picUploadForm = this.fb.group({
+    type: [""],
+    category: [""],
+    image: [""],
+    sub_category: [""],
+    brand: [""],
+  });
+
+  onClick() {
+    const fileUpload = document.getElementById(
+      "fileUpload"
+    ) as HTMLInputElement;
+    fileUpload.onchange = (e) => {
+      this.onFileSelect(e);
+    };
+    fileUpload.click();
+  }
+
+  // run when file field changes
+  onFileSelect(event) {
+    let previewImageContainer = document.querySelector(
+      ".previewImageContainer"
+    ) as HTMLElement;
+    let img1 = document.createElement("img") as HTMLImageElement;
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+
+      let fr = new FileReader();
+      fr.onload = (e) => {
+        img1.src = e.target.result.toString();
+        img1.width = 100;
+        previewImageContainer.innerHTML = "";
+        previewImageContainer.appendChild(img1);
+      };
+
+      fr.readAsDataURL(file);
+
+      this.picUploadForm.get("image").setValue(file);
+    }
+  }
 
   onNoClick(): void {
     this.dialogRef.close();

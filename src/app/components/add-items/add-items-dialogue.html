@@ -14,7 +14,7 @@
       <mat-form-field *ngIf="!isAddCategory">
         <mat-label>Category</mat-label>
         <mat-select formControlName="category">
-          <mat-option *ngFor="let c of categories" [value]="c">
+          <mat-option *ngFor="let c of data.categories" [value]="c">
             {{ c }}
           </mat-option>
         </mat-select>
@@ -42,7 +42,7 @@
         <mat-label>Sub-category</mat-label>
         <mat-select formControlName="sub_category">
           <mat-option
-            *ngFor="let sub of sub_categories[itemForm.controls.category.value]"
+            *ngFor="let sub of data.sub_categories[itemForm.controls.category.value]"
             [value]="sub"
           >
             {{sub}}
@@ -76,7 +76,7 @@
         <mat-label>Brand</mat-label>
         <mat-select formControlName="brand">
           <mat-option
-            *ngFor="let brand of brands[itemForm.controls.sub_category.value]"
+            *ngFor="let brand of data.brands[itemForm.controls.sub_category.value]"
             [value]="brand"
           >
             {{brand}}

@@ -2,7 +2,7 @@
     <mat-card [ngClass]="{'is-side-panel-expanded': isSidePanelExpanded}">
         <h2>Items:</h2>
         <div class="items-top-search-container">
-            <app-add-items></app-add-items>
+            <app-add-items [productData]="productData"></app-add-items>
             <div class="input">
                 <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="Start searching for item by name ">
             </div>

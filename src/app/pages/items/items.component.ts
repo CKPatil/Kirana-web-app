@@ -17,7 +17,9 @@ export class ItemsComponent implements OnInit {
     description: string;
     variety: string[];
   }[];
-  allProducts: any;
+  allProducts: any = [];
+
+  productData: any;
 
   constructor(
     private interaction: InteractionService,
@@ -28,7 +30,27 @@ export class ItemsComponent implements OnInit {
     this.productService.getAllProducts().subscribe((res) => {
       this.allProducts = res.body;
       console.log(res.body);
+      this.productData = this.prepareDataForNewItem()
     });
+  }
+
+  prepareDataForNewItem() {
+    let data = { categories: [], sub_categories: {}, brands: {} };
+    this.allProducts.forEach((val) => {
+      data.categories.push(val.category);
+      if(data.sub_categories[val.category]){
+        data.sub_categories[val.category].push(val.sub_category);
+      }else{
+        data.sub_categories[val.category] = [val.sub_category]
+      }
+      if(data.brands[val.sub_category]){
+        data.brands[val.sub_category].push(val.brand);
+      }else{
+        data.brands[val.sub_category] = [val.brand];
+      }
+    });
+
+    return data;
   }
 
   addProduct() {

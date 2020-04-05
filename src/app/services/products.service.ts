@@ -9,6 +9,7 @@ import { throwError } from "rxjs";
 })
 export class ProductsService {
   productsURL: string;
+  imageUploadURL: string;
   httpOptions: any;
 
   constructor(private http: HttpClient) {
@@ -22,6 +23,7 @@ export class ProductsService {
 
   buildURLS() {
     this.productsURL = environment.backend_end_point + environment.products;
+    this.imageUploadURL = environment.backend_end_point + environment.imageUpload;
   }
 
   getAllProducts() {
@@ -40,6 +42,7 @@ export class ProductsService {
   addProduct(data) {
     return this.http
       .post(this.productsURL, JSON.stringify(data), {
+        // .post(this.productsURL, data, {
         headers: this.httpOptions,
         observe: "response",
       })
@@ -50,10 +53,11 @@ export class ProductsService {
       );
   }
 
-  deleteProduct(data) {
-    console.log(data);
-    console.log(this.productsURL);
+  uploadImage(data) {
+    return this.http.post(this.imageUploadURL, data);
+  }
 
+  deleteProduct(data) {
     return this.http
       .delete(this.productsURL + data, {
         headers: this.httpOptions,

@@ -1,0 +1,21 @@
+<h1 mat-dialog-title>Select Product Image</h1>
+<div mat-dialog-content>
+  <div>
+    <button mat-button color="warn" (click)="onClick()">
+      <mat-icon>file_upload</mat-icon> Upload
+    </button>
+    <input
+      accept="image/*"
+      type="file"
+      id="fileUpload"
+      style="display: none;"
+    />
+  </div>
+  <div class="previewImageContainer"></div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="picUploadForm" cdkFocusInitial>
+    Upload
+  </button>
+</div>

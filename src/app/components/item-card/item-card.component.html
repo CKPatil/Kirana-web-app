@@ -1,6 +1,18 @@
 <div class="item-card">
   <div class="item-image-container">
-    <img [src]="item.image_url[0]" alt="{{item.name}} Image" />
+    <div *ngIf="item.image_url.length">
+      <img [src]="item.image_url[0]" alt="{{ item.name }} Image" />
+    </div>
+    <div>
+      <button
+          mat-icon-button
+          color="primary"
+          aria-label="Example icon-button with delete icon"
+          (click)="openSelectImageDialog()"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
+    </div>
   </div>
   <div class="item-details-container">
     <div class="item-top-container">

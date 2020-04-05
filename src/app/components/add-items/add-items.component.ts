@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from "@angular/core";
+import { Component, OnInit, Inject, Input } from "@angular/core";
 import {
   MatDialog,
   MatDialogRef,
@@ -11,6 +11,8 @@ import {
   FormBuilder,
   FormArray,
 } from "@angular/forms";
+import { ProductsService } from "src/app/services/products.service";
+import { Router } from "@angular/router";
 
 export interface DialogData {
   animal: string;
@@ -26,17 +28,41 @@ export class AddItemsComponent implements OnInit {
   animal: string;
   name: string;
 
-  constructor(public dialog: MatDialog) {}
+  @Input() productData;
+
+  constructor(
+    public dialog: MatDialog,
+    private productService: ProductsService,
+    private router: Router
+  ) {}
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogAddItemComponent, {
       width: "350px",
-      data: { name: this.name, animal: this.animal },
+      data: this.productData,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log("The dialog was closed");
       console.log(result);
+      let variant_details = result.variant_details;
+      result["variants"] = [];
+      result["quantities"] = [];
+      variant_details.forEach((val) => {
+        result["variants"].push(val.variant);
+        result["quantities"].push(val.quantity);
+      });
+      delete result.variant_details;
+      console.log(result);
+      this.productService.addProduct(result).subscribe((res) => {
+        alert("Product Added");
+        console.log(res);
+        // this.router
+        //   .navigateByUrl("/login", { skipLocationChange: true })
+        //   .then(() => {
+        //     this.router.navigate(["/items"]);
+        //   });
+      });
     });
   }
 
@@ -77,31 +103,31 @@ export class DialogAddItemComponent {
     details: ["", Validators.required],
   });
 
-  categories = ["Dairy", "Grocery"];
-  sub_categories = {
-    Dairy: ["Milk", "Butter"],
-    Grocery: ["Rice", "Wheat"],
-  };
-  brands = {
-    Rice: ["Basmathi"],
-    Milk: ["Nandhini"],
-    Wheat: ["Pillsburry"],
-  };
+  // categories = ["Dairy", "Grocery"];
+  // sub_categories = {
+  //   Dairy: ["Milk", "Butter"],
+  //   Grocery: ["Rice", "Wheat"],
+  // };
+  // brands = {
+  //   Rice: ["Basmathi"],
+  //   Milk: ["Nandhini"],
+  //   Wheat: ["Pillsburry"],
+  // };
   quantity_types = ["ml", "ltr", "kg", "unit", "gm"];
-  variants = {
-    ml: [100, 250, 500],
-    ltr: [1],
-    kg: [1],
-    unit: [1],
-    gm: [100, 250, 500],
-  };
+  // variants = {
+  //   ml: [100, 250, 500],
+  //   ltr: [1],
+  //   kg: [1],
+  //   unit: [1],
+  //   gm: [100, 250, 500],
+  // };
   isAddCategory: boolean;
   isAddSubCategory: boolean;
   isAddBrand: boolean;
 
   constructor(
     public dialogRef: MatDialogRef<DialogAddItemComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    @Inject(MAT_DIALOG_DATA) public data,
     private fb: FormBuilder
   ) {
     console.log(this.data);
@@ -122,7 +148,7 @@ export class DialogAddItemComponent {
   }
 
   get allVariants() {
-    return this.itemForm.get('variant_details') as FormArray;
+    return this.itemForm.get("variant_details") as FormArray;
   }
 
   addVariant() {
