@@ -14,7 +14,7 @@ import {
 import {
   TransactionService
 } from 'src/app/services/transaction.service';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { MatDatepickerInputEvent, MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { SharedService } from "../../services/shared.service";
@@ -27,6 +27,7 @@ import { DialogData } from 'src/app/components/add-items/add-items.component';
 })
 export class TransactionsComponent implements OnInit, OnChanges {
 
+  statusDialogRef: MatDialogRef<StatusChangeComponent>;
   statusChange:string;
   searchRetail1:any;
   searchRetail:any;
@@ -134,10 +135,40 @@ export class TransactionsComponent implements OnInit, OnChanges {
       console.log(res);
     });
   }
-  openDialog(){}
+  openDialog(){
+    this.statusDialogRef=this.dialog.open(StatusChangeComponent,{
+      width: '1000px',height: '200px'
+    });
+
+    this.statusDialogRef.afterClosed().subscribe(result=>{
+      this.statusChange=result;  
+    })
+  }
 
   setStatusColor(status) {
     return status;
   }
 
+}
+
+@Component({
+  selector: 'app-status-change-dialogue',
+  templateUrl: './statusChange.component.html',
+  styleUrls: ['./statusChange.component.scss']
+})
+export class StatusChangeComponent implements OnInit{
+
+  form: FormGroup;
+  constructor(private formBuilder: FormBuilder,private dialogRef: MatDialogRef<StatusChangeComponent>){
+    
+  }
+  ngOnInit(){
+    this.form=this.formBuilder.group({
+      status: ''
+    })
+  }
+
+  submit(form){
+    this.dialogRef.close(`${form.value.status}`);
+  }
 }
