@@ -9,6 +9,7 @@ export const environment = {
   port_number: '8000',
   userDetails: 'api/v1/userDetails/',
   orders: 'api/v1/vendor/order/',
+  updateStatusURL: 'api/v1/vendor/order/',
   retailers: 'api/v1/vendors/',
   products: 'api/v1/products/',
   signUpURL: 'user/signUp/',
@@ -18,7 +19,7 @@ export const environment = {
 
 };
 
-/*
+/*1/
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
  *

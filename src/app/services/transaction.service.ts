@@ -13,6 +13,7 @@ export class TransactionService {
   getAllTransactionsURL: any;
   httpOptions;
   orderType;
+  getUpdateOrderStatusURL: string;
   buildURLS(param: string) {
     this.getAllTransactionsURL = environment.backend_end_point + environment.orders+param;
   }
@@ -34,6 +35,27 @@ export class TransactionService {
       })
     );
   }
+
+  fetchUpdateOrderStatusURL(id: number, status: number){
+    this.getUpdateOrderStatusURL = environment.backend_end_point + environment.updateStatusURL + '?order_id=' + id + '&status=' + status;
+
+  }
+
+  updateOrderStatus(id: number, status: number){
+    this.fetchUpdateOrderStatusURL(id,status);
+    debugger;
+    return this.http.put(this.getUpdateOrderStatusURL,{ 
+      headers: this.httpOptions,
+      observe: 'response'
+    })
+    .pipe(
+      catchError(error => {
+        return throwError(error);
+      })
+    );
+  }
+  
+  
 
   getAllTransactions() {
     return transactions;

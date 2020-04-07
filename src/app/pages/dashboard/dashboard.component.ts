@@ -14,8 +14,11 @@ export class DashboardComponent implements OnInit {
   analytics: { name: string; count: number; }[];
   allTransactions:any;
   packedOrders:any;
-  orderStatus: any = 'Packed';
+  orderStatus: any = 'Dispatched';
   orderStatusPacked: boolean;
+  cancelledOrders:any;
+  allOrders:any;
+
   constructor(private interaction: InteractionService,private transactionService: TransactionService) {
     this.isSidePanelExpanded = this.interaction.getExpandedStatus();
   }
@@ -23,28 +26,28 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.analytics = analytics;
     this.interaction.expandedStatus$.subscribe( (res) => {
-      this.isSidePanelExpanded = res;
+      this.isSidePanelExpanded = res; 
     });
-    this.getTransactions("?order=listall");
+    this.transactionService.buildURLS("?order=listall");
+    this.transactionService.getAllOrders().subscribe((res) => {
+      console.log(res);
+      console.log("allTransactions")
+      this.allTransactions = res.body;
+      console.log(this.allTransactions);
+    });
     this.transactionService.buildURLS("?order=delivered");
     this.transactionService.getAllOrders().subscribe((res) => {
-      this.allTransactions.push(res.body);
-      console.log("Dashboard component");
+      console.log("allOrders");
+      this.allOrders = res.body;
+      console.log(this.allOrders);
     });
     this.transactionService.buildURLS("?order=cancelled");
     this.transactionService.getAllOrders().subscribe((res) => {
-      this.allTransactions.push(res.body)
-      console.log(this.allTransactions);
-      console.log("Dashboard component");
+      console.log("cancelledOrders");
+      this.cancelledOrders = res.body;
+      console.log(this.cancelledOrders);
     });
-
   }
   getTransactions(orderType:string){
-    this.transactionService.buildURLS(orderType);
-    this.transactionService.getAllOrders().subscribe((res) => {
-      this.allTransactions = res.body;
-      console.log(this.allTransactions);
-      console.log("Dashboard component");
-    });
   }
 }

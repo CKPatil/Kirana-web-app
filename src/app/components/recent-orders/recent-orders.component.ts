@@ -63,10 +63,12 @@ export class RecentOrdersComponent implements OnInit {
     console.log(this.orderStatus);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+    this.transactionService.buildURLS("?order=listall");
     this.transactionService.getAllOrders().subscribe((res) => {
       console.log(res);
+      console.log("allTransactions")
       this.allTransactions = res.body;
-      console.log(typeof this.allTransactions);
+      console.log(this.allTransactions);
     });
     this.transactionService.buildURLS("?order=delivered");
     this.transactionService.getAllOrders().subscribe((res) => {
@@ -78,7 +80,7 @@ export class RecentOrdersComponent implements OnInit {
     this.transactionService.getAllOrders().subscribe((res) => {
       console.log("cancelledOrders");
       this.cancelledOrders = res.body;
-      console.log(this.allTransactions);
+      console.log(this.cancelledOrders);
     });
   }
   getOrders(){
@@ -88,19 +90,36 @@ export class RecentOrdersComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-  onStatusChange(event: any) {
-    this.openDialog(event.value);
+  onStatusChange(event: any,row: any) {
+    this.openDialog(event.value,row);
   }
 
-  openDialog(status: any): void {
+  getStatusToKeyMap(status: string){
+    switch(status){
+      case 'Delivered' :
+        return 3;break;
+      case 'Packed' :
+        return 1;break;      
+      case 'Dispatched' :
+        return 2;break;
+      case 'Cancelled' :
+        return 4;break;
+    }
+  }
+
+  openDialog(status: any,row: any): void {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '300px',
-      data: {statusValue: status}
+      data: {statusValue: status,row: row}
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if ( result === 'YES' ) {
+      if ( result.button === 'YES' ) {
         
+        this.transactionService.updateOrderStatus(result.data.row.id,this.getStatusToKeyMap(result.data.statusValue))
+        .subscribe((res)=>{
+          console.log(res);
+        })
       } else {
 
       }

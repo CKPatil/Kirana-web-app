@@ -27,7 +27,7 @@ import { DialogData } from 'src/app/components/add-items/add-items.component';
 })
 export class TransactionsComponent implements OnInit, OnChanges {
 
-  statusChange:any;
+  statusChange:string;
   searchRetail:any;
   searchStatus:any;
   searchDate1:any;
@@ -135,7 +135,7 @@ export class TransactionsComponent implements OnInit, OnChanges {
   }
   openDialog(): void{
     const dialogRef = this.dialog.open(StatusChangeDialog, {
-      width: '250px',height: '250px',
+      width: '1000px',height: '250px',
       data: {statusChange: this.statusChange}
     });
 
