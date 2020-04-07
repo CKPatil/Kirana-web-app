@@ -1,5 +1,5 @@
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, Output } from '@angular/core';
 import {
   FormControl,
   FormGroupDirective,
@@ -10,9 +10,11 @@ import {
 
 } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+//import { SharedLoginService } from '../../services/sharedLogin.service';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { EventEmitter } from 'protractor';
 
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -31,11 +33,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 export interface DialogData {
   emailID: string;
 }
-export interface ResetPassword{
-  otp: string;
-  phoneNumber: string;
-  newPassword: string;
-}
+
 
 @Component({
   selector: 'app-login',
@@ -61,13 +59,14 @@ export class LoginComponent implements OnInit {
     newPassword: 'string'
   };
   dialogRef:MatDialogRef<ForgotPasswordDialog>;
-
+  dialogResponse:any;
 
   constructor(
     private authService: AuthService,
     private router: Router,
     private fb: FormBuilder,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    //private sharedService: SharedLoginService
     // protected commonUtil: CommonUtil
   ) {
     this.loginForm = this.fb.group({
@@ -93,18 +92,13 @@ export class LoginComponent implements OnInit {
       this.existingLogin();
     }
   }
-  openDialog(): void{
-    this.dialogRef = this.dialog.open(ForgotPasswordDialog, {
-      width: '700px',height: '200px'
-    });
 
-    this.dialogRef.afterClosed().pipe(
-      filter(name => name)
-    ).subscribe(name => {
-      this.phoneNumber=name;
-      console.log(this.phoneNumber);
-    })
-  }
+
+  // recieveResponse($event){
+  //   this.dialogResponse=$event;
+  //   console.log(this.dialogResponse);
+    
+  // }
 
   public existingLogin() {
     this.isLogin = this.isLogin ? false : true;
@@ -182,6 +176,19 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/dashboard']);
     }
   }
+  openDialog(): void{
+    this.dialogRef = this.dialog.open(ForgotPasswordDialog, {
+      width: '700px',height: '200px'
+    });
+
+    this.dialogRef.afterClosed().subscribe(name => {
+      console.log(name);
+      this.phoneNumber=name;
+      this.resetPassword.phoneNumber=this.phoneNumber;
+      console.log(this.resetPassword);      
+      console.log(this.phoneNumber);
+    })
+  }
 }
 
 @Component({
@@ -193,12 +200,21 @@ export class LoginComponent implements OnInit {
 // tslint:disable-next-line: component-class-suffix
 export class ForgotPasswordDialog implements OnInit{
   form: FormGroup;
+  resetMethod={
+    reset_method:"mobile"
+  }
+  res:any;
+
+  //@Output() responseEvent =new EventEmitter();
 
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<ForgotPasswordDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    //private sharedservice: SharedLoginService,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+      //this.sharedservice.response="";
+    }
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -208,22 +224,34 @@ export class ForgotPasswordDialog implements OnInit{
     this.form = this.formBuilder.group({
       phone: ''
     })
-    console.log(this.form);
+    
   }
 
-  submit(form){
+  // ngAfterContentChecked(){
+  //   this.res=this.sharedservice.response;
+  // }
 
+  // updateResponse(obj){
+  //   this.sharedservice.updateResponse(obj);
+  // }
+  
+  // sendResponse(){
+  //   this.responseEvent.emit(this.response);
+  // }
+
+  submit(form){
     this.dialogRef.close(`${form.value.phone}`);
-    const data = Object.assign({}, this.form .value);
+    const data = Object.assign({},this.resetMethod ,this.form.value);
     console.log(data);
     this.authService.forgotPassword(data).subscribe(
       response=>{
-        console.log(response.body);
+        this.res=response.body;
+        //this.updateResponse(this.res);
+        console.log(this.res);
       },
       error=>{
         console.log(error);
       }
     );
-
   }
 }
