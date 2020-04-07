@@ -11,7 +11,7 @@
                   <div>
                     <mat-form-field>
                       <mat-label>Retailer</mat-label>
-                      <mat-select [(ngModel)]="searchRetail">
+                      <mat-select [(ngModel)]="searchRetail1">
                         <mat-option *ngFor="let retailer of retailers" [value]="retailer.viewValue">
                           {{retailer.viewValue}}
                         </mat-option>
@@ -52,7 +52,7 @@
                 </div>
             </div>
             <mat-divider></mat-divider>
-            <div class="transaction-container" *ngFor="let item of allTransactions| filter:searchRetail|filter:searchStatus|filter:searchDate">
+            <div class="transaction-container" *ngFor="let item of allTransactions| filter:searchRetail1|filter:searchStatus|filter:searchDate| filter:searchRetail">
                   <mat-card>
                     <div class="content">
                       <h5>{{ item.Consumer.Name }}</h5>

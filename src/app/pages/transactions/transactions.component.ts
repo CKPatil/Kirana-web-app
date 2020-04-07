@@ -28,6 +28,7 @@ import { DialogData } from 'src/app/components/add-items/add-items.component';
 export class TransactionsComponent implements OnInit, OnChanges {
 
   statusChange:string;
+  searchRetail1:any;
   searchRetail:any;
   searchStatus:any;
   searchDate1:any;
@@ -112,12 +113,12 @@ export class TransactionsComponent implements OnInit, OnChanges {
     this.getTransactionHistory();
 
     console.log(this.searchDate);
+    console.log(this.searchRetail);
+    
   }
 
-  ngOnChanges() {
-    console.log(this.searchDate);
+  ngOnChanges() {}
 
-  }
   ngAfterContentChecked(){
     this.searchRetail=this.sharedService.comp1Val;
   }
@@ -133,39 +134,10 @@ export class TransactionsComponent implements OnInit, OnChanges {
       console.log(res);
     });
   }
-  openDialog(): void{
-    const dialogRef = this.dialog.open(StatusChangeDialog, {
-      width: '1000px',height: '250px',
-      data: {statusChange: this.statusChange}
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.statusChange=result;
-    });
-  }
+  openDialog(){}
 
   setStatusColor(status) {
     return status;
   }
 
-}
-
-@Component({
-  selector: 'app-status-change',
-  templateUrl : './statusChange.component.html',
-  styleUrls: ['./statusChange.component.scss']
-})
-
-// tslint:disable-next-line: component-class-suffix
-export class StatusChangeDialog implements OnInit{
-  constructor(
-    public dialogRef: MatDialogRef<StatusChangeDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  ngOnInit(){}
 }
