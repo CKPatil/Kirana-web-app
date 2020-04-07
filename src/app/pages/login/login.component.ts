@@ -6,11 +6,13 @@ import {
   NgForm,
   Validators,
   FormBuilder,
+  FormGroup,
 
 } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -28,6 +30,11 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 }
 export interface DialogData {
   emailID: string;
+}
+export interface ResetPassword{
+  otp: string;
+  phoneNumber: string;
+  newPassword: string;
 }
 
 @Component({
@@ -47,7 +54,14 @@ export class LoginComponent implements OnInit {
   registerBtn = 'Register';
   loginBtn = 'Sign in';
   hide = true;
-  emailID: string;
+  phoneNumber: string;
+  resetPassword={
+    otp: 'string',
+    phoneNumber: 'string',
+    newPassword: 'string'
+  };
+  dialogRef:MatDialogRef<ForgotPasswordDialog>;
+
 
   constructor(
     private authService: AuthService,
@@ -80,13 +94,15 @@ export class LoginComponent implements OnInit {
     }
   }
   openDialog(): void{
-    const dialogRef = this.dialog.open(ForgotPasswordDialog, {
-      width: '700px',height: '200px',
-      data:{mail:this.emailID}
+    this.dialogRef = this.dialog.open(ForgotPasswordDialog, {
+      width: '700px',height: '200px'
     });
 
-    dialogRef.afterClosed().subscribe(result=>{
-      this.emailID=result;
+    this.dialogRef.afterClosed().pipe(
+      filter(name => name)
+    ).subscribe(name => {
+      this.phoneNumber=name;
+      console.log(this.phoneNumber);
     })
   }
 
@@ -176,7 +192,11 @@ export class LoginComponent implements OnInit {
 
 // tslint:disable-next-line: component-class-suffix
 export class ForgotPasswordDialog implements OnInit{
+  form: FormGroup;
+
   constructor(
+    private authService: AuthService,
+    private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<ForgotPasswordDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
@@ -184,5 +204,26 @@ export class ForgotPasswordDialog implements OnInit{
     this.dialogRef.close();
   }
 
-  ngOnInit(){}
+  ngOnInit(){
+    this.form = this.formBuilder.group({
+      phone: ''
+    })
+    console.log(this.form);
+  }
+
+  submit(form){
+
+    this.dialogRef.close(`${form.value.phone}`);
+    const data = Object.assign({}, this.form .value);
+    console.log(data);
+    this.authService.forgotPassword(data).subscribe(
+      response=>{
+        console.log(response.body);
+      },
+      error=>{
+        console.log(error);
+      }
+    );
+
+  }
 }

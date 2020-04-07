@@ -63,18 +63,20 @@ export class AuthService {
       );
   }
 
-  // forgotPassword(data) {
-  //   var url = environment.api_Base_URL + environment.forgotPassword;
-  //   var body = JSON.stringify(data);
-
-  //   return this.http
-  //     .post(url, body, { headers: this.httpOptions, observe: 'response' })
-  //     .pipe(
-  //       catchError(error => {
-  //         return throwError(error);
-  //       })
-  //     );
-  // }
+  forgotPassword(data) {
+    const url = environment.backend_end_point + environment.forgotPassword;
+    
+    return this.http
+      .post(url, JSON.stringify(data), {
+        headers: this.httpOptions,
+        observe: 'response'
+      })
+      .pipe(
+        catchError(error => {
+          return throwError(error);
+        })
+      );
+  }
 
   // resetPassword(data, token) {
   //   var url = environment.api_Base_URL + environment.resetPassword;

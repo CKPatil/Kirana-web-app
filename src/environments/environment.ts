@@ -10,12 +10,13 @@ export const environment = {
   userDetails: 'api/v1/userDetails/',
   orders: 'order/',
   retailers: 'api/v1/vendors/',
+  forgotPassword: 'api/v1/forgot_password/',
   products: 'api/v1/products/',
   signUpURL: 'user/signUp/',
   loginURL: 'login/',
   tokenURL: 'api/token/',
   refreshURL: 'api/token/refresh',
-
+ 
 };
 
 /*
