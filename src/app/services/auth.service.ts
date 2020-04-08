@@ -63,11 +63,26 @@ export class AuthService {
       );
   }
 
-  forgotPassword(data) {
-    const url = environment.backend_end_point + environment.forgotPassword;
+  forgotPassword(data,param) {
+    const url = environment.backend_end_point + environment.forgotPassword+param;
     
     return this.http
       .post(url, JSON.stringify(data), {
+        headers: this.httpOptions,
+        observe: 'response'
+      })
+      .pipe(
+        catchError(error => {
+          return throwError(error);
+        })
+      );
+  }
+
+  sendOTP(data,param){
+    const url = environment.backend_end_point + environment.forgotPassword+param;
+    
+    return this.http
+      .put(url, JSON.stringify(data), {
         headers: this.httpOptions,
         observe: 'response'
       })

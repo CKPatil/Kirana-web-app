@@ -7,14 +7,14 @@ import {
   Validators,
   FormBuilder,
   FormGroup,
-
+  ReactiveFormsModule
 } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 //import { SharedLoginService } from '../../services/sharedLogin.service';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { EventEmitter } from 'protractor';
+import { EventEmitter } from '@angular/core';
 
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -31,9 +31,13 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   }
 }
 export interface DialogData {
-  emailID: string;
+  dialogResponse: any;
 }
-
+export interface ResetPassword{
+  otp: string,
+  phone: string,
+  password: string
+}
 
 @Component({
   selector: 'app-login',
@@ -55,18 +59,21 @@ export class LoginComponent implements OnInit {
   phoneNumber: string;
   resetPassword={
     otp: 'string',
-    phoneNumber: 'string',
-    newPassword: 'string'
+    phone: 'string',
+    password: 'string'
   };
   dialogRef:MatDialogRef<ForgotPasswordDialog>;
+  otpDialogRef:MatDialogRef<OTPComponent>;
+  updateDialogRef:MatDialogRef<UpdatePasswordComponent>;
   dialogResponse:any;
+  otpResponse:any;
+
 
   constructor(
     private authService: AuthService,
     private router: Router,
     private fb: FormBuilder,
     public dialog: MatDialog,
-    //private sharedService: SharedLoginService
     // protected commonUtil: CommonUtil
   ) {
     this.loginForm = this.fb.group({
@@ -90,15 +97,8 @@ export class LoginComponent implements OnInit {
     }
     if (!this.role) {
       this.existingLogin();
-    }
+    }  
   }
-
-
-  // recieveResponse($event){
-  //   this.dialogResponse=$event;
-  //   console.log(this.dialogResponse);
-    
-  // }
 
   public existingLogin() {
     this.isLogin = this.isLogin ? false : true;
@@ -178,19 +178,43 @@ export class LoginComponent implements OnInit {
   }
   openDialog(): void{
     this.dialogRef = this.dialog.open(ForgotPasswordDialog, {
-      width: '700px',height: '200px'
+      width: '700px',height: '200px',
+      data: {dialogResponse:this.dialogResponse}
     });
-
-    this.dialogRef.afterClosed().subscribe(name => {
-      console.log(name);
-      this.phoneNumber=name;
-      this.resetPassword.phoneNumber=this.phoneNumber;
-      console.log(this.resetPassword);      
-      console.log(this.phoneNumber);
+    const sub=this.dialogRef.componentInstance.onSubmit.subscribe((data) => {
+      this.dialogResponse=data;
+      console.log(this.dialogResponse);
+      if(this.dialogResponse.message=="otp sent"){
+        this.otpDialogRef=this.dialog.open(OTPComponent,{
+          width: '500px',height: '200px',
+          data:{dialogResponse: this.dialogResponse}
+        });
+        const sendOTP=this.otpDialogRef.componentInstance.onSendOTP.subscribe((data)=>{
+          this.otpResponse=data;
+          console.log(this.otpResponse);
+          if(this.otpResponse.verified==true){
+            this.updateDialogRef=this.dialog.open(UpdatePasswordComponent,{
+              width: '500px',height: '500px'
+            });
+          }
+        });
+        this.otpDialogRef.afterClosed().subscribe(result => {
+          this.resetPassword.otp=result;
+          console.log(this.resetPassword);
+        });
+      }
     })
+    this.dialogRef.afterClosed().subscribe(name => {
+      this.resetPassword.phone=name;
+      console.log(this.resetPassword);
+    });
+    
+    
   }
+
 }
 
+//ForgotPasswordComponent
 @Component({
   selector: 'app-forgot-password',
   templateUrl : './forgotPasswordDialog.component.html',
@@ -204,17 +228,18 @@ export class ForgotPasswordDialog implements OnInit{
     reset_method:"mobile"
   }
   res:any;
+  otpDialogRef: MatDialogRef<OTPComponent>
 
-  //@Output() responseEvent =new EventEmitter();
+  onSubmit= new EventEmitter();
 
+  onClick(){
+  }
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<ForgotPasswordDialog>,
-    //private sharedservice: SharedLoginService,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
-      //this.sharedservice.response="";
-    }
+    public otpDialog: MatDialogRef<OTPComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -223,35 +248,102 @@ export class ForgotPasswordDialog implements OnInit{
   ngOnInit(){
     this.form = this.formBuilder.group({
       phone: ''
-    })
-    
+    });  
   }
-
-  // ngAfterContentChecked(){
-  //   this.res=this.sharedservice.response;
-  // }
-
-  // updateResponse(obj){
-  //   this.sharedservice.updateResponse(obj);
-  // }
-  
-  // sendResponse(){
-  //   this.responseEvent.emit(this.response);
-  // }
-
   submit(form){
     this.dialogRef.close(`${form.value.phone}`);
     const data = Object.assign({},this.resetMethod ,this.form.value);
     console.log(data);
-    this.authService.forgotPassword(data).subscribe(
+    this.authService.forgotPassword(data,'').subscribe(
       response=>{
         this.res=response.body;
-        //this.updateResponse(this.res);
-        console.log(this.res);
+        this.onSubmit.emit(this.res);
+        console.log(response.body);
+      },
+      error=>{
+        console.log(error);
+      }
+    );    
+  }
+}
+
+//OTPComponent
+@Component({
+  selector: 'app-otp',
+  templateUrl : './otp.component.html',
+  styleUrls: ['./otp.component.scss']
+})
+
+export class OTPComponent implements OnInit{
+  form: FormGroup;
+  otp: string;
+  userId: string;
+  res:any;
+
+  onSendOTP= new EventEmitter();
+
+  constructor(
+    public authService: AuthService,
+    public formBuilder: FormBuilder,
+    public dialogRef: MatDialogRef<OTPComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
+  ){}
+
+  ngOnInit(){
+    this.form=this.formBuilder.group({
+      otp: ''
+    })
+    console.log(this.data);
+    this.userId=this.data.dialogResponse.user_id;
+    console.log(this.userId);
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  submit(form){
+    this.dialogRef.close(`${form.value.otp}`);
+    const data = Object.assign({},this.form.value);
+    this.authService.sendOTP(data,'?id='+this.userId).subscribe(
+      response=>{
+        this.res=response.body;
+        console.log(response);
+        
+        this.onSendOTP.emit(this.res);return;
       },
       error=>{
         console.log(error);
       }
     );
+  }
+}
+
+//UpdatePasswordComponent
+@Component({
+  selector: 'app-update-password',
+  templateUrl : './updatePassword.component.html',
+  styleUrls: ['./updatePassword.component.scss']
+})
+
+export class UpdatePasswordComponent implements OnInit{
+  pass:string;
+  form:FormGroup;
+
+  constructor(    
+    public authService: AuthService,
+    public formBuilder: FormBuilder,
+    public dialogRef: MatDialogRef<UpdatePasswordComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
+  ){}
+  
+  ngOnInit(){
+    this.form=this.formBuilder.group({
+      pass: ''
+    })
+  }
+
+  submit(form){
+    this.dialogRef.close(`${form.value.pass}`);
   }
 }
