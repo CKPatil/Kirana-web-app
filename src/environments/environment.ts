@@ -17,7 +17,8 @@ export const environment = {
   tokenURL: 'api/token/',
   refreshURL: 'api/token/refresh',
   inviteURL: "api/v1/vendor_request/",
-  inviteResponseURL: "api/v1/vendor_registration/"
+  inviteResponseURL: "api/v1/vendor_registration/",
+  feedbackURL:"api/v1/ratings/"
 };
 
 /*

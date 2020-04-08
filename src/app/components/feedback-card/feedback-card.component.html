@@ -2,12 +2,12 @@
   <div class="feedback-top-container">
     <div class="user-details-container">
       <i class="fa fa-user-circle"></i>
-      <h5>{{ feedback.name }}</h5>
+      <h5>{{ feedback.customer_name }}</h5>
     </div>
     <div class="star-ratings-css">
       <div
         class="star-ratings-css-top"
-        [style]="{ width: feedback.stars * 20 + '%' }"
+        [style]="{ width: feedback.rating * 20 + '%' }"
       >
         <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
       </div>
@@ -16,15 +16,15 @@
       </div>
     </div>
     <div class="date-of-feedback-container">
-      <h6>{{ feedback.date }}</h6>
+      <h6>{{ feedback.date || 'Not Available' }}</h6>
     </div>
   </div>
   <!-- <star-rating value="5" totalstars="10" checkedcolor="red" size="15px" uncheckedcolor="black" readonly="true" (rate)="onRate($event)"></star-rating> -->
 
   <!-- <star-rating-comp [starType]="'svg'" [rating]="2.63"></star-rating-comp> -->
-  <div class="feedback-description">
+  <div class="feedback-description mt-4">
     <p>
-      {{ feedback.description }}
+      {{ feedback.comment }}
     </p>
   </div>
 </mat-card>

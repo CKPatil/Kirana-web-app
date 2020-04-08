@@ -42,7 +42,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import { AnalyticContainerComponent } from './components/analytic-container/analytic-container.component';
 import { RecentOrdersComponent } from './components/recent-orders/recent-orders.component';
 import { HttpClientModule } from '@angular/common/http';
-import { InviteRequestComponent } from './components/invite-request/invite-request.component';
+import { InviteRequestComponent, ShowInviteDetailModal } from './components/invite-request/invite-request.component';
 import { ItemCardComponent, SelectVarietyDialog, SelectImageDialog } from './components/item-card/item-card.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { DialogComponent } from './components/dialog/dialog.component';
@@ -75,7 +75,8 @@ import { UpdateItemComponent, UpdateItemModal } from './components/update-item/u
     SelectVarietyDialog,
     SelectImageDialog,
     UpdateItemComponent,
-    UpdateItemModal
+    UpdateItemModal,
+    ShowInviteDetailModal
   ],
   entryComponents: [
     DialogComponent
