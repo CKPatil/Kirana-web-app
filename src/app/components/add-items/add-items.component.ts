@@ -46,23 +46,25 @@ export class AddItemsComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       console.log("The dialog was closed");
       console.log(result);
-      let variant_details = result.variant_details;
-      result["variants"] = [];
-      result["quantites"] = [];
-      variant_details.forEach((val) => {
-        result["variants"].push(val.variant);
-        result["quantites"].push(val.quantity);
-      });
-      delete result.variant_details;
-      console.log(result);
-      this.productService.addProduct(result).subscribe((res) => {
-        alert("Product Saved");
-        this.router
-          .navigateByUrl("/login", { skipLocationChange: true })
-          .then(() => {
-            this.router.navigate(["/items"]);
-          });
-      });
+      if (result) {
+        let variant_details = result.variant_details;
+        result["variants"] = [];
+        result["quantites"] = [];
+        variant_details.forEach((val) => {
+          result["variants"].push(val.variant);
+          result["quantites"].push(val.quantity);
+        });
+        delete result.variant_details;
+        console.log(result);
+        this.productService.addProduct(result).subscribe((res) => {
+          alert("Product Saved");
+          this.router
+            .navigateByUrl("/login", { skipLocationChange: true })
+            .then(() => {
+              this.router.navigate(["/items"]);
+            });
+        });
+      }
     });
   }
 
@@ -98,7 +100,7 @@ export class DialogAddItemComponent {
       this.fb.group({
         variant: "",
         quantity: "",
-      })
+      }),
     ]),
     details: ["", Validators.required],
   });
