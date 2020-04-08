@@ -16,7 +16,8 @@ export const environment = {
   loginURL: 'login/',
   tokenURL: 'api/token/',
   refreshURL: 'api/token/refresh',
-
+  inviteURL: "api/v1/vendor_request/",
+  inviteResponseURL: "api/v1/vendor_registration/"
 };
 
 /*

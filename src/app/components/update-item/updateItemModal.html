@@ -1,135 +1,85 @@
 <h1 mat-dialog-title>Update the Product</h1>
 <div mat-dialog-content>
-  <p>Update Form</p>
-  <!-- <form class="example-form" [formGroup]="itemForm" (ngSubmit)="addItem()">
-    <div class="category-container">
-      <mat-form-field *ngIf="!isAddCategory">
-        <mat-label>Category</mat-label>
-        <mat-select formControlName="categorySelected">
-          <mat-option *ngFor="let category of categories" [value]="category">
-            {{category}}
-          </mat-option>
-        </mat-select>
-        <mat-error> Category is <strong>required</strong> </mat-error>
-      </mat-form-field>
-      <div class="add-category-container" *ngIf="isAddCategory">
+  <form [formGroup]="itemForm">
+    <div class="name-container">
+      <div class="">
         <mat-form-field class="example-full-width">
-          <mat-label>New Category</mat-label>
-          <input
-            matInput
-            formControlName="categorySelected"
-            placeholder="Enter new Category"
-          />
-          <mat-error> Category is <strong>required</strong> </mat-error>
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" placeholder="Enter Name" />
+          <mat-error> Name is <strong>required</strong> </mat-error>
         </mat-form-field>
       </div>
-      <button mat-raised-button (click)="addCategory()">
-        <mat-icon aria-hidden="false" aria-label="Example home icon"
-          >{{isAddCategory == true ? 'remove':'add'}}</mat-icon
-        >
-      </button>
     </div>
-    <div class="subcategory-container">
-      <mat-form-field *ngIf="!isAddSubCategory">
-        <mat-label>Sub-category</mat-label>
-        <mat-select formControlName="subCategorySelected">
-          <mat-option
-            *ngFor="let sub of sub_categories[itemForm.controls.categorySelected.value]"
-            [value]="sub"
-          >
-            {{sub}}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="itemForm.controls.subCategorySelected.errors">
-          Sub-category is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-      <div class="add-sub-category-container" *ngIf="isAddSubCategory">
-        <mat-form-field class="example-full-width">
-          <mat-label>New Sub-category</mat-label>
-          <input
-            matInput
-            placeholder="Enter new Sub-category"
-            formControlName="subCategorySelected"
-          />
-          <mat-error *ngIf="itemForm.controls.subCategorySelected.errors">
-            Sub-category is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
+
+    <div class="variant-container row" formArrayName="variant_details">
+      <div class="row col-12 justify-content-center">
+        <p class="col-6">Variants</p>
+        <div class="col-6">
+          <button mat-raised-button (click)="addVariant()">
+            <mat-icon aria-hidden="false" aria-label="Example home icon">
+              add
+            </mat-icon>
+          </button>
+        </div>
       </div>
-      <button mat-raised-button (click)="addSubCategory()">
-        <mat-icon aria-hidden="false" aria-label="Example home icon"
-          >{{isAddSubCategory == true ? 'remove':'add'}}</mat-icon
+      <div class="row col-12">
+        <div
+          class="col-12"
+          *ngFor="let v of allVariants.controls; let i = index"
         >
-      </button>
-    </div>
-    <div class="brand-container">
-      <mat-form-field *ngIf="!isAddBrand">
-        <mat-label>Brand</mat-label>
-        <mat-select formControlName="brandSelected">
-          <mat-option
-            *ngFor="let brand of brands[itemForm.controls.subCategorySelected.value]"
-            [value]="brand"
+          <table
+            class="example-full-width col-12"
+            cellspacing="0"
+            [formGroupName]="i"
           >
-            {{brand}}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="itemForm.controls.brandSelected.errors">
-          Brand is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-      <div class="add-brand-container" *ngIf="isAddBrand">
-        <mat-form-field class="example-full-width">
-          <mat-label>New Brand</mat-label>
-          <input
-            matInput
-            placeholder="Enter new Brand"
-            formControlName="brandSelected"
-          />
-          <mat-error *ngIf="itemForm.controls.brandSelected.errors">
-            Brand is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
+            <tr>
+              <td>
+                <mat-form-field class="example-full-width">
+                  <mat-label>Variants</mat-label>
+                  <input
+                    matInput
+                    formControlName="variant"
+                    placeholder="Enter Variant"
+                  />
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field class="example-full-width">
+                  <mat-label>Quantity</mat-label>
+                  <input
+                    matInput
+                    formControlName="quantity"
+                    placeholder="Enter Quantity"
+                  />
+                </mat-form-field>
+              </td>
+              <td>
+                <button
+                  mat-icon-button
+                  color="primary"
+                  aria-label="Example icon-button with delete icon"
+                  (click)="removeVariant(i)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </table>
+        </div>
       </div>
-      <button mat-raised-button (click)="addBrand()">
-        <mat-icon aria-hidden="false" aria-label="Example home icon"
-          >{{isAddBrand == true ? 'remove':'add'}}</mat-icon
-        >
-      </button>
     </div>
-    <div class="quantity-container">
-      <mat-form-field>
-        <mat-label>Quantity Type</mat-label>
-        <mat-select formControlName="quantitySelected">
-          <mat-option
-            *ngFor="let quantity of quantity_types"
-            [value]="quantity"
-          >
-            {{quantity}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div class="variant-container">
-      <mat-form-field>
-        <mat-label>Variants</mat-label>
-        <mat-select formControlName="variantSelected">
-          <mat-option
-            *ngFor="let variant of variants[quantitySelected]"
-            [value]="variant"
-          >
-            {{variant}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
+
     <div class="description-container">
       <mat-form-field class="example-full-width">
         <mat-label>Details</mat-label>
-        <textarea matInput placeholder="Description of Item"></textarea>
+        <textarea
+          formControlName="details"
+          matInput
+          placeholder="Description of Item"
+        ></textarea>
       </mat-form-field>
     </div>
-  </form> -->
+  </form>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancel</button>

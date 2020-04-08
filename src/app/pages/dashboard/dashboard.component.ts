@@ -27,8 +27,12 @@ export class DashboardComponent implements OnInit {
       this.isSidePanelExpanded = res;
     });
 
-    this.retailerService.getAllRetailers().subscribe((result) => {
-      console.log("AAA", result.body);
+    // this.retailerService.getAllRetailers().subscribe((result) => {
+    //   console.log("AAA", result.body);
+    //   this.inviteRequests = result.body;
+    // });
+
+    this.retailerService.getAllInvitationRequests().subscribe((result) => {
       this.inviteRequests = result.body;
     });
   }

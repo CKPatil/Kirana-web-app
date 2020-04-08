@@ -4,7 +4,13 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from "@angular/material/dialog";
-import { FormControl, Validators, FormGroup } from "@angular/forms";
+import {
+  FormControl,
+  Validators,
+  FormGroup,
+  FormBuilder,
+  FormArray,
+} from "@angular/forms";
 
 @Component({
   selector: "app-update-item",
@@ -35,22 +41,59 @@ export class UpdateItemComponent implements OnInit {
   templateUrl: "./updateItemModal.html",
 })
 export class UpdateItemModal {
-  itemForm = new FormGroup({
-    categorySelected: new FormControl(null, Validators.required),
-    subCategorySelected: new FormControl(null, Validators.required),
-    brandSelected: new FormControl(null, Validators.required),
-    quantitySelected: new FormControl(),
-    variantSelected: new FormControl(),
+  itemForm = this.fb.group({
+    name: ["", Validators.required],
+    variant_details: this.fb.array([
+      // this.fb.group({
+      //   // p_id: '',
+      //   variant: "",
+      //   quantity: "",
+      // }),
+    ]),
+    details: ["", Validators.required],
   });
-
   constructor(
     public dialogRef: MatDialogRef<UpdateItemModal>,
-    @Inject(MAT_DIALOG_DATA) public data
+    @Inject(MAT_DIALOG_DATA) public data,
+    private fb: FormBuilder
   ) {
     console.log(this.data);
+
+    let newVariant = []
+    this.data.variant_details.map(val=>{
+      this.addVariant()
+      newVariant.push({variant: val.variant, quantity: val.quantity})
+    })
+
+    let newData = {}
+    newData['name'] = this.data.name
+    newData['details'] = this.data.details
+    newData['variant_details'] = newVariant
+
+    this.itemForm.patchValue(newData)
   }
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  get allVariants() {
+    return this.itemForm.get("variant_details") as FormArray;
+  }
+
+  addVariant() {
+    const varient = this.itemForm.controls.variant_details as FormArray;
+    varient.push(
+      this.fb.group({
+        variant: "",
+        quantity: "",
+      })
+    );
+  }
+
+  removeVariant(i) {
+    console.log(i);
+    const varient = this.itemForm.controls.variant_details as FormArray;
+    varient.removeAt(i);
   }
 }

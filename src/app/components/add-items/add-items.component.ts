@@ -38,7 +38,8 @@ export class AddItemsComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogAddItemComponent, {
-      width: "350px",
+      width: "90%",
+      maxWidth: "500px",
       data: this.productData,
     });
 
@@ -94,10 +95,10 @@ export class DialogAddItemComponent {
     brand: ["", Validators.required],
     quantity_type: ["", Validators.required],
     variant_details: this.fb.array([
-      // {
-      //   variant: "",
-      //   quantity: "",
-      // },
+      this.fb.group({
+        variant: "",
+        quantity: "",
+      })
     ]),
     details: ["", Validators.required],
   });
@@ -158,6 +159,12 @@ export class DialogAddItemComponent {
         quantity: "",
       })
     );
+  }
+
+  removeVariant(i) {
+    console.log(i);
+    const varient = this.itemForm.controls.variant_details as FormArray;
+    varient.removeAt(i);
   }
 
   addItem() {}

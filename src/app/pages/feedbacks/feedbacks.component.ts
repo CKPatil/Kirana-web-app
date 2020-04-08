@@ -15,7 +15,7 @@ export class FeedbacksComponent implements OnInit {
   feedbacks = [
     {
       name: 'Pranav',
-      stars: '4',
+      stars: '3.5',
       date: '21/02/2020',
       description: 'Very good and on time delivery. Very much satisfied with the pricing as well.'
     },

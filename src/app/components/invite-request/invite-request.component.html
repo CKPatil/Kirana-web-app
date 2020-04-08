@@ -1,7 +1,7 @@
 <div class="invite-request-container">
   <div class="info">
-    <h6><b>Pranav</b></h6>
-    <h6>pranavpace97@gmail.com</h6>
+    <h6><b>{{inviteRequest.name}}</b></h6>
+    <h6>{{inviteRequest.email}}</h6>
   </div>
   <div class="more-option">
     <button
@@ -12,7 +12,7 @@
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item>
+      <button mat-menu-item (click)="approveInviteRequest()">
         <mat-icon>done</mat-icon>
         <span>Accept invite</span>
       </button>

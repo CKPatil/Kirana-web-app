@@ -1,19 +1,30 @@
 <mat-card class="feedback-mat-card">
-    <div class="feedback-top-container">
-        <div class="user-details-container">
-            <i class="fa fa-user-circle"></i>
-            <h5>{{feedback.name}}</h5>
-        </div>
-        <div class="date-of-feedback-container">
-            <h6>{{feedback.date}}</h6>
-        </div>
+  <div class="feedback-top-container">
+    <div class="user-details-container">
+      <i class="fa fa-user-circle"></i>
+      <h5>{{ feedback.name }}</h5>
     </div>
-    <star-rating value="5" totalstars="10" checkedcolor="red" size="15px" uncheckedcolor="black" readonly="true" (rate)="onRate($event)"></star-rating>
+    <div class="star-ratings-css">
+      <div
+        class="star-ratings-css-top"
+        [style]="{ width: feedback.stars * 20 + '%' }"
+      >
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+      </div>
+      <div class="star-ratings-css-bottom">
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+      </div>
+    </div>
+    <div class="date-of-feedback-container">
+      <h6>{{ feedback.date }}</h6>
+    </div>
+  </div>
+  <!-- <star-rating value="5" totalstars="10" checkedcolor="red" size="15px" uncheckedcolor="black" readonly="true" (rate)="onRate($event)"></star-rating> -->
 
-    <!-- <star-rating-comp [starType]="'svg'" [rating]="2.63"></star-rating-comp> -->
-    <div class="feedback-description">
-        <p>
-            {{feedback.description}}
-        </p>
-    </div>
+  <!-- <star-rating-comp [starType]="'svg'" [rating]="2.63"></star-rating-comp> -->
+  <div class="feedback-description">
+    <p>
+      {{ feedback.description }}
+    </p>
+  </div>
 </mat-card>
