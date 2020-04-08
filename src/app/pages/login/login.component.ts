@@ -339,8 +339,14 @@ export class UpdatePasswordComponent implements OnInit{
   
   ngOnInit(){
     this.form=this.formBuilder.group({
-      pass: ''
-    })
+      pass: ['',[Validators.required,Validators.minLength(8)]],
+      confirmPass: ['',[Validators.required,Validators.minLength(8)]]
+    },{validator:this.checkPasswordValidity});
+  }
+
+  checkPasswordValidity(p: FormGroup){
+    return p.get('password').value === p.get('passwordConfirm').value
+       ? null : {'mismatch': true};
   }
 
   submit(form){
