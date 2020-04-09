@@ -15,6 +15,7 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { EventEmitter } from '@angular/core';
+import { OldPwdValidators } from './olPwdvalidator.component';
 
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -196,6 +197,13 @@ export class LoginComponent implements OnInit {
             this.updateDialogRef=this.dialog.open(UpdatePasswordComponent,{
               width: '500px',height: '500px'
             });
+            this.updateDialogRef.afterClosed().subscribe(data=>{
+              this.resetPassword.password=data;
+              console.log(this.resetPassword);
+              this.authService.updatePassword(this.resetPassword,'').subscribe(res=>{
+                console.log(res.body);              
+              })
+            });
           }
         });
         this.otpDialogRef.afterClosed().subscribe(result => {
@@ -335,13 +343,25 @@ export class UpdatePasswordComponent implements OnInit{
     public formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<UpdatePasswordComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
-  ){}
+  ){
+    this.form = formBuilder.group({
+      newPwd: ['', Validators.required],
+      confirmPwd: ['', Validators.required]
+    }, {
+      validator: OldPwdValidators.matchPwds
+    });
+  }
   
   ngOnInit(){
-    this.form=this.formBuilder.group({
-      pass: ['',[Validators.required,Validators.minLength(8)]],
-      confirmPass: ['',[Validators.required,Validators.minLength(8)]]
-    },{validator:this.checkPasswordValidity});
+
+  }
+
+   get newPwd() {
+    return this.form.get('newPwd');
+  }
+
+   get confirmPwd() {
+    return this.form.get('confirmPwd');
   }
 
   checkPasswordValidity(p: FormGroup){
@@ -350,6 +370,6 @@ export class UpdatePasswordComponent implements OnInit{
   }
 
   submit(form){
-    this.dialogRef.close(`${form.value.pass}`);
+    this.dialogRef.close(`${form.value.newPwd}`);
   }
 }

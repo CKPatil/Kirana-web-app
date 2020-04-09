@@ -93,6 +93,21 @@ export class AuthService {
       );
   }
 
+  updatePassword(data,param){
+    const url = environment.backend_end_point + environment.updatePassword+param;
+    
+    return this.http
+      .post(url, JSON.stringify(data), {
+        headers: this.httpOptions,
+        observe: 'response'
+      })
+      .pipe(
+        catchError(error => {
+          return throwError(error);
+        })
+      );
+  }
+
   // resetPassword(data, token) {
   //   var url = environment.api_Base_URL + environment.resetPassword;
   //   var body = JSON.stringify(data);
