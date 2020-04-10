@@ -137,7 +137,8 @@ export class TransactionsComponent implements OnInit, OnChanges {
   }
   openDialog(){
     this.statusDialogRef=this.dialog.open(StatusChangeComponent,{
-      width: '1000px',height: '200px'
+      width: '1000px',height: '200px',
+      data:{}
     });
 
     this.statusDialogRef.afterClosed().subscribe(result=>{
@@ -159,7 +160,7 @@ export class TransactionsComponent implements OnInit, OnChanges {
 export class StatusChangeComponent implements OnInit{
 
   form: FormGroup;
-  constructor(private formBuilder: FormBuilder,private dialogRef: MatDialogRef<StatusChangeComponent>){
+  constructor(private formBuilder: FormBuilder,private dialogRef: MatDialogRef<StatusChangeComponent>,@Inject(MAT_DIALOG_DATA) data:any){
     
   }
   ngOnInit(){

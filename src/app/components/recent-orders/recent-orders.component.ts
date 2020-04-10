@@ -50,6 +50,9 @@ export class RecentOrdersComponent implements OnInit {
     {value: Status.ORDERED, viewValue: Status.ORDERED},
     {value: Status.PACKED, viewValue: Status.PACKED}
   ];
+  deliveryTime:any;
+  timeDiff:any;
+  currentTime:any;
 
   constructor(private interaction: InteractionService, public dialog: MatDialog,private transactionService: TransactionService) {
     this.isSidePanelExpanded = this.interaction.getExpandedStatus();
@@ -59,36 +62,49 @@ export class RecentOrdersComponent implements OnInit {
     this.interaction.expandedStatus$.subscribe( (res) => {
       this.isSidePanelExpanded = res;
     });
-
+    this.currentTime=new Date();
+    
     console.log(this.orderStatus);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.transactionService.buildURLS("?order=listall");
+    this.transactionService.buildURLS("");
     this.transactionService.getAllOrders().subscribe((res) => {
       console.log(res);
       console.log("allTransactions")
       this.allTransactions = res.body;
+      this.allTransactions.forEach(element => {
+        element.timestamp=new Date(element.timestamp);
+        this.deliveryTime=new Date(element.timestamp.getTime()+(2*60*60*1000));
+        console.log(element.timestamp);
+        console.log(this.deliveryTime);
+        this.timeDiff=this.deliveryTime-this.currentTime;
+        this.timeDiff=(((this.timeDiff/1000)/60)/60);
+        element.remaining_time=this.timeDiff;
+        console.log(this.timeDiff);
+      });
       console.log(this.allTransactions);
     });
-    this.transactionService.buildURLS("?order=delivered");
-    this.transactionService.getAllOrders().subscribe((res) => {
-      console.log("allOrders");
-      this.allOrders = res.body;
-      console.log(this.allOrders);
-    });
-    this.transactionService.buildURLS("?order=cancelled");
-    this.transactionService.getAllOrders().subscribe((res) => {
-      console.log("cancelledOrders");
-      this.cancelledOrders = res.body;
-      console.log(this.cancelledOrders);
-    });
+
+    // this.transactionService.buildURLS("?order=delivered");
+    // this.transactionService.getAllOrders().subscribe((res) => {
+    //   console.log("allOrders");
+    //   this.allOrders = res.body;
+    //   console.log(this.allOrders);
+    // });
+    // this.transactionService.buildURLS("?order=cancelled");
+    // this.transactionService.getAllOrders().subscribe((res) => {
+    //   console.log("cancelledOrders");
+    //   this.cancelledOrders = res.body;
+    //   console.log(this.cancelledOrders);
+    // });
   }
   getOrders(){
 
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if(filterValue)
+      this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   onStatusChange(event: any,row: any) {
     this.openDialog(event.value,row);
@@ -104,6 +120,8 @@ export class RecentOrdersComponent implements OnInit {
         return 2;break;
       case 'Cancelled' :
         return 4;break;
+      case 'Ordered' :
+        return 0;break;
     }
   }
 
@@ -121,7 +139,7 @@ export class RecentOrdersComponent implements OnInit {
           console.log(res);
         })
       } else {
-
+        dialogRef.close();
       }
     });
   }

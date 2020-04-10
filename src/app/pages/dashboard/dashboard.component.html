@@ -14,13 +14,12 @@
           <mat-card>
             <h5><b>Packed Orders</b></h5>
             <app-recent-orders [orderStatus]="orderStatus"></app-recent-orders>
-            
         </mat-card>
         </div>
         <div class="urgent-orders-container">
           <mat-card>
             <h5><b>Critical Orders</b></h5>
-            <app-recent-orders [orderStatus]=""></app-recent-orders>
+            <app-recent-orders [orderStatus]="'Dispatched'"></app-recent-orders>
         </mat-card>
         </div>
       </div>
@@ -28,7 +27,7 @@
         <div class="recent-orders-container">
           <mat-card>
             <h5><b>Recent Orders</b></h5>
-            <app-recent-orders [orderStatus]=""></app-recent-orders>
+            <app-recent-orders [orderStatus]="'Ordered'"></app-recent-orders>
             <!-- <app-recent-orders></app-recent-orders> -->
         </mat-card>
         </div>

@@ -24,7 +24,7 @@ export class TransactionService {
   }
 
   getAllOrders() {
-    console.log();
+    console.log(this.httpOptions);
     return this.http.get(this.getAllTransactionsURL,  {
       headers: this.httpOptions,
       observe: 'response'
@@ -38,13 +38,14 @@ export class TransactionService {
 
   fetchUpdateOrderStatusURL(id: number, status: number){
     this.getUpdateOrderStatusURL = environment.backend_end_point + environment.updateStatusURL + '?order_id=' + id + '&status=' + status;
-
+    debugger;
   }
 
   updateOrderStatus(id: number, status: number){
     this.fetchUpdateOrderStatusURL(id,status);
+    console.log(this.httpOptions);
     debugger;
-    return this.http.put(this.getUpdateOrderStatusURL,{ 
+    return this.http.put(this.getUpdateOrderStatusURL,{},{ 
       headers: this.httpOptions,
       observe: 'response'
     })
