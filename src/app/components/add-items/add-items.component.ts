@@ -50,9 +50,11 @@ export class AddItemsComponent implements OnInit {
         let variant_details = result.variant_details;
         result["variants"] = [];
         result["quantites"] = [];
+        result['price'] = []
         variant_details.forEach((val) => {
           result["variants"].push(val.variant);
-          result["quantites"].push(val.quantity);
+          result["quantites"].push(parseInt(val.quantity));
+          result["price"].push(parseInt(val.price));
         });
         delete result.variant_details;
         console.log(result);
@@ -100,6 +102,7 @@ export class DialogAddItemComponent {
       this.fb.group({
         variant: "",
         quantity: "",
+        price:''
       }),
     ]),
     details: ["", Validators.required],
@@ -159,6 +162,7 @@ export class DialogAddItemComponent {
       this.fb.group({
         variant: "",
         quantity: "",
+        price: ''
       })
     );
   }

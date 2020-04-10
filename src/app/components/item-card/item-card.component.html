@@ -45,8 +45,11 @@
         <h5>Variety:</h5>
         <ul>
           <li *ngFor="let variety of item.variant_details">
-            <span
-              >{{ variety.variant }} :: Quantity : {{ variety.quantity }}</span
+            <span>
+              {{ variety.variant }} ::
+              Quantity : {{ variety.quantity }} ::
+              Price : {{variety.price || ''}}
+              </span
             >
           </li>
         </ul>
