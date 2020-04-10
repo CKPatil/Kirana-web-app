@@ -19,10 +19,15 @@ export class InviteRequestComponent implements OnInit {
 
   approveInviteRequest() {
     let data = { requestId: this.inviteRequest.id, approved: true };
-    // console.log(this.inviteRequest);
     this.retailerService.inviteRequestResponse(data).subscribe((result) => {
-      console.log("A", result);
       alert("Request Approved");
+    });
+  }
+
+  rejectInviteRequest() {
+    let data = { requestId: this.inviteRequest.id, approved: false };
+    this.retailerService.inviteRequestResponse(data).subscribe((result) => {
+      alert("Request Rejected");
     });
   }
 
@@ -33,8 +38,6 @@ export class InviteRequestComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log("The dialog was closed");
-      console.log(result);
       if (result) {
         this.approveInviteRequest();
       }
@@ -50,9 +53,7 @@ export class ShowInviteDetailModal {
   constructor(
     public dialogRef: MatDialogRef<ShowInviteDetailModal>,
     @Inject(MAT_DIALOG_DATA) public data
-  ) {
-    console.log(this.data);
-  }
+  ) {}
 
   onNoClick(): void {
     this.dialogRef.close();
