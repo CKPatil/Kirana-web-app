@@ -78,7 +78,7 @@ export class RecentOrdersComponent implements OnInit {
         console.log(element.timestamp);
         console.log(this.deliveryTime);
         this.timeDiff=this.deliveryTime-this.currentTime;
-        this.timeDiff=(((this.timeDiff/1000)/60)/60);
+        this.timeDiff=(((this.timeDiff/1000)/60)/60);        
         element.remaining_time=this.timeDiff;
         console.log(this.timeDiff);
       });

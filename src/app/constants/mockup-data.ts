@@ -117,23 +117,23 @@ export const transactions = [
 export const analytics = [
     {
         name: 'Critical',
-        count: 60
+        count: 0
     },
     {
         name: 'Ordered',
-        count: 16
+        count: 0
     },
     {
         name: 'Packed',
-        count: 43
+        count: 0
     },
     {
         name: 'Delivered',
-        count: 64
+        count: 0
     },
     {
         name: 'Clients',
-        count: 20
+        count: 0
     },
 ];
 
