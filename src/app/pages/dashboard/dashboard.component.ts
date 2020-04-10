@@ -5,7 +5,6 @@ import { TransactionService } from './../../services/transaction.service';
 import { RetailerService } from './../../services/retailer.service';
 
 import { EmptyError } from 'rxjs';
-import { ENGINE_METHOD_NONE } from 'constants';
 
 
 @Component({
@@ -26,14 +25,7 @@ export class DashboardComponent implements OnInit {
   orderTime=[];
   timeDiff:any;
   deliveryTime:any;
-  Ordered=0;
-  packedCount=0;
-  dispatchedCount=0;
-  deliveredCount=0;
-  cancelledCount=0;
-  criticalCount=0;
   allRetailers:any;
-  retailerCount=0;
 
   constructor(private interaction: InteractionService,private transactionService: TransactionService,private retailerService: RetailerService) {
     this.isSidePanelExpanded = this.interaction.getExpandedStatus();
@@ -57,12 +49,8 @@ export class DashboardComponent implements OnInit {
           this.analytics[1].count++;
         }else if(element.status=="Packed"){
           this.analytics[2].count++;
-        }else if(element.status=="Dispatched"){
-          this.dispatchedCount++
         }else if(element.status=="Delivered"){
           this.analytics[3].count++;
-        }else if(element.status=="Cancelled"){
-          this.cancelledCount++;
         }else if(element.remaining_time<0){
           this.analytics[0].count++;
         }
