@@ -1,0 +1,76 @@
+<div class="outer">
+  <h3>Notifications</h3>
+  <mat-accordion multi='true'>
+    <div *ngIf="newOrderStatus =='true'">
+      <mat-expansion-panel
+        (opened)="panelOpenState = true"
+        (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+          New Order
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div *ngFor="let newNotification of newOrderFilter" >
+          <div class="innerdiv">
+          <h5 >New Critical Order for {{newNotification.ShopName}}</h5>
+          <p class="od">Date: {{newNotification.OrderDate}}</p>
+          </div>
+          <div class="innerdiv">
+          <small>OrderID: {{newNotification.OrderID}}</small>
+          <p class="od">Time: {{newNotification.Time}}</p>
+          </div>
+          <p>Customer Name: {{newNotification.CustomerName}}</p>
+          <p> Customer Address: {{newNotification.CustomerLocation}}</p>
+          <hr>
+        </div>
+      </mat-expansion-panel>
+    </div>
+    <div *ngIf="cancelOrderStatus =='true'">
+      <mat-expansion-panel (opened)="panelOpenState = true"
+                         (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Cancelled Order
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+          <div *ngFor="let cancelledNotification of cancelOrderFilter" >
+            <div class="innerdiv">
+              <h5>New Cancelled Order for {{cancelledNotification.ShopName}}</h5>
+              <p class="od">Date: {{cancelledNotification.OrderDate}}</p>
+            </div>
+            <div class="innerdiv">
+              <small>OrderID: {{cancelledNotification.OrderID}}</small>
+              <p class="od">Time: {{cancelledNotification.Time}}</p>
+            </div>
+           <p>Customer Name: {{cancelledNotification.CustomerName}}</p>
+            <p> Customer Address: {{cancelledNotification.CustomerLocation}}</p>
+            <hr>
+          </div>
+      </mat-expansion-panel>
+    </div>
+    <div *ngIf="criticalOrderStatus =='true'">
+      <mat-expansion-panel
+        (opened)="panelOpenState = true"
+        (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Critical Order
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+          <div *ngFor="let criticalNotification of criticalOrderFilter">
+            <div class="innerdiv" style="overflow: hidden;">
+              <h5>New Critical Order for {{criticalNotification.ShopName}}</h5>
+              <p class="od">Date: {{criticalNotification.OrderDate}}</p>
+            </div>
+            <div class="innerdiv" style="overflow: hidden;">
+              <small>OrderID: {{criticalNotification.OrderID}}</small>
+              <p class="od">Time: {{criticalNotification.Time}}</p>
+            </div>
+            <p>Customer Name: {{criticalNotification.CustomerName}}</p>
+            <p> Customer Address: {{criticalNotification.CustomerLocation}}</p>
+            <hr>
+          </div>
+      </mat-expansion-panel>
+    </div>
+  </mat-accordion>
+</div>

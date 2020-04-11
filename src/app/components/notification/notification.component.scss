@@ -3,24 +3,24 @@
   margin-top: 50px;
   margin-left: 50px;
 }
-.example-h2 {
-  margin: 10px;
-  padding-bottom: 1rem;
-}
-
 .example-section {
   display: flex;
   align-content: center;
   align-items: center;
   height: 60px;
-}
-
-.example-margin {
-  margin: 10px;
-  position: absolute;
-  right: 150px;
+  position: relative;
 }
 .toggle{
-  padding-bottom: 50px;
+  position: absolute;
+  right: 10px;
+  top: 5px;
 
+}
+#hov:hover{
+  background-color: #0074d9;
+}
+#hov {
+  margin-left: 330px;
+  margin-top: 2em;
+  background-color: rgb(245, 242, 239);
 }

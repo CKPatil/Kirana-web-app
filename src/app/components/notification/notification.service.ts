@@ -1,25 +1,28 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
-export class SharingService {
-  private storageName = 'Settings';
+export class NotificationService {
+  private newOrderSource = new BehaviorSubject<string>('');
+  newOrderSetting$ = this.newOrderSource.asObservable();
+
+  private criticalOrderSource = new BehaviorSubject<string>('');
+  criticalOrderSetting$ = this.criticalOrderSource.asObservable();
+
+  private cancelOrderSource = new BehaviorSubject<string>('');
+  cancelOrderSetting$ = this.cancelOrderSource.asObservable();
 
   constructor() { }
 
-  setSettings(data: any) {
-    localStorage.setItem(this.storageName, JSON.stringify(data));
+  sendNewOrder(newOrderStatus: string) {
+    this.newOrderSource.next(newOrderStatus);
   }
 
-  getUserSettings() {
-    const data = localStorage.getItem(this.storageName);
-    return JSON.parse(data);
+  sendCriticalOrder(criticalOrderStatus: string) {
+    this.criticalOrderSource.next(criticalOrderStatus);
   }
 
-  clearUserSettings() {
-    localStorage.removeItem(this.storageName);
-  }
-
-  cleanAll() {
-    localStorage.clear();
+  sendCancelOrder(cancelOrderStatus: string) {
+    this.cancelOrderSource.next(cancelOrderStatus);
   }
 }

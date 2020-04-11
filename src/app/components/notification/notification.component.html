@@ -1,8 +1,5 @@
-<div class="container">
-  <mat-card class="result">
-    <mat-card-content>
-      <h2 class="example-h2">Notifications Setting</h2>
-
+<div mat-dialog-content>
+  <h2 class="example-h2">Notifications Setting</h2>
       <section class="example-section">
         <div>
           <h4>New Order</h4>
@@ -45,6 +42,7 @@
           </mat-slide-toggle>
         </div>
       </section>
-    </mat-card-content>
-  </mat-card>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button id="hov" (click)="onNoClick()">CLOSE</button>
 </div>

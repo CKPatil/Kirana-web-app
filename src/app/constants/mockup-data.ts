@@ -92,3 +92,106 @@ export const Items = [
         price: '1$'
     },
 ];
+
+export const NewOrderNotification = [
+      {
+        OrderID: '1333632',
+        OrderDate: '7/4/2020',
+        Time: '08:45:25',
+        ShopName: 'Kirana Shop 1',
+        CustomerName: 'Pranav',
+        CustomerLocation: 'XYZ',
+      },
+      {
+        OrderID: '1333632',
+        OrderDate: '20/12/2020',
+        Time: '08:45:25',
+        ShopName: 'Kirana Shop 2',
+        CustomerName: 'Chetan',
+        CustomerLocation: 'XYZ',
+      },
+      {
+        OrderID: '1333632',
+        OrderDate: '20/12/2020',
+        Time: '08:45:25',
+        ShopName: 'Kirana Shop 3',
+        CustomerName: 'Sumanth',
+        CustomerLocation: 'XYZ',
+      },
+      {
+        OrderID: '1333632',
+        OrderDate: '20/12/2020',
+        Time: '08:45:25',
+        ShopName: 'Kirana Shop 4 ',
+        CustomerName: 'Athreya',
+        CustomerLocation: 'XYZ',
+      }
+];
+export const CriticalOrderNotification = [
+  {
+    OrderID: '1333632',
+    OrderDate: '20/12/2020',
+    Time: '08:45:25',
+    ShopName: 'Kirana Shop 1',
+    CustomerName: 'Pranav',
+    CustomerLocation: 'XYZ',
+  },
+  {
+    OrderID: '1333632',
+    OrderDate: '20/12/2020',
+    Time: '08:45:25',
+    ShopName: 'Kirana Shop 2',
+    CustomerName: 'Chetan',
+    CustomerLocation: 'XYZ',
+  },
+  {
+    OrderID: '1333632',
+    OrderDate: '20/12/2020',
+    Time: '08:45:25',
+    ShopName: 'Kirana Shop 3',
+    CustomerName: 'Sumanth',
+    CustomerLocation: 'XYZ',
+  },
+  {
+    OrderID: '1333632',
+    OrderDate: '20/12/2020',
+    Time: '08:45:25',
+    ShopName: 'Kirana Shop 4 ',
+    CustomerName: 'Athreya',
+    CustomerLocation: 'XYZ',
+  }
+];
+export const CancelledOrderNotification = [
+  {
+    OrderID: '1333632',
+    OrderDate: '20/12/2020',
+    Time: '08:45:25',
+    ShopName: 'Kirana Shop 1',
+    CustomerName: 'Pranav',
+    CustomerLocation: 'XYZ',
+  },
+  {
+    OrderID: '1333632',
+    OrderDate: '20/12/2020',
+    Time: '08:45:25',
+    ShopName: 'Kirana Shop 2',
+    CustomerName: 'Chetan',
+    CustomerLocation: 'XYZ',
+  },
+  {
+    OrderID: '1333632',
+    OrderDate: '20/12/2020',
+    Time: '08:45:25',
+    ShopName: 'Kirana Shop 3',
+    CustomerName: 'Sumanth',
+    CustomerLocation: 'XYZ',
+  },
+  {
+    OrderID: '1333632',
+    OrderDate: '7/4/2020',
+    Time: '08:45:25',
+    ShopName: 'Kirana Shop 4 ',
+    CustomerName: 'Athreya',
+    CustomerLocation: 'XYZ',
+  }
+];

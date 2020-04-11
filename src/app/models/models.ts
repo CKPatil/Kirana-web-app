@@ -68,3 +68,31 @@ export class Transactions {
   customer_name: string;
   customer_phone: number;
   }
+export class ResetPassword {
+  public old_password: any;
+  public new_password: any;
+}
+
+export class Notifications {
+  OrderID: string;
+  OrderDate: string;
+  Time: string;
+  ShopName: string;
+  CustomerName: string;
+  CustomerLocation: string;
+}
+export class _Items  {
+  name: string;
+  category: string;
+  sub_category: string;
+  brand: string;
+  variant_details: variants_details[];
+  quantity_type: string;
+  details: string;
+}
+class variants_details {
+  p_id: number;
+  variant: string;
+  quantity: string;
+
+}
