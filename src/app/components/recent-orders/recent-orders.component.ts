@@ -53,6 +53,9 @@ export class RecentOrdersComponent implements OnInit {
   deliveryTime:any;
   timeDiff:any;
   currentTime:any;
+  timeDiffMins:any;
+  timeDiffHours:any;
+  
 
   constructor(private interaction: InteractionService, public dialog: MatDialog,private transactionService: TransactionService) {
     this.isSidePanelExpanded = this.interaction.getExpandedStatus();
@@ -78,9 +81,11 @@ export class RecentOrdersComponent implements OnInit {
         console.log(element.timestamp);
         console.log(this.deliveryTime);
         this.timeDiff=this.deliveryTime-this.currentTime;
-        this.timeDiff=(((this.timeDiff/1000)/60)/60);        
-        element.remaining_time=this.timeDiff;
-        console.log(this.timeDiff);
+        this.timeDiffMins=(((this.timeDiff/1000)/60));
+        this.timeDiffHours=this.timeDiffMins/60;
+        this.timeDiffMins=this.timeDiff%60;        
+        element.remaining_time=this.timeDiffHours.toFixed(0)+" hours "+this.timeDiffMins+" mins";
+        console.log(element.remaining_time);
       });
       console.log(this.allTransactions);
     });
