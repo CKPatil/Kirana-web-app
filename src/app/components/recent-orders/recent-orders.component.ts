@@ -7,7 +7,6 @@ import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog} from '@angular/material/dialog';
-import { TransactionService } from './../../services/transaction.service';
 
 export interface Order {
   consumer: string;
@@ -37,7 +36,6 @@ export class RecentOrdersComponent implements OnInit {
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  allTransactions: any;
 
   selectedValue: string;
   status: StatusMenu[] = [
@@ -48,21 +46,16 @@ export class RecentOrdersComponent implements OnInit {
     {value: Status.PACKED, viewValue: Status.PACKED}
   ];
 
-  constructor(private interaction: InteractionService, public dialog: MatDialog,private transactionService: TransactionService) {
+  constructor(private interaction: InteractionService, public dialog: MatDialog) {
     this.isSidePanelExpanded = this.interaction.getExpandedStatus();
   }
 
-  ngOnInit() {  
+  ngOnInit() {
     this.interaction.expandedStatus$.subscribe( (res) => {
       this.isSidePanelExpanded = res;
     });
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.transactionService.getAllOrders().subscribe((res) => {
-      console.log(res);
-      this.allTransactions = res.body;
-      console.log(this.allTransactions);
-    });
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

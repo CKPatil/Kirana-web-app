@@ -1,107 +1,82 @@
-
-import { OnChanges } from '@angular/core';
-// import { Component, OnInit } from '@angular/core';
-// import { InteractionService } from 'src/app/services/interaction.service';
-
-import {
-  Component,
-  OnInit,
-  AfterContentChecked
-} from '@angular/core';
-import {
-  InteractionService
-} from 'src/app/services/interaction.service';
-import {
-  TransactionService
-} from 'src/app/services/transaction.service';
+import { Component, OnInit } from '@angular/core';
+import { InteractionService } from 'src/app/services/interaction.service';
+import { TransactionService } from 'src/app/services/transaction.service';
 import { FormGroup, FormControl } from '@angular/forms';
-import { formatDate } from '@angular/common';
-import { MatDatepickerInputEvent } from '@angular/material';
-import { SharedService } from "../../services/shared.service";
+import { formatDate, DatePipe } from '@angular/common';
+import { MatDatepickerInputEvent, MatDatepicker } from '@angular/material';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { PageEvent, MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-transactions',
   templateUrl: './transactions.component.html',
-  styleUrls: ['./transactions.component.scss']
+  styleUrls: ['./transactions.component.scss'],
 })
-export class TransactionsComponent implements OnInit, OnChanges {
+export class TransactionsComponent implements OnInit {
+  pageSize = 25;
+  pageSizeOptions: number[] = [25, 50, 100];
+  notEmptyPost = true;
+  notscrolly = true;
 
-  searchRetail:any;
-  searchStatus:any;
-  searchDate1:any;
-  searchDate:any;
+  searchDate: any;
+
   taskTotal = 10;
   taskRemaining = 0;
-  retailers = [
-    {
-      value: 'retailer-1',
-      viewValue: 'Pranav'
-    },
-    {
-      value: 'retailer-2',
-      viewValue: 'Vijay'
-    },
-    {
-      value: 'retailer-3',
-      viewValue: 'Rebecca'
-    }
-  ];
+  retailers = [];
   status = [
-    {
-      value: 'status-1',
-      viewValue: 'Delivered'
-    },
-    {
-      value: 'status-2',
-      viewValue: 'Ordered'
-    },
-    {
-      value: 'status-3',
-      viewValue: 'Packed'
-    },
-    {
-      value: 'status-4',
-      viewValue: 'Cancelled'
-    },
-    {
-      value: 'status-5',
-      viewValue: 'Dispatched'
-    }
+    'Delivered',
+    'Ordered',
+    'Packed',
+    'Cancelled',
+    'Dispatched',
+    'Payment Failure',
   ];
-  today = Date.now();
-  daysOfTheWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  dateNumber = 0;
 
+  today = Date.now();
+  model: any = {};
   filters: string[];
   isSidePanelExpanded: boolean;
-  // tslint:disable-next-line: max-line-length
-  allTransactions: {
-    Consumer: {
-      Name: string;
-      Area: string; 
-    }; 
-    Retailer: {
-      Name: string; 
-      Area: string;
-    };
-    OrderDetails: {
-      OrderDate: string; 
-      ItemsPurchased: {
-        ItemName: string; 
-        ItemPrice: number; 
-        Quantity: number;
-      } []; 
-      TotalPrice: number;
-    };
-    Status: string;
-  } [];
-  comp1val: string;
-  comp2val: string;
+  allTransaction: any = [];
+  dup: [];
+  removeDuplicate: string[] = [];
+  temp = '';
 
-  constructor(private interaction: InteractionService, private transaction: TransactionService,private sharedService: SharedService) {
+  retailerControl = new FormControl();
+  statusControl = new FormControl();
+  dateControl = new FormControl();
+
+  date: Date[] = [];
+  orderDate: string[] = [];
+
+  retailerFilteredOptions: Observable<string[]>;
+  statusFilteredOptions: Observable<string[]>;
+
+  pageEvent: PageEvent;
+  length;
+
+  private _retailerfilter(value: string): string[] {
+    const retailerFilterValue = value.toLocaleLowerCase();
+    return this.retailers.filter((retailer) =>
+      retailer.toLocaleLowerCase().includes(retailerFilterValue)
+    );
+  }
+
+  private _statusFilter(value: string): string[] {
+    const statusFilterValue = value.toLowerCase();
+    return this.status.filter((state) =>
+      state.toLowerCase().includes(statusFilterValue)
+    );
+  }
+
+  constructor(
+    private interaction: InteractionService,
+    private transactionService: TransactionService,
+    private router: Router
+  ) {
     this.filters = ['Retailer', 'Status', 'Date'];
     this.isSidePanelExpanded = this.interaction.getExpandedStatus();
-
   }
 
   ngOnInit() {
@@ -109,33 +84,79 @@ export class TransactionsComponent implements OnInit, OnChanges {
       this.isSidePanelExpanded = res;
     });
     this.getTransactionHistory();
-
-    console.log(this.searchDate);
   }
 
-  ngOnChanges() {
-    console.log(this.searchDate);
-
-  }
-  ngAfterContentChecked(){
-    this.searchRetail=this.sharedService.comp1Val;
-  }
-
-  addEvent(type : string, event: MatDatepickerInputEvent<Date>){
-    this.searchDate1 = (`${type}:${event.value.toLocaleDateString()}`);
-    this.searchDate=this.searchDate1.slice(6,16);
+  dateChanged(event: MatDatepickerInputEvent<Date>) {
+    if (event.value) {
+      this.searchDate = this.parseDate(event.value);
+    } else {
+      this.searchDate = '';
+    }
   }
 
   getTransactionHistory() {
-    this.allTransactions = this.transaction.getAllTransactions();
-    this.transaction.getAllOrders().subscribe((res) => {
-      console.log(res);
+    this.transactionService.getAllOrders().subscribe((res) => {
+      this.allTransaction = res;
+      this.allTransaction.reverse();
+
+      this.pageEvent = {
+        pageIndex: 0,
+        pageSize: 10,
+        length: this.allTransaction.length,
+      };
+      this.length = this.allTransaction.length;
+
+      // tslint:disable-next-line: prefer-for-of
+      for (let i = 0; i < this.allTransaction.length; i++) {
+        this.allTransaction[i].orderDate = this.parseDate(
+          this.allTransaction[i].timestamp
+        );
+      }
+      
+      // tslint:disable-next-line: prefer-for-of
+      for (let i = 0; i < this.allTransaction.length; i++) {
+        this.removeDuplicate.push(this.allTransaction[i].vendor_name);
+      }
+
+      this.removeDuplicate.sort();
+
+      // tslint:disable-next-line: prefer-for-of
+      for (let i = 0; i < this.removeDuplicate.length; i++) {
+        if (this.removeDuplicate[i] !== this.temp) {
+          this.retailers.push(this.removeDuplicate[i]);
+          this.temp = this.removeDuplicate[i];
+        }
+      }
+
+      this.statusFilteredOptions = this.statusControl.valueChanges.pipe(
+        startWith(''),
+        map((value) => this._statusFilter(value))
+      );
+      this.retailerFilteredOptions = this.retailerControl.valueChanges.pipe(
+        startWith(''),
+        map((value) => this._retailerfilter(value))
+      );
     });
   }
 
-
-  setStatusColor(status) {
+  setStatusColor(status: any) {
     return status;
   }
 
+  onReset() {
+    this.statusControl.setValue('');
+    this.retailerControl.setValue('');
+    this.dateControl.setValue('');
+    this.searchDate = '';
+  }
+
+  parseDate = (d) => {
+    d = new Date(d);
+    let date = d.getDate();
+    date = ('' + date).length === 1 ? '' + 0 + date : date;
+    let month = d.getMonth();
+    month = ('' + (month + 1)).length === 1 ? '' + 0 + (month + 1) : month + 1;
+    const year = d.getFullYear();
+    return `${date}/${month}/${year}`;
+  }
 }

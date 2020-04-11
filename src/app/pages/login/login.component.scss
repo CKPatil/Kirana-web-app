@@ -1,4 +1,4 @@
-@import "../../../var";
+@import '../../../var';
 
 .outer-container {
   width: -webkit-fill-available;
@@ -8,22 +8,18 @@
   justify-content: center;
 
   #login-mat-card {
-    width: 70%;
-    margin: auto;
+      width: 70%;
+      margin: auto;
   }
 
   .inner-container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    height: 500px;
+    height: 400px;
 
     .left-container {
-      background-image: linear-gradient(
-        to right top,
-        $login-bottom-gradient,
-        $login-top-gradient
-      );
+      background-image: linear-gradient(to right top, $login-bottom-gradient, $login-top-gradient);
       flex: 3;
       display: flex;
       color: white;
@@ -87,13 +83,13 @@
 .left-btn {
   background-color: transparent;
   border: 2px solid white;
-  animation: moveInBottom 0.1s ease-out 0.4s;
+  animation: moveInBottom .1s ease-out .4s;
   animation-fill-mode: backwards;
 }
 
 .right-btn {
   background-color: #5ebeb2;
-  animation: moveInBottom 0.5s ease-out 0.75s;
+  animation: moveInBottom .5s ease-out .75s;
   animation-fill-mode: backwards;
   border: none;
 }
@@ -106,7 +102,7 @@
   color: white;
   text-transform: uppercase;
   font-weight: 800;
-  transition: all 0.2s;
+  transition: all .2s;
 }
 
 .login-btn:hover {
@@ -124,8 +120,9 @@
 .login-btn:focus {
   outline: none;
   transform: translateY(0);
-  //   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+//   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
 }
+
 
 .example-form {
   width: 100%;
@@ -181,16 +178,5 @@
   100% {
     opacity: 1;
     transform: translate(0);
-  }
-}
-
-@media (max-width: 632px) {
-  h1 {
-    font-size: 1.85rem;
-  }
-  .outer-container {
-    #login-mat-card {
-      width: 85%;
-    }
   }
 }

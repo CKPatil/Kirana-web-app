@@ -2,114 +2,39 @@ import { Status } from '../models/models';
 
 export const transactions = [
     {
-        Consumer: {
-            Name: 'Pranav',
-            Area: 'HSR layout'
-        },
-        Retailer: {
-            Name: 'Nishanth',
-            Area: 'JP nagar'
-        },
-        OrderDetails: {
-            OrderDate: '20/01/2020',
-            ItemsPurchased: [
-                {
-                    ItemName: 'Sample Item',
-                    ItemPrice: 500,
-                    Quantity: 2,
-                }
-            ],
-            TotalPrice: 1000
-        },
-        Status: Status.DELIVERED
+        customer_name: 'Pranav',
+        vendor_name: 'Nishanth',
+        order_date: '20/01/2020',
+        price: 500,
+        status: Status.DELIVERED
     },
     {
-        Consumer: {
-            Name: 'Vijay',
-            Area: 'HSR layout'
-        },
-        Retailer: {
-            Name: 'Nishanth',
-            Area: 'JP nagar'
-        },
-        OrderDetails: {
-            OrderDate: '22/01/2020',
-            ItemsPurchased: [
-                {
-                    ItemName: 'Sample Item2',
-                    ItemPrice: 300,
-                    Quantity: 2,
-                }
-            ],
-            TotalPrice: 600
-        },
-        Status: Status.CANCELLED
+      customer_name: 'Pranav',
+      vendor_name: 'Nishanth',
+      order_date: '22/01/2020',
+      price: 500,
+      status: Status.CANCELLED
     },
     {
-        Consumer: {
-            Name: 'Vijay',
-            Area: 'HSR layout'
-        },
-        Retailer: {
-            Name: 'Nishanth',
-            Area: 'JP nagar'
-        },
-        OrderDetails: {
-            OrderDate: '22/01/2020',
-            ItemsPurchased: [
-                {
-                    ItemName: 'Sample Item2',
-                    ItemPrice: 300,
-                    Quantity: 2,
-                }
-            ],
-            TotalPrice: 600
-        },
-        Status: Status.PACKED
+      customer_name: 'Pranav',
+      vendor_name: 'Nishanth',
+      order_date: '22/01/2020',
+      price: 500,
+      status: Status.PACKED,
     },
     {
-        Consumer: {
-            Name: 'Pranav',
-            Area: 'HSR layout'
-        },
-        Retailer: {
-            Name: 'Nishanth',
-            Area: 'JP nagar'
-        },
-        OrderDetails: {
-            OrderDate: '20/01/2020',
-            ItemsPurchased: [
-                {
-                    ItemName: 'Sample Item',
-                    ItemPrice: 500,
-                    Quantity: 2,
-                }
-            ],
-            TotalPrice: 1000
-        },
-        Status: Status.DISPATCHED
+      customer_name: 'Pranav',
+      vendor_name: 'Nishanth',
+      order_date: '22/01/2020',
+      price: 500,
+      status: Status.CANCELLED
     },
     {
-        Consumer: {
-            Name: 'Pranav',
-            Area: 'HSR layout'
-        },
-        Retailer: {
-            Name: 'Nishanth',
-            Area: 'JP nagar'
-        },
-        OrderDetails: {
-            OrderDate: '20/01/2020',
-            ItemsPurchased: [
-                {
-                    ItemName: 'Sample Item',
-                    ItemPrice: 500,
-                    Quantity: 2,
-                }
-            ],
-            TotalPrice: 1000
-        },
-        Status: Status.ORDERED
+      customer_name: 'Pranav',
+      vendor_name: 'Nishanth',
+      order_date: '22/01/2020',
+      price: 500,
+      status: Status.ORDERED,
     }
 ];
 

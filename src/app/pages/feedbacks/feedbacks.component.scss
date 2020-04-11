@@ -1,32 +1,33 @@
 .outer {
-  height: 90vh;
+    height: 90vh;
   overflow: scroll;
   .mat-card {
-    margin: 20px 2% 0px 2%;
-    // .filter-container {
-    //   width: 100%;
-      // display: flex;
-      // flex-direction: row;
-      // justify-content: space-evenly;
+    margin: 50px 2% 0px 2%;
+    .filter-container {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+    
+        .filter {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-evenly;
+        }
+      }
+      .feedbacks-container {
+          display: flex;
+          flex-wrap: wrap;
 
-      // .filter {
-      //   display: flex;
-      //   flex-direction: row;
-      //   justify-content: space-evenly;
-      // }
-    // }
-    // .feedbacks-container {
-    //   display: flex;
-    //   flex-wrap: wrap;
-
-    //   .feedbacks {
-    //     flex-grow: 1;
-    //     width: 40%;
-    //     margin: 10px;
-    //   }
-    // }
+          .feedbacks {
+            flex-grow: 1;
+            width: 40%;
+            margin: 10px;
+          }
+      }
   }
   .is-side-panel-expanded {
     margin-left: 2% !important;
   }
+  
 }

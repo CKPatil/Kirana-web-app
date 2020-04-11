@@ -8,17 +8,14 @@ export const environment = {
   backend_end_point: 'http://54.197.216.47/',
   port_number: '8000',
   userDetails: 'api/v1/userDetails/',
-  orders: 'api/v1/vendor/order/?order=listall',
-  retailers: 'api/v1/vendors/',
+  orders: 'order/?order=listall',
+  retailers: 'api/v1/vendor/',
   products: 'api/v1/products/',
-  imageUpload: 'api/v1/imageUpload',
   signUpURL: 'user/signUp/',
   loginURL: 'login/',
   tokenURL: 'api/token/',
   refreshURL: 'api/token/refresh',
-  inviteURL: "api/v1/vendor_request/",
-  inviteResponseURL: "api/v1/vendor_registration/",
-  feedbackURL:"api/v1/ratings/"
+
 };
 
 /*

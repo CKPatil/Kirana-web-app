@@ -8,6 +8,7 @@
     // justify-content: space-around;
     height: -webkit-fill-available;
 
+
     .head-section {
       margin: 10px 0;
       display: flex;
@@ -19,7 +20,7 @@
         margin: 0;
       }
       .invite-retailer {
-        background-color: #109cf1;
+        background-color: #109CF1;
         color: white !important;
       }
     }
@@ -27,27 +28,23 @@
     .analytics-container {
       display: flex;
       flex-direction: row;
-      justify-content: space-around;
+      justify-content: space-between;
       width: 100%;
       margin: 10px 0px;
-      flex-wrap: wrap;
-      > div {
-        margin-top: 1em;
-      }
     }
 
-    // .order-container {
-    //   display: flex;
-    //   justify-content: space-between;
-    //   // margin: 10px 0px;
-    //   .packed-orders-container {
-    //     width: -webkit-fill-available;
-    //     // margin-right: 20px;
-    //   }
-    //   .urgent-orders-container {
-    //     width: -webkit-fill-available;
-    //   }
-    // }
+    .order-container {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0px;
+      .packed-orders-container {
+        width: -webkit-fill-available;
+        margin-right: 20px;
+      }
+      .urgent-orders-container {
+        width: -webkit-fill-available;
+      }
+    }
 
     .third-container {
       display: flex;
@@ -72,16 +69,3 @@
     margin-left: 2%;
   }
 }
-
-// @media (max-width: 632px) {
-//   .outer {
-//     .dashboard-container {
-//       .order-container {
-//         .packed-orders-container{
-//           width: 100%;
-//           background-color: red;
-//         }
-//       }
-//     }
-//   }
-// }
