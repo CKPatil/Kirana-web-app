@@ -1,10 +1,115 @@
 .outer {
+  height: 90vh;
+  overflow: scroll;
   .mat-card {
-    margin-top: 50px;
-    margin-left: 7%;
-    margin: 50px 2% 0px 7%;
+    margin: 50px 2% 0px 2%;
+    // display: flex;
+    // min-width: 800px;
+
+    .top-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      width: 100%;
+
+      .task-container {
+        min-width: fit-content;
+      }
+
+      .filter-container {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+
+        .filter {
+          display: flex;
+          flex-direction: row;
+        }
+      }
+      .mat-divider {
+        margin-top: 30px;
+        border: 0;
+        height: 1px;
+        background: #333;
+        background-image: linear-gradient(
+          to right,
+          #ccc,
+          rgb(89, 141, 54),
+          #ccc
+        );
+      }
+    }
+    .date {
+      padding: 15px;
+    }
+    .daysOfTheWeek {
+      // text-align: center;
+      // display: flex;
+      // flex-direction: row;
+      .day {
+        width: 100%;
+        // display: flex;
+        // padding: 5px;
+        // margin-left: auto;
+        // margin-right: auto;
+        // justify-content: space-around;
+        // .dayName {
+        //   margin-left: 80px;
+        //   padding: 10px;
+        // }
+        // .dateNumber {
+        //   margin-left: 80px;
+        //   padding: 0px;
+        // }
+      }
+    }
+    .mat-divider {
+      margin-top: 5px;
+    }
+    .mat-card {
+      margin: 20px 0px 20px 0px;
+      padding: 20px;
+      .content {
+        display: flex;
+        justify-content: space-between;
+        text-align: left;
+        .event {
+          text-align: right;
+        }
+      }
+      .lastLine {
+        display: flex;
+        justify-content: space-between;
+        text-align: left;
+        .status {
+          color: white;
+          padding: 5px 15px 5px 15px;
+          background: rgb(87, 87, 214);
+          text-align: right;
+          // border: 1px solid rgb(87, 87, 214);
+          border-radius: 5px;
+        }
+        .Delivered {
+          background-color: #2ed47a;
+        }
+        .Cancelled {
+          background-color: #f7685b;
+        }
+        .Packed {
+          background-color: #ffb946;
+        }
+        .Dispatched {
+          background-color: #56ccf2;
+        }
+        .Ordered {
+          background-color: #098edf;
+        }
+      }
+    }
   }
+
   .is-side-panel-expanded {
-    margin-left: 15%;
+    margin-left: 2% !important;
   }
 }

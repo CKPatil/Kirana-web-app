@@ -1,11 +1,33 @@
 .outer {
-  .mat-card {
-    margin-top: 50px;
-    margin-left: 7%;
-    margin: 50px 2% 0px 7%;
-  }
-  .is-side-panel-expanded {
-    margin-left: 15%;
-  }
+  height: 90vh;
+  overflow: scroll;
+
+  // .mat-card {
+    // margin: 50px 2% 0px 2%;
+
+    // .items-top-search-container {
+    //   display: flex;
+    //   flex-direction: row-reverse;
+    //   justify-content: space-around;
+    // }
+
+    // .input {
+    //   margin-left: 325px;
+
+    //   .form-control {
+    //     width: 500px;
+    //   }
+    // }
+
+    // .item-cards {
+    //   .inner-item-mat-card {
+    //     margin: 20px;
+    //   }
+    // }
+  // }
+
+  // .is-side-panel-expanded {
+  //   margin-left: 2%;
+  // }
 
 }

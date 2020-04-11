@@ -1,10 +1,22 @@
 .outer {
+    height: 90vh;
+  overflow: scroll;
   .mat-card {
-    margin-top: 50px;
-    margin-left: 7%;
-    margin: 50px 2% 0px 7%;
+    margin: 50px 2% 0px 2%;
+    table {
+      width: 100%;
+    }
+    
+    .mat-form-field {
+      font-size: 14px;
+      width: 100%;
+    }
+    .example-container {
+      height: 400px;
+      overflow: auto;
+    }
   }
   .is-side-panel-expanded {
-    margin-left: 15% !important;
+    margin-left: 2% !important;
   }
 }

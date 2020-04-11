@@ -1,53 +1,51 @@
 <div class="outer">
-  <mat-card [ngClass]="{'is-side-panel-expanded': isSidePanelExpanded}">
-    <div class="top-container">
-      <div class="task-container">
-        <p>{{taskRemaining}} out of {{taskTotal}}</p>
+  <div
+    class="dashboard-container"
+    [ngClass]="{ 'is-side-panel-expanded': isSidePanelExpanded }"
+  >
+    <div class="head-section">
+      <h2 class="heading">Dashboard</h2>
+      <button mat-raised-button class="invite-retailer">Invite Retailer</button>
+    </div>
+    <div class="analytics-container">
+      <div *ngFor="let item of analytics">
+        <app-analytic-container [data]="item"></app-analytic-container>
       </div>
-
-      <div class="filter-container">
-        <div class="filter" *ngFor="let item of filters">
-          <mat-form-field>
-            <mat-label class="first">{{item}}</mat-label>
-            <mat-select>
-              <mat-option *ngFor="let food of foods" [value]="food.value">
-                {{food.viewValue}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-        </div>
+    </div>
+    <div class="order-container row mt-3">
+      <div class="packed-orders-container my-2 col-12 col-lg-6">
+        <mat-card>
+          <h5><b>Packed Orders</b></h5>
+          <app-recent-orders></app-recent-orders>
+        </mat-card>
       </div>
-      
-      <mat-divider></mat-divider>
-
+      <div class="urgent-orders-container my-2 col-12 col-lg-6">
+        <mat-card>
+          <h5><b>Critical Orders</b></h5>
+          <app-recent-orders></app-recent-orders>
+        </mat-card>
+      </div>
     </div>
-    <div class="date">
-        <p><strong>{{today | date: 'fullDate'}}</strong> </p>
+    <div class="third-container row mt-3">
+      <div class="recent-orders-container col-12 col-lg-8">
+        <mat-card>
+          <h5><b>Recent Orders</b></h5>
+          <app-recent-orders></app-recent-orders>
+          <!-- <app-recent-orders></app-recent-orders> -->
+        </mat-card>
+        </div>
+        <div class="invite-requests-container">
+          <mat-card>
+            <h5><b>Invite Requests</b></h5>
+            <div class="invite-requests">
+              <div *ngFor="let i of inviteRequests">
+                <app-invite-request [inviteRequest]="i"></app-invite-request>
+              </div>
+              <!-- <app-invite-request></app-invite-request>
+              <app-invite-request></app-invite-request> -->
+            </div>
+        </mat-card>
+      </div>
     </div>
-    <div class="daysOfTheWeek">
-        <div class="day">
-        <div *ngFor="let item of daysOfTheWeek">
-            <div class="dayName"><p>{{item}}</p></div>
-            <div class="dateNumber"><p>{{dateNumber}}</p></div>
-        </div>
-        </div>
-    </div>
-    <mat-divider></mat-divider>
-
-    <div *ngFor="let item of allTransactions">
-      <mat-card>
-        <div class="content">
-          <h5>{{ item.Consumer.Name }}</h5>
-          <p class="event">₹{{ item.OrderDetails.TotalPrice }}</p>
-        </div>
-        <p>Order date : {{ item.OrderDetails.OrderDate }} </p>
-        <div class="lastLine">
-          <p>Vendor name : {{ item.Retailer.Name }}</p>
-          <p class="status" [ngClass]='setStatusColor(item.Status)'>{{ item.Status }}</p>
-        </div>
-      </mat-card>
-    </div>
-    
-  </mat-card>
+  </div>
 </div>

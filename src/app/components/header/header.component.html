@@ -1,5 +1,11 @@
 <mat-toolbar color="primary">
-    <div>
-        <h2>KIRANA</h2>
+    <div class="head-main">
+        <div>
+            <h2>KIRANA</h2>
+        </div>
+        <div class="logout-btn-container">
+            <a class="cursorPointer" (click)="feedbacks()"><i class="fa fa-comments-o" aria-hidden="true"></i></a>
+            <a class="cursorPointer" (click)="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i></a>            
+        </div>
     </div>
 </mat-toolbar>

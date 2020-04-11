@@ -1,9 +1,24 @@
+// import { Orders } from './../app/constants/mockup-data';
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  backend_end_point: 'http://54.197.216.47/',
+  port_number: '8000',
+  userDetails: 'api/v1/userDetails/',
+  orders: 'api/v1/vendor/order/?order=listall',
+  retailers: 'api/v1/vendors/',
+  products: 'api/v1/products/',
+  imageUpload: 'api/v1/imageUpload',
+  signUpURL: 'user/signUp/',
+  loginURL: 'login/',
+  tokenURL: 'api/token/',
+  refreshURL: 'api/token/refresh',
+  inviteURL: "api/v1/vendor_request/",
+  inviteResponseURL: "api/v1/vendor_registration/",
+  feedbackURL:"api/v1/ratings/"
 };
 
 /*

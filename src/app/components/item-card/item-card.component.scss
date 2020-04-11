@@ -1,0 +1,40 @@
+.item-card {
+    display: flex;
+    .item-image-container {
+        width: 30%;
+        img {
+            width: 100%;
+        }
+    }
+    .item-details-container {
+        width: 70%;
+        margin: 5px 20px;
+        .item-top-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            .item-top-left {
+                .item-name {
+
+                }
+                .item-unit {
+
+                }
+            }
+            .item-price {
+                align-self: auto;
+                cursor: pointer;
+            }
+        }
+        .item-detail-container {
+            .item-description-container {
+
+            }
+            .item-variety {
+                ul {
+                    list-style-position: inside;
+                }
+            }
+        }
+    }
+}

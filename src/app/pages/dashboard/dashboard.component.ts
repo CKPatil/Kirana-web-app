@@ -1,49 +1,39 @@
-import { Component, OnInit } from '@angular/core';
-import { InteractionService } from 'src/app/services/interaction.service';
-import { TransactionService } from 'src/app/services/transaction.service';
-
+import { Component, OnInit } from "@angular/core";
+import { InteractionService } from "src/app/services/interaction.service";
+import { analytics } from "./../../constants/mockup-data";
+import { RetailerService } from "./../../services/retailer.service";
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  selector: "app-dashboard",
+  templateUrl: "./dashboard.component.html",
+  styleUrls: ["./dashboard.component.scss"],
 })
 export class DashboardComponent implements OnInit {
-
-  taskTotal=10;
-  taskRemaining=0;
-  foods = [
-    {value: 'retailer-1', viewValue: 'George'},
-    {value: 'retailer-2', viewValue: 'Lucas'},
-    {value: 'retailer-3', viewValue: 'Rebecca'}
-  ];
-  today = Date.now();
-  daysOfTheWeek = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
-  dateNumber=0;
-
-  filters: string[];
   isSidePanelExpanded: boolean;
-  // tslint:disable-next-line: max-line-length
-  allTransactions: { Consumer: { Name: string; Area: string; }; Retailer: { Name: string; Area: string; }; OrderDetails: { OrderDate: string; ItemsPurchased: { ItemName: string; ItemPrice: number; Quantity: number; }[]; TotalPrice: number; }; Status: string; }[];
+  analytics: { name: string; count: number }[];
 
-  constructor(private interaction: InteractionService, private transaction: TransactionService) {
-    this.filters = ['Retailer', 'Status', 'Date'];
+  inviteRequests: any;
+
+  constructor(
+    private interaction: InteractionService,
+    private retailerService: RetailerService
+  ) {
     this.isSidePanelExpanded = this.interaction.getExpandedStatus();
-   }
+  }
 
   ngOnInit() {
-    this.interaction.expandedStatus$.subscribe( (res) => {
+    this.analytics = analytics;
+    this.interaction.expandedStatus$.subscribe((res) => {
       this.isSidePanelExpanded = res;
     });
-    this.getTransactionHistory();
-  }
 
-  getTransactionHistory() {
-    this.allTransactions = this.transaction.getAllTransactions();
-  }
+    // this.retailerService.getAllRetailers().subscribe((result) => {
+    //   console.log("AAA", result.body);
+    //   this.inviteRequests = result.body;
+    // });
 
-  setStatusColor(status) {
-    return status;
+    this.retailerService.getAllInvitationRequests().subscribe((result) => {
+      this.inviteRequests = result.body;
+    });
   }
-
 }

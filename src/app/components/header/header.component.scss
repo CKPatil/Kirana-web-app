@@ -2,4 +2,14 @@
     background-color: #7b84fc;
     color: #333344;
     box-shadow: 0 8px 8px 0 rgba(0,0,0,0.5);
+    .head-main {
+        width: 100%;
+        display:  flex;
+        justify-content: space-between;
+        .logout-btn-container {
+            width: 80px;
+            display: flex;
+            justify-content: space-between;
+        }
+    }
 }

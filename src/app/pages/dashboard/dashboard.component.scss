@@ -1,109 +1,87 @@
 .outer {
+  height: 90vh;
+  overflow: scroll;
+  .dashboard-container {
+    margin: 20px 2% 0px 2%;
+    display: flex;
+    flex-direction: column;
+    // justify-content: space-around;
+    height: -webkit-fill-available;
 
-  .mat-card {
-    margin-top: 50px;
-    margin-left: 7%;
-    margin: 50px 2% 0px 7%;
-    // display: flex;
-    // min-width: 800px;
-
-    .top-container {
+    .head-section {
+      margin: 10px 0;
       display: flex;
       flex-direction: row;
-      align-items: center;
+      justify-content: space-between;
+      .heading {
+        align-self: center;
+        line-height: 1;
+        margin: 0;
+      }
+      .invite-retailer {
+        background-color: #109cf1;
+        color: white !important;
+      }
+    }
+
+    .analytics-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
       width: 100%;
+      margin: 10px 0px;
+      flex-wrap: wrap;
+      > div {
+        margin-top: 1em;
+      }
+    }
 
-      .task-container {
-        min-width: fit-content;
-      }
+    // .order-container {
+    //   display: flex;
+    //   justify-content: space-between;
+    //   // margin: 10px 0px;
+    //   .packed-orders-container {
+    //     width: -webkit-fill-available;
+    //     // margin-right: 20px;
+    //   }
+    //   .urgent-orders-container {
+    //     width: -webkit-fill-available;
+    //   }
+    // }
 
-      .filter-container {
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-
-        .filter {
-          display: flex;
-          flex-direction: row
-        }
+    .third-container {
+      display: flex;
+      justify-content: space-between;
+      width: -webkit-fill-available;
+      margin: 10px 0px;
+      .recent-orders-container {
+        width: 70%;
+        margin-right: 20px;
       }
-      .mat-divider{
-          margin-top: 30px;
-          border: 0;
-          height: 1px;
-          background: #333;
-          background-image: linear-gradient(to right, #ccc, rgb(89, 141, 54), #ccc);
-      }
-    }
-    .date{
-        padding: 15px;
-    }
-    .daysOfTheWeek{
-        text-align: center;
-        display: flex;
-        flex-direction: row;
-        .day{
-            display:flex;
-            padding: 5px;
-            margin-left: auto;
-            margin-right: auto;
-            .dayName{
-                margin-left: 80px;
-                padding: 10px;
-            }
-            .dateNumber{
-                margin-left: 80px;
-                padding: 0px;
-            }
-        }
-    }
-    .mat-divider{
-        margin-top: 5px;
-    }
-    .mat-card{
-      margin: 20px 50px 20px 50px;
-      padding: 20px;
-      .content{
-        display: flex;
-        justify-content: space-between;
-        text-align: left;
-        .event{
-          text-align: right;
-        }
-      }
-      .lastLine{
-        display: flex;
-        justify-content: space-between;
-        text-align: left;
-        .status{
-          color: white;
-          padding: 5px 15px 5px 15px;
-          background: rgb(87, 87, 214);
-          text-align: right;
-          // border: 1px solid rgb(87, 87, 214);
-          border-radius: 5px;
-        }
-        .Delivered {
-          background-color: #2ED47A;
-        }
-        .Cancelled {
-          background-color: #F7685B;
-        }
-        .Packed {
-          background-color: #FFB946;
-        }
-        .Dispatched {
-          background-color: #56CCF2;
-        }
-        .Ordered {
-          background-color: #098EDF;
+      .invite-requests-container {
+        width: 30%;
+        .invite-requests {
+          height: 313px;
+          overflow: auto;
         }
       }
     }
   }
 
   .is-side-panel-expanded {
-    margin-left: 15% !important;
+    margin-left: 2%;
   }
 }
+
+// @media (max-width: 632px) {
+//   .outer {
+//     .dashboard-container {
+//       .order-container {
+//         .packed-orders-container{
+//           width: 100%;
+//           background-color: red;
+//         }
+//       }
+//     }
+//   }
+// }

@@ -1,0 +1,36 @@
+
+table {
+    width: 100%;
+    table-layout: fixed;
+  }
+  .mat-elevation-z1 {
+    box-shadow: none !important;
+  }
+  
+  th, td, tr {
+    overflow: hidden;
+    width:auto;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+    
+    .mat-form-field {
+      font-size: 14px;
+      width: 100%;
+    }
+    .example-container {
+      height: 200px;
+      overflow: auto;
+      .mat-form-field .mat-primary .mat-form-field-type-mat-select .mat-form-field-appearance-legacy .mat-form-field-can-float .mat-form-field-hide-placeholder .mat-form-field-should-float{
+          width: 80% !important;
+      }
+      .mat-form-field-infix{
+          padding: 0 !important;
+      }
+      ::ng-deep .mat-form-field-underline {
+        display: none;
+      }
+    }
+  .is-side-panel-expanded {
+    margin-left: 15% !important;
+  }

@@ -1,0 +1,59 @@
+<div class="item-card">
+  <div class="item-image-container">
+    <div *ngIf="item.image_url.length">
+      <img [src]="item.image_url[0]" alt="{{ item.name }} Image" />
+    </div>
+    <div>
+      <button
+          mat-icon-button
+          color="primary"
+          aria-label="Example icon-button with delete icon"
+          (click)="openSelectImageDialog()"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
+    </div>
+  </div>
+  <div class="item-details-container">
+    <div class="item-top-container">
+      <div class="item-top-left">
+        <div class="item-name">
+          <h4>{{ item.name }}</h4>
+        </div>
+      </div>
+      <div class="item-price">
+        <button
+          mat-icon-button
+          color="primary"
+          aria-label="Example icon-button with delete icon"
+          (click)="openConfirmDeleteDialog()"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+      <app-update-item [item]="item"></app-update-item>
+    </div>
+    <div class="item-detail-container">
+      <div class="item-description-container">
+        <p class="item-description">{{ item.details }}</p>
+        <p>Category : {{ item.category }}</p>
+        <p>Sub Category : {{ item.sub_category }}</p>
+        <p>Brand : {{ item.brand }}</p>
+        <p>Quantity Type : {{ item.quantity_type }}</p>
+      </div>
+      <div class="item-variety">
+        <h5>Variety:</h5>
+        <ul>
+          <li *ngFor="let variety of item.variant_details">
+            <span>
+              {{ variety.variant }} ::
+              Quantity : {{ variety.quantity }} ::
+              Price : {{variety.price || ''}}
+              </span
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

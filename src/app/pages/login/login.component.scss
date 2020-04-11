@@ -1,0 +1,196 @@
+@import "../../../var";
+
+.outer-container {
+  width: -webkit-fill-available;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  #login-mat-card {
+    width: 70%;
+    margin: auto;
+  }
+
+  .inner-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 500px;
+
+    .left-container {
+      background-image: linear-gradient(
+        to right top,
+        $login-bottom-gradient,
+        $login-top-gradient
+      );
+      flex: 3;
+      display: flex;
+      color: white;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      .login-welcome {
+        text-align: center;
+
+        h1 {
+          font-weight: 800;
+          margin: 0;
+        }
+      }
+    }
+
+    .left-half-border-radius {
+      border-top-left-radius: 15px;
+      border-bottom-left-radius: 15px;
+      animation-name: moveInLeft;
+      animation-duration: 1s;
+      animation-timing-function: ease-out;
+    }
+
+    .right-half-border-radius {
+      border-top-right-radius: 15px;
+      border-bottom-right-radius: 15px;
+      animation-name: moveInRight;
+      animation-duration: 1s;
+      animation-timing-function: ease-out;
+    }
+
+    .right-container {
+      flex: 7;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      h1 {
+        color: #5ebeb2;
+        font-weight: 800;
+        animation-name: moveInLeft;
+        animation-duration: 1s;
+        animation-timing-function: ease-out;
+      }
+
+      .login-form {
+        .login-form-fields {
+          text-align: center;
+          animation-name: moveInRight;
+          animation-duration: 1s;
+          animation-timing-function: ease-out;
+        }
+      }
+    }
+  }
+}
+
+.left-btn {
+  background-color: transparent;
+  border: 2px solid white;
+  animation: moveInBottom 0.1s ease-out 0.4s;
+  animation-fill-mode: backwards;
+}
+
+.right-btn {
+  background-color: #5ebeb2;
+  animation: moveInBottom 0.5s ease-out 0.75s;
+  animation-fill-mode: backwards;
+  border: none;
+}
+
+.login-btn,
+.login-btn:link,
+.login-btn:visited {
+  padding: 5px 50px;
+  border-radius: 100px;
+  color: white;
+  text-transform: uppercase;
+  font-weight: 800;
+  transition: all 0.2s;
+}
+
+.login-btn:hover {
+  //   background-color: $login-top-gradient;
+  transform: translateY(-3px);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+}
+
+.login-btn:hover::after {
+  transform: scaleX(1.4) scaleY(1.6);
+  opacity: 0;
+}
+
+.login-btn:active,
+.login-btn:focus {
+  outline: none;
+  transform: translateY(0);
+  //   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+}
+
+.example-form {
+  width: 100%;
+}
+
+.flex-row-reverse {
+  transition: all 1s;
+  flex-direction: row-reverse !important;
+}
+
+.example-full-width {
+  width: 70%;
+}
+
+@keyframes moveInBottom {
+  0% {
+    opacity: 0;
+    transform: translateY(3rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+@keyframes moveInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-10rem);
+  }
+
+  80% {
+    transform: translateX(1rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+@keyframes moveInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(10rem);
+  }
+
+  80% {
+    transform: translateX(-1rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+@media (max-width: 632px) {
+  h1 {
+    font-size: 1.85rem;
+  }
+  .outer-container {
+    #login-mat-card {
+      width: 85%;
+    }
+  }
+}
