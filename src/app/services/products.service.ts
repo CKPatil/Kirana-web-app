@@ -11,7 +11,7 @@ export class ProductsService {
   productsURL: string;
   imageUploadURL: string;
   httpOptions: any;
-
+  tempURL: string;
   constructor(private http: HttpClient) {
     const token = localStorage.getItem("access");
     this.httpOptions = new HttpHeaders({
@@ -39,7 +39,6 @@ export class ProductsService {
         })
       );
   }
-
   addProduct(data) {
     return this.http
       .post(this.productsURL, JSON.stringify(data), {
@@ -63,15 +62,14 @@ export class ProductsService {
     });
   }
 
-  deleteProduct(data) {
-    return this.http
-      .delete(this.productsURL + data, {
-        headers: this.httpOptions,
+  deleteProduct(id: number): Observable<any> {
+    // return this.http.delete<DeleteItems>(this.productsURL)
+  console.log(this.productsURL + '?id=' + id);
+  return this.http.delete(this.productsURL + '?id=' + id, { responseType: 'text' })
+    .pipe(
+      catchError(error => {
+        return throwError(error);
       })
-      .pipe(
-        catchError((error) => {
-          return throwError(error);
-        })
-      );
+    );
   }
 }

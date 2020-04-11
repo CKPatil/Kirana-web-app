@@ -21,5 +21,11 @@ export class HeaderComponent implements OnInit {
   feedbacks() {
     this.router.navigate(['/feedbacks']);
   }
+  ResetPass() {
+    this.router.navigate(['/reset-password']);
+  }
+  NotifySetting() {
+    this.router.navigate(['/notifications']);
+  }
 
 }

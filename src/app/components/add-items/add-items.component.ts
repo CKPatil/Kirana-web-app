@@ -13,6 +13,7 @@ import {
 } from "@angular/forms";
 import { ProductsService } from "src/app/services/products.service";
 import { Router } from "@angular/router";
+import { Sent } from 'src/app/models/models';
 
 export interface DialogData {
   animal: string;
@@ -129,7 +130,8 @@ export class DialogAddItemComponent {
   isAddCategory: boolean;
   isAddSubCategory: boolean;
   isAddBrand: boolean;
-
+  newProduct = new Sent();
+  post: any;
   constructor(
     public dialogRef: MatDialogRef<DialogAddItemComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
@@ -142,13 +144,13 @@ export class DialogAddItemComponent {
     this.dialogRef.close();
   }
 
-  addCategory() {
+addCategory() {
     this.isAddCategory = this.isAddCategory ? false : true;
   }
-  addSubCategory() {
+addSubCategory() {
     this.isAddSubCategory = this.isAddSubCategory ? false : true;
   }
-  addBrand() {
+addBrand() {
     this.isAddBrand = this.isAddBrand ? false : true;
   }
 

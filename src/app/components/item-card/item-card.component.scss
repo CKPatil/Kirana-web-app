@@ -38,3 +38,21 @@
         }
     }
 }
+#edit{
+  position: absolute;
+  right: 2rem;
+  align-self: auto;
+  justify-content: space-between;
+  cursor: pointer;
+  font-size: 1.5em;
+}
+span h4{
+  display: inline-block;
+  margin:10px 10px 0 0;
+  padding:5px 10px;
+}
+.sp {
+  display: inline-block;
+  margin:10px 10px 0 0;
+  padding:5px 0px 5px 50px;
+}

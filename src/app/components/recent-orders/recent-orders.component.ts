@@ -52,7 +52,7 @@ export class RecentOrdersComponent implements OnInit {
     this.isSidePanelExpanded = this.interaction.getExpandedStatus();
   }
 
-  ngOnInit() {  
+  ngOnInit() {
     this.interaction.expandedStatus$.subscribe( (res) => {
       this.isSidePanelExpanded = res;
     });
@@ -60,7 +60,7 @@ export class RecentOrdersComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.transactionService.getAllOrders().subscribe((res) => {
       console.log(res);
-      this.allTransactions = res.body;
+      this.allTransactions = res;
       console.log(this.allTransactions);
     });
   }

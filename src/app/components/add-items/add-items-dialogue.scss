@@ -1,4 +1,4 @@
-.category-container, .subcategory-container, .brand-container, .quantity-container, .variant-container {
+.category-container, .subcategory-container, .brand-container, .quantity-container, .variant-container, .name-container {
     display: flex;
     width: 105%;
     align-items: center;
@@ -9,7 +9,23 @@
     max-width: 500px;
     width: 100%;
   }
-  
+
+  .example-half-width {
+    width: 50%;
+  }
   .example-full-width {
     width: 100%;
   }
+  #hov:hover{
+    background-color: #337ab7
+  }
+.quan, .var {
+    width: 40%;
+    padding-left: 12px;
+    white-space: pre;
+}
+.input {
+  height: 2em;
+  font-size: 1em;
+  padding-left: .4em;
+}

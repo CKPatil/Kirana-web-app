@@ -1,16 +1,17 @@
+import { Transaction } from './../models/models';
 import { Injectable } from '@angular/core';
-import { transactions } from '../constants/mockup-data';
 import { HttpClientModule, HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs/internal/observable/throwError';
-
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TransactionService {
   getAllTransactionsURL: any;
+  tempURL: any;
   httpOptions;
   buildURLS() {
     this.getAllTransactionsURL = environment.backend_end_point + environment.orders;
@@ -22,10 +23,9 @@ export class TransactionService {
     this.buildURLS();
   }
 
-  getAllOrders() {
-    return this.http.get(this.getAllTransactionsURL,  {
+  getAllOrders(): Observable<Transaction[]> {
+    return this.http.get<Transaction[]>(this.getAllTransactionsURL,  {
       headers: this.httpOptions,
-      observe: 'response'
     })
     .pipe(
       catchError(error => {
@@ -33,7 +33,18 @@ export class TransactionService {
       })
     );
   }
-
+  getNextOrders(id) {
+    return this.http
+      .post(this.getAllTransactionsURL, JSON.stringify(id), {
+        headers: this.httpOptions,
+        observe: 'response',
+      })
+      .pipe(
+        catchError((error) => {
+          return throwError(error);
+        })
+      );
+  }
   getAllTransactions() {
     return transactions;
   }

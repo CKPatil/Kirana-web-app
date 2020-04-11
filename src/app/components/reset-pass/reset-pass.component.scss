@@ -1,0 +1,28 @@
+.pass-mat-card {
+  margin: auto;
+  padding-bottom: 20px;
+  .pass-top-container{
+      display: flex;
+      justify-content: space-between;
+      .user-details-container {
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+          align-items: center;
+          i {
+              margin-right: 10px;
+
+          }
+      }
+  }
+}
+.container {
+  display: flexbox;
+  margin-top: 50px;
+}
+.form-goup{
+  position: relative;
+}
+.is-side-panel-expanded {
+  margin-left: 2% !important;
+}

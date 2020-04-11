@@ -3,97 +3,109 @@
     <mat-card>
       <h2>Transactions:</h2>
       <div class="top-container row">
-        <div class="task-container col-3 col-md-2">
-          <p>{{ taskRemaining }} out of {{ taskTotal }}</p>
-        </div>
         <div class="filter-container col-12 col-md-10 row justify-content-center">
           <div class="filter col-5 mx-3 mx-md-0 col-md-4">
-            <div>
-              <mat-form-field>
-                <mat-label>Retailer</mat-label>
-                <mat-select [(ngModel)]="searchRetail">
+              <mat-form-field class="searchRetail">
+                <input
+                  type="text"
+                  placeholder="Retailer"
+                  aria-label="Number"
+                  matInput
+                  [formControl]="retailerControl"
+                  [matAutocomplete]="auto"
+                />
+                <mat-autocomplete #auto="matAutocomplete">
                   <mat-option
-                    *ngFor="let retailer of retailers"
-                    [value]="retailer.viewValue"
+                    *ngFor="let retailer of retailerFilteredOptions | async"
+                    [value]="retailer"
                   >
-                    {{ retailer.viewValue }}
+                    {{ retailer }}
                   </mat-option>
-                </mat-select>
+                </mat-autocomplete>
               </mat-form-field>
             </div>
-          </div>
-          <div class="col-5 mx-3 mx-md-0 col-md-4">
-            <mat-form-field>
-              <mat-label>Status</mat-label>
-              <mat-select [(ngModel)]="searchStatus">
-                <mat-option
-                  *ngFor="let item of status"
-                  [value]="item.viewValue"
-                >
-                  {{ item.viewValue }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="col-5 mx-3 mx-md-0 col-md-4">
-            <mat-form-field>
-              <mat-label>Pick a date</mat-label>
-              <input
-                matInput
-                [matDatepicker]="picker"
-                (dateInput)="addEvent('input', $event)"
-                (dateChange)="addEvent('input', $event)"
-              />
-              <mat-datepicker-toggle
-                matSuffix
-                [for]="picker"
-              ></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-          </div>
+            <div class="col-5 mx-3 mx-md-0 col-md-4">
+              <mat-form-field class="searchStatus">
+                <input
+                  type="text"
+                  placeholder="Status"
+                  aria-label="Number"
+                  matInput
+                  [formControl]="statusControl"
+                  [matAutocomplete]="auto2"
+                />
+                <mat-autocomplete #auto2="matAutocomplete">
+                  <mat-option
+                    *ngFor="let status of statusFilteredOptions | async"
+                    [value]="status"
+                  >
+                    {{ status }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+            <div class="col-5 mx-3 mx-md-0 col-md-4">
+              <mat-form-field>
+                <mat-label>Pick a date</mat-label>
+                <input
+                  matInput
+                  [formControl]="dateControl"
+                  [matDatepicker]="picker"
+                  (dateInput)="dateChanged($event)"
+                  (dateChange)="dateChanged($event)"
+                  placeholder="MM/DD/YYYY"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </div>
         </div>
+        <button mat-raised-button (click)="onReset()">RESET</button>
       </div>
-      <mat-divider></mat-divider>
       <div class="date">
         <p>
           <strong>{{ today | date: "fullDate" }}</strong>
         </p>
       </div>
-      <div class="daysOfTheWeek row justify-content-center">
-        <div class="day row justify-content-around p-1">
-          <div *ngFor="let item of daysOfTheWeek" class="p-2">
-            <div class="dayName">
-              <p>{{ item }}</p>
-            </div>
-            <div class="dateNumber">
-              <p>{{ dateNumber }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <mat-divider></mat-divider>
-      <div
-        class="transaction-container"
-        *ngFor="
-          let item of allTransactions
-            | filter: searchRetail
-            | filter: searchStatus
-            | filter: searchDate
-        "
+      <mat-paginator
+        [length]="length"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="pageEvent = $event"
       >
-        <mat-card>
-          <div class="content">
-            <h5>{{ item.Consumer.Name }}</h5>
-            <p class="event">₹{{ item.OrderDetails.TotalPrice }}</p>
-          </div>
-          <p>Order date : {{ item.OrderDetails.OrderDate }}</p>
-          <div class="lastLine">
-            <p>Vendor name : {{ item.Retailer.Name }}</p>
-            <p class="status" [ngClass]="setStatusColor(item.Status)">
-              {{ item.Status }}
-            </p>
-          </div>
-        </mat-card>
+      </mat-paginator>
+      <div *ngIf="pageEvent">
+        <div
+          class="transaction-container"
+          *ngFor="
+            let i = index;
+            let item;
+            of: allTransaction.slice(
+              pageEvent.pageIndex * pageEvent.pageSize,
+              (pageEvent.pageIndex + 1) * pageEvent.pageSize
+            )
+              | filter: retailerControl.value
+              | filter: statusControl.value
+              | filter: searchDate
+          "
+        >
+          <mat-card class="mat-elevation-z6">
+            <div class="content">
+              <h5>{{ item.customer_name }}</h5>
+              <p class="event">₹{{ item.price }}</p>
+            </div>
+            <p>Order date : {{ item.orderDate }}</p>
+            <div class="lastLine">
+              <p>Vendor name : {{ item.vendor_name }}</p>
+              <p class="status" [ngClass]="setStatusColor(item.status)">
+                {{ item.status }}
+              </p>
+            </div>
+          </mat-card>
+        </div>
       </div>
     </mat-card>
   </div>

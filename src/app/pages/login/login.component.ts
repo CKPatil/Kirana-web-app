@@ -41,6 +41,7 @@ export class LoginComponent implements OnInit {
   registerBtn = 'Register';
   loginBtn = 'Sign in';
   hide = true;
+  static confirmPassword: any;
 
   constructor(
     private authService: AuthService,

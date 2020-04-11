@@ -103,7 +103,7 @@
           background-color: #56ccf2;
         }
         .Ordered {
-          background-color: #098edf;
+          background-color: #098EDF;
         }
       }
     }
@@ -112,4 +112,20 @@
   .is-side-panel-expanded {
     margin-left: 2% !important;
   }
+}
+.search-results {
+  height: 40em;
+  overflow: scroll;
+}
+.searchRetail {
+  margin-right: 7em;
+}
+.searchStatus {
+  margin-right: 7em;
+}
+button {
+  margin-right: 4em;
+  background-color: #5757d6;
+  color: white;
+  text-align: center;
 }

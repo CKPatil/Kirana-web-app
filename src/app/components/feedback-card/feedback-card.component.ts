@@ -11,7 +11,7 @@ import { StarRatingComponent } from 'ng-starrating';
 export class FeedbackCardComponent implements OnInit {
   @Input() feedback: any;
   constructor() { }
-
+  gridsize: number;
   ngOnInit() {
   }
   // onRate($event: {oldValue: number, newValue: number, starRating: StarRatingComponent}) {

@@ -1,0 +1,50 @@
+<div class="container">
+  <mat-card class="result">
+    <mat-card-content>
+      <h2 class="example-h2">Notifications Setting</h2>
+
+      <section class="example-section">
+        <div>
+          <h4>New Order</h4>
+        </div>
+        <div class="toggle">
+          <mat-slide-toggle
+            class="example-margin"
+            [color]="color"
+            [checked]="checkedNewOrder"
+            [disabled]="disabled"
+            (change)="newOrdersChange($event)">
+          </mat-slide-toggle>
+        </div>
+      </section>
+      <section class="example-section">
+        <div>
+          <h4>Critical Status</h4>
+        </div>
+        <div class="toggle">
+          <mat-slide-toggle
+            class="example-margin"
+            [color]="color"
+            [checked]="checkedCriticalStatus"
+            [disabled]="disabled"
+            (change)="CriticalStatusChange($event)">
+          </mat-slide-toggle>
+        </div>
+      </section>
+      <section class="example-section">
+        <div>
+          <h4>Cancelled Order</h4>
+        </div>
+        <div class="toggle">
+          <mat-slide-toggle
+            class="example-margin"
+            [color]="color"
+            [checked]="checkedCancelledStatus"
+            [disabled]="disabled"
+            (change)="CancelledStatusChange($event)">
+          </mat-slide-toggle>
+        </div>
+      </section>
+    </mat-card-content>
+  </mat-card>
+</div>
