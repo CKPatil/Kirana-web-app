@@ -1,5 +1,7 @@
-<h1 mat-dialog-title>Select the Variety</h1>
-<div mat-dialog-content>
+<h1 mat-dialog-title class="text-center font-weight-bold">
+  Select the Variety
+</h1>
+<div mat-dialog-content class="text-center">
   <form>
     <mat-form-field>
       <mat-label>Select Product Variant</mat-label>
@@ -12,7 +14,7 @@
     </mat-form-field>
   </form>
 </div>
-<div mat-dialog-actions>
+<div mat-dialog-actions class="row justify-content-around">
   <button mat-button (click)="onNoClick()">Cancel</button>
   <button mat-button [mat-dialog-close]="selectedValue" cdkFocusInitial>
     Delete

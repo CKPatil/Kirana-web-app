@@ -1,37 +1,52 @@
-import { Component, OnInit, Inject, Input } from "@angular/core";
+import { Component, Inject, Input } from "@angular/core";
 import {
   MatDialog,
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from "@angular/material/dialog";
-import {
-  FormControl,
-  Validators,
-  FormGroup,
-  FormBuilder,
-  FormArray,
-} from "@angular/forms";
+import { FormBuilder, Validators } from "@angular/forms";
+import { ProductsService } from "src/app/services/products.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-update-item",
   templateUrl: "./update-item.component.html",
   styleUrls: ["./update-item.component.scss"],
 })
-export class UpdateItemComponent implements OnInit {
-  ngOnInit(): void {}
-  @Input() item: any;
+export class UpdateItemComponent {
+  @Input() variant: any;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(
+    public dialog: MatDialog,
+    private productService: ProductsService,
+    private router: Router
+  ) {}
 
+  // for variant detail Update
   openDialog() {
     const dialogRef = this.dialog.open(UpdateItemModal, {
       width: "350px",
-      data: this.item,
+      data: this.variant,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log("The dialog was closed");
-      console.log(result);
+      if (result) {
+        this.productService
+          .updateProduct(result, "?id=" + this.variant.p_id)
+          .subscribe(
+            (result) => {
+              alert("Product Variant Detail Updated");
+              this.router
+                .navigateByUrl("/login", { skipLocationChange: true })
+                .then(() => {
+                  this.router.navigate(["/items"]);
+                });
+            },
+            (error) => {
+              alert("Error Occured while updating the Detail");
+            }
+          );
+      }
     });
   }
 }
@@ -42,58 +57,24 @@ export class UpdateItemComponent implements OnInit {
 })
 export class UpdateItemModal {
   itemForm = this.fb.group({
-    name: ["", Validators.required],
-    variant_details: this.fb.array([
-      // this.fb.group({
-      //   // p_id: '',
-      //   variant: "",
-      //   quantity: "",
-      // }),
-    ]),
-    details: ["", Validators.required],
+    variant: ["", [Validators.required]],
+    quantity: ["", [Validators.required]],
+    price: ["", [Validators.required]],
   });
+
   constructor(
     public dialogRef: MatDialogRef<UpdateItemModal>,
     @Inject(MAT_DIALOG_DATA) public data,
     private fb: FormBuilder
   ) {
-    console.log(this.data);
-
-    let newVariant = []
-    this.data.variant_details.map(val=>{
-      this.addVariant()
-      newVariant.push({variant: val.variant, quantity: val.quantity})
-    })
-
-    let newData = {}
-    newData['name'] = this.data.name
-    newData['details'] = this.data.details
-    newData['variant_details'] = newVariant
-
-    this.itemForm.patchValue(newData)
+    this.itemForm.setValue({
+      variant: data.variant,
+      quantity: data.quantity,
+      price: data.price,
+    });
   }
 
   onNoClick(): void {
     this.dialogRef.close();
-  }
-
-  get allVariants() {
-    return this.itemForm.get("variant_details") as FormArray;
-  }
-
-  addVariant() {
-    const varient = this.itemForm.controls.variant_details as FormArray;
-    varient.push(
-      this.fb.group({
-        variant: "",
-        quantity: "",
-      })
-    );
-  }
-
-  removeVariant(i) {
-    console.log(i);
-    const varient = this.itemForm.controls.variant_details as FormArray;
-    varient.removeAt(i);
   }
 }

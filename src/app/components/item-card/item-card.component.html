@@ -5,13 +5,13 @@
     </div>
     <div>
       <button
-          mat-icon-button
-          color="primary"
-          aria-label="Example icon-button with delete icon"
-          (click)="openSelectImageDialog()"
-        >
-          <mat-icon>add</mat-icon>
-        </button>
+        mat-icon-button
+        color="primary"
+        aria-label="Example icon-button with delete icon"
+        (click)="openSelectImageDialog()"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
     </div>
   </div>
   <div class="item-details-container">
@@ -21,6 +21,17 @@
           <h4>{{ item.name }}</h4>
         </div>
       </div>
+      <div>
+        <button
+          mat-icon-button
+          color="primary"
+          aria-label="Example icon-button with Update icon"
+          (click)="openEditProductDetailDialog()"
+        >
+          <mat-icon>create</mat-icon>
+        </button>
+      </div>
+
       <div class="item-price">
         <button
           mat-icon-button
@@ -31,7 +42,6 @@
           <mat-icon>delete</mat-icon>
         </button>
       </div>
-      <app-update-item [item]="item"></app-update-item>
     </div>
     <div class="item-detail-container">
       <div class="item-description-container">
@@ -41,16 +51,15 @@
         <p>Brand : {{ item.brand }}</p>
         <p>Quantity Type : {{ item.quantity_type }}</p>
       </div>
-      <div class="item-variety">
-        <h5>Variety:</h5>
+      <div class="item-variant">
+        <h5>Variant:</h5>
         <ul>
-          <li *ngFor="let variety of item.variant_details">
+          <li *ngFor="let variant of item.variant_details">
             <span>
-              {{ variety.variant }} ::
-              Quantity : {{ variety.quantity }} ::
-              Price : {{variety.price || ''}}
-              </span
-            >
+              {{ variant.variant }} :: Quantity : {{ variant.quantity }} ::
+              Price : {{ variant.price || "" }}
+            </span>
+            <app-update-item [variant]="variant"></app-update-item>
           </li>
         </ul>
       </div>

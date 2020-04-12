@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject } from "@angular/core";
+import { Component, Input, Inject } from "@angular/core";
 import {
   MatDialog,
   MatDialogRef,
@@ -13,8 +13,9 @@ import { FormBuilder, Validators } from "@angular/forms";
   templateUrl: "./item-card.component.html",
   styleUrls: ["./item-card.component.scss"],
 })
-export class ItemCardComponent implements OnInit {
+export class ItemCardComponent {
   @Input() item: any;
+
   constructor(
     private dialog: MatDialog,
     private productService: ProductsService,
@@ -27,6 +28,7 @@ export class ItemCardComponent implements OnInit {
     }
   }
 
+  // for deleting the Variant
   openSelectVarietyDialog() {
     const dialogRef = this.dialog.open(SelectVarietyDialog, {
       width: "20em",
@@ -43,7 +45,11 @@ export class ItemCardComponent implements OnInit {
           deleteURL = `?id=${deleteDetail[1]}`;
         }
         this.productService.deleteProduct(deleteURL).subscribe(
-          (result) => {
+          (result: any) => {
+            if (result.error) {
+              alert("Error Occured in Deleting the Product");
+              return 0;
+            }
             alert("Product Deleted");
             this.router
               .navigateByUrl("/login", { skipLocationChange: true })
@@ -52,7 +58,6 @@ export class ItemCardComponent implements OnInit {
               });
           },
           (error) => {
-            console.log("Error Occured : ", error);
             alert("Error Occured in Deleting the Product");
           }
         );
@@ -60,6 +65,7 @@ export class ItemCardComponent implements OnInit {
     });
   }
 
+  // for image upload
   openSelectImageDialog() {
     const dialogRef = this.dialog.open(SelectImageDialog, {
       width: "20em",
@@ -68,7 +74,6 @@ export class ItemCardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result && result.value.image) {
-        console.log(result);
         let formData = new FormData();
 
         formData.append("type", "products");
@@ -77,18 +82,50 @@ export class ItemCardComponent implements OnInit {
         formData.append("brand", this.item.brand);
         formData.append("image", result.value.image);
 
-        this.productService.uploadImage(formData).subscribe((result) => {
-          alert("Image Uploaded");
-          this.router
-            .navigateByUrl("/login", { skipLocationChange: true })
-            .then(() => {
-              this.router.navigate(["/items"]);
-            });
-        });
+        this.productService.uploadImage(formData).subscribe(
+          (result) => {
+            alert("Image Uploaded");
+            this.router
+              .navigateByUrl("/login", { skipLocationChange: true })
+              .then(() => {
+                this.router.navigate(["/items"]);
+              });
+          },
+          (error) => {
+            alert("Error Occured In Image Upload");
+          }
+        );
       }
     });
   }
-  ngOnInit() {}
+
+  // for updating the product detail
+  openEditProductDetailDialog() {
+    const dialogRef = this.dialog.open(EditProductDetailDialog, {
+      width: "20em",
+      data: this.item,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.productService
+          .updateProduct(result, "?p_id=" + this.item.variant_details[0].p_id)
+          .subscribe(
+            (result) => {
+              alert("Product Detail Updated");
+              this.router
+                .navigateByUrl("/login", { skipLocationChange: true })
+                .then(() => {
+                  this.router.navigate(["/items"]);
+                });
+            },
+            (error) => {
+              alert("Error Occured while Updating the Detail");
+            }
+          );
+      }
+    });
+  }
 }
 
 // //////////// SelectVarietyDialog
@@ -157,6 +194,33 @@ export class SelectImageDialog {
       this.picUploadForm.get("image").setValue(file);
     }
   }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+// ////////// Update Product Detail Dialog
+@Component({
+  selector: "editProductDetailDialog",
+  templateUrl: "editProductDetailDialog.html",
+})
+export class EditProductDetailDialog {
+  constructor(
+    public dialogRef: MatDialogRef<EditProductDetailDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private fb: FormBuilder
+  ) {
+    this.itemForm.setValue({
+      name: data.name,
+      description: data.details,
+    });
+  }
+
+  itemForm = this.fb.group({
+    name: ["", [Validators.required]],
+    description: ["", [Validators.required]],
+  });
 
   onNoClick(): void {
     this.dialogRef.close();
