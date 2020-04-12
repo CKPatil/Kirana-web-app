@@ -67,8 +67,6 @@ import { NotificationsPageComponent } from './pages/notifications-page/notificat
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatBadgeModule} from '@angular/material/badge';
-import { NotificationService } from './components/notification/notification.service';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -139,7 +137,6 @@ import { NotificationService } from './components/notification/notification.serv
   ],
   providers: [
     ProductsService,
-    NotificationService,
     TransactionService,
     [AuthGuard, FilterPipe],
     {provide: MAT_DATE_LOCALE, useValue: 'en-IN'},
