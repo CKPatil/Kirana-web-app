@@ -15,6 +15,7 @@ import { FormBuilder, Validators } from "@angular/forms";
 })
 export class ItemCardComponent {
   @Input() item: any;
+
   constructor(
     private dialog: MatDialog,
     private productService: ProductsService,
@@ -27,6 +28,7 @@ export class ItemCardComponent {
     }
   }
 
+  // for deleting the Variant
   openSelectVarietyDialog() {
     const dialogRef = this.dialog.open(SelectVarietyDialog, {
       width: "20em",
@@ -44,7 +46,6 @@ export class ItemCardComponent {
         }
         this.productService.deleteProduct(deleteURL).subscribe(
           (result: any) => {
-            console.log("RESULT: ", result);
             if (result.error) {
               alert("Error Occured in Deleting the Product");
               return 0;
@@ -57,7 +58,6 @@ export class ItemCardComponent {
               });
           },
           (error) => {
-            console.log("Error: ", error);
             alert("Error Occured in Deleting the Product");
           }
         );
@@ -65,13 +65,13 @@ export class ItemCardComponent {
     });
   }
 
+  // for image upload
   openSelectImageDialog() {
     const dialogRef = this.dialog.open(SelectImageDialog, {
       width: "20em",
       data: this.item,
     });
 
-    // To upload the Image
     dialogRef.afterClosed().subscribe((result) => {
       if (result && result.value.image) {
         let formData = new FormData();
@@ -84,7 +84,6 @@ export class ItemCardComponent {
 
         this.productService.uploadImage(formData).subscribe(
           (result) => {
-            console.log("RESULT: ", result);
             alert("Image Uploaded");
             this.router
               .navigateByUrl("/login", { skipLocationChange: true })
@@ -93,7 +92,6 @@ export class ItemCardComponent {
               });
           },
           (error) => {
-            console.log("ERROR: ", error);
             alert("Error Occured In Image Upload");
           }
         );
@@ -101,6 +99,7 @@ export class ItemCardComponent {
     });
   }
 
+  // for updating the product detail
   openEditProductDetailDialog() {
     const dialogRef = this.dialog.open(EditProductDetailDialog, {
       width: "20em",
@@ -113,7 +112,6 @@ export class ItemCardComponent {
           .updateProduct(result, "?p_id=" + this.item.variant_details[0].p_id)
           .subscribe(
             (result) => {
-              console.log("RESUTL : ", result);
               alert("Product Detail Updated");
               this.router
                 .navigateByUrl("/login", { skipLocationChange: true })
@@ -122,7 +120,6 @@ export class ItemCardComponent {
                 });
             },
             (error) => {
-              console.log("ERROR : ", error);
               alert("Error Occured while Updating the Detail");
             }
           );

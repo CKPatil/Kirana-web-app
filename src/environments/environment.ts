@@ -11,7 +11,7 @@ export const environment = {
   orders: 'api/v1/vendor/order/?order=listall',
   retailers: 'api/v1/vendors/',
   products: 'api/v1/products/',
-  imageUpload: 'api/v1/imageUpload',
+  imageUpload: 'api/v1/imageUpload/',
   signUpURL: 'user/signUp/',
   loginURL: 'login/',
   tokenURL: 'api/token/',

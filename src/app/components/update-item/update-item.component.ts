@@ -6,6 +6,7 @@ import {
 } from "@angular/material/dialog";
 import { FormBuilder, Validators } from "@angular/forms";
 import { ProductsService } from "src/app/services/products.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-update-item",
@@ -17,9 +18,11 @@ export class UpdateItemComponent {
 
   constructor(
     public dialog: MatDialog,
-    private productService: ProductsService
+    private productService: ProductsService,
+    private router: Router
   ) {}
 
+  // for variant detail Update
   openDialog() {
     const dialogRef = this.dialog.open(UpdateItemModal, {
       width: "350px",
@@ -32,11 +35,14 @@ export class UpdateItemComponent {
           .updateProduct(result, "?id=" + this.variant.p_id)
           .subscribe(
             (result) => {
-              console.log("RESULT : ", result);
               alert("Product Variant Detail Updated");
+              this.router
+                .navigateByUrl("/login", { skipLocationChange: true })
+                .then(() => {
+                  this.router.navigate(["/items"]);
+                });
             },
             (error) => {
-              console.log("ERROR : ", error);
               alert("Error Occured while updating the Detail");
             }
           );
@@ -55,6 +61,7 @@ export class UpdateItemModal {
     quantity: ["", [Validators.required]],
     price: ["", [Validators.required]],
   });
+
   constructor(
     public dialogRef: MatDialogRef<UpdateItemModal>,
     @Inject(MAT_DIALOG_DATA) public data,

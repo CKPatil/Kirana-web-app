@@ -33,11 +33,11 @@ export class AddItemsComponent {
       if (result) {
         let variant_details = result.variant_details;
         result["variants"] = [];
-        result["quantites"] = [];
+        result["quantity"] = [];
         result["price"] = [];
         variant_details.forEach((val) => {
           result["variants"].push(val.variant);
-          result["quantites"].push(parseInt(val.quantity));
+          result["quantity"].push(parseInt(val.quantity));
           result["price"].push(parseInt(val.price));
         });
         delete result.variant_details;
