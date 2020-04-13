@@ -67,35 +67,35 @@ export class RecentOrdersComponent implements OnInit {
     });
     this.currentTime=new Date();
     
-    console.log(this.orderStatus);
+    //console.log(this.orderStatus);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.transactionService.buildURLS("");
     this.transactionService.getAllOrders().subscribe((res) => {
       console.log(res);
-      console.log("allTransactions")
+      //console.log("allTransactions")
       this.allTransactions = res.body;
       this.allTransactions.forEach(element => {
         element.timestamp=new Date(element.timestamp);
         this.deliveryTime=new Date(element.timestamp.getTime()+(2*60*60*1000));
-        console.log(element.timestamp);
-        console.log(this.deliveryTime);
+        //console.log(element.timestamp);
+        //console.log(this.deliveryTime);
         this.timeDiff=this.deliveryTime-this.currentTime;
         this.timeDiff=(((this.timeDiff/1000)/60)/60);
         this.timeDiff=this.timeDiff.toFixed(2);
-        console.log(this.timeDiff);
+        //console.log(this.timeDiff);
         
         this.timeDiffMins=((this.timeDiff*100)%100)/100;
         this.timeDiffMins=this.timeDiffMins*60;
-        console.log(this.timeDiffMins);
+        //console.log(this.timeDiffMins);
         
         this.timeDiffHours=(this.timeDiff/10)*10;
-        console.log(this.timeDiffHours);
+        //console.log(this.timeDiffHours);
         
         element.remaining_time=this.timeDiffHours.toFixed(0)+" hour "+this.timeDiffMins.toFixed(0)+" mins";
-        console.log(element.remaining_time);
+        //console.log(element.remaining_time);
       });
-      console.log(this.allTransactions);
+      //console.log(this.allTransactions);
     });
 
     // this.transactionService.buildURLS("?order=delivered");

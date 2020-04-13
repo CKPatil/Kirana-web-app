@@ -38,13 +38,12 @@ export class TransactionService {
 
   fetchUpdateOrderStatusURL(id: number, status: number){
     this.getUpdateOrderStatusURL = environment.backend_end_point + environment.updateStatusURL + '?order_id=' + id + '&status=' + status;
-    debugger;
+
   }
 
   updateOrderStatus(id: number, status: number){
     this.fetchUpdateOrderStatusURL(id,status);
     console.log(this.httpOptions);
-    debugger;
     return this.http.put(this.getUpdateOrderStatusURL,{},{ 
       headers: this.httpOptions,
       observe: 'response'
