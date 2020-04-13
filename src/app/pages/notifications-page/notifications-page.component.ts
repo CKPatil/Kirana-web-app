@@ -44,6 +44,9 @@ export class NotificationsPageComponent implements OnInit {
   newStatus = 'Ordered';
   cancelledStatus = 'Cancelled';
   orderedNotification: any;
+  dupOrderedNotifcation: any;
+  dupCancelNotifcation: any;
+  dupCriticalNotifcation: any;
   cancelNotification: any;
   newOrderedStatus: any;
   cancelOrderedStatus: any;
@@ -80,7 +83,6 @@ export class NotificationsPageComponent implements OnInit {
         this.cancelOrderFun();
         this.criticalOrderFun();
       });
-    console.log('done');
   }
   pad = (num)  => ('0' + num).slice(-2);
   getTimeFromDate = (timestamp) => {
@@ -91,31 +93,38 @@ export class NotificationsPageComponent implements OnInit {
     return this.pad(hours) + ':' + this.pad(minutes) + ':' + this.pad(seconds);
   }
   newOrderFun() {
-    this.orderedNotification.forEach(element => {
-      this.date = new Date(element.timestamp);
-      this.formatDate = ('0' + this.date.getDate()).slice(-2) + '/' + ('0' +
-                  (this.date.getMonth() + 1)).slice(-2) + '/' + this.date.getFullYear();
-      if (this.formatDate === this.formattedTodayDate) {
-        this.newOrderFilter.push(element);
-        this.newOrderDate.push(this.formatDate);
-        this.time = this.getTimeFromDate(this.date.getTime());
-        this.newOrderTime.push(this.time);
-      }
-    });
+    if (this.orderedNotification.length !== this.dupOrderedNotifcation) {
+      this.orderedNotification.forEach(element => {
+        this.date = new Date(element.timestamp);
+        this.formatDate = ('0' + this.date.getDate()).slice(-2) + '/' + ('0' +
+                    (this.date.getMonth() + 1)).slice(-2) + '/' + this.date.getFullYear();
+        if (this.formatDate === this.formattedTodayDate) {
+          this.newOrderFilter.push(element);
+          this.newOrderDate.push(this.formatDate);
+          this.time = this.getTimeFromDate(this.date.getTime());
+          this.newOrderTime.push(this.time);
+        }
+      });
+      this.dupOrderedNotifcation = this.orderedNotification.length;
+    }
+
   }
 
   cancelOrderFun() {
-    this.cancelNotification.forEach(element => {
-      this.date = new Date(element.timestamp);
-      this.formatDate = ('0' + this.date.getDate()).slice(-2) + '/' + ('0' +
-                  (this.date.getMonth() + 1)).slice(-2) + '/' + this.date.getFullYear();
-      // if (this.formatDate === this.formattedTodayDate) {
-      this.cancelOrderFilter.push(element);
-      this.cancelOrderDate.push(this.formatDate);
-      this.time = this.getTimeFromDate(this.date.getTime());
-      this.cancelOrderTime.push(this.time);
-      // }
-    });
+    if (this.cancelNotification.length !== this.dupCancelNotifcation) {
+      this.cancelNotification.forEach(element => {
+        this.date = new Date(element.timestamp);
+        this.formatDate = ('0' + this.date.getDate()).slice(-2) + '/' + ('0' +
+                    (this.date.getMonth() + 1)).slice(-2) + '/' + this.date.getFullYear();
+        if (this.formatDate === this.formattedTodayDate) {
+        this.cancelOrderFilter.push(element);
+        this.cancelOrderDate.push(this.formatDate);
+        this.time = this.getTimeFromDate(this.date.getTime());
+        this.cancelOrderTime.push(this.time);
+        }
+      });
+    }
+    this.dupCancelNotifcation = this.cancelNotification.length;
   }
 
   criticalOrderFun() {
@@ -128,16 +137,19 @@ export class NotificationsPageComponent implements OnInit {
             this.criticalOrder.push(element);
       }
     });
-    this.criticalOrder.forEach(element => {
-      this.date = new Date(element.timestamp);
-      this.formatDate = ('0' + this.date.getDate()).slice(-2) + '/' + ('0' +
-                  (this.date.getMonth() + 1)).slice(-2) + '/' + this.date.getFullYear();
-      if (this.formatDate === this.formattedTodayDate) {
-        this.criticalOrderFilter.push(element);
-        this.criticalOrderDate.push(this.formatDate);
-        this.time = this.getTimeFromDate(this.date.getTime());
-        this.criticalOrderTime.push(this.time);
-      }
-    });
+    if (this.criticalOrder.length !== this.dupCriticalNotifcation) {
+      this.criticalOrder.forEach(element => {
+        this.date = new Date(element.timestamp);
+        this.formatDate = ('0' + this.date.getDate()).slice(-2) + '/' + ('0' +
+                    (this.date.getMonth() + 1)).slice(-2) + '/' + this.date.getFullYear();
+        if (this.formatDate === this.formattedTodayDate) {
+          this.criticalOrderFilter.push(element);
+          this.criticalOrderDate.push(this.formatDate);
+          this.time = this.getTimeFromDate(this.date.getTime());
+          this.criticalOrderTime.push(this.time);
+        }
+      });
+      this.dupCriticalNotifcation = this.criticalOrder.length;
+    }
   }
 }
