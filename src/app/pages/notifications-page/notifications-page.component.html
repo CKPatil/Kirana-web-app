@@ -1,7 +1,7 @@
 <div class="outer">
   <h3>Notifications</h3>
   <mat-accordion multi='true'>
-    <div *ngIf="newOrderStatus =='true'">
+    <div class='notify' *ngIf="newOrderStatus =='true'">
       <mat-expansion-panel
         (opened)="panelOpenState = true"
         (closed)="panelOpenState = false">
@@ -10,22 +10,22 @@
           New Order
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <div *ngFor="let newNotification of newOrderFilter" >
+        <div *ngFor="let i = index ;let newNotification of newOrderFilter" >
           <div class="innerdiv">
-          <h5 >New Critical Order for {{newNotification.ShopName}}</h5>
-          <p class="od">Date: {{newNotification.OrderDate}}</p>
+          <h5 >New Critical Order for {{newNotification.retailer_name}}</h5>
+          <p class="od">Date: {{newOrderDate[i]}}</p>
           </div>
           <div class="innerdiv">
-          <small>OrderID: {{newNotification.OrderID}}</small>
-          <p class="od">Time: {{newNotification.Time}}</p>
+          <small>OrderID: {{newNotification.id}}</small>
+          <p class="od">Time: {{newOrderTime[i]}}</p>
           </div>
-          <p>Customer Name: {{newNotification.CustomerName}}</p>
-          <p> Customer Address: {{newNotification.CustomerLocation}}</p>
+          <p>Customer Name: {{newNotification.customer_name}}</p>
+          <p> Customer Address: {{newNotification.customer_address}}</p>
           <hr>
         </div>
       </mat-expansion-panel>
     </div>
-    <div *ngIf="cancelOrderStatus =='true'">
+    <div class='notify' *ngIf="cancelOrderStatus =='true'">
       <mat-expansion-panel (opened)="panelOpenState = true"
                          (closed)="panelOpenState = false">
         <mat-expansion-panel-header>
@@ -33,22 +33,22 @@
             Cancelled Order
           </mat-panel-title>
         </mat-expansion-panel-header>
-          <div *ngFor="let cancelledNotification of cancelOrderFilter" >
+          <div *ngFor="let i = index; let cancelledNotification of cancelOrderFilter" >
             <div class="innerdiv">
-              <h5>New Cancelled Order for {{cancelledNotification.ShopName}}</h5>
-              <p class="od">Date: {{cancelledNotification.OrderDate}}</p>
+              <h5>New Cancelled Order for {{cancelledNotification.retailer_name}}</h5>
+              <p class="od">Date: {{cancelOrderDate[i]}}</p>
             </div>
             <div class="innerdiv">
-              <small>OrderID: {{cancelledNotification.OrderID}}</small>
-              <p class="od">Time: {{cancelledNotification.Time}}</p>
+              <small>OrderID: {{cancelledNotification.id}}</small>
+              <p class="od">Time: {{cancelOrderTime[i]}}</p>
             </div>
-           <p>Customer Name: {{cancelledNotification.CustomerName}}</p>
-            <p> Customer Address: {{cancelledNotification.CustomerLocation}}</p>
+           <p>Customer Name: {{cancelledNotification.customer_name}}</p>
+            <p> Customer Address: {{cancelledNotification.customer_address}}</p>
             <hr>
           </div>
       </mat-expansion-panel>
     </div>
-    <div *ngIf="criticalOrderStatus =='true'">
+    <div class='notify' *ngIf="criticalOrderStatus =='true'">
       <mat-expansion-panel
         (opened)="panelOpenState = true"
         (closed)="panelOpenState = false">
@@ -57,14 +57,14 @@
             Critical Order
           </mat-panel-title>
         </mat-expansion-panel-header>
-          <div *ngFor="let criticalNotification of criticalOrderFilter">
+          <div *ngFor="let i = index; let criticalNotification of criticalOrderFilter">
             <div class="innerdiv" style="overflow: hidden;">
               <h5>New Critical Order for {{criticalNotification.ShopName}}</h5>
-              <p class="od">Date: {{criticalNotification.OrderDate}}</p>
+              <p class="od">Date: {{criticalOrderDate[i]}}</p>
             </div>
             <div class="innerdiv" style="overflow: hidden;">
               <small>OrderID: {{criticalNotification.OrderID}}</small>
-              <p class="od">Time: {{criticalNotification.Time}}</p>
+              <p class="od">Time: {{criticalOrderDate[i]}}</p>
             </div>
             <p>Customer Name: {{criticalNotification.CustomerName}}</p>
             <p> Customer Address: {{criticalNotification.CustomerLocation}}</p>

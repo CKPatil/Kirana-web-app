@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { NotificationsService } from './../../services/notifications.service';
 import { NewOrderNotification, CancelledOrderNotification, CriticalOrderNotification } from './../../constants/mockup-data';
 import { Component, OnInit } from '@angular/core';
@@ -15,7 +16,7 @@ import {
   styleUrls: ['./notifications-page.component.scss']
 })
 export class NotificationsPageComponent implements OnInit {
-  constructor(private notificationsService: NotificationsService) { }
+  constructor(private notificationsService: NotificationsService, private router: Router) { }
   message = 'Password changed sucessfully';
   errMessage = 'Old Password not valid !!!';
   actionButtonLabel = 'OK';
@@ -31,53 +32,112 @@ export class NotificationsPageComponent implements OnInit {
   cancelOrderNotification: any[] = [];
   critcalOrderNotification: any[] = [];
   today = new Date();
-  tomorrow = new Date();
-  formattedDate = this.today.getDate() + '/' + (this.today.getMonth() + 1) + '/' + this.today.getFullYear();
+  formattedTodayDate = ('0' + this.today.getDate()).slice(-2) + '/' + ('0' +
+                  (this.today.getMonth() + 1)).slice(-2) + '/' + this.today.getFullYear();
   newOrd: any;
   cancelOrd: any;
-  criticalOrd: any;
-  newOrderFilter: any;
-  criticalOrderFilter: any;
-  cancelOrderFilter: any;
-
+  criticalOrder: any = [];
+  newOrderFilter: any = [];
+  criticalOrderFilter: any = [];
+  cancelOrderFilter: any = [];
+  notifications: any[];
+  newStatus = 'Ordered';
+  cancelledStatus = 'Cancelled';
+  orderedNotification: any;
+  cancelNotification: any;
+  newOrderedStatus: any;
+  cancelOrderedStatus: any;
+  date: any;
+  time: any;
+  formatDate: any;
+  newOrderDate: any = [];
+  newOrderTime: any = [];
+  cancelOrderDate: any = [];
+  cancelOrderTime: any = [];
+  criticalOrderDate: any = [];
+  criticalOrderTime: any = [];
+  criticalDelivery = ['Cancelled', 'Delivered' ];
   ngOnInit() {
     this.newOrderStatus = localStorage.getItem('newOrder');
     this.cancelOrderStatus = localStorage.getItem('cancelOrder');
     this.criticalOrderStatus = localStorage.getItem('criticalOrder');
-    this.newOrder();
-    this.cancelOrder();
-    this.criticalOrder();
+    this.newNotify();
+    setInterval( () => {
+      this.newNotify();
+    }, 10000);
+  }
+  newNotify() {
+    this.notificationsService.getAllNotifications()
+      .subscribe( data => {
+        this.notifications = data;
+        this.notifications = this.notifications.reverse();
+        this.newOrderedStatus = {records: this.notifications};
+        this.orderedNotification = this.newOrderedStatus.records.filter( (i: { status: string; }) => this.newStatus.includes(i.status));
+        this.cancelOrderedStatus = {records: this.notifications};
+        this.cancelNotification = this.cancelOrderedStatus.records.filter( (i: { status: string; }) =>
+                                  this.cancelledStatus.includes(i.status));
+        this.newOrderFun();
+        this.cancelOrderFun();
+        this.criticalOrderFun();
+      });
+    console.log('done');
+  }
+  pad = (num)  => ('0' + num).slice(-2);
+  getTimeFromDate = (timestamp) => {
+    const date = new Date(timestamp * 1000);
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+    return this.pad(hours) + ':' + this.pad(minutes) + ':' + this.pad(seconds);
+  }
+  newOrderFun() {
+    this.orderedNotification.forEach(element => {
+      this.date = new Date(element.timestamp);
+      this.formatDate = ('0' + this.date.getDate()).slice(-2) + '/' + ('0' +
+                  (this.date.getMonth() + 1)).slice(-2) + '/' + this.date.getFullYear();
+      if (this.formatDate === this.formattedTodayDate) {
+        this.newOrderFilter.push(element);
+        this.newOrderDate.push(this.formatDate);
+        this.time = this.getTimeFromDate(this.date.getTime());
+        this.newOrderTime.push(this.time);
+      }
+    });
   }
 
-newOrder() {
-    // this.notificationsService.getAllNewNotifications()
-    //   .subscribe( data => {
-    //     this.mockNewOrderNotification = data;
-    //     this.newOrderNotification = this.newOrderNotification.concat(this.mockNewOrderNotification);
-    //     this.newOrd = {records: this.mockNewOrderNotification};
-    //     this.newOrderFilter = this.newOrd.records.filter( (i: { OrderDate: string; }) => this.formattedDate.includes(i.OrderDate));
-    //   });
+  cancelOrderFun() {
+    this.cancelNotification.forEach(element => {
+      this.date = new Date(element.timestamp);
+      this.formatDate = ('0' + this.date.getDate()).slice(-2) + '/' + ('0' +
+                  (this.date.getMonth() + 1)).slice(-2) + '/' + this.date.getFullYear();
+      // if (this.formatDate === this.formattedTodayDate) {
+      this.cancelOrderFilter.push(element);
+      this.cancelOrderDate.push(this.formatDate);
+      this.time = this.getTimeFromDate(this.date.getTime());
+      this.cancelOrderTime.push(this.time);
+      // }
+    });
   }
 
-criticalOrder() {
-    // this.notificationsService.getAllCriticalNotifications()
-    //   .subscribe( data => {
-    //     this.mockCriticalOrderNotification = data;
-    //     this.critcalOrderNotification = this.critcalOrderNotification.concat(this.mockCriticalOrderNotification);
-    //     this.criticalOrd = {records: this.mockCriticalOrderNotification};
-    //     this.criticalOrderFilter = this.criticalOrd.records.filter((i: { OrderDate: string; }) =>
-    //     this.formattedDate.includes(i.OrderDate));
-    //   });
-  }
+  criticalOrderFun() {
+    this.time = new Date().getTime();
+    this.notifications.forEach(element => {
+      this.date = new Date(element.remaining_time);
+      if (((this.date.getTime() - this.time) <= 20000 && (this.date.getTime() - this.time) >= 0
+            && !(this.criticalDelivery.includes(element.status)))) {
 
-cancelOrder() {
-    // this.notificationsService.getAllCancelledNotifications()
-    //   .subscribe( data => {
-    //     this.mockCancelledOrderNotification = data;
-    //     this.cancelOrderNotification = this.cancelOrderNotification.concat(this.mockCancelledOrderNotification);
-    //     this.cancelOrd = {records: this.mockCancelledOrderNotification};
-    //     this.cancelOrderFilter = this.criticalOrd.records.filter((i: { OrderDate: string; }) =>
-    //     this.formattedDate.includes(i.OrderDate));
-    //   });
+            this.criticalOrder.push(element);
+      }
+    });
+    this.criticalOrder.forEach(element => {
+      this.date = new Date(element.timestamp);
+      this.formatDate = ('0' + this.date.getDate()).slice(-2) + '/' + ('0' +
+                  (this.date.getMonth() + 1)).slice(-2) + '/' + this.date.getFullYear();
+      if (this.formatDate === this.formattedTodayDate) {
+        this.criticalOrderFilter.push(element);
+        this.criticalOrderDate.push(this.formatDate);
+        this.time = this.getTimeFromDate(this.date.getTime());
+        this.criticalOrderTime.push(this.time);
+      }
+    });
   }
 }
