@@ -1,0 +1,17 @@
+<mat-card class="mat-elevation-z6">
+  <div class="content">
+    <h5>{{ item.customer_name }}</h5>
+    <p class="event">₹{{ item.price }}</p>
+  </div>
+  <p>Order date : {{ item.orderDate }}</p>
+  <div class="lastLine">
+    <p>Vendor name : {{ item.vendor_name }}</p>
+    <p
+      class="status mybtn"
+      [ngClass]="item.status"
+      (click)="openChooseOrderStatusDialog()"
+    >
+      {{ item.status }}
+    </p>
+  </div>
+</mat-card>

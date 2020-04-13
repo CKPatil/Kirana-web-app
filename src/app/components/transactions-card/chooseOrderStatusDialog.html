@@ -1,0 +1,21 @@
+<h1 mat-dialog-title class="text-center font-weight-bold">
+  Change the Status
+</h1>
+<div mat-dialog-content class="text-center">
+  <form>
+    <mat-form-field>
+      <mat-label>Choose Status</mat-label>
+      <mat-select [(ngModel)]="selectedValue" name="status">
+        <mat-option *ngFor="let i of status" [value]="status.indexOf(i)">
+          {{i}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions class="row justify-content-around">
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="selectedValue" cdkFocusInitial>
+    Update
+  </button>
+</div>

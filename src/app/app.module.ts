@@ -35,6 +35,7 @@ import { DialogAddItemComponent } from './components/add-items/add-items.compone
 import { RetailerComponent } from './pages/retailer/retailer.component';
 import { ItemsComponent } from './pages/items/items.component';
 import { TransactionsComponent } from './pages/transactions/transactions.component';
+
 import { LoginComponent } from './pages/login/login.component';
 import { AuthGuard } from './guards/auth/auth.guard';
 import {MatSelectModule} from '@angular/material/select';
@@ -68,6 +69,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatBadgeModule} from '@angular/material/badge';
 import { NotificationService } from './components/notification/notification.service';
+import { TransactionsCardComponent, ChooseOrderStatusDialog } from './components/transactions-card/transactions-card.component';
 
 @NgModule({
   declarations: [
@@ -78,6 +80,8 @@ import { NotificationService } from './components/notification/notification.serv
     RetailerComponent,
     ItemsComponent,
     TransactionsComponent,
+    ChooseOrderStatusDialog,
+    TransactionsCardComponent,
     LoginComponent,
     AnalyticContainerComponent,
     RecentOrdersComponent,
