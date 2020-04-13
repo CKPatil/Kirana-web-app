@@ -24,9 +24,10 @@ export class TransactionService {
     this.buildURLS();
   }
 
-  getAllOrders(): Observable<Transaction[]> {
-    return this.http.get<Transaction[]>(this.getAllTransactionsURL,  {
+  getAllOrders(){
+    return this.http.get(this.getAllTransactionsURL,  {
       headers: this.httpOptions,
+      observe: 'response'
     })
     .pipe(
       catchError(error => {

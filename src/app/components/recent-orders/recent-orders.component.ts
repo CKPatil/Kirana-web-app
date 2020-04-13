@@ -47,6 +47,11 @@ export class RecentOrdersComponent implements OnInit {
     {value: Status.ORDERED, viewValue: Status.ORDERED},
     {value: Status.PACKED, viewValue: Status.PACKED}
   ];
+  deliveryTime: any;
+  timeDiff: any;
+  currentTime: any;
+  timeDiffMins: any;
+  timeDiffHours: any;
 
   constructor(private interaction: InteractionService, public dialog: MatDialog,private transactionService: TransactionService) {
     this.isSidePanelExpanded = this.interaction.getExpandedStatus();
@@ -59,8 +64,30 @@ export class RecentOrdersComponent implements OnInit {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.transactionService.getAllOrders().subscribe((res) => {
-      console.log(res);
-      this.allTransactions = res;
+      //console.log(res);
+      //console.log("allTransactions")
+      this.allTransactions = res.body;
+      this.allTransactions.reverse();
+      this.allTransactions.forEach(element => {
+        element.timestamp=new Date(element.timestamp);
+        this.deliveryTime=new Date(element.timestamp.getTime()+(2*60*60*1000));
+        //console.log(element.timestamp);
+        //console.log(this.deliveryTime);
+        this.timeDiff=this.deliveryTime-this.currentTime;
+        this.timeDiff=(((this.timeDiff/1000)/60)/60);
+        this.timeDiff=this.timeDiff.toFixed(2);
+        //console.log(this.timeDiff);
+        
+        this.timeDiffMins=((this.timeDiff*100)%100)/100;
+        this.timeDiffMins=this.timeDiffMins*60;
+        //console.log(this.timeDiffMins);
+        
+        this.timeDiffHours=(this.timeDiff/10)*10;
+        //console.log(this.timeDiffHours);
+        
+        element.remaining_time=this.timeDiffHours.toFixed(0)+" hour "+this.timeDiffMins.toFixed(0)+" mins";
+        console.log(element.remaining_time);
+      });
       console.log(this.allTransactions);
     });
   }
