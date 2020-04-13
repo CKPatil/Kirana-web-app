@@ -1,5 +1,4 @@
 import { Router } from '@angular/router';
-import { NotificationService } from './notification.service';
 import { Component, OnInit, Inject } from '@angular/core';
 import {ThemePalette} from '@angular/material/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
@@ -16,7 +15,7 @@ export class NotificationComponent implements OnInit  {
   checkedCriticalStatus: any = false;
   disabled = false;
   constructor(public dialogRef: MatDialogRef<NotificationComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any, private notificationService: NotificationService, private router: Router) { }
+              @Inject(MAT_DIALOG_DATA) public data: any, private router: Router) { }
 
   ngOnInit(): void {
     this.checkedNewOrder = localStorage.getItem('newOrder');
@@ -31,7 +30,6 @@ export class NotificationComponent implements OnInit  {
     .then( () => {
       this.router.navigate(['/notifications']);
     });
-    this.notificationService.sendNewOrder(newNotificationEvent.checked.toString());
   }
   CriticalStatusChange(criticalNotificationEvent) {
     localStorage.setItem('criticalOrder', criticalNotificationEvent.checked.toString());
@@ -40,7 +38,6 @@ export class NotificationComponent implements OnInit  {
     .then( () => {
       this.router.navigate(['/notifications']);
     });
-    this.notificationService.sendCriticalOrder(criticalNotificationEvent.checked.toString());
   }
   CancelledStatusChange(cancelledlNotificationEvent) {
     localStorage.setItem('cancelOrder', cancelledlNotificationEvent.checked.toString());
@@ -49,7 +46,6 @@ export class NotificationComponent implements OnInit  {
     .then( () => {
       this.router.navigate(['/notifications']);
     });
-    this.notificationService.sendCancelOrder(cancelledlNotificationEvent.checked.toString());
   }
   onNoClick(): void {
     this.dialogRef.close();
