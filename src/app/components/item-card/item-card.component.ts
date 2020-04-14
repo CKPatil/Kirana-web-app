@@ -25,9 +25,16 @@ export class ItemCardComponent {
   displayedColumns = ["variant", "quantity", "price", "edit"];
 
   openConfirmDeleteDialog() {
-    if (confirm("Do you realy wanted to delete the Product?")) {
-      this.openSelectVarietyDialog();
-    }
+    const dialogRef = this.dialog.open(DeleteConformationDialog, {
+      width: "20em",
+      data: "",
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.openSelectVarietyDialog();
+      }
+    });
   }
 
   // for deleting the Variant
@@ -139,6 +146,22 @@ export class ItemCardComponent {
           );
       }
     });
+  }
+}
+
+// //////////// Delete Conformation Dialog
+@Component({
+  selector: "deleteConformationDialog",
+  templateUrl: "deleteConformationDialog.html",
+})
+export class DeleteConformationDialog {
+  constructor(
+    public dialogRef: MatDialogRef<DeleteConformationDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 }
 
