@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { InteractionService } from "src/app/services/interaction.service";
 import { TransactionService } from "src/app/services/transaction.service";
 import { FormControl } from "@angular/forms";
@@ -12,29 +12,23 @@ import { PageEvent } from "@angular/material/paginator";
   templateUrl: "./transactions.component.html",
   styleUrls: ["./transactions.component.scss"],
 })
-export class TransactionsComponent implements OnInit {
+export class TransactionsComponent implements OnInit, OnDestroy {
+  pageEvent: PageEvent;
   pageSize = 25;
   pageSizeOptions: number[] = [25, 50, 100];
-  notEmptyPost = true;
-  notscrolly = true;
+  length;
 
   searchRetail: any;
   searchStatus: any;
   searchDate: any;
 
-  taskTotal = 10;
-  taskRemaining = 0;
-
   retailers = [];
 
   status = ["Ordered", "Packed", "Dispatched", "Delivered", "Cancelled"];
 
-  today = Date.now();
-  model: any = {};
-  filters: string[];
   isSidePanelExpanded: boolean;
+
   allTransaction: any = [];
-  dup: [];
   removeDuplicate: string[] = [];
   temp = "";
 
@@ -47,9 +41,6 @@ export class TransactionsComponent implements OnInit {
 
   retailerFilteredOptions: Observable<string[]>;
   statusFilteredOptions: Observable<string[]>;
-
-  pageEvent: PageEvent;
-  length;
 
   private _retailerfilter(value: string): string[] {
     const retailerFilterValue = value.toLocaleLowerCase();
@@ -69,15 +60,25 @@ export class TransactionsComponent implements OnInit {
     private interaction: InteractionService,
     private transactionService: TransactionService
   ) {
-    this.filters = ["Retailer", "Status", "Date"];
     this.isSidePanelExpanded = this.interaction.getExpandedStatus();
   }
+
+  refresh;
 
   ngOnInit() {
     this.interaction.expandedStatus$.subscribe((res) => {
       this.isSidePanelExpanded = res;
     });
     this.getTransactionHistory();
+
+    // this.refresh = setInterval(() => {
+    //   this.getTransactionHistory();
+    // }, 10000);
+  }
+
+  // to clear the refresh interval
+  ngOnDestroy() {
+    // clearInterval(this.refresh);
   }
 
   dateChanged(event: MatDatepickerInputEvent<Date>) {
@@ -95,7 +96,7 @@ export class TransactionsComponent implements OnInit {
 
       this.pageEvent = {
         pageIndex: 0,
-        pageSize: 10,
+        pageSize: 25,
         length: this.allTransaction.length,
       };
       this.length = this.allTransaction.length;
@@ -149,4 +150,8 @@ export class TransactionsComponent implements OnInit {
     const year = d.getFullYear();
     return `${date}/${month}/${year}`;
   };
+
+  trackByOrderId(index, item){
+    return item.id
+  }
 }

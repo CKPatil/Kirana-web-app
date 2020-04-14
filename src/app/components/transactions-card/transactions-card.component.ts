@@ -7,6 +7,9 @@ import {
 import { Router } from "@angular/router";
 import { TransactionService } from "src/app/services/transaction.service";
 
+// STATUS Array
+import { STATUSES } from "./../../constants/constants";
+
 @Component({
   selector: "app-transactions-card",
   templateUrl: "./transactions-card.component.html",
@@ -50,7 +53,7 @@ export class TransactionsCardComponent {
   }
 }
 
-// //////////// Select the StatusDialog
+// //////////// Select the Status Dialog
 @Component({
   selector: "chooseOrderStatusDialog",
   templateUrl: "chooseOrderStatusDialog.html",
@@ -60,10 +63,12 @@ export class ChooseOrderStatusDialog {
     public dialogRef: MatDialogRef<ChooseOrderStatusDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    this.selectedValue = this.status.indexOf(this.data);
+    this.statuses = STATUSES;
+    this.selectedValue = STATUSES.indexOf(this.data);
   }
-  status = ["Ordered", "Packed", "Dispatched", "Delivered", "Cancelled"];
+  statuses;
   selectedValue;
+
   onNoClick(): void {
     this.dialogRef.close();
   }

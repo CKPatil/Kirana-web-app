@@ -6,7 +6,7 @@
     <mat-form-field>
       <mat-label>Choose Status</mat-label>
       <mat-select [(ngModel)]="selectedValue" name="status">
-        <mat-option *ngFor="let i of status" [value]="status.indexOf(i)">
+        <mat-option *ngFor="let i of statuses" [value]="statuses.indexOf(i)">
           {{i}}
         </mat-option>
       </mat-select>

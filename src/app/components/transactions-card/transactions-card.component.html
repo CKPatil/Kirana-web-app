@@ -1,17 +1,32 @@
 <mat-card class="mat-elevation-z6">
-  <div class="content">
-    <h5>{{ item.customer_name }}</h5>
-    <p class="event">₹{{ item.price }}</p>
+  <div class="row justify-content-between px-3 mb-4">
+    <h5>
+      Retailer<small>(shop)</small> : {{ item.retailer_name | titlecase }}
+    </h5>
+    <h5>₹ {{ item.price }}</h5>
   </div>
-  <p>Order date : {{ item.orderDate }}</p>
-  <div class="lastLine">
-    <p>Vendor name : {{ item.vendor_name }}</p>
-    <p
-      class="status mybtn"
-      [ngClass]="item.status"
-      (click)="openChooseOrderStatusDialog()"
-    >
-      {{ item.status }}
-    </p>
+  <div class="row justify-content-center">
+    <div class="col-5 font-weight-bold">
+      <p>Bill No.</p>
+      <p>Ord. time</p>
+      <p>Cust. name</p>
+      <p>Cust. mobile</p>
+      <p>Status</p>
+    </div>
+    <div class="col-7">
+      <p>{{ item.bill_no || "Not Available" }}</p>
+      <p>{{ item.timestamp | date: "medium" }}</p>
+      <p>{{ item.customer_name | titlecase }}</p>
+      <p>{{ item.customer_phone }}</p>
+      <p>
+        <button
+          class="btn text-white"
+          [ngClass]="item.status"
+          (click)="openChooseOrderStatusDialog()"
+        >
+          {{ item.status }}
+        </button>
+      </p>
+    </div>
   </div>
 </mat-card>

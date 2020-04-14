@@ -2,12 +2,13 @@
   <div [ngClass]="{ 'is-side-panel-expanded': isSidePanelExpanded }">
     <mat-card>
       <h2>Transactions:</h2>
-      <div class="top-container row justify-content-center">
+      <!-- Filter Container -->
+      <div class="my-3 row justify-content-center text-center">
         <div
-          class="filter-container col-12 col-md-10 row justify-content-center"
+          class="col-12 col-lg-10 row justify-content-center align-items-center"
         >
-          <div class="filter col-6 col-md-3">
-            <mat-form-field class="searchRetail">
+          <div class="col-6 col-sm-4 col-md-3">
+            <mat-form-field class="example-full-width">
               <input
                 type="text"
                 placeholder="Retailer"
@@ -26,8 +27,8 @@
               </mat-autocomplete>
             </mat-form-field>
           </div>
-          <div class="col-6 col-md-3">
-            <mat-form-field class="searchStatus">
+          <div class="col-6 col-sm-4 col-md-3">
+            <mat-form-field class="example-full-width">
               <input
                 type="text"
                 placeholder="Status"
@@ -46,8 +47,8 @@
               </mat-autocomplete>
             </mat-form-field>
           </div>
-          <div class="col-6 col-md-3">
-            <mat-form-field>
+          <div class="col-6 col-sm-4 col-md-3">
+            <mat-form-field class="example-full-width">
               <mat-label>Pick a date</mat-label>
               <input
                 matInput
@@ -64,26 +65,27 @@
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
           </div>
-          <div class="col-6 col-md-3 text-center">
-            <button class="mr-0 ml-5" mat-raised-button (click)="onReset()">RESET</button>
+          <div class="col-6 col-sm-4 col-md-3">
+            <button class="mr-0 ml-5" mat-raised-button (click)="onReset()">
+              RESET
+            </button>
           </div>
         </div>
       </div>
-      <div class="date">
-        <p>
-          <strong>{{ today | date: "fullDate" }}</strong>
-        </p>
+      <!-- Paginator Container -->
+      <div>
+        <mat-paginator
+          [length]="length"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="pageSizeOptions"
+          (page)="pageEvent = $event"
+        >
+        </mat-paginator>
       </div>
-      <mat-paginator
-        [length]="length"
-        [pageSize]="pageSize"
-        [pageSizeOptions]="pageSizeOptions"
-        (page)="pageEvent = $event"
-      >
-      </mat-paginator>
-      <div *ngIf="pageEvent">
+      <!-- Transactions Container -->
+      <div *ngIf="pageEvent" class="row justify-content-center">
         <div
-          class="transaction-container"
+          class="col-12 col-md-6 col-lg-4"
           *ngFor="
             let i = index;
             let item;
@@ -94,7 +96,7 @@
               | filter: retailerControl.value
               | filter: statusControl.value
               | filter: searchDate
-          "
+          ; trackBy: trackByOrderId"
         >
           <app-transactions-card [item]="item"></app-transactions-card>
         </div>
