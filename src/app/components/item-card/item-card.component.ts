@@ -22,6 +22,8 @@ export class ItemCardComponent {
     private router: Router
   ) {}
 
+  displayedColumns = ["variant", "quantity", "price", "edit"];
+
   openConfirmDeleteDialog() {
     if (confirm("Do you realy wanted to delete the Product?")) {
       this.openSelectVarietyDialog();
@@ -99,6 +101,18 @@ export class ItemCardComponent {
     });
   }
 
+  // to open image slider dialog
+  openImageSliderDialog() {
+    const dialogRef = this.dialog.open(ImageSliderDialog, {
+      width: "90%",
+      maxWidth: "25em",
+      height: "25em",
+      data: this.item.image_url,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {});
+  }
+
   // for updating the product detail
   openEditProductDetailDialog() {
     const dialogRef = this.dialog.open(EditProductDetailDialog, {
@@ -153,7 +167,7 @@ export class SelectVarietyDialog {
 })
 export class SelectImageDialog {
   constructor(
-    public dialogRef: MatDialogRef<SelectVarietyDialog>,
+    public dialogRef: MatDialogRef<SelectImageDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder
   ) {}
@@ -198,6 +212,24 @@ export class SelectImageDialog {
   onNoClick(): void {
     this.dialogRef.close();
   }
+}
+
+// ///////////// Image Slider Dialog
+@Component({
+  selector: "imageSliderDialog",
+  templateUrl: "imageSliderDialog.html",
+})
+export class ImageSliderDialog {
+  constructor(
+    public dialogRef: MatDialogRef<ImageSliderDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  handleImageUrlError(e) {}
 }
 
 // ////////// Update Product Detail Dialog

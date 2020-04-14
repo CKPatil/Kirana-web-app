@@ -43,7 +43,7 @@ import { AnalyticContainerComponent } from './components/analytic-container/anal
 import { RecentOrdersComponent } from './components/recent-orders/recent-orders.component';
 import { HttpClientModule } from '@angular/common/http';
 import { InviteRequestComponent, ShowInviteDetailModal } from './components/invite-request/invite-request.component';
-import { ItemCardComponent, SelectVarietyDialog, SelectImageDialog, EditProductDetailDialog } from './components/item-card/item-card.component';
+import { ItemCardComponent, SelectVarietyDialog, SelectImageDialog, EditProductDetailDialog, ImageSliderDialog } from './components/item-card/item-card.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { FeedbacksComponent } from './pages/feedbacks/feedbacks.component';
@@ -96,7 +96,8 @@ import { NotificationService } from './components/notification/notification.serv
     ResetPassComponent,
     NotificationComponent,
     NotificationsPageComponent,
-    EditProductDetailDialog
+    EditProductDetailDialog,
+    ImageSliderDialog
   ],
   entryComponents: [
     DialogComponent

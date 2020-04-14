@@ -1,25 +1,19 @@
 import { ProductsService } from "./../../services/products.service";
-import { Component, OnInit } from "@angular/core";
-import { InteractionService } from "src/app/services/interaction.service";
+import { Component } from "@angular/core";
 
 @Component({
   selector: "app-items",
   templateUrl: "./items.component.html",
   styleUrls: ["./items.component.scss"],
 })
-export class ItemsComponent implements OnInit {
+export class ItemsComponent {
   isSidePanelExpanded: boolean;
 
   searchText;
   allProducts: any = [];
   productsData: any;
 
-  constructor(
-    private interaction: InteractionService,
-    private productService: ProductsService
-  ) {
-    this.isSidePanelExpanded = this.interaction.getExpandedStatus();
-
+  constructor(private productService: ProductsService) {
     this.productService.getAllProducts().subscribe(
       (result) => {
         this.allProducts = result.body;
@@ -50,11 +44,5 @@ export class ItemsComponent implements OnInit {
     });
 
     return data;
-  }
-
-  ngOnInit() {
-    this.interaction.expandedStatus$.subscribe((res) => {
-      this.isSidePanelExpanded = res;
-    });
   }
 }
