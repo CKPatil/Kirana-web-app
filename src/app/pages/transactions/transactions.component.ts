@@ -71,14 +71,14 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     });
     this.getTransactionHistory();
 
-    // this.refresh = setInterval(() => {
-    //   this.getTransactionHistory();
-    // }, 10000);
+    this.refresh = setInterval(() => {
+      this.getTransactionHistory();
+    }, 60000);
   }
 
   // to clear the refresh interval
   ngOnDestroy() {
-    // clearInterval(this.refresh);
+    clearInterval(this.refresh);
   }
 
   dateChanged(event: MatDatepickerInputEvent<Date>) {
