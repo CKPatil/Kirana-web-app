@@ -30,14 +30,20 @@ export class ItemsComponent {
   prepareDataForNewItem() {
     let data = { categories: [], sub_categories: {}, brands: {} };
     this.allProducts.forEach((val) => {
-      data.categories.push(val.category);
+      if (!data.categories.includes(val.category)) {
+        data.categories.push(val.category);
+      }
       if (data.sub_categories[val.category]) {
-        data.sub_categories[val.category].push(val.sub_category);
+        if (!data.sub_categories[val.category].includes(val.sub_category)) {
+          data.sub_categories[val.category].push(val.sub_category);
+        }
       } else {
         data.sub_categories[val.category] = [val.sub_category];
       }
       if (data.brands[val.sub_category]) {
-        data.brands[val.sub_category].push(val.brand);
+        if (!data.brands[val.sub_category].includes(val.brand)) {
+          data.brands[val.sub_category].push(val.brand);
+        }
       } else {
         data.brands[val.sub_category] = [val.brand];
       }
