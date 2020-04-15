@@ -48,7 +48,7 @@ export class DashboardComponent implements OnInit {
     this.transactionService.getAllOrders().subscribe((res:any) => {
       console.log(res);
       console.log("allTransactions")
-      this.allTransactions = res.body;
+      this.allTransactions = res;
       console.log(this.currentDate);
 
       this.allTransactions.forEach(element => {

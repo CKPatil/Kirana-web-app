@@ -1,7 +1,7 @@
 import { DialogComponent } from './../../components/dialog/dialog.component';
 import { Orders } from './../../constants/mockup-data';
 import { Status } from './../../models/models';
-import {Component, OnInit, ViewChild, Inject} from '@angular/core';
+import {Component, OnInit, ViewChild, Inject, Input} from '@angular/core';
 import { InteractionService } from 'src/app/services/interaction.service';
 import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
@@ -32,7 +32,9 @@ const ELEMENT_DATA: Order[] = Orders;
   styleUrls: ['./recent-orders.component.scss']
 })
 export class RecentOrdersComponent implements OnInit {
+  @Input('orderStatus') orderStatus:any;
   isSidePanelExpanded: boolean;
+
   displayedColumns: string[] = ['consumer', 'shop', 'phone', 'status', 'total', 'time_left'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -71,7 +73,7 @@ export class RecentOrdersComponent implements OnInit {
     this.transactionService.getAllOrders().subscribe((res:any) => {
       console.log(res);
       //console.log("allTransactions")
-      this.allTransactions = res.body;
+      this.allTransactions = res;
       this.allTransactions.forEach(element => {
         element.timestamp=new Date(element.timestamp);
         this.deliveryTime=new Date(element.timestamp.getTime()+(2*60*60*1000));
