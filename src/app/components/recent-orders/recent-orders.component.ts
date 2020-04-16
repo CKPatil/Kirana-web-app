@@ -69,7 +69,7 @@ export class RecentOrdersComponent implements OnInit {
     //console.log(this.orderStatus);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.transactionService.buildURLS("");
+    this.transactionService.buildURLS();
     this.transactionService.getAllOrders().subscribe((res:any) => {
       console.log(res);
       //console.log("allTransactions")
