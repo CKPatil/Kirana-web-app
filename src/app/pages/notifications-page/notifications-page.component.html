@@ -1,6 +1,6 @@
 <div class="outer">
   <h3>Notifications</h3>
-  <div *ngIf="(newOrderedStatus === 'false' && criticalOrderStatus === 'false' && cancelOrderedStatus === 'false')">
+  <div *ngIf="(!newOrderStatus && !criticalOrderStatus && !cancelOrderStatus)">
     <h6>
        !!! ALL NOTIFICATIONS ARE TURNED OFF !!!
     </h6>
