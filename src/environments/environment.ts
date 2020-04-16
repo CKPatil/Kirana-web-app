@@ -8,7 +8,8 @@ export const environment = {
   backend_end_point: 'http://54.197.216.47/',
   port_number: '8000',
   userDetails: 'api/v1/userDetails/',
-  orders: 'api/v1/vendor/order/?order=listall',
+  orders: 'api/v1/vendor/order/',
+  updateStatusURL: 'api/v1/vendor/order/',
   retailers: 'api/v1/vendors/',
   products: 'api/v1/products/',
   imageUpload: 'api/v1/imageUpload/',
@@ -23,7 +24,7 @@ export const environment = {
   notification: 'api/v1/notifications',
 };
 
-/*
+/*1/
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
  *
