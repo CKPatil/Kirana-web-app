@@ -1,25 +1,19 @@
 import { ProductsService } from "./../../services/products.service";
-import { Component, OnInit } from "@angular/core";
-import { InteractionService } from "src/app/services/interaction.service";
+import { Component } from "@angular/core";
 
 @Component({
   selector: "app-items",
   templateUrl: "./items.component.html",
   styleUrls: ["./items.component.scss"],
 })
-export class ItemsComponent implements OnInit {
+export class ItemsComponent {
   isSidePanelExpanded: boolean;
 
   searchText;
   allProducts: any = [];
   productsData: any;
 
-  constructor(
-    private interaction: InteractionService,
-    private productService: ProductsService
-  ) {
-    this.isSidePanelExpanded = this.interaction.getExpandedStatus();
-
+  constructor(private productService: ProductsService) {
     this.productService.getAllProducts().subscribe(
       (result) => {
         this.allProducts = result.body;
@@ -36,25 +30,25 @@ export class ItemsComponent implements OnInit {
   prepareDataForNewItem() {
     let data = { categories: [], sub_categories: {}, brands: {} };
     this.allProducts.forEach((val) => {
-      data.categories.push(val.category);
+      if (!data.categories.includes(val.category)) {
+        data.categories.push(val.category);
+      }
       if (data.sub_categories[val.category]) {
-        data.sub_categories[val.category].push(val.sub_category);
+        if (!data.sub_categories[val.category].includes(val.sub_category)) {
+          data.sub_categories[val.category].push(val.sub_category);
+        }
       } else {
         data.sub_categories[val.category] = [val.sub_category];
       }
       if (data.brands[val.sub_category]) {
-        data.brands[val.sub_category].push(val.brand);
+        if (!data.brands[val.sub_category].includes(val.brand)) {
+          data.brands[val.sub_category].push(val.brand);
+        }
       } else {
         data.brands[val.sub_category] = [val.brand];
       }
     });
 
     return data;
-  }
-
-  ngOnInit() {
-    this.interaction.expandedStatus$.subscribe((res) => {
-      this.isSidePanelExpanded = res;
-    });
   }
 }

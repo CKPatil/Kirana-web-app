@@ -1,0 +1,18 @@
+.mat-card {
+  margin: 20px 0px;
+  .Delivered {
+    background-color: #2ed47a;
+  }
+  .Cancelled {
+    background-color: #f7685b;
+  }
+  .Packed {
+    background-color: #ffb946;
+  }
+  .Dispatched {
+    background-color: #56ccf2;
+  }
+  .Ordered {
+    background-color: #098edf;
+  }
+}

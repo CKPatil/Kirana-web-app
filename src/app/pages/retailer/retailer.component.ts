@@ -66,7 +66,8 @@ export class RetailerComponent implements OnInit {
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.allRetailers.filter = filterValue.trim().toLowerCase();
+    if(filterValue)
+      this.allRetailers.filter = filterValue.trim().toLowerCase();
   }
   getRecord(selectRow:any){
     this.record=selectRow;

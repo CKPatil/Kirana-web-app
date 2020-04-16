@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Inject } from "@angular/core";
 import { RetailerService } from "../../../app/services/retailer.service";
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from "@angular/material";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-invite-request",
@@ -10,7 +11,8 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from "@angular/material";
 export class InviteRequestComponent implements OnInit {
   constructor(
     private retailerService: RetailerService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router
   ) {}
 
   @Input() inviteRequest;
@@ -21,6 +23,11 @@ export class InviteRequestComponent implements OnInit {
     let data = { requestId: this.inviteRequest.id, approved: true };
     this.retailerService.inviteRequestResponse(data).subscribe((result) => {
       alert("Request Approved");
+      this.router
+        .navigateByUrl("/login", { skipLocationChange: true })
+        .then(() => {
+          this.router.navigate(["/dashboard"]);
+        });
     });
   }
 
@@ -28,6 +35,11 @@ export class InviteRequestComponent implements OnInit {
     let data = { requestId: this.inviteRequest.id, approved: false };
     this.retailerService.inviteRequestResponse(data).subscribe((result) => {
       alert("Request Rejected");
+      this.router
+        .navigateByUrl("/login", { skipLocationChange: true })
+        .then(() => {
+          this.router.navigate(["/dashboard"]);
+        });
     });
   }
 

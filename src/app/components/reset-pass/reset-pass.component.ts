@@ -63,11 +63,12 @@ export class ResetPassComponent {
           if (this.mess === 'password updated') {
             this.snackBar.open(this.message, this.actionButtonLabel);
           }
-      }, error => {
-        console.log(error);
-        this.snackBar.open(this.message, this.actionButtonLabel);
-      }
-      );
+          if (this.mess === 'failed') {
+            this.snackBar.open(this.errMessage, this.actionButtonLabel);
+          }
+      }, (error) => {
+        this.snackBar.open(error.error.message, this.actionButtonLabel);
+      });
     this.form1.reset();
   }
   onNoClick(): void {
