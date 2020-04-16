@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { InteractionService } from 'src/app/services/interaction.service';
 import { analytics } from './../../constants/mockup-data';
 import { TransactionService } from './../../services/transaction.service';
@@ -12,7 +12,7 @@ import { EmptyError } from 'rxjs';
   templateUrl: "./dashboard.component.html",
   styleUrls: ["./dashboard.component.scss"],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy  {
   isSidePanelExpanded: boolean;
   analytics: { name: string; count: number; }[];
   allTransactions:any;
@@ -33,15 +33,25 @@ export class DashboardComponent implements OnInit {
     this.isSidePanelExpanded = this.interaction.getExpandedStatus();
   }
 
+  // to get the invitaition request from the server
+  getInvitations(){
+    this.retailerService.getAllInvitationRequests().subscribe((result) => {
+      this.inviteRequests = result.body;
+    });
+  }
+  refresh;
+
   ngOnInit() {
     this.analytics=analytics;
     this.interaction.expandedStatus$.subscribe( (res) => {
       this.isSidePanelExpanded = res;
     });
 
-    this.retailerService.getAllInvitationRequests().subscribe((result) => {
-      this.inviteRequests = result.body;
-    });
+    this.getInvitations()
+
+    this.refresh = setInterval(() => {
+      this.getInvitations();
+    }, 60000);
 
     this.currentDate=new Date();
     this.transactionService.buildURLS("?order=listall");
@@ -92,6 +102,11 @@ export class DashboardComponent implements OnInit {
     //   this.cancelledOrders = res.body;
     //   console.log(this.cancelledOrders);
     // });
+  }
+
+  // to clear the refresh interval
+  ngOnDestroy() {
+    clearInterval(this.refresh);
   }
   getTransactions(orderType:string){
   }
