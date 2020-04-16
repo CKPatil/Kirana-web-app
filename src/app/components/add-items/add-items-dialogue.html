@@ -1,7 +1,8 @@
 <h1 mat-dialog-title class="text-center font-weight-bold">Add new Item</h1>
 <div mat-dialog-content>
   <form class="item-form row" [formGroup]="itemForm">
-    <div class="name-container col-12">
+    <!-- Name Container -->
+    <div class="col-12">
       <mat-form-field class="example-full-width">
         <mat-label>Product Name</mat-label>
         <input
@@ -12,8 +13,9 @@
         <mat-error>Product Name is <strong>required</strong> </mat-error>
       </mat-form-field>
     </div>
-    <div class="category-container col-12">
-      <mat-form-field *ngIf="!isAddCategory">
+    <!-- Category Container -->
+    <div class="col-12 row pr-0">
+      <mat-form-field class="col-8" *ngIf="!isAddCategory">
         <mat-label>Category</mat-label>
         <mat-select formControlName="category">
           <mat-option *ngFor="let c of data.categories" [value]="c">
@@ -22,7 +24,7 @@
         </mat-select>
         <mat-error> Category is <strong>required</strong> </mat-error>
       </mat-form-field>
-      <div class="add-category-container" *ngIf="isAddCategory">
+      <div class="col-8" *ngIf="isAddCategory">
         <mat-form-field class="example-full-width">
           <mat-label>New Category</mat-label>
           <input
@@ -33,14 +35,17 @@
           <mat-error> Category is <strong>required</strong> </mat-error>
         </mat-form-field>
       </div>
-      <button mat-raised-button (click)="addCategory()">
-        <mat-icon aria-hidden="false" aria-label="Example home icon"
-          >{{isAddCategory == true ? 'remove':'add'}}</mat-icon
-        >
-      </button>
+      <div class="col-4 text-center">
+        <button mat-raised-button (click)="addCategory()">
+          <mat-icon aria-hidden="false" aria-label="Example home icon"
+            >{{isAddCategory == true ? 'remove':'add'}}</mat-icon
+          >
+        </button>
+      </div>
     </div>
-    <div class="subcategory-container col-12">
-      <mat-form-field *ngIf="!isAddSubCategory">
+    <!-- Sub Category Container -->
+    <div class="col-12 row pr-0">
+      <mat-form-field class="col-8" *ngIf="!isAddSubCategory">
         <mat-label>Sub-category</mat-label>
         <mat-select formControlName="sub_category">
           <mat-option
@@ -54,7 +59,7 @@
           Sub-category is <strong>required</strong>
         </mat-error>
       </mat-form-field>
-      <div class="add-sub-category-container" *ngIf="isAddSubCategory">
+      <div class="col-8" *ngIf="isAddSubCategory">
         <mat-form-field class="example-full-width">
           <mat-label>New Sub-category</mat-label>
           <input
@@ -67,14 +72,17 @@
           </mat-error>
         </mat-form-field>
       </div>
-      <button mat-raised-button (click)="addSubCategory()">
-        <mat-icon aria-hidden="false" aria-label="Example home icon"
-          >{{isAddSubCategory == true ? 'remove':'add'}}</mat-icon
-        >
-      </button>
+      <div class="col-4 text-center">
+        <button mat-raised-button (click)="addSubCategory()">
+          <mat-icon aria-hidden="false" aria-label="Example home icon"
+            >{{isAddSubCategory == true ? 'remove':'add'}}</mat-icon
+          >
+        </button>
+      </div>
     </div>
-    <div class="brand-container col-12">
-      <mat-form-field *ngIf="!isAddBrand">
+    <!-- Brand Conatiner -->
+    <div class="col-12 row pr-0">
+      <mat-form-field class="col-8" *ngIf="!isAddBrand">
         <mat-label>Brand</mat-label>
         <mat-select formControlName="brand">
           <mat-option
@@ -88,7 +96,7 @@
           Brand is <strong>required</strong>
         </mat-error>
       </mat-form-field>
-      <div class="add-brand-container" *ngIf="isAddBrand">
+      <div class="col-8" *ngIf="isAddBrand">
         <mat-form-field class="example-full-width">
           <mat-label>New Brand</mat-label>
           <input
@@ -101,15 +109,18 @@
           </mat-error>
         </mat-form-field>
       </div>
-      <button mat-raised-button (click)="addBrand()">
-        <mat-icon aria-hidden="false" aria-label="Example home icon"
-          >{{isAddBrand == true ? 'remove':'add'}}</mat-icon
-        >
-      </button>
+      <div class="col-4 text-center">
+        <button mat-raised-button (click)="addBrand()">
+          <mat-icon aria-hidden="false" aria-label="Example home icon"
+            >{{isAddBrand == true ? 'remove':'add'}}</mat-icon
+          >
+        </button>
+      </div>
     </div>
-    <div class="quantity-container col-12">
-      <mat-form-field>
-        <mat-label>Quantity Type</mat-label>
+    <!-- Qunatity Unit Container -->
+    <div class="col-12 row pr-0">
+      <mat-form-field class="col-8">
+        <mat-label>Quantity Unit</mat-label>
         <mat-select formControlName="quantity_type">
           <mat-option
             *ngFor="let quantity of quantity_types"
@@ -120,10 +131,13 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <div class="variant-container col-12 row" formArrayName="variant_details">
-      <div class="row col-12 justify-content-between">
-        <p class="col-6 font-weight-bold">Variants</p>
-        <div class="col-6 text-right">
+    <!-- Variant Container -->
+    <div class="col-12 row mt-2 pr-0" formArrayName="variant_details">
+      <div class="row col-12 justify-content-between align-items-center mb-2">
+        <p class="col-8 font-weight-bold m-0" style="font-size: 1.15em;">
+          Variants List
+        </p>
+        <div class="col-4 text-right">
           <button mat-raised-button (click)="addVariant()">
             <mat-icon aria-hidden="false" aria-label="Example home icon">
               add
@@ -131,14 +145,14 @@
           </button>
         </div>
       </div>
-      <div class="row col-12">
+      <div class="row col-12 pr-0">
         <div
-          class="col-12"
+          class="col-12 pr-0"
           *ngFor="let v of allVariants.controls; let i = index"
         >
-          <table class="col-12" cellspacing="0" [formGroupName]="i">
-            <tr class="row">
-              <td class="col-4">
+          <table cellspacing="0" [formGroupName]="i">
+            <tr class="row px-0">
+              <td class="col-4 pr-0">
                 <mat-form-field class="example-full-width">
                   <mat-label>Variants</mat-label>
                   <input
@@ -148,27 +162,29 @@
                   />
                 </mat-form-field>
               </td>
-              <td class="col-3">
+              <td class="col-4 pr-0">
                 <mat-form-field class="example-full-width">
-                  <mat-label>Quantity</mat-label>
+                  <mat-label>Quantity Type</mat-label>
                   <input
                     matInput
+                    type="number"
                     formControlName="quantity"
                     placeholder="Enter Quantity"
-                  />
-                </mat-form-field>
-              </td>
-              <td class="col-3">
-                <mat-form-field class="example-full-width">
-                  <mat-label>Price</mat-label>
-                  <input
+                    />
+                  </mat-form-field>
+                </td>
+                <td class="col-3">
+                  <mat-form-field class="example-full-width">
+                    <mat-label>Price</mat-label>
+                    <input
                     matInput
+                    type="number"
                     formControlName="price"
                     placeholder="Enter Price"
                   />
                 </mat-form-field>
               </td>
-              <td class="col-2">
+              <td class="pl-0 col-1">
                 <button
                   mat-icon-button
                   color="primary"
@@ -183,7 +199,8 @@
         </div>
       </div>
     </div>
-    <div class="description-container col-12">
+    <!-- description Container -->
+    <div class="col-12">
       <mat-form-field class="example-full-width">
         <mat-label>Details</mat-label>
         <textarea
@@ -195,10 +212,10 @@
     </div>
   </form>
 </div>
-<div mat-dialog-actions align="end">
-  <button mat-button (click)="onNoClick()">Cancel</button>
+<div mat-dialog-actions class="row justify-content-around">
+  <button mat-raised-button (click)="onNoClick()">Cancel</button>
   <button
-    mat-button
+    mat-raised-button
     [mat-dialog-close]="itemForm.value"
     [disabled]="!itemForm.valid"
   >
