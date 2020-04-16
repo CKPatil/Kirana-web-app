@@ -65,6 +65,8 @@ export class ResetPassComponent {
           if (this.mess === 'failed') {
             this.snackBar.open(this.errMessage, this.actionButtonLabel);
           }
+      }, (error) => {
+        this.snackBar.open(error.error.message, this.actionButtonLabel);
       });
     this.form1.reset();
   }
