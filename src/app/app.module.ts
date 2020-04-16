@@ -35,7 +35,7 @@ import { DialogAddItemComponent } from './components/add-items/add-items.compone
 import { RetailerComponent } from './pages/retailer/retailer.component';
 import { ItemsComponent } from './pages/items/items.component';
 import { TransactionsComponent } from './pages/transactions/transactions.component';
-import { LoginComponent } from './pages/login/login.component';
+import { LoginComponent, ForgotPasswordDialog, OTPComponent, UpdatePasswordComponent } from './pages/login/login.component';
 import { AuthGuard } from './guards/auth/auth.guard';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDividerModule} from '@angular/material/divider';
@@ -88,6 +88,9 @@ import { NotificationService } from './components/notification/notification.serv
     FeedbacksComponent,
     FeedbackCardComponent,
     AddItemsComponent,
+    ForgotPasswordDialog,
+    OTPComponent,
+    UpdatePasswordComponent,
     SelectVarietyDialog,
     SelectImageDialog,
     UpdateItemComponent,
@@ -131,6 +134,7 @@ import { NotificationService } from './components/notification/notification.serv
     MatDatepickerModule,
     MatNativeDateModule,
     ReactiveFormsModule,
+    MatDialogModule,
     InfiniteScrollModule,
     NgxSpinnerModule,
     ScrollingModule,
