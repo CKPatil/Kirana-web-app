@@ -8,6 +8,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog} from '@angular/material/dialog';
 import { TransactionService } from './../../services/transaction.service';
+import { Router } from '@angular/router';
 
 export interface Order {
   consumer: string;
@@ -58,7 +59,7 @@ export class RecentOrdersComponent implements OnInit {
   timeDiffHours:Number;
 
 
-  constructor(private interaction: InteractionService, public dialog: MatDialog,private transactionService: TransactionService) {
+  constructor(private interaction: InteractionService, public dialog: MatDialog,private transactionService: TransactionService,private router: Router) {
     this.isSidePanelExpanded = this.interaction.getExpandedStatus();
   }
 
@@ -76,7 +77,7 @@ export class RecentOrdersComponent implements OnInit {
       //console.log(res);
       this.allTransactions=this.tableData.reverse();
       
-      console.log(this.allTransactions);
+      //console.log(this.allTransactions);
             
       this.allTransactions.forEach(element => {
         if(element.remaining_time<0){
@@ -180,7 +181,12 @@ export class RecentOrdersComponent implements OnInit {
 
         this.transactionService.updateOrderStatus(result.data.row.id,this.getStatusToKeyMap(result.data.statusValue))
         .subscribe((res)=>{
-          console.log(res);
+          //console.log(res);
+          this.router
+            .navigateByUrl("/login", { skipLocationChange: true })
+            .then(() => {
+              this.router.navigate(["/dashboard"]);
+            });
         })
       } else {
         dialogRef.close();

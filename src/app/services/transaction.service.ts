@@ -56,7 +56,7 @@ export class TransactionService {
 
   updateOrderStatus(id: number, status: number){
     this.fetchUpdateOrderStatusURL(id,status);
-    console.log(this.httpOptions);
+    //console.log(this.httpOptions);
     return this.http.put(this.getUpdateOrderStatusURL,{},{
       headers: this.httpOptions,
       observe: 'response'

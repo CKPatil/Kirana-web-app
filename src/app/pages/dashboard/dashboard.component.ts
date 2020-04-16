@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { InteractionService } from 'src/app/services/interaction.service';
 import { analytics } from './../../constants/mockup-data';
 import { TransactionService } from './../../services/transaction.service';
@@ -12,7 +12,7 @@ import { EmptyError } from 'rxjs';
   templateUrl: "./dashboard.component.html",
   styleUrls: ["./dashboard.component.scss"],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit,OnDestroy {
   isSidePanelExpanded: boolean;
   analytics: { name: string; count: number; }[];
   allTransactions:any;
@@ -30,6 +30,7 @@ export class DashboardComponent implements OnInit {
   criticalOrders=[];
   recentOrders=[];
 
+  refresh:any;
   inviteRequests: any;
   timeDiffMins: number;
   dispatchedOrders=[];
@@ -48,12 +49,18 @@ export class DashboardComponent implements OnInit {
     this.retailerService.getAllInvitationRequests().subscribe((result) => {
       this.inviteRequests = result.body;
     });
+    this.analytics[0].count=0;
+    this.analytics[1].count=0;
+    this.analytics[2].count=0;
+    this.analytics[3].count=0;
+    this.analytics[4].count=0;
+  
     
     this.currentDate=new Date();
     this.transactionService.buildURLS("");
     this.transactionService.getAllOrders().subscribe((res:any) => {
       //console.log(res);
-      //console.log("allTransactions")
+      //console.log("allTransactions");
       this.allTransactions = res;
       //console.log(this.currentDate);
       this.allTransactions.forEach(element => {
@@ -77,8 +84,10 @@ export class DashboardComponent implements OnInit {
         //   this.dispatchedOrders.push(element);
         // }
         //console.log(this.dispatchedOrders);
+        //console.log(this.allTransactions);
         
       });
+
 
       this.allTransactions.forEach(element => {
         if(element.status=="Ordered"){
@@ -87,15 +96,12 @@ export class DashboardComponent implements OnInit {
           this.analytics[2].count++;
         }else if(element.status=="Delivered"){
           this.analytics[3].count++;
-        }else if(element.remaining_time<30){
+        }else if(element.remaining_time<=30&&element.remaining_time>0){
           this.analytics[0].count++;
         }
       });
       //console.log(this.criticalOrders);
       
-      this.analytics.forEach(element => {
-
-      });
 
 
       //console.log(this.allTransactions);
@@ -122,6 +128,12 @@ export class DashboardComponent implements OnInit {
     //   this.cancelledOrders = res.body;
     //   console.log(this.cancelledOrders);
     // });
+    this.refresh=setTimeout(()=>{
+      this.ngOnInit();
+    },60000);
+  }
+  ngOnDestroy(){
+    clearTimeout(this.refresh);
   }
   getTransactions(orderType:string){
   }
