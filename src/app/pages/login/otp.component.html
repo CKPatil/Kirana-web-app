@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>One-Time Password</h1>
+<div>
+    <form [formGroup]="form" (ngSubmit)="submit(form)">
+        <mat-dialog-content>
+            <mat-form-field>
+                <input matInput formControlName="otp" placeholder="Enter the OTP sent to your registered phone-number">
+            </mat-form-field>
+            <mat-dialog-actions>
+                <button mat-button type="submit">OK</button>
+                <button mat-button type="button" (click)="dialogRef.close()">Cancel</button>
+            </mat-dialog-actions>
+        </mat-dialog-content>
+    </form>
+</div>
+
+

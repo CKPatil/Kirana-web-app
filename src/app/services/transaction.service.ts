@@ -14,17 +14,19 @@ export class TransactionService {
   getAllTransactionsURL: any;
   tempURL: any;
   httpOptions;
-  buildURLS() {
-    this.getAllTransactionsURL = environment.backend_end_point + environment.orders;
+  orderType;
+  getUpdateOrderStatusURL: string;
+  buildURLS(param: string) {
+    this.getAllTransactionsURL = environment.backend_end_point + environment.orders+param;
   }
 
   constructor(private http: HttpClient) {
     const token = localStorage.getItem('access');
     this.httpOptions = new HttpHeaders({ 'Content-Type': 'application/json', Authorization: 'Bearer ' + token});
-    this.buildURLS();
+    this.buildURLS("");
   }
 
-  getAllOrders(): Observable<Transaction[]> {
+  getAllOrders(): Observable<Transaction[]>  {
     return this.http.get<Transaction[]>(this.getAllTransactionsURL,  {
       headers: this.httpOptions,
     })
@@ -46,6 +48,28 @@ export class TransactionService {
         })
       );
   }
+
+  fetchUpdateOrderStatusURL(id: number, status: number){
+    this.getUpdateOrderStatusURL = environment.backend_end_point + environment.updateStatusURL + '?order_id=' + id + '&status=' + status;
+
+  }
+
+  updateOrderStatus(id: number, status: number){
+    this.fetchUpdateOrderStatusURL(id,status);
+    console.log(this.httpOptions);
+    return this.http.put(this.getUpdateOrderStatusURL,{},{
+      headers: this.httpOptions,
+      observe: 'response'
+    })
+    .pipe(
+      catchError(error => {
+        return throwError(error);
+      })
+    );
+  }
+
+
+
   getAllTransactions() {
     return transactions;
   }
