@@ -54,7 +54,7 @@ export class DashboardComponent implements OnInit, OnDestroy  {
     }, 60000);
 
     this.currentDate=new Date();
-    this.transactionService.buildURLS("?order=listall");
+    this.transactionService.buildURLS();
     this.transactionService.getAllOrders().subscribe((res:any) => {
       console.log(res);
       console.log("allTransactions")
