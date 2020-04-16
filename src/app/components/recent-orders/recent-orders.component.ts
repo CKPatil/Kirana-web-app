@@ -70,15 +70,14 @@ export class RecentOrdersComponent implements OnInit {
     this.currentTime=new Date();
     //console.log(this.orderStatus);
     this.dataSource.sort = this.sort;
-    // this.dataSource.paginator = this.paginator;
-    
-    this.transactionService.buildURLS("");
+    this.dataSource.paginator = this.paginator;
+    this.transactionService.buildURLS();
     this.transactionService.getAllOrders().subscribe((res:any) => {
       //console.log(res);
       this.allTransactions=this.tableData.reverse();
-      
+
       //console.log(this.allTransactions);
-            
+
       this.allTransactions.forEach(element => {
         if(element.remaining_time<0){
           element.remaining_time="-";
@@ -98,7 +97,7 @@ export class RecentOrdersComponent implements OnInit {
 
           this.timeDiffHours=Math.trunc(this.timeDiff);
           //console.log("timeDiffHours "+this.timeDiffHours);
-          
+
           element.remaining_time=this.timeDiffHours.toFixed(0)+" hours "+this.timeDiffMins.toFixed(0)+" mins ";
           //console.log(element.remaining_time);
         }
@@ -131,7 +130,7 @@ export class RecentOrdersComponent implements OnInit {
       this.allTransactions=new MatTableDataSource(this.tableData.reverse());
       this.allTransactions.paginator=this.paginator;
     });
-    
+
 
     // this.transactionService.buildURLS("?order=delivered");
     // this.transactionService.getAllOrders().subscribe((res) => {

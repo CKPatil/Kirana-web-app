@@ -17,12 +17,18 @@ export interface DialogData {
 export class HeaderComponent implements OnInit {
   animal: string;
   name: string;
-
+  change: any;
   constructor(private router: Router, public dialog: MatDialog) { }
 
   ngOnInit() {
+    this.change = localStorage.getItem('change');
+    this.repeat();
   }
-
+  repeat() {
+    setInterval( () => {
+      this.change = localStorage.getItem('change');
+    }, 10000);
+  }
   logout() {
     localStorage.clear();
     window.location.reload();

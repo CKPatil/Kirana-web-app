@@ -10,9 +10,7 @@ import { catchError } from 'rxjs/internal/operators/catchError';
 })
 export class NotificationsService {
 
-  newNotificationURL: string;
-  cancelNotificationURL: string;
-  criticalNotificationURL: string;
+  NotificationURL: string;
   httpOptions: any;
   constructor(private http: HttpClient) {
     const token = localStorage.getItem('access');
@@ -21,32 +19,10 @@ export class NotificationsService {
   }
 
   buildURLS() {
-    this.newNotificationURL = environment.backend_end_point + environment.notification;
-    this.criticalNotificationURL = environment.backend_end_point + environment.notification;
-    this.cancelNotificationURL = environment.backend_end_point + environment.notification;
+    this.NotificationURL = environment.backend_end_point + environment.notification;
   }
-  getAllNewNotifications(): Observable<Notifications[]> {
-    return this.http.get<Notifications[]>(this.newNotificationURL, {
-      headers: this.httpOptions
-    })
-    .pipe(
-      catchError(error => {
-        return throwError(error);
-      })
-    );
-  }
-  getAllCancelledNotifications(): Observable<Notifications[]> {
-    return this.http.get<Notifications[]>(this.cancelNotificationURL, {
-      headers: this.httpOptions
-    })
-    .pipe(
-      catchError(error => {
-        return throwError(error);
-      })
-    );
-  }
-  getAllCriticalNotifications(): Observable<Notifications[]> {
-    return this.http.get<Notifications[]>(this.criticalNotificationURL, {
+  getAllNotifications(): Observable<Notifications[]> {
+    return this.http.get<Notifications[]>(this.NotificationURL, {
       headers: this.httpOptions
     })
     .pipe(

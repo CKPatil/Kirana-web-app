@@ -2,84 +2,90 @@
   <div [ngClass]="{ 'is-side-panel-expanded': isSidePanelExpanded }">
     <mat-card>
       <h2>Transactions:</h2>
-      <div class="top-container row">
-        <div class="filter-container col-12 col-md-10 row justify-content-center">
-          <div class="filter col-5 mx-3 mx-md-0 col-md-4">
-              <mat-form-field class="searchRetail">
-                <input
-                  type="text"
-                  placeholder="Retailer"
-                  aria-label="Number"
-                  matInput
-                  [formControl]="retailerControl"
-                  [matAutocomplete]="auto"
-                />
-                <mat-autocomplete #auto="matAutocomplete">
-                  <mat-option
-                    *ngFor="let retailer of retailerFilteredOptions | async"
-                    [value]="retailer"
-                  >
-                    {{ retailer }}
-                  </mat-option>
-                </mat-autocomplete>
-              </mat-form-field>
-            </div>
-            <div class="col-5 mx-3 mx-md-0 col-md-4">
-              <mat-form-field class="searchStatus">
-                <input
-                  type="text"
-                  placeholder="Status"
-                  aria-label="Number"
-                  matInput
-                  [formControl]="statusControl"
-                  [matAutocomplete]="auto2"
-                />
-                <mat-autocomplete #auto2="matAutocomplete">
-                  <mat-option
-                    *ngFor="let status of statusFilteredOptions | async"
-                    [value]="status"
-                  >
-                    {{ status }}
-                  </mat-option>
-                </mat-autocomplete>
-              </mat-form-field>
-            </div>
-            <div class="col-5 mx-3 mx-md-0 col-md-4">
-              <mat-form-field>
-                <mat-label>Pick a date</mat-label>
-                <input
-                  matInput
-                  [formControl]="dateControl"
-                  [matDatepicker]="picker"
-                  (dateInput)="dateChanged($event)"
-                  (dateChange)="dateChanged($event)"
-                  placeholder="MM/DD/YYYY"
-                />
-                <mat-datepicker-toggle
-                  matSuffix
-                  [for]="picker"
-                ></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-              </mat-form-field>
-            </div>
-        </div>
-        <button mat-raised-button (click)="onReset()">RESET</button>
-      </div>
-      <div class="date">
-        <p>
-          <strong>{{ today | date: "fullDate" }}</strong>
-        </p>
-      </div>
-      <mat-paginator
-        [length]="length"
-        [pageSize]="pageSize"
-        [pageSizeOptions]="pageSizeOptions"
-        (page)="pageEvent = $event"
-      >
-      </mat-paginator>
-      <div *ngIf="pageEvent">
+      <!-- Filter Container -->
+      <div class="my-3 row justify-content-center text-center">
         <div
-          class="transaction-container"
+          class="col-12 col-lg-10 row justify-content-center align-items-center"
+        >
+          <div class="col-6 col-sm-4 col-md-3">
+            <mat-form-field class="example-full-width">
+              <input
+                type="text"
+                placeholder="Retailer"
+                aria-label="Number"
+                matInput
+                [formControl]="retailerControl"
+                [matAutocomplete]="auto"
+              />
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option
+                  *ngFor="let retailer of retailerFilteredOptions | async"
+                  [value]="retailer"
+                >
+                  {{ retailer }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div class="col-6 col-sm-4 col-md-3">
+            <mat-form-field class="example-full-width">
+              <input
+                type="text"
+                placeholder="Status"
+                aria-label="Number"
+                matInput
+                [formControl]="statusControl"
+                [matAutocomplete]="auto2"
+              />
+              <mat-autocomplete #auto2="matAutocomplete">
+                <mat-option
+                  *ngFor="let status of statusFilteredOptions | async"
+                  [value]="status"
+                >
+                  {{ status }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div class="col-6 col-sm-4 col-md-3">
+            <mat-form-field class="example-full-width">
+              <mat-label>Pick a date</mat-label>
+              <input
+                matInput
+                [formControl]="dateControl"
+                [matDatepicker]="picker"
+                (dateInput)="dateChanged($event)"
+                (dateChange)="dateChanged($event)"
+                placeholder="MM/DD/YYYY"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-6 col-sm-4 col-md-3">
+            <button class="mr-0 ml-5" mat-raised-button (click)="onReset()">
+              RESET
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Paginator Container -->
+      <div>
+        <mat-paginator
+          [length]="length"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="pageSizeOptions"
+          (page)="pageEvent = $event"
+        >
+        </mat-paginator>
+      </div>
+      <!-- Transactions Container -->
+      <div *ngIf="pageEvent" class="row justify-content-center">
+        <div
+          class="col-12 col-sm-8 col-md-6 col-lg-4"
           *ngFor="
             let i = index;
             let item;
@@ -90,21 +96,9 @@
               | filter: retailerControl.value
               | filter: statusControl.value
               | filter: searchDate
-          "
+          ; trackBy: trackByOrderId"
         >
-          <mat-card class="mat-elevation-z6">
-            <div class="content">
-              <h5>{{ item.customer_name }}</h5>
-              <p class="event">₹{{ item.price }}</p>
-            </div>
-            <p>Order date : {{ item.orderDate }}</p>
-            <div class="lastLine">
-              <p>Vendor name : {{ item.vendor_name }}</p>
-              <p class="status" [ngClass]="setStatusColor(item.status)">
-                {{ item.status }}
-              </p>
-            </div>
-          </mat-card>
+          <app-transactions-card [item]="item"></app-transactions-card>
         </div>
       </div>
     </mat-card>

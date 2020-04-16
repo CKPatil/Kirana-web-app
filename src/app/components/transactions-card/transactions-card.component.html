@@ -1,0 +1,49 @@
+<mat-card class="mat-elevation-z6">
+  <div class="row justify-content-between align-items-center px-3 mb-4">
+    <h5><b>Retail Shop:</b> {{ item.retailer_name | titlecase }}</h5>
+    <button
+      class="btn text-white"
+      style="font-size: 90%;"
+      [ngClass]="item.status"
+      (click)="openChooseOrderStatusDialog()"
+    >
+      {{ item.status }}
+    </button>
+  </div>
+  <div class="row justify-content-center" style="font-size: 90%;">
+    <div class="col-6 font-weight-bold pr-0">
+      <p>Bill No.</p>
+    </div>
+    <div class="col-6 pl-0">
+      <p>{{ item.bill_no || "Not Available" }}</p>
+    </div>
+
+    <div class="col-6 font-weight-bold pr-0">
+      <p>Order Time</p>
+    </div>
+    <div class="col-6 pl-0">
+      <p>{{ item.timestamp | date: "medium" }}</p>
+    </div>
+
+    <div class="col-6 font-weight-bold pr-0">
+      <p>Customer Name</p>
+    </div>
+    <div class="col-6 pl-0">
+      <p>{{ item.customer_name | titlecase }}</p>
+    </div>
+
+    <div class="col-6 font-weight-bold pr-0">
+      <p>Customer Mobile</p>
+    </div>
+    <div class="col-6 pl-0">
+      <p>{{ item.customer_phone }}</p>
+    </div>
+
+    <div class="col-6 font-weight-bold pr-0">
+      <p>Total Amount</p>
+    </div>
+    <div class="col-6 pl-0">
+      <p>₹ {{ item.price }}</p>
+    </div>
+  </div>
+</mat-card>
