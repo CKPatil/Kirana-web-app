@@ -1,15 +1,7 @@
+import { NewOrderNotification } from './../../constants/mockup-data';
 import { Router } from '@angular/router';
 import { NotificationsService } from './../../services/notifications.service';
-import { NewOrderNotification, CancelledOrderNotification, CriticalOrderNotification } from './../../constants/mockup-data';
 import { Component, OnInit } from '@angular/core';
-import {
-  MatSnackBar,
-  MatSnackBarConfig,
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-} from '@angular/material';
 @Component({
   selector: 'app-notifications-page',
   templateUrl: './notifications-page.component.html',
@@ -17,20 +9,15 @@ import {
 })
 export class NotificationsPageComponent implements OnInit {
   constructor(private notificationsService: NotificationsService, private router: Router) { }
-  message = 'Password changed sucessfully';
-  errMessage = 'Old Password not valid !!!';
-  actionButtonLabel = 'OK';
-  snackBar: any;
-  panelOpenState = false;
   newOrderStatus: any;
   criticalOrderStatus: any;
   cancelOrderStatus: any;
-  mockNewOrderNotification = NewOrderNotification;
-  mockCancelledOrderNotification = CancelledOrderNotification;
-  mockCriticalOrderNotification = CriticalOrderNotification;
   newOrderNotification: any[] = [];
   cancelOrderNotification: any[] = [];
   critcalOrderNotification: any[] = [];
+  newOdd = true;
+  cancelOdd = true;
+  criticalOdd = true;
   today = new Date();
   formattedTodayDate = ('0' + this.today.getDate()).slice(-2) + '/' + ('0' +
                   (this.today.getMonth() + 1)).slice(-2) + '/' + this.today.getFullYear();
@@ -51,19 +38,46 @@ export class NotificationsPageComponent implements OnInit {
   newOrderedStatus: any;
   cancelOrderedStatus: any;
   date: any;
+  actualTime: any;
   time: any;
   formatDate: any;
-  newOrderDate: any = [];
   newOrderTime: any = [];
-  cancelOrderDate: any = [];
   cancelOrderTime: any = [];
-  criticalOrderDate: any = [];
   criticalOrderTime: any = [];
   criticalDelivery = ['Cancelled', 'Delivered' ];
+  newOrderRemove = [];
+  cancelOrderRemove = [];
+  criticalOrderRemove = [];
+  myNewOrder = [];
+  newOrderDateSet: any;
+  newOrderTimeSet: any;
+  cancelOrderSet: any;
+  cancelOrderDateSet: any;
+  cancelOrderTimeSet: any;
+  criticalOrderSet: any;
+  criticalOrderDateSet: any;
+  criticalOrderTimeSet: any;
+  newFilteredArray = [];
+  cancelFilteredArray = [];
+  criticalFilteredArray = [];
+  notifylen: number;
+  newOrderDate = [];
+  cancelOrderDate = [];
+  criticalOrderDate = [];
+  newOrders: number;
+  cancelOrders: number;
+  criticalOrders: number;
+  pos = true;
+  change = 'false';
+  newbillno: any ;
+  cancelbillno: any ;
+  criticalbillno: any ;
   ngOnInit() {
     this.newOrderStatus = localStorage.getItem('newOrder');
     this.cancelOrderStatus = localStorage.getItem('cancelOrder');
     this.criticalOrderStatus = localStorage.getItem('criticalOrder');
+    this.change = 'false';
+    localStorage.setItem('change', this.change);
     this.newNotify();
     setInterval( () => {
       this.newNotify();
@@ -93,63 +107,105 @@ export class NotificationsPageComponent implements OnInit {
     return this.pad(hours) + ':' + this.pad(minutes) + ':' + this.pad(seconds);
   }
   newOrderFun() {
-    if (this.orderedNotification.length !== this.dupOrderedNotifcation) {
-      this.orderedNotification.forEach(element => {
-        this.date = new Date(element.timestamp);
-        this.formatDate = ('0' + this.date.getDate()).slice(-2) + '/' + ('0' +
-                    (this.date.getMonth() + 1)).slice(-2) + '/' + this.date.getFullYear();
-        if (this.formatDate === this.formattedTodayDate) {
-          this.newOrderFilter.push(element);
-          this.newOrderDate.push(this.formatDate);
-          this.time = this.getTimeFromDate(this.date.getTime());
-          this.newOrderTime.push(this.time);
-        }
-      });
-      this.dupOrderedNotifcation = this.orderedNotification.length;
+    this.newOdd = false;
+    let i = 0;
+    this.orderedNotification.forEach(element => {
+      i++;
+      this.date = new Date(element.timestamp);
+      this.formatDate = ('0' + this.date.getDate()).slice(-2) + '/' + ('0' +
+                  (this.date.getMonth() + 1)).slice(-2) + '/' + this.date.getFullYear();
+      if (i <= 30) {
+        this.newOrderFilter.push(element);
+        this.time = new Date(element.timestamp);
+        this.actualTime = this.time.toLocaleTimeString();
+        this.newOrderTime.push(this.actualTime);
+        this.newOrderDate.push(this.formatDate);
+      }
+    });
+    this.newFilteredArray = this.newOrderFilter.filter( (x)  => this.newOrderRemove.indexOf(x) < 0);
+    this.newOrders = this.newFilteredArray.length;
+    this.newbillno = localStorage.getItem('newnotify');
+    if (this.newFilteredArray.length > 0) {
+      if (this.newbillno !== this.newFilteredArray[0].bill_no) {
+        this.newbillno = this.newFilteredArray[0].bill_no;
+        localStorage.setItem('newnotify', this.newbillno);
+        this.change = 'true';
+        localStorage.setItem('change', this.change);
+      }
+      this.newOrderRemove = this.newOrderRemove.concat(this.newOrderFilter);
     }
-
   }
 
   cancelOrderFun() {
-    if (this.cancelNotification.length !== this.dupCancelNotifcation) {
-      this.cancelNotification.forEach(element => {
-        this.date = new Date(element.timestamp);
-        this.formatDate = ('0' + this.date.getDate()).slice(-2) + '/' + ('0' +
-                    (this.date.getMonth() + 1)).slice(-2) + '/' + this.date.getFullYear();
-        if (this.formatDate === this.formattedTodayDate) {
+    let i = 0;
+    this.cancelNotification.forEach(element => {
+      i++;
+      this.date = new Date(element.timestamp);
+      this.formatDate = ('0' + this.date.getDate()).slice(-2) + '/' + ('0' +
+                  (this.date.getMonth() + 1)).slice(-2) + '/' + this.date.getFullYear();
+      if (i <= 30) {
         this.cancelOrderFilter.push(element);
+        this.time = new Date(element.timestamp);
+        this.actualTime = this.time.toLocaleTimeString();
+        this.cancelOrderTime.push(this.actualTime);
         this.cancelOrderDate.push(this.formatDate);
-        this.time = this.getTimeFromDate(this.date.getTime());
-        this.cancelOrderTime.push(this.time);
-        }
-      });
+      }
+    });
+    this.cancelFilteredArray = this.cancelOrderFilter.filter( (x)  => this.cancelOrderRemove.indexOf(x) < 0);
+    this.cancelOrders = this.cancelFilteredArray.length;
+    this.cancelbillno = localStorage.getItem('cancelnotify');
+    if (this.cancelFilteredArray.length > 0) {
+      if (this.cancelbillno !== this.cancelFilteredArray[0].bill_no) {
+        this.cancelbillno = this.cancelFilteredArray[0].bill_no;
+        localStorage.setItem('cancelnotify', this.cancelbillno);
+        this.change = 'true';
+        localStorage.setItem('change', this.change);
+      }
+      this.cancelOrderRemove = this.cancelOrderRemove.concat(this.cancelOrderFilter);
     }
-    this.dupCancelNotifcation = this.cancelNotification.length;
   }
 
   criticalOrderFun() {
     this.time = new Date().getTime();
     this.notifications.forEach(element => {
       this.date = new Date(element.remaining_time);
-      if (((this.date.getTime() - this.time) <= 20000 && (this.date.getTime() - this.time) >= 0
+      if (((this.date.getTime() - this.time) <= 60000 && (this.date.getTime() - this.time) >= 0
             && !(this.criticalDelivery.includes(element.status)))) {
 
             this.criticalOrder.push(element);
       }
     });
-    if (this.criticalOrder.length !== this.dupCriticalNotifcation) {
-      this.criticalOrder.forEach(element => {
-        this.date = new Date(element.timestamp);
-        this.formatDate = ('0' + this.date.getDate()).slice(-2) + '/' + ('0' +
-                    (this.date.getMonth() + 1)).slice(-2) + '/' + this.date.getFullYear();
-        if (this.formatDate === this.formattedTodayDate) {
-          this.criticalOrderFilter.push(element);
-          this.criticalOrderDate.push(this.formatDate);
-          this.time = this.getTimeFromDate(this.date.getTime());
-          this.criticalOrderTime.push(this.time);
-        }
-      });
-      this.dupCriticalNotifcation = this.criticalOrder.length;
+    let i = 0;
+    this.criticalOrder.forEach(element => {
+      i++;
+      this.date = new Date(element.timestamp);
+      this.formatDate = ('0' + this.date.getDate()).slice(-2) + '/' + ('0' +
+                  (this.date.getMonth() + 1)).slice(-2) + '/' + this.date.getFullYear();
+      if (i <= 30) {
+        this.criticalOrderFilter.push(element);
+        this.time = new Date(element.timestamp);
+        this.actualTime = this.time.toLocaleTimeString();
+        this.criticalOrderTime.push(this.actualTime);
+        this.criticalOrderDate.push(this.formatDate);
+      }
+    });
+    this.criticalFilteredArray = this.criticalOrderFilter.filter( (x)  => this.criticalOrderRemove.indexOf(x) < 0);
+    this.criticalOrders = this.criticalFilteredArray.length;
+    this.criticalbillno = localStorage.getItem('criticalnotify');
+    if (this.criticalFilteredArray.length > 0) {
+      if (this.criticalbillno !== this.criticalFilteredArray[0].bill_no) {
+        this.criticalbillno = this.criticalFilteredArray[0].bill_no;
+        localStorage.setItem('criticalnotify', this.criticalbillno);
+        this.change = 'true';
+        localStorage.setItem('change', this.change);
+      }
+      this.criticalOrderRemove = this.criticalOrderRemove.concat(this.criticalOrderFilter);
     }
+  }
+
+  // tslint:disable-next-line: use-lifecycle-interface
+  ngOnDestroy() {
+    this.change = 'false';
+    localStorage.setItem('change', this.change);
   }
 }

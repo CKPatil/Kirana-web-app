@@ -67,6 +67,8 @@ import { NotificationsPageComponent } from './pages/notifications-page/notificat
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatBadgeModule} from '@angular/material/badge';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatChipsModule} from '@angular/material/chips';
 @NgModule({
   declarations: [
     AppComponent,
@@ -133,7 +135,9 @@ import {MatBadgeModule} from '@angular/material/badge';
     NgxSpinnerModule,
     ScrollingModule,
     MatSliderModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatChipsModule,
+    MatProgressBarModule
   ],
   providers: [
     ProductsService,

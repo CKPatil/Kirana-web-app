@@ -59,13 +59,15 @@ export class ResetPassComponent {
     this.resetpasswordService.addNewPassword(this.resetPass)
       .subscribe(res => {
           this.mess = res.body.message;
+          console.log(this.mess);
           if (this.mess === 'password updated') {
             this.snackBar.open(this.message, this.actionButtonLabel);
           }
-          if (this.mess === 'failed') {
-            this.snackBar.open(this.errMessage, this.actionButtonLabel);
-          }
-      });
+      }, error => {
+        console.log(error);
+        this.snackBar.open(this.message, this.actionButtonLabel);
+      }
+      );
     this.form1.reset();
   }
   onNoClick(): void {
