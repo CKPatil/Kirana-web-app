@@ -1,34 +1,35 @@
 <div class="outer">
-  <div class="dashboard-container" [ngClass]="{'is-side-panel-expanded': isSidePanelExpanded}">
+  <div
+    class="dashboard-container"
+    [ngClass]="{ 'is-side-panel-expanded': isSidePanelExpanded }"
+  >
     <div class="head-section">
       <h2 class="heading">Dashboard</h2>
-      <button mat-raised-button class="invite-retailer">Invite Retailer</button>
+      <!-- <button mat-raised-button class="invite-retailer">Invite Retailer</button> -->
     </div>
-      <div class="analytics-container">
+    <div class="analytics-container">
       <div *ngFor="let item of analytics">
         <app-analytic-container [data]="item"></app-analytic-container>
       </div>
       </div>
-      <div class="order-container">
-        <div class="packed-orders-container">
+      <div class="order-container row mt-3">
+        <div class="packed-orders-container my-2 col-12 col-lg-6">
           <mat-card>
             <h5><b>Packed Orders</b></h5>
-            <app-recent-orders></app-recent-orders>
-            
+            <app-recent-orders [orderStatus]="orderStatus"></app-recent-orders>
         </mat-card>
         </div>
-        <div class="urgent-orders-container">
+        <div class="urgent-orders-container my-2 col-12 col-lg-6">
           <mat-card>
             <h5><b>Critical Orders</b></h5>
-            <app-recent-orders></app-recent-orders>
+            <app-recent-orders [orderStatus]="'Delivered'"></app-recent-orders>
         </mat-card>
-        </div>
       </div>
-      <div class="third-container">
-        <div class="recent-orders-container">
+      <div class="third-container row mt-3">
+        <div class="recent-orders-container col-12 col-lg-8">
           <mat-card>
             <h5><b>Recent Orders</b></h5>
-            <app-recent-orders></app-recent-orders>
+            <app-recent-orders [orderStatus]="'Ordered'"></app-recent-orders>
             <!-- <app-recent-orders></app-recent-orders> -->
         </mat-card>
         </div>
@@ -36,12 +37,14 @@
           <mat-card>
             <h5><b>Invite Requests</b></h5>
             <div class="invite-requests">
-              <app-invite-request></app-invite-request>
-              <app-invite-request></app-invite-request>
-              <app-invite-request></app-invite-request>
+              <div *ngFor="let i of inviteRequests">
+                <app-invite-request [inviteRequest]="i"></app-invite-request>
+              </div>
+              <!-- <app-invite-request></app-invite-request>
+              <app-invite-request></app-invite-request> -->
             </div>
         </mat-card>
-        </div>
       </div>
+    </div>
   </div>
 </div>

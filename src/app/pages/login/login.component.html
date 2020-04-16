@@ -1,13 +1,17 @@
 <div class="outer-container">
     <mat-card id="login-mat-card">
-      <div class="inner-container" [ngClass]="{'flex-row-reverse': isRegister}">
-        <div class="left-container" [ngClass]="{'left-half-border-radius': !isRegister , 'right-half-border-radius': isRegister}">
+      <div class="inner-container row" [ngClass]="{'flex-row-reverse': isRegister}">
+        <div class="left-container  col-12" [ngClass]="{'left-half-border-radius': !isRegister , 'right-half-border-radius': isRegister}">
           LOGO
           <div class="login-welcome">
             <h1>Welcome!</h1>
           </div>
-          <button class="login-btn left-btn" (click)="registerClicked()">{{registerBtn}}</button>
-          <h6>{{btnInfo}}</h6>
+          <div class=" d-none d-md-block">
+            <button class="login-btn left-btn" (click)="registerClicked()">
+              {{ registerBtn }}
+            </button>
+            <h6>{{ btnInfo }}</h6>
+          </div>
         </div>
         <div class="right-container">
           <h1>{{loginBtn}} to Kirana</h1>
@@ -32,16 +36,81 @@
                 </mat-form-field>
               </div>
               <div>
-                <button class="login-btn right-btn" (click)="login()">{{loginBtn}}</button>  
+                <button class="login-btn right-btn" (click)="login()">{{loginBtn}}</button>
               </div>
               <div>
                 <button class="login-btn right-btn" (click)="openDialog()">Forgot Password?</button>
               </div>
             </form>
           </div>
-  
+
         </div>
+
       </div>
-    </mat-card>
-  </div>
-  
+      <!-- <div class="right-container col-12">
+        <h1>{{ loginBtn }} to Kirana</h1>
+        <div class="login-form">
+          <form class="example-form" autocomplete="off" [formGroup]="loginForm">
+            <div class="login-form-fields">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  placeholder="Enter your Email"
+                  formControlName="username"
+                  autocomplete="off"
+                />
+                <mat-error
+                  *ngIf="
+                    loginForm.controls['username']?.status == 'INVALID' &&
+                    !loginForm.controls['username']?.errors?.required
+                  "
+                >
+                  Please enter a valid email address
+                </mat-error>
+                <mat-error
+                  *ngIf="
+                    loginForm.controls['username']?.errors?.required &&
+                    loginForm.controls['username']?.touched
+                  "
+                >
+                  Email is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  formControlName="password"
+                  placeholder="Enter your password"
+                  [type]="hide ? 'password' : 'text'"
+                />
+                <button
+                  mat-icon-button
+                  matSuffix
+                  (click)="hide = !hide"
+                  [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="hide"
+                >
+                  <mat-icon>{{
+                    hide ? "visibility_off" : "visibility"
+                  }}</mat-icon>
+                </button>
+              </mat-form-field>
+            </div>
+            <button class="login-btn right-btn" (click)="login()">
+              {{ loginBtn }}
+            </button>
+          </form>
+        </div>
+
+        <div class="d-md-none mt-5">
+          <h6>{{ btnInfo }}</h6>
+          <button
+            class="login-btn left-btn btn text-dark shadow"
+            (click)="registerClicked()"
+          >
+            {{ registerBtn }}
+          </button>
+        </div>
+      </div> -->
+  </mat-card>
+</div>

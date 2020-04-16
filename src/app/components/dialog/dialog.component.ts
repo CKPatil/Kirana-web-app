@@ -14,11 +14,17 @@ export interface DialogData {
 
 export class DialogComponent implements OnInit {
 
+  dataOnClose: any;
   constructor(
     public dialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
     ngOnInit() {
+      this.dataOnClose= {
+        button: 'YES',
+        data: this.data
+
+      }
     }
 
   onNoClick(): void {

@@ -98,7 +98,7 @@ export class LoginComponent implements OnInit {
     }
     if (!this.role) {
       this.existingLogin();
-    }  
+    }
   }
 
   public existingLogin() {
@@ -201,7 +201,7 @@ export class LoginComponent implements OnInit {
               this.resetPassword.password=data;
               console.log(this.resetPassword);
               this.authService.updatePassword(this.resetPassword,'').subscribe(res=>{
-                console.log(res.body);              
+                console.log(res.body);
               })
             });
           }
@@ -216,8 +216,8 @@ export class LoginComponent implements OnInit {
       this.resetPassword.phone=name;
       console.log(this.resetPassword);
     });
-    
-    
+
+
   }
 
 }
@@ -256,7 +256,7 @@ export class ForgotPasswordDialog implements OnInit{
   ngOnInit(){
     this.form = this.formBuilder.group({
       phone: ''
-    });  
+    });
   }
   submit(form){
     this.dialogRef.close(`${form.value.phone}`);
@@ -271,7 +271,7 @@ export class ForgotPasswordDialog implements OnInit{
       error=>{
         console.log(error);
       }
-    );    
+    );
   }
 }
 
@@ -317,7 +317,7 @@ export class OTPComponent implements OnInit{
       response=>{
         this.res=response.body;
         console.log(response);
-        
+
         this.onSendOTP.emit(this.res);return;
       },
       error=>{
@@ -338,7 +338,7 @@ export class UpdatePasswordComponent implements OnInit{
   pass:string;
   form:FormGroup;
 
-  constructor(    
+  constructor(
     public authService: AuthService,
     public formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<UpdatePasswordComponent>,
@@ -351,7 +351,7 @@ export class UpdatePasswordComponent implements OnInit{
       validator: OldPwdValidators.matchPwds
     });
   }
-  
+
   ngOnInit(){
 
   }

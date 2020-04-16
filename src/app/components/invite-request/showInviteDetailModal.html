@@ -1,0 +1,22 @@
+<h1 mat-dialog-title>Invitation Request Detail</h1>
+<div mat-dialog-content>
+  <div class="row mb-4">
+    <div class="col-6 font-weight-bold">Name</div>
+    <div class="col-6">{{data.name}}</div>
+
+    <div class="col-6 font-weight-bold">Request</div>
+    <div class="col-6">{{data.request}}</div>
+
+    <div class="col-6 font-weight-bold">Phone No.</div>
+    <div class="col-6">{{data.ph_no}}</div>
+
+    <div class="col-6 font-weight-bold">Email</div>
+    <div class="col-6">{{data.email}}</div>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>
+    Accept invite
+  </button>
+</div>

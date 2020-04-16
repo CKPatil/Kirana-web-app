@@ -27,55 +27,62 @@
           flex-direction: row;
         }
       }
-      .mat-divider{
-          margin-top: 30px;
-          border: 0;
-          height: 1px;
-          background: #333;
-          background-image: linear-gradient(to right, #ccc, rgb(89, 141, 54), #ccc);
+      .mat-divider {
+        margin-top: 30px;
+        border: 0;
+        height: 1px;
+        background: #333;
+        background-image: linear-gradient(
+          to right,
+          #ccc,
+          rgb(89, 141, 54),
+          #ccc
+        );
       }
     }
-    .date{
-        padding: 15px;
+    .date {
+      padding: 15px;
     }
-    .daysOfTheWeek{
-        text-align: center;
-        display: flex;
-        flex-direction: row;
-        .day{
-            display:flex;
-            padding: 5px;
-            margin-left: auto;
-            margin-right: auto;
-            .dayName{
-                margin-left: 80px;
-                padding: 10px;
-            }
-            .dateNumber{
-                margin-left: 80px;
-                padding: 0px;
-            }
-        }
+    .daysOfTheWeek {
+      // text-align: center;
+      // display: flex;
+      // flex-direction: row;
+      .day {
+        width: 100%;
+        // display: flex;
+        // padding: 5px;
+        // margin-left: auto;
+        // margin-right: auto;
+        // justify-content: space-around;
+        // .dayName {
+        //   margin-left: 80px;
+        //   padding: 10px;
+        // }
+        // .dateNumber {
+        //   margin-left: 80px;
+        //   padding: 0px;
+        // }
+      }
     }
-    .mat-divider{
-        margin-top: 5px;
+    .mat-divider {
+      margin-top: 5px;
     }
-    .mat-card{
+    .mat-card {
       margin: 20px 0px 20px 0px;
       padding: 20px;
-      .content{
+      .content {
         display: flex;
         justify-content: space-between;
         text-align: left;
-        .event{
+        .event {
           text-align: right;
         }
       }
-      .lastLine{
+      .lastLine {
         display: flex;
         justify-content: space-between;
         text-align: left;
-        .status{
+        .status {
           color: white;
           padding: 5px 15px 5px 15px;
           background: rgb(87, 87, 214);
@@ -84,16 +91,16 @@
           border-radius: 5px;
         }
         .Delivered {
-          background-color: #2ED47A;
+          background-color: #2ed47a;
         }
         .Cancelled {
-          background-color: #F7685B;
+          background-color: #f7685b;
         }
         .Packed {
-          background-color: #FFB946;
+          background-color: #ffb946;
         }
         .Dispatched {
-          background-color: #56CCF2;
+          background-color: #56ccf2;
         }
         .Ordered {
           background-color: #098EDF;
@@ -105,4 +112,20 @@
   .is-side-panel-expanded {
     margin-left: 2% !important;
   }
+}
+.search-results {
+  height: 40em;
+  overflow: scroll;
+}
+.searchRetail {
+  margin-right: 7em;
+}
+.searchStatus {
+  margin-right: 7em;
+}
+button {
+  margin-right: 4em;
+  background-color: #5757d6;
+  color: white;
+  text-align: center;
 }

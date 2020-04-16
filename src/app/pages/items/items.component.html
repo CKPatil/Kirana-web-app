@@ -7,10 +7,17 @@
                 <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="Start searching for item by name ">
             </div>
         </div>
-        <div class="item-cards" *ngFor="let item of items |filter:searchText">
-            <mat-card class="inner-item-mat-card">
-                <app-item-card  [item]="item"></app-item-card>
-            </mat-card>
+    <div class="row mt-4 justify-content-center">
+      <div class="col-12 col-lg-10">
+        <div
+          class="item-cards my-2"
+          *ngFor="let item of allProducts | filter: searchText"
+        >
+          <mat-card class="inner-item-mat-card">
+            <app-item-card [item]="item"></app-item-card>
+          </mat-card>
         </div>
-    </mat-card>
+      </div>
+    </div>
+  </mat-card>
 </div>

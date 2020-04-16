@@ -1,0 +1,21 @@
+.outer {
+  height: 90vh;
+  overflow: scroll;
+  margin: 50px 10%;
+}
+.mat-form-field + .mat-form-field {
+  margin: 100px 2% 50px 2%;
+}
+p {
+  line-height: 50%;
+}
+.innerdiv{
+  overflow: hidden;
+}
+h5, small {
+  float: left;
+}
+.od {
+  float: right;
+  margin-top: 5px;
+}
