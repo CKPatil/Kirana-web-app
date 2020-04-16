@@ -26,8 +26,13 @@ export class DashboardComponent implements OnInit {
   timeDiff:any;
   deliveryTime:any;
   allRetailers:any;
+  currentTime: Date;
+  criticalOrders=[];
+  recentOrders=[];
 
   inviteRequests: any;
+  timeDiffMins: number;
+  dispatchedOrders=[];
 
   constructor(private interaction: InteractionService,private transactionService: TransactionService,private retailerService: RetailerService) {
     this.isSidePanelExpanded = this.interaction.getExpandedStatus();
@@ -37,19 +42,43 @@ export class DashboardComponent implements OnInit {
     this.analytics=analytics;
     this.interaction.expandedStatus$.subscribe( (res) => {
       this.isSidePanelExpanded = res;
+
     });
 
     this.retailerService.getAllInvitationRequests().subscribe((result) => {
       this.inviteRequests = result.body;
     });
-
+    
     this.currentDate=new Date();
-    this.transactionService.buildURLS("?order=listall");
+    this.transactionService.buildURLS("");
     this.transactionService.getAllOrders().subscribe((res:any) => {
-      console.log(res);
-      console.log("allTransactions")
+      //console.log(res);
+      //console.log("allTransactions")
       this.allTransactions = res;
-      console.log(this.currentDate);
+      //console.log(this.currentDate);
+      this.allTransactions.forEach(element => {
+        element.timestamp=new Date(element.timestamp);
+        this.deliveryTime=new Date(element.timestamp.getTime()+(2*60*60*1000));
+        this.timeDiff=this.deliveryTime-this.currentDate;
+        this.timeDiff=(((this.timeDiff/1000)/60)/60);
+        this.timeDiff=this.timeDiff.toFixed(2);
+        this.timeDiffMins=this.timeDiff*60;
+        element.remaining_time=+(this.timeDiffMins.toFixed(0));
+        if(element.remaining_time>0&&element.remaining_time<=30&&(element.status=='Packed'||element.status=='Ordered'||element.status=='Dispatched')){
+          this.criticalOrders.push(element);
+        }
+        if(element.status=='Packed'){
+          this.packedOrders.push(element);
+        }
+        if(element.status=='Ordered'){
+          this.recentOrders.push(element);
+        }
+        // if(element.status=='Dispatched'){
+        //   this.dispatchedOrders.push(element);
+        // }
+        //console.log(this.dispatchedOrders);
+        
+      });
 
       this.allTransactions.forEach(element => {
         if(element.status=="Ordered"){
@@ -58,24 +87,25 @@ export class DashboardComponent implements OnInit {
           this.analytics[2].count++;
         }else if(element.status=="Delivered"){
           this.analytics[3].count++;
-        }else if(element.remaining_time<0){
+        }else if(element.remaining_time<30){
           this.analytics[0].count++;
         }
       });
-
+      //console.log(this.criticalOrders);
+      
       this.analytics.forEach(element => {
 
       });
 
 
-      console.log(this.allTransactions);
-      console.log(this.packedOrders);
+      //console.log(this.allTransactions);
+      //console.log(this.packedOrders);
 
     });
     this.retailerService.getAllRetailers().subscribe((res) => {
-      console.log(res);
+      //console.log(res);
       this.allRetailers = res.body;
-      console.log(this.allRetailers);
+      //console.log(this.allRetailers);
       this.allRetailers.forEach(element => {
         this.analytics[4].count++;
       });

@@ -32,14 +32,16 @@ const ELEMENT_DATA: Order[] = Orders;
   styleUrls: ['./recent-orders.component.scss']
 })
 export class RecentOrdersComponent implements OnInit {
-  @Input('orderStatus') orderStatus:any;
+  // @Input('orderStatus') orderStatus:any;
+  @Input('tableData') tableData:any;
   isSidePanelExpanded: boolean;
 
   displayedColumns: string[] = ['consumer', 'shop', 'phone', 'status', 'total', 'time_left'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  dataSource = new MatTableDataSource();
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   allTransactions: any;
+  filterData: string;
 
   selectedValue: string;
   status: StatusMenu[] = [
@@ -53,7 +55,7 @@ export class RecentOrdersComponent implements OnInit {
   timeDiff:any;
   currentTime:any;
   timeDiffMins:any;
-  timeDiffHours:any;
+  timeDiffHours:Number;
 
 
   constructor(private interaction: InteractionService, public dialog: MatDialog,private transactionService: TransactionService) {
@@ -65,37 +67,70 @@ export class RecentOrdersComponent implements OnInit {
       this.isSidePanelExpanded = res;
     });
     this.currentTime=new Date();
-
     //console.log(this.orderStatus);
     this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+    // this.dataSource.paginator = this.paginator;
+    
     this.transactionService.buildURLS("");
     this.transactionService.getAllOrders().subscribe((res:any) => {
-      console.log(res);
-      //console.log("allTransactions")
-      this.allTransactions = res;
+      //console.log(res);
+      this.allTransactions=this.tableData.reverse();
+      
+      console.log(this.allTransactions);
+            
       this.allTransactions.forEach(element => {
-        element.timestamp=new Date(element.timestamp);
-        this.deliveryTime=new Date(element.timestamp.getTime()+(2*60*60*1000));
-        //console.log(element.timestamp);
-        //console.log(this.deliveryTime);
-        this.timeDiff=this.deliveryTime-this.currentTime;
-        this.timeDiff=(((this.timeDiff/1000)/60)/60);
-        this.timeDiff=this.timeDiff.toFixed(2);
-        //console.log(this.timeDiff);
+        if(element.remaining_time<0){
+          element.remaining_time="-";
+        }else{
+          element.timestamp=new Date(element.timestamp);
+          this.deliveryTime=new Date(element.timestamp.getTime()+(2*60*60*1000));
+          //console.log(element.timestamp);
+          //console.log(this.deliveryTime);
+          this.timeDiff=this.deliveryTime-this.currentTime;
+          this.timeDiff=(((this.timeDiff/1000)/60)/60);
+          this.timeDiff=this.timeDiff.toFixed(2);
+          //console.log("timeDiff "+this.timeDiff);
 
-        this.timeDiffMins=((this.timeDiff*100)%100)/100;
-        this.timeDiffMins=this.timeDiffMins*60;
-        //console.log(this.timeDiffMins);
+          this.timeDiffMins=((this.timeDiff*100)%100)/100;
+          this.timeDiffMins=this.timeDiffMins*60;
+          //console.log("timeDiffmins "+this.timeDiffMins);
 
-        this.timeDiffHours=(this.timeDiff/10)*10;
-        //console.log(this.timeDiffHours);
-
-        element.remaining_time=this.timeDiffHours.toFixed(0)+" hour "+this.timeDiffMins.toFixed(0)+" mins";
-        //console.log(element.remaining_time);
+          this.timeDiffHours=Math.trunc(this.timeDiff);
+          //console.log("timeDiffHours "+this.timeDiffHours);
+          
+          element.remaining_time=this.timeDiffHours.toFixed(0)+" hours "+this.timeDiffMins.toFixed(0)+" mins ";
+          //console.log(element.remaining_time);
+        }
       });
+      //console.log("allTransactions")
+      // this.allTransactions = res;
+      // this.dataSource=this.allTransactions;
+      // this.allTransactions.forEach(element => {
+      //   element.timestamp=new Date(element.timestamp);
+      //   this.deliveryTime=new Date(element.timestamp.getTime()+(2*60*60*1000));
+      //   //console.log(element.timestamp);
+      //   //console.log(this.deliveryTime);
+      //   this.timeDiff=this.deliveryTime-this.currentTime;
+      //   this.timeDiff=(((this.timeDiff/1000)/60)/60);
+      //   this.timeDiff=this.timeDiff.toFixed(2);
+      //   //console.log("timeDiff "+this.timeDiff);
+
+      //   //this.timeDiffMins=((this.timeDiff*100)%100)/100;
+      //   //this.timeDiffMins=this.timeDiffMins*60;
+      //   // console.log("timeDiffmins "+this.timeDiffMins);
+      //   this.timeDiffMins=this.timeDiff*60;
+
+      //   //this.timeDiffHours=(this.timeDiff/10)*10;
+      //   //console.log("timeDiffHours "+this.timeDiffHours);
+
+      //   element.remaining_time=+(this.timeDiffMins.toFixed(0));
+      //   //console.log(element.remaining_time);
+      // });
       //console.log(this.allTransactions);
+      this.allTransactions=new MatTableDataSource(this.tableData.reverse());
+      this.allTransactions.paginator=this.paginator;
     });
+    
 
     // this.transactionService.buildURLS("?order=delivered");
     // this.transactionService.getAllOrders().subscribe((res) => {
@@ -113,7 +148,7 @@ export class RecentOrdersComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     if(filterValue)
-      this.dataSource.filter = filterValue.trim().toLowerCase();
+      this.allTransactions.filter = filterValue.trim().toLowerCase();
   }
   onStatusChange(event: any,row: any) {
     this.openDialog(event.value,row);
