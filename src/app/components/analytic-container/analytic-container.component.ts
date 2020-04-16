@@ -10,7 +10,7 @@ export class AnalyticContainerComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.data);
+    //console.log(this.data);
     
   }
 
