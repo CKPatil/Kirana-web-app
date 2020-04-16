@@ -11,6 +11,8 @@ export const environment = {
   order: "api/v1/vendor/order/",
   orders: 'api/v1/vendor/order/?order=listall',
   retailers: 'api/v1/vendors/',
+  forgotPassword: 'api/v1/forgot_password/',
+  updatePassword: 'api/v1/update_password/',
   products: 'api/v1/products/',
   imageUpload: 'api/v1/imageUpload/',
   signUpURL: 'user/signUp/',
@@ -24,7 +26,7 @@ export const environment = {
   notification: 'api/v1/notifications',
 };
 
-/*
+/*1/
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
  *

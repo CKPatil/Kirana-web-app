@@ -14,6 +14,8 @@ export class TransactionService {
   getAllTransactionsURL: any;
   tempURL: any;
   httpOptions;
+  orderType;
+  getUpdateOrderStatusURL: string;
   buildURLS() {
     this.getAllTransactionsURL =
       environment.backend_end_point + environment.orders;
@@ -51,6 +53,7 @@ export class TransactionService {
         })
       );
   }
+
   getAllTransactions() {
     return transactions;
   }

@@ -1,8 +1,9 @@
 <div class="outer">
-  <mat-card [ngClass]="{ 'is-side-panel-expanded': isSidePanelExpanded }">
-    <h2>Items : </h2>
-    <div class="container">
-      <div class="items-top-search-container row">
+  <mat-card>
+    <h2>Items :</h2>
+    <!-- Search box and Add item Container -->
+    <div class="container my-4">
+      <div class="row">
         <div class="col-8">
           <div class="input">
             <input
@@ -11,25 +12,22 @@
               name="search"
               [(ngModel)]="searchText"
               autocomplete="off"
-              placeholder="Start searching for item by name "
+              placeholder="Search"
             />
           </div>
         </div>
-        <div class="col-3">
+        <div class="col-4 text-center">
           <app-add-items [productsData]="productsData"></app-add-items>
         </div>
       </div>
     </div>
+    <!-- Items Container -->
     <div class="row mt-4 justify-content-center">
-      <div class="col-12 col-lg-10">
-        <div
-          class="item-cards my-2"
-          *ngFor="let item of allProducts | filter: searchText"
-        >
-          <mat-card class="inner-item-mat-card">
-            <app-item-card [item]="item"></app-item-card>
-          </mat-card>
-        </div>
+      <div
+        class="col-12 col-md-10 col-lg-6 item-cards my-2"
+        *ngFor="let item of allProducts | filter: searchText"
+      >
+        <app-item-card [item]="item"></app-item-card>
       </div>
     </div>
   </mat-card>
