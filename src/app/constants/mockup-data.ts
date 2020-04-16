@@ -95,7 +95,7 @@ export const Items = [
 
 export const NewOrderNotification = [
       {
-        OrderID: '1333632',
+        biil_no: '1333632',
         OrderDate: '7/4/2020',
         Time: '08:45:25',
         ShopName: 'Kirana Shop 1',
@@ -103,7 +103,7 @@ export const NewOrderNotification = [
         CustomerLocation: 'XYZ',
       },
       {
-        OrderID: '1333632',
+        bill_no: '1333632',
         OrderDate: '20/12/2020',
         Time: '08:45:25',
         ShopName: 'Kirana Shop 2',
@@ -111,7 +111,7 @@ export const NewOrderNotification = [
         CustomerLocation: 'XYZ',
       },
       {
-        OrderID: '1333632',
+        bill_no: '1333632',
         OrderDate: '20/12/2020',
         Time: '08:45:25',
         ShopName: 'Kirana Shop 3',
@@ -119,7 +119,7 @@ export const NewOrderNotification = [
         CustomerLocation: 'XYZ',
       },
       {
-        OrderID: '1333632',
+        bill_no: '1333632',
         OrderDate: '20/12/2020',
         Time: '08:45:25',
         ShopName: 'Kirana Shop 4 ',

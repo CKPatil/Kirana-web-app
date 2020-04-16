@@ -1,40 +1,46 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { InteractionService } from 'src/app/services/interaction.service';
-import { analytics } from './../../constants/mockup-data';
-import { TransactionService } from './../../services/transaction.service';
-import { RetailerService } from './../../services/retailer.service';
+import { NotificationsPageComponent } from "./../notifications-page/notifications-page.component";
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { InteractionService } from "src/app/services/interaction.service";
+import { analytics } from "./../../constants/mockup-data";
+import { TransactionService } from "./../../services/transaction.service";
+import { RetailerService } from "./../../services/retailer.service";
 
-import { EmptyError } from 'rxjs';
-
+import { EmptyError } from "rxjs";
 
 @Component({
   selector: "app-dashboard",
   templateUrl: "./dashboard.component.html",
   styleUrls: ["./dashboard.component.scss"],
+  providers: [NotificationsPageComponent],
 })
-export class DashboardComponent implements OnInit, OnDestroy  {
+export class DashboardComponent implements OnInit, OnDestroy {
   isSidePanelExpanded: boolean;
-  analytics: { name: string; count: number; }[];
-  allTransactions:any;
-  packedOrders=[];
-  orderStatus="Packed";
+  analytics: { name: string; count: number }[];
+  allTransactions: any;
+  packedOrders = [];
+  orderStatus = "Packed";
   orderStatusPacked: boolean;
-  cancelledOrders:any;
-  allOrders:any;
-  currentDate:any;
-  orderTime=[];
-  timeDiff:any;
-  deliveryTime:any;
-  allRetailers:any;
+  cancelledOrders: any;
+  allOrders: any;
+  currentDate: any;
+  orderTime = [];
+  timeDiff: any;
+  deliveryTime: any;
+  allRetailers: any;
 
   inviteRequests: any;
 
-  constructor(private interaction: InteractionService,private transactionService: TransactionService,private retailerService: RetailerService) {
+  constructor(
+    private interaction: InteractionService,
+    private transactionService: TransactionService,
+    private retailerService: RetailerService,
+    private notificationsPageComponent: NotificationsPageComponent
+  ) {
     this.isSidePanelExpanded = this.interaction.getExpandedStatus();
   }
 
   // to get the invitaition request from the server
-  getInvitations(){
+  getInvitations() {
     this.retailerService.getAllInvitationRequests().subscribe((result) => {
       this.inviteRequests = result.body;
     });
@@ -42,51 +48,48 @@ export class DashboardComponent implements OnInit, OnDestroy  {
   refresh;
 
   ngOnInit() {
-    this.analytics=analytics;
-    this.interaction.expandedStatus$.subscribe( (res) => {
+    this.notificationsPageComponent.ngOnInit();
+    this.analytics = analytics;
+    this.interaction.expandedStatus$.subscribe((res) => {
       this.isSidePanelExpanded = res;
     });
 
-    this.getInvitations()
+    this.getInvitations();
 
     this.refresh = setInterval(() => {
       this.getInvitations();
     }, 60000);
 
-    this.currentDate=new Date();
+    this.currentDate = new Date();
     this.transactionService.buildURLS();
-    this.transactionService.getAllOrders().subscribe((res:any) => {
+    this.transactionService.getAllOrders().subscribe((res: any) => {
       console.log(res);
-      console.log("allTransactions")
+      console.log("allTransactions");
       this.allTransactions = res;
       console.log(this.currentDate);
 
-      this.allTransactions.forEach(element => {
-        if(element.status=="Ordered"){
+      this.allTransactions.forEach((element) => {
+        if (element.status == "Ordered") {
           this.analytics[1].count++;
-        }else if(element.status=="Packed"){
+        } else if (element.status == "Packed") {
           this.analytics[2].count++;
-        }else if(element.status=="Delivered"){
+        } else if (element.status == "Delivered") {
           this.analytics[3].count++;
-        }else if(element.remaining_time<0){
+        } else if (element.remaining_time < 0) {
           this.analytics[0].count++;
         }
       });
 
-      this.analytics.forEach(element => {
-
-      });
-
+      this.analytics.forEach((element) => {});
 
       console.log(this.allTransactions);
       console.log(this.packedOrders);
-
     });
     this.retailerService.getAllRetailers().subscribe((res) => {
       console.log(res);
       this.allRetailers = res.body;
       console.log(this.allRetailers);
-      this.allRetailers.forEach(element => {
+      this.allRetailers.forEach((element) => {
         this.analytics[4].count++;
       });
     });
@@ -108,6 +111,5 @@ export class DashboardComponent implements OnInit, OnDestroy  {
   ngOnDestroy() {
     clearInterval(this.refresh);
   }
-  getTransactions(orderType:string){
-  }
+  getTransactions(orderType: string) {}
 }

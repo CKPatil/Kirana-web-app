@@ -23,7 +23,7 @@ export const environment = {
   inviteResponseURL: "api/v1/vendor_registration/",
   feedbackURL:"api/v1/ratings/",
   resetPassURL: 'api/v1/update_password/',
-  notification: 'api/v1/notifications',
+  notification: 'api/v1/vendor/order/',
 };
 
 /*1/
