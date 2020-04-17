@@ -98,11 +98,11 @@
                   [ngStyle]="{
                     backgroundColor: i.available === 'True' ? 'green' : 'red'
                   }"
-                  style="width: 1em; height: 1em;display: inline-block;"
+                  style="width: 1em; height: 1em; display: inline-block;"
                 ></span>
                 <mat-slide-toggle
                   [checked]="i.available === 'True' ? true : false"
-                  (change)="log($event, i)"
+                  (change)="updateStatus($event, i)"
                 ></mat-slide-toggle>
               </td>
               <td class="col-2">

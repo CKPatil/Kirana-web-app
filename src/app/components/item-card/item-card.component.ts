@@ -24,7 +24,7 @@ export class ItemCardComponent {
     private _snackbar: MatSnackBar
   ) {}
 
-  log(e, variant) {
+  updateStatus(e, variant) {
     let orderId = variant.p_id;
     let status = e.checked ? 1 : 0;
     this.productService.toogleDisableVariant(orderId, status).subscribe(
