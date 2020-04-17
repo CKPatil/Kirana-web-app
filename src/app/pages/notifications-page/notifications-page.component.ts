@@ -172,7 +172,7 @@ export class NotificationsPageComponent implements OnInit {
       this.date = new Date(element.timestamp);
       this.deliveryTime = this.date.getTime();
       this.deliveryTime += 7200000;
-      if (((this.deliveryTime - this.time) <= 60000 && (this.deliveryTime - this.time) >= 0
+      if (((this.deliveryTime - this.time) <= 1800000 && (this.deliveryTime - this.time) >= 0
             && !(this.criticalDelivery.includes(element.status)))) {
 
             this.criticalOrder.push(element);
