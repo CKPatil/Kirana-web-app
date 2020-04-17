@@ -11,6 +11,7 @@ import { MatSort } from "@angular/material/sort";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
 import { Router } from "@angular/router";
+import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
 
 export interface Retailer {
   name: string;
@@ -54,6 +55,9 @@ export class RetailerComponent implements OnInit {
     this.retailerService.getAllRetailers().subscribe((res) => {
       console.log(res);
       this.allRetailers = res.body;
+      this.allRetailers=new MatTableDataSource(this.allRetailers);
+      this.allRetailers.sort=this.sort;
+      this.allRetailers.paginator=this.paginator;
       // console.log(this.allRetailers);
     });
     this.dataSource = new MatTableDataSource();
