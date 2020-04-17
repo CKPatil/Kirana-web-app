@@ -1,22 +1,47 @@
-<h1 mat-dialog-title>Invitation Request Detail</h1>
+<h1 mat-dialog-title class="text-center">Invitation Request Detail</h1>
 <div mat-dialog-content>
   <div class="row mb-4">
-    <div class="col-6 font-weight-bold">Name</div>
-    <div class="col-6">{{data.name}}</div>
+    <div class="col-6 font-weight-bold">
+      <p>Name</p>
+    </div>
+    <div class="col-6">
+      <p>{{data.name | titlecase}}</p>
+    </div>
 
-    <div class="col-6 font-weight-bold">Request</div>
-    <div class="col-6">{{data.request}}</div>
+    <div class="col-6 font-weight-bold">
+      <p>Request</p>
+    </div>
+    <div class="col-6">
+      <p>{{data.request}}</p>
+    </div>
 
-    <div class="col-6 font-weight-bold">Phone No.</div>
-    <div class="col-6">{{data.ph_no}}</div>
+    <div class="col-6 font-weight-bold">
+      <p>Phone No.</p></div>
+    <div class="col-6">
+      <p>{{data.ph_no}}</p>
+    </div>
 
-    <div class="col-6 font-weight-bold">Email</div>
-    <div class="col-6">{{data.email}}</div>
+    <div class="col-6 font-weight-bold">
+      <p>Email</p>
+    </div>
+    <div class="col-6">
+      <p>{{data.email}}</p>
+    </div>
+
+    <div class="col-6 font-weight-bold">
+      <p>Address</p>
+    </div>
+    <div class="col-6" style="font-size: 95%;">
+      <p class="m-0">{{data.line1}}</p>
+      <p class="m-0">{{data.line2}}</p>
+      <p class="m-0">{{data.city}}</p>
+      <p class="m-0">{{data.state}}, {{data.pincode}}</p>
+    </div>
   </div>
 </div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>
+<div mat-dialog-actions class="row justify-content-around">
+  <button mat-raised-button (click)="onNoClick()">Cancel</button>
+  <button mat-raised-button [mat-dialog-close]="true" cdkFocusInitial>
     Accept invite
   </button>
 </div>

@@ -1,5 +1,13 @@
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { ThemePalette } from '@angular/material/core';
+import { NotificationComponent} from './../notification/notification.component';
+import { ResetPassComponent } from './../reset-pass/reset-pass.component';
+export interface DialogData {
+  animal: string;
+  name: string;
+}
 
 @Component({
   selector: 'app-header',
@@ -7,25 +15,48 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-
-  constructor(private router: Router) { }
+  animal: string;
+  name: string;
+  change: any;
+  constructor(private router: Router, public dialog: MatDialog) { }
 
   ngOnInit() {
+    this.change = localStorage.getItem('change');
+    this.repeat();
   }
-
+  repeat() {
+    setInterval( () => {
+      this.change = localStorage.getItem('change');
+    }, 10000);
+  }
   logout() {
     localStorage.clear();
     window.location.reload();
   }
-
+  notifications() {
+    this.router.navigate(['/notifications']);
+  }
   feedbacks() {
     this.router.navigate(['/feedbacks']);
   }
   ResetPass() {
-    this.router.navigate(['/reset-password']);
-  }
-  NotifySetting() {
-    this.router.navigate(['/notifications']);
-  }
+    const dialogRef = this.dialog.open(ResetPassComponent, {
+      width: '450px',
+      data: {name: this.name, animal: this.animal}
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      this.animal = result;
+    });
+  }
+  NotifySetting(): void {
+    const dialogRef = this.dialog.open(NotificationComponent, {
+      width: '450px',
+      data: {name: this.name, animal: this.animal}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.animal = result;
+    });
+  }
 }

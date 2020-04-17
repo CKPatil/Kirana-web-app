@@ -5,33 +5,32 @@
   >
     <div class="head-section">
       <h2 class="heading">Dashboard</h2>
-      <button mat-raised-button class="invite-retailer">Invite Retailer</button>
+      <!-- <button mat-raised-button class="invite-retailer">Invite Retailer</button> -->
     </div>
     <div class="analytics-container">
       <div *ngFor="let item of analytics">
         <app-analytic-container [data]="item"></app-analytic-container>
       </div>
-    </div>
-    <div class="order-container row mt-3">
-      <div class="packed-orders-container my-2 col-12 col-lg-6">
-        <mat-card>
-          <h5><b>Packed Orders</b></h5>
-          <app-recent-orders></app-recent-orders>
+      </div>
+      <div class="order-container">
+        <div class="packed-orders-container">
+          <mat-card>
+            <h5><b>Packed Orders</b></h5>
+            <app-recent-orders [tableData]="packedOrders"></app-recent-orders>
+        </mat-card>
+        </div>
+        <div class="urgent-orders-container">
+          <mat-card>
+            <h5><b>Critical Orders</b></h5>
+            <app-recent-orders [tableData]="criticalOrders"></app-recent-orders>
         </mat-card>
       </div>
-      <div class="urgent-orders-container my-2 col-12 col-lg-6">
-        <mat-card>
-          <h5><b>Critical Orders</b></h5>
-          <app-recent-orders></app-recent-orders>
-        </mat-card>
-      </div>
-    </div>
-    <div class="third-container row mt-3">
-      <div class="recent-orders-container col-12 col-lg-8">
-        <mat-card>
-          <h5><b>Recent Orders</b></h5>
-          <app-recent-orders></app-recent-orders>
-          <!-- <app-recent-orders></app-recent-orders> -->
+      <div class="third-container row mt-3">
+        <div class="recent-orders-container col-12 col-lg-8">
+          <mat-card>
+            <h5><b>Recent Orders</b></h5>
+            <app-recent-orders [tableData]="recentOrders"></app-recent-orders>
+            <!-- <app-recent-orders></app-recent-orders> -->
         </mat-card>
         </div>
         <div class="invite-requests-container">

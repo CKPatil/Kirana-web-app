@@ -1,59 +1,104 @@
-<div class="item-card">
-  <div class="item-image-container">
-    <div *ngIf="item.image_url.length">
-      <img [src]="item.image_url[0]" alt="{{ item.name }} Image" />
-    </div>
-    <div>
-      <button
-          mat-icon-button
-          color="primary"
-          aria-label="Example icon-button with delete icon"
-          (click)="openSelectImageDialog()"
-        >
-          <mat-icon>add</mat-icon>
-        </button>
-    </div>
-  </div>
-  <div class="item-details-container">
-    <div class="item-top-container">
-      <div class="item-top-left">
-        <div class="item-name">
-          <h4>{{ item.name }}</h4>
-        </div>
+<mat-card class="">
+  <div>
+    <!-- name, edit, delete container -->
+    <div class="row justify-content-between align-items-center mt-3 mb-4">
+      <div class="col-8">
+        <h4>{{ item.name }}</h4>
       </div>
-      <div class="item-price">
+      <div class="col-4 row justify-content-around text-center">
         <button
           mat-icon-button
           color="primary"
-          aria-label="Example icon-button with delete icon"
+          (click)="openEditProductDetailDialog()"
+        >
+          <mat-icon>create</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          color="primary"
           (click)="openConfirmDeleteDialog()"
         >
           <mat-icon>delete</mat-icon>
         </button>
       </div>
-      <app-update-item [item]="item"></app-update-item>
     </div>
-    <div class="item-detail-container">
-      <div class="item-description-container">
-        <p class="item-description">{{ item.details }}</p>
-        <p>Category : {{ item.category }}</p>
-        <p>Sub Category : {{ item.sub_category }}</p>
-        <p>Brand : {{ item.brand }}</p>
-        <p>Quantity Type : {{ item.quantity_type }}</p>
+    <!-- img, other itme detail container -->
+    <div class="row">
+      <div class="col-4">
+        <div
+          *ngIf="item.image_url.length"
+          style="height: 10em;"
+          class="text-center d-flex align-items-center justify-content-center"
+        >
+          <img
+            [src]="item.image_url[0]"
+            alt="{{ item.name }} Image"
+            (click)="openImageSliderDialog()"
+          />
+        </div>
+        <div class="text text-center">
+          <button
+            mat-raised-button
+            aria-label="Example icon-button with delete icon"
+            (click)="openSelectImageDialog()"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
       </div>
-      <div class="item-variety">
-        <h5>Variety:</h5>
-        <ul>
-          <li *ngFor="let variety of item.variant_details">
-            <span>
-              {{ variety.variant }} ::
-              Quantity : {{ variety.quantity }} ::
-              Price : {{variety.price || ''}}
-              </span
-            >
-          </li>
-        </ul>
+      <div class="col-8 row text-90">
+        <p class="text-muted col-12">{{ item.details }}</p>
+        <div class="col-6 pr-0 font-weight-bold">
+          <p>Category</p>
+        </div>
+        <div class="col-6 pl-0">
+          <p>{{ item.category }}</p>
+        </div>
+        <div class="col-6 pr-0 font-weight-bold">
+          <p>Sub Category</p>
+        </div>
+        <div class="col-6 pl-0">
+          <p>{{ item.sub_category }}</p>
+        </div>
+        <div class="col-6 pr-0 font-weight-bold">
+          <p>Brand</p>
+        </div>
+        <div class="col-6 pl-0">
+          <p>{{ item.brand }}</p>
+        </div>
+        <div class="col-6 pr-0 font-weight-bold">
+          <p>Quantity Type</p>
+        </div>
+        <div class="col-6 pl-0">
+          <p>{{ item.quantity_type }}</p>
+        </div>
+      </div>
+    </div>
+    <!-- variant detail container -->
+    <div class="mt-3">
+      <h5>Variants List -</h5>
+      <div class="table-responsive">
+        <table class="table table-sm table-fixed">
+          <thead>
+            <tr>
+              <th class="col-4">Name</th>
+              <th class="col-3">Quantity</th>
+              <th class="col-3">Price</th>
+              <th class="col-2">Edit</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let i of item.variant_details">
+              <td class="col-4">{{ i.variant }}</td>
+              <td class="col-3">{{ i.quantity }}</td>
+              <td class="col-3">{{ i.price }}</td>
+              <td class="col-2">
+                <app-update-item [variant]="i"></app-update-item>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
-</div>
+</mat-card>

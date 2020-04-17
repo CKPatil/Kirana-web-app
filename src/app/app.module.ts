@@ -35,7 +35,7 @@ import { DialogAddItemComponent } from './components/add-items/add-items.compone
 import { RetailerComponent } from './pages/retailer/retailer.component';
 import { ItemsComponent } from './pages/items/items.component';
 import { TransactionsComponent } from './pages/transactions/transactions.component';
-import { LoginComponent } from './pages/login/login.component';
+import { LoginComponent, ForgotPasswordDialog, OTPComponent, UpdatePasswordComponent } from './pages/login/login.component';
 import { AuthGuard } from './guards/auth/auth.guard';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDividerModule} from '@angular/material/divider';
@@ -43,7 +43,7 @@ import { AnalyticContainerComponent } from './components/analytic-container/anal
 import { RecentOrdersComponent } from './components/recent-orders/recent-orders.component';
 import { HttpClientModule } from '@angular/common/http';
 import { InviteRequestComponent, ShowInviteDetailModal } from './components/invite-request/invite-request.component';
-import { ItemCardComponent, SelectVarietyDialog, SelectImageDialog } from './components/item-card/item-card.component';
+import { ItemCardComponent, SelectVarietyDialog, SelectImageDialog, EditProductDetailDialog, ImageSliderDialog, DeleteConformationDialog } from './components/item-card/item-card.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { FeedbacksComponent } from './pages/feedbacks/feedbacks.component';
@@ -63,6 +63,13 @@ import { NotificationComponent } from './components/notification/notification.co
 import { ProductsService } from './services/products.service';
 import { TransactionService } from './services/transaction.service';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { NotificationsPageComponent } from './pages/notifications-page/notifications-page.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatBadgeModule} from '@angular/material/badge';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatChipsModule} from '@angular/material/chips';
+import { TransactionsCardComponent, ChooseOrderStatusDialog } from './components/transactions-card/transactions-card.component';
 
 @NgModule({
   declarations: [
@@ -73,6 +80,8 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     RetailerComponent,
     ItemsComponent,
     TransactionsComponent,
+    ChooseOrderStatusDialog,
+    TransactionsCardComponent,
     LoginComponent,
     AnalyticContainerComponent,
     RecentOrdersComponent,
@@ -83,6 +92,9 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     FeedbacksComponent,
     FeedbackCardComponent,
     AddItemsComponent,
+    ForgotPasswordDialog,
+    OTPComponent,
+    UpdatePasswordComponent,
     SelectVarietyDialog,
     SelectImageDialog,
     UpdateItemComponent,
@@ -90,12 +102,17 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     ShowInviteDetailModal,
     ResetPassComponent,
     NotificationComponent,
+    NotificationsPageComponent,
+    EditProductDetailDialog,
+    ImageSliderDialog,
+    DeleteConformationDialog
   ],
   entryComponents: [
     DialogComponent
   ],
   imports: [
     BrowserModule,
+    MatBadgeModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
@@ -109,6 +126,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     MatInputModule,
     MatIconModule,
     MatCardModule,
+    MatTooltipModule,
     MatMenuModule,
     MatSnackBarModule,
     MatToolbarModule,
@@ -116,16 +134,20 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     MatDividerModule,
     MatTableModule,
     MatPaginatorModule,
+    MatExpansionModule,
     MatSortModule,
     Ng2SearchPipeModule,
     MatDatepickerModule,
     MatNativeDateModule,
     ReactiveFormsModule,
+    MatDialogModule,
     InfiniteScrollModule,
     NgxSpinnerModule,
     ScrollingModule,
     MatSliderModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatChipsModule,
+    MatProgressBarModule
   ],
   providers: [
     ProductsService,

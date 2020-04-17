@@ -14,7 +14,7 @@
     <!-- Email Column -->
     <ng-container matColumnDef="shop">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Shop </b></th>
-      <td mat-cell *matCellDef="let element"> {{element.retailer_name}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.vendor_name}} </td>
     </ng-container>
 
     <!-- Phone Column -->
@@ -26,11 +26,11 @@
     <!-- Shop Column -->
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Status</b> </th>
-      <td mat-cell *matCellDef="let element"> 
+      <td mat-cell *matCellDef="let element">
         <form>
-            <mat-form-field style="width: 80% !important; padding: 0;" appearance="none"> 
+            <mat-form-field style="width: 80% !important; padding: 0;" appearance="none">
               <!-- <mat-label>Status</mat-label> -->
-              <mat-select name="status" [value]="element.status" (selectionChange)="onStatusChange($event)">
+              <mat-select name="status" [value]="element.status" (selectionChange)="onStatusChange($event,element)">
                 <mat-option *ngFor="let STATUS of status" [value]="STATUS.value">
                   {{STATUS.viewValue}}
                 </mat-option>
@@ -49,7 +49,7 @@
     <!-- Reacent Activity Column -->
     <ng-container matColumnDef="time_left">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Time Left</b> </th>
-      <td mat-cell *matCellDef="let element"> {{element.order_time}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.remaining_time}}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true;"></tr>

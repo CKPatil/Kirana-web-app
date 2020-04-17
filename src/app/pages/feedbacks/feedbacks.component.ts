@@ -14,40 +14,6 @@ export class FeedbacksComponent implements OnInit {
   searchRating: any;
   searchDate: any;
 
-  // MOCK Data
-  feedbacks = [
-    {
-      name: "Pranav",
-      stars: "3.5",
-      date: "21/02/2020",
-      description:
-        "Very good and on time delivery. Very much satisfied with the pricing as well.",
-    },
-    {
-      name: "Vijay",
-      stars: "5",
-      date: "22/02/2020",
-      description: "Smooth app with best UX",
-    },
-    {
-      name: "Vijay",
-      stars: "5",
-      date: "23/02/2020",
-      description: "Smooth app with best UX",
-    },
-  ];
-  retailers = [
-    {
-      value: "retailer-1",
-      viewValue: "Pranav",
-    },
-    {
-      value: "retailer-2",
-      viewValue: "Vijay",
-    },
-  ];
-  // END Mock Data
-
   filters: { [key: string]: any } = {};
   filteredData: {
     name: string;
@@ -57,10 +23,8 @@ export class FeedbacksComponent implements OnInit {
   }[];
   isSidePanelExpanded: any;
 
-  allFeedbacks;
-  allVendors: {
-    vendor_name: String;
-  }[] = [];
+  allFeedbacks = [];
+  allVendors = [];
 
   constructor(
     private multiFilter: FilterPipe,
@@ -69,6 +33,7 @@ export class FeedbacksComponent implements OnInit {
   ) {
     this.isSidePanelExpanded = this.interaction.getExpandedStatus();
   }
+
   ngOnInit() {
     this.getAllFeedbacks();
     this.filteredData = this.allFeedbacks;
@@ -86,7 +51,6 @@ export class FeedbacksComponent implements OnInit {
 
   onDateFilterChange(value: Date) {
     this.filters.date = this.parseDate(value);
-    // value.getDate() + "/0" + value.getMonth() + "/" + value.getFullYear();
     this.filter();
   }
 
@@ -106,35 +70,28 @@ export class FeedbacksComponent implements OnInit {
   }
 
   getAllFeedbacks() {
-    this.feedbackService.getAllFeedbacks().subscribe((result: any) => {
-      let response = result.body;
-      console.log(response);
-      let allFeedbacks = [];
-      let allVendors = [];
-      response.forEach((val) => {
-        val.forEach((value, index) => {
-          if (index === val.length - 1) {
-            allVendors.push(val[val.length - 1]);
-          } else {
-            let vendor = {
-              customer_name: value.customer_name,
-              rating: value.rating,
-              comment: value.comments,
-              vendor_name: val[val.length - 1].vendor_name,
-              date: this.parseDate(value.date_time),
-            };
-            allFeedbacks.push(vendor);
-          }
+    this.feedbackService.getAllFeedbacks().subscribe(
+      (result: any) => {
+        result.body.forEach((val) => {
+          val.forEach((value, index) => {
+            if (index === val.length - 1) {
+              this.allVendors.push(val[val.length - 1]);
+            } else {
+              this.allFeedbacks.push({
+                customer_name: value.customer_name,
+                rating: value.rating,
+                comment: value.comments,
+                vendor_name: val[val.length - 1].vendor_name,
+                date: this.parseDate(value.date_time),
+              });
+            }
+          });
         });
-      });
-
-      this.allFeedbacks = allFeedbacks;
-      this.filteredData = allFeedbacks;
-      this.allVendors = allVendors;
-
-      console.log("All Feedback", allFeedbacks);
-      console.log("All Vendors", allVendors);
-    });
+      },
+      (error) => {
+        alert("Error Occured While Getting Feedbacks");
+      }
+    );
   }
 
   parseDate = (d) => {

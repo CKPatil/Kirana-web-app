@@ -1,29 +1,59 @@
-import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Component, OnInit, Inject } from '@angular/core';
 import {ThemePalette} from '@angular/material/core';
-
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 @Component({
   selector: 'app-notification',
   templateUrl: './notification.component.html',
   styleUrls: ['./notification.component.scss']
 })
-export class NotificationComponent implements OnInit {
-  color: ThemePalette = 'accent';
-  checkedNewOrder = false;
-  checkedCancelledStatus = false;
-  checkedCriticalStatus = false;
-  disabled = false;
+export class NotificationComponent implements OnInit  {
 
-  constructor() { }
+  color: ThemePalette = 'accent';
+  checkedNewOrder: any = false;
+  checkedCancelledStatus: any = false;
+  checkedCriticalStatus: any = false;
+  disabled = false;
+  constructor(public dialogRef: MatDialogRef<NotificationComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: any, private router: Router) { }
 
   ngOnInit(): void {
+    this.checkedNewOrder = localStorage.getItem('newOrder');
+    this.checkedCancelledStatus = localStorage.getItem('cancelOrder');
+    this.checkedCriticalStatus = localStorage.getItem('criticalOrder');
   }
-  newOrdersChange(event) {
-    console.log(event.checked.toString());
+
+  newOrdersChange(newNotificationEvent) {
+    localStorage.setItem('newOrder', newNotificationEvent.checked.toString());
+    if (this.router.url === '/notifications') {
+      this.router.navigateByUrl('/login',
+      {skipLocationChange: true})
+      .then( () => {
+        this.router.navigate(['/notifications']);
+      });
+    }
   }
-  CriticalStatusChange(event) {
-    console.log(event.checked.toString());
+  CriticalStatusChange(criticalNotificationEvent) {
+    localStorage.setItem('criticalOrder', criticalNotificationEvent.checked.toString());
+    if (this.router.url === '/notifications') {
+      this.router.navigateByUrl('/login',
+      {skipLocationChange: true})
+      .then( () => {
+        this.router.navigate(['/notifications']);
+      });
+    }
   }
-  CancelledStatusChange(event) {
-    console.log(event.checked.toString());
+  CancelledStatusChange(cancelledlNotificationEvent) {
+    localStorage.setItem('cancelOrder', cancelledlNotificationEvent.checked.toString());
+    if (this.router.url === '/notifications') {
+      this.router.navigateByUrl('/login',
+      {skipLocationChange: true})
+      .then( () => {
+        this.router.navigate(['/notifications']);
+      });
+    }
+  }
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 }

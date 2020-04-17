@@ -1,4 +1,6 @@
-<h1 mat-dialog-title>Select Product Image</h1>
+<h1 mat-dialog-title class="text-center font-weight-bold">
+  Select Product Image
+</h1>
 <div mat-dialog-content>
   <div>
     <button mat-button color="warn" (click)="onClick()">
@@ -13,7 +15,7 @@
   </div>
   <div class="previewImageContainer"></div>
 </div>
-<div mat-dialog-actions>
+<div mat-dialog-actions class="row justify-content-around">
   <button mat-button (click)="onNoClick()">Cancel</button>
   <button mat-button [mat-dialog-close]="picUploadForm" cdkFocusInitial>
     Upload

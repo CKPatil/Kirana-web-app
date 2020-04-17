@@ -1,35 +1,20 @@
-import { Component, OnInit, Inject, Input } from "@angular/core";
+import { Component, Inject, Input } from "@angular/core";
 import {
   MatDialog,
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from "@angular/material/dialog";
-import {
-  FormControl,
-  Validators,
-  FormGroup,
-  FormBuilder,
-  FormArray,
-} from "@angular/forms";
+import { Validators, FormBuilder, FormArray } from "@angular/forms";
 import { ProductsService } from "src/app/services/products.service";
 import { Router } from "@angular/router";
-import { Sent } from 'src/app/models/models';
-
-export interface DialogData {
-  animal: string;
-  name: string;
-}
 
 @Component({
   selector: "app-add-items",
   templateUrl: "./add-items.component.html",
   styleUrls: ["./add-items.component.scss"],
 })
-export class AddItemsComponent implements OnInit {
-  animal: string;
-  name: string;
-
-  @Input() productData;
+export class AddItemsComponent {
+  @Input() productsData;
 
   constructor(
     public dialog: MatDialog,
@@ -41,116 +26,90 @@ export class AddItemsComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogAddItemComponent, {
       width: "90%",
       maxWidth: "500px",
-      data: this.productData,
+      data: this.productsData,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log("The dialog was closed");
-      console.log(result);
       if (result) {
         let variant_details = result.variant_details;
         result["variants"] = [];
-        result["quantites"] = [];
-        result['price'] = []
+        result["quantity"] = [];
+        result["price"] = [];
         variant_details.forEach((val) => {
           result["variants"].push(val.variant);
-          result["quantites"].push(parseInt(val.quantity));
+          result["quantity"].push(parseInt(val.quantity));
           result["price"].push(parseInt(val.price));
         });
         delete result.variant_details;
-        console.log(result);
-        this.productService.addProduct(result).subscribe((res) => {
-          alert("Product Saved");
-          this.router
-            .navigateByUrl("/login", { skipLocationChange: true })
-            .then(() => {
-              this.router.navigate(["/items"]);
-            });
-        });
+        this.productService.addProduct(result).subscribe(
+          (result) => {
+            console.log("Result: ", result);
+            alert("Product Saved");
+            this.router
+              .navigateByUrl("/login", { skipLocationChange: true })
+              .then(() => {
+                this.router.navigate(["/items"]);
+              });
+          },
+          (error) => {
+            console.log("Error : ", error);
+            alert("Error Occured while Adding New Item");
+          }
+        );
       }
     });
   }
-
-  ngOnInit(): void {}
 }
 
+// Dialog to ADD ITEM
 @Component({
   selector: "app-add-items-dialogue",
   templateUrl: "./add-items-dialogue.html",
   styleUrls: ["./add-items-dialogue.scss"],
 })
 export class DialogAddItemComponent {
-  // categorySelected;
-  // subCategorySelected;
-  // brandSelected;
-  // quantitySelected;
-  // variantSelected;
-  // itemForm = new FormGroup({
-  //   categorySelected: new FormControl(null, Validators.required),
-  //   subCategorySelected: new FormControl(null, Validators.required),
-  //   brandSelected: new FormControl(null, Validators.required),
-  //   quantitySelected: new FormControl(),
-  //   variantSelected: new FormControl(),
-  // });
-
   itemForm = this.fb.group({
     name: ["", Validators.required],
     category: ["", Validators.required],
     sub_category: ["", Validators.required],
     brand: ["", Validators.required],
     quantity_type: ["", Validators.required],
-    variant_details: this.fb.array([
-      this.fb.group({
-        variant: "",
-        quantity: "",
-        price:''
-      }),
-    ]),
+    variant_details: this.fb.array(
+      [
+        this.fb.group({
+          variant: ["", [Validators.required]],
+          quantity: ["", [Validators.required]],
+          price: ["", [Validators.required]],
+        }),
+      ],
+      [Validators.required, Validators.minLength(1)]
+    ),
     details: ["", Validators.required],
   });
 
-  // categories = ["Dairy", "Grocery"];
-  // sub_categories = {
-  //   Dairy: ["Milk", "Butter"],
-  //   Grocery: ["Rice", "Wheat"],
-  // };
-  // brands = {
-  //   Rice: ["Basmathi"],
-  //   Milk: ["Nandhini"],
-  //   Wheat: ["Pillsburry"],
-  // };
   quantity_types = ["ml", "ltr", "kg", "unit", "gm"];
-  // variants = {
-  //   ml: [100, 250, 500],
-  //   ltr: [1],
-  //   kg: [1],
-  //   unit: [1],
-  //   gm: [100, 250, 500],
-  // };
+
   isAddCategory: boolean;
   isAddSubCategory: boolean;
   isAddBrand: boolean;
-  newProduct = new Sent();
-  post: any;
+
   constructor(
     public dialogRef: MatDialogRef<DialogAddItemComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
     private fb: FormBuilder
-  ) {
-    console.log(this.data);
-  }
+  ) {}
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
-addCategory() {
+  addCategory() {
     this.isAddCategory = this.isAddCategory ? false : true;
   }
-addSubCategory() {
+  addSubCategory() {
     this.isAddSubCategory = this.isAddSubCategory ? false : true;
   }
-addBrand() {
+  addBrand() {
     this.isAddBrand = this.isAddBrand ? false : true;
   }
 
@@ -162,9 +121,9 @@ addBrand() {
     const varient = this.itemForm.controls.variant_details as FormArray;
     varient.push(
       this.fb.group({
-        variant: "",
-        quantity: "",
-        price: ''
+        variant: ["", [Validators.required]],
+        quantity: ["", [Validators.required]],
+        price: ["", [Validators.required]],
       })
     );
   }
@@ -174,6 +133,4 @@ addBrand() {
     const varient = this.itemForm.controls.variant_details as FormArray;
     varient.removeAt(i);
   }
-
-  addItem() {}
 }

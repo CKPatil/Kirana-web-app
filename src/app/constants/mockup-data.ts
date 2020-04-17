@@ -42,23 +42,23 @@ export const transactions = [
 export const analytics = [
     {
         name: 'Critical',
-        count: 60
+        count: 0
     },
     {
         name: 'Ordered',
-        count: 16
+        count: 0
     },
     {
         name: 'Packed',
-        count: 43
+        count: 0
     },
     {
         name: 'Delivered',
-        count: 64
+        count: 0
     },
     {
         name: 'Clients',
-        count: 20
+        count: 0
     },
 ];
 
@@ -91,4 +91,107 @@ export const Items = [
         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores'],
         price: '1$'
     },
+];
+
+export const NewOrderNotification = [
+      {
+        biil_no: '1333632',
+        OrderDate: '7/4/2020',
+        Time: '08:45:25',
+        ShopName: 'Kirana Shop 1',
+        CustomerName: 'Pranav',
+        CustomerLocation: 'XYZ',
+      },
+      {
+        bill_no: '1333632',
+        OrderDate: '20/12/2020',
+        Time: '08:45:25',
+        ShopName: 'Kirana Shop 2',
+        CustomerName: 'Chetan',
+        CustomerLocation: 'XYZ',
+      },
+      {
+        bill_no: '1333632',
+        OrderDate: '20/12/2020',
+        Time: '08:45:25',
+        ShopName: 'Kirana Shop 3',
+        CustomerName: 'Sumanth',
+        CustomerLocation: 'XYZ',
+      },
+      {
+        bill_no: '1333632',
+        OrderDate: '20/12/2020',
+        Time: '08:45:25',
+        ShopName: 'Kirana Shop 4 ',
+        CustomerName: 'Athreya',
+        CustomerLocation: 'XYZ',
+      }
+];
+export const CriticalOrderNotification = [
+  {
+    OrderID: '1333632',
+    OrderDate: '20/12/2020',
+    Time: '08:45:25',
+    ShopName: 'Kirana Shop 1',
+    CustomerName: 'Pranav',
+    CustomerLocation: 'XYZ',
+  },
+  {
+    OrderID: '1333632',
+    OrderDate: '20/12/2020',
+    Time: '08:45:25',
+    ShopName: 'Kirana Shop 2',
+    CustomerName: 'Chetan',
+    CustomerLocation: 'XYZ',
+  },
+  {
+    OrderID: '1333632',
+    OrderDate: '20/12/2020',
+    Time: '08:45:25',
+    ShopName: 'Kirana Shop 3',
+    CustomerName: 'Sumanth',
+    CustomerLocation: 'XYZ',
+  },
+  {
+    OrderID: '1333632',
+    OrderDate: '20/12/2020',
+    Time: '08:45:25',
+    ShopName: 'Kirana Shop 4 ',
+    CustomerName: 'Athreya',
+    CustomerLocation: 'XYZ',
+  }
+];
+export const CancelledOrderNotification = [
+  {
+    OrderID: '1333632',
+    OrderDate: '20/12/2020',
+    Time: '08:45:25',
+    ShopName: 'Kirana Shop 1',
+    CustomerName: 'Pranav',
+    CustomerLocation: 'XYZ',
+  },
+  {
+    OrderID: '1333632',
+    OrderDate: '20/12/2020',
+    Time: '08:45:25',
+    ShopName: 'Kirana Shop 2',
+    CustomerName: 'Chetan',
+    CustomerLocation: 'XYZ',
+  },
+  {
+    OrderID: '1333632',
+    OrderDate: '20/12/2020',
+    Time: '08:45:25',
+    ShopName: 'Kirana Shop 3',
+    CustomerName: 'Sumanth',
+    CustomerLocation: 'XYZ',
+  },
+  {
+    OrderID: '1333632',
+    OrderDate: '7/4/2020',
+    Time: '08:45:25',
+    ShopName: 'Kirana Shop 4 ',
+    CustomerName: 'Athreya',
+    CustomerLocation: 'XYZ',
+  }
 ];

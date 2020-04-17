@@ -1,0 +1,38 @@
+<h1 mat-dialog-title class="text-center font-weight-bold">
+  Edit the Product Information
+</h1>
+<div mat-dialog-content class="text-center">
+  <form [formGroup]="itemForm">
+    <div class="name-container">
+      <div class="">
+        <mat-form-field class="example-full-width">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" placeholder="Enter Name" />
+          <mat-error> Name is <strong>required</strong> </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="description-container">
+      <mat-form-field class="example-full-width">
+        <mat-label>Description</mat-label>
+        <textarea
+          formControlName="description"
+          matInput
+          placeholder="Description of Item"
+        ></textarea>
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions class="row justify-content-around">
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button
+    mat-button
+    [disabled]="!itemForm.valid"
+    [mat-dialog-close]="itemForm.value"
+    cdkFocusInitial
+  >
+    Update
+  </button>
+</div>

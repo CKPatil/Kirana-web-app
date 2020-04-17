@@ -1,0 +1,57 @@
+.outer {
+  height: 85vh;
+  overflow: scroll;
+  margin-top: 30px;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-bottom: 5px;
+}
+.mat-form-field + .mat-form-field {
+  margin: 100px 2% 50px 2%;
+}
+p {
+  line-height: 50%;
+}
+.innerdiv{
+  overflow: hidden;
+}
+h5, small {
+  float: left;
+}
+.od {
+  float: right;
+  margin-top: 5px;
+}
+.notify {
+  margin-bottom: 1em;
+}
+.ptag {
+  text-align: center;
+  height: 20px;
+}
+mat-chip {
+  margin-left: 1em;
+  border-radius: 20px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.no {
+  background-color: #4CAF50;
+}
+.se {
+  background-color: #FBC02D;
+}
+.exp-body {
+  height: 20vh;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+h3 {
+  margin-bottom: 1em;
+}
+h6 {
+  background-color: whitesmoke;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 5px;
+}
