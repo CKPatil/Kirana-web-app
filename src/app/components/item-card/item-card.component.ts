@@ -107,13 +107,16 @@ export class ItemCardComponent {
 
         formData.append("type", "products");
         formData.append("category", this.item.category);
+        formData.append("name", this.item.name);
         formData.append("sub_category", this.item.sub_category);
         formData.append("brand", this.item.brand);
         formData.append("image", result.value.image);
 
         this.productService.uploadImage(formData).subscribe(
           (result) => {
-            alert("Image Uploaded");
+            this._snackbar.open("Image Uploaded", "", {
+              duration: 5000,
+            });
             this.router
               .navigateByUrl("/login", { skipLocationChange: true })
               .then(() => {
@@ -121,6 +124,9 @@ export class ItemCardComponent {
               });
           },
           (error) => {
+            this._snackbar.open("Error Occured, Try after sometime.", "", {
+              duration: 5000,
+            });
             alert("Error Occured In Image Upload");
           }
         );
