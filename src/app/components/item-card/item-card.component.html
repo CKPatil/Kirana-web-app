@@ -98,7 +98,17 @@
                   [ngStyle]="{
                     backgroundColor: i.available === 'True' ? 'green' : 'red'
                   }"
-                  style="width: 1em; height: 1em; display: inline-block;"
+                  [matTooltip]="
+                    i.available === 'True' ? 'Available' : 'Unavailable'
+                  "
+                  style="
+                    width: 1.3em;
+                    height: 1.3em;
+                    display: inline-block;
+                    border-radius: 50%;
+                    cursor: pointer;
+                  "
+                  class="mr-3"
                 ></span>
                 <mat-slide-toggle
                   [checked]="i.available === 'True' ? true : false"
