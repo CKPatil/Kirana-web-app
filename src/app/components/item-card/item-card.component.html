@@ -81,17 +81,30 @@
         <table class="table table-sm table-fixed">
           <thead>
             <tr>
-              <th class="col-4">Name</th>
-              <th class="col-3">Quantity</th>
-              <th class="col-3">Price</th>
+              <th class="col-3">Name</th>
+              <th class="col-2">Quantity</th>
+              <th class="col-2">Price</th>
+              <th class="col-3">Availability</th>
               <th class="col-2">Edit</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let i of item.variant_details">
-              <td class="col-4">{{ i.variant }}</td>
-              <td class="col-3">{{ i.quantity }}</td>
-              <td class="col-3">{{ i.price }}</td>
+              <td class="col-3">{{ i.variant }}</td>
+              <td class="col-2">{{ i.quantity }}</td>
+              <td class="col-2">{{ i.price }}</td>
+              <td class="col-3">
+                <span
+                  [ngStyle]="{
+                    backgroundColor: i.available === 'True' ? 'green' : 'red'
+                  }"
+                  style="width: 1em; height: 1em;display: inline-block;"
+                ></span>
+                <mat-slide-toggle
+                  [checked]="i.available === 'True' ? true : false"
+                  (change)="log($event, i)"
+                ></mat-slide-toggle>
+              </td>
               <td class="col-2">
                 <app-update-item [variant]="i"></app-update-item>
               </td>

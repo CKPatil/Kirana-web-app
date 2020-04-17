@@ -7,6 +7,7 @@ import {
 import { ProductsService } from "src/app/services/products.service";
 import { Router } from "@angular/router";
 import { FormBuilder, Validators } from "@angular/forms";
+import { MatSnackBar } from "@angular/material";
 
 @Component({
   selector: "app-item-card",
@@ -19,8 +20,27 @@ export class ItemCardComponent {
   constructor(
     private dialog: MatDialog,
     private productService: ProductsService,
-    private router: Router
+    private router: Router,
+    private _snackbar: MatSnackBar
   ) {}
+
+  log(e, variant) {
+    let orderId = variant.p_id;
+    let status = e.checked ? 1 : 0;
+    this.productService.toogleDisableVariant(orderId, status).subscribe(
+      (result) => {
+        variant.available = status ? "True" : "False";
+        this._snackbar.open("Status Updated", "", {
+          duration: 5000,
+        });
+      },
+      (error) => {
+        this._snackbar.open("Error Occured, Try after sometime.", "", {
+          duration: 5000,
+        });
+      }
+    );
+  }
 
   displayedColumns = ["variant", "quantity", "price", "edit"];
 
