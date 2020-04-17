@@ -72,6 +72,7 @@ export class NotificationsPageComponent implements OnInit {
   newbillno: any ;
   cancelbillno: any ;
   criticalbillno: any ;
+  deliveryTime: any;
   ngOnInit() {
     this.newOrderStatus = localStorage.getItem('newOrder');
     this.cancelOrderStatus = localStorage.getItem('cancelOrder');
@@ -168,8 +169,10 @@ export class NotificationsPageComponent implements OnInit {
   criticalOrderFun() {
     this.time = new Date().getTime();
     this.notifications.forEach(element => {
-      this.date = new Date(element.remaining_time);
-      if (((this.date.getTime() - this.time) <= 60000 && (this.date.getTime() - this.time) >= 0
+      this.date = new Date(element.timestamp);
+      this.deliveryTime = this.date.getTime();
+      this.deliveryTime += 7200000;
+      if (((this.deliveryTime - this.time) <= 1800000 && (this.deliveryTime - this.time) >= 0
             && !(this.criticalDelivery.includes(element.status)))) {
 
             this.criticalOrder.push(element);
