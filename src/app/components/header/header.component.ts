@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit {
   repeat() {
     setInterval( () => {
       this.change = localStorage.getItem('change');
-    }, 10000);
+    }, 3000);
   }
   logout() {
     localStorage.clear();

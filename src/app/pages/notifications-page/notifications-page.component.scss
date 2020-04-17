@@ -31,10 +31,10 @@ h5, small {
   word-wrap: break-word;
 }
 mat-chip {
-  margin-left: 1em;
+  margin-left: 1.5em;
   border-radius: 20px;
-  padding-left: 5px;
-  padding-right: 5px;
+  padding-left: 7px;
+  padding-right: 7px;
 }
 .no {
   background-color: #4CAF50;
@@ -54,4 +54,15 @@ h6 {
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 5px;
+}
+.pack {
+  background-color: #ADFF2F;
+}
+
+.disp {
+  background-color: lightseagreen;
+}
+
+.inv {
+  background-color: orange;
 }

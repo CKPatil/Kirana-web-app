@@ -8,7 +8,34 @@
   <div>
     <mat-accordion>
       <div class='notify' *ngIf="newOrderStatus =='true'">
-        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel (opened)="panelOpenState = true " (closed)="panelOpenState = false" [hideToggle]='true' >
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <h6>
+                <b>
+                  INVITE REQUESTS
+                </b>
+                <mat-chip color="#4CAF50" class="inv" selected>{{invitationFilteredArray.length}}</mat-chip>
+              </h6>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="exp-body" *ngIf='newFilteredArray.length > 0'>
+            <div *ngFor="let i = index ;let invitation of invitationFilteredArray" >
+              <mat-card mat-elevation-z1>
+                <div class="innerdiv">
+                  <h5 >New Enrollment </h5>
+                  </div>
+                  <div>
+                  <p>{{invitation.name}} from {{invitation.city}}, {{invitation.state}} has requested to be enrolled onto the Kirana platform.</p>
+                  </div>
+              </mat-card>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </div>
+      <hr>
+      <div class='notify' *ngIf="newOrderStatus =='true'">
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [hideToggle]='true'>
           <mat-expansion-panel-header>
             <mat-panel-title>
               <h6>
@@ -38,7 +65,7 @@
         </mat-expansion-panel>
       </div>
       <div class='notify' *ngIf="criticalOrderStatus =='true'">
-        <mat-expansion-panel>
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [hideToggle]='true'>
           <mat-expansion-panel-header>
             <mat-panel-title>
               <h6>
@@ -68,7 +95,7 @@
         </mat-expansion-panel>
       </div>
       <div class='notify' *ngIf="cancelOrderStatus =='true'">
-        <mat-expansion-panel>
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [hideToggle]='true'>
           <mat-expansion-panel-header>
             <h6>
               <b>
@@ -96,13 +123,13 @@
         </mat-expansion-panel>
       </div>
       <div class='notify' *ngIf="packedOrderStatus =='true'">
-        <mat-expansion-panel>
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [hideToggle]='true'>
           <mat-expansion-panel-header>
             <h6>
               <b>
                 PACKED ORDERS
               </b>
-                <mat-chip color="warn" selected>{{packedOrders}}</mat-chip>
+                <mat-chip color="#4CAF50" class="pack" selected>{{packedOrders}}</mat-chip>
             </h6>
           </mat-expansion-panel-header>
           <div class="exp-body" *ngIf='packedFilteredArray.length > 0'>
@@ -124,13 +151,13 @@
         </mat-expansion-panel>
       </div>
       <div class='notify' *ngIf="dispatchedOrderStatus =='true'">
-        <mat-expansion-panel>
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [hideToggle]='true'>
           <mat-expansion-panel-header>
             <h6>
               <b>
                 DISPATCHED ORDERS
               </b>
-                <mat-chip color="warn" selected>{{dispatchedOrders}}</mat-chip>
+                <mat-chip color="#4CAF50" class="disp" selected>{{dispatchedOrders}}</mat-chip>
             </h6>
           </mat-expansion-panel-header>
           <div class="exp-body" *ngIf='dispatchedFilteredArray.length > 0'>
