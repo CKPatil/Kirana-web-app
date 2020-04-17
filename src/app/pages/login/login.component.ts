@@ -113,7 +113,7 @@ export class LoginComponent implements OnInit {
       const data = Object.assign({}, this.loginForm.value);
       this.authService.login(data).subscribe(
         (response) => {
-          console.log(response.body);
+          // console.log(response.body);
           localStorage.setItem("userId", response.body["userId"]);
           localStorage.setItem("userType", response.body["userType"]);
           localStorage.setItem("emailId", response.body["emailId"]);
@@ -190,17 +190,17 @@ export class LoginComponent implements OnInit {
     });
     const sub = this.dialogRef.componentInstance.onSubmit.subscribe((data) => {
       this.dialogResponse = data;
-      console.log(this.dialogResponse);
+      // console.log(this.dialogResponse);
       if (this.dialogResponse.message == "otp sent") {
         this.otpDialogRef = this.dialog.open(OTPComponent, {
-          width: "500px",
+          width: "700px",
           height: "200px",
           data: { dialogResponse: this.dialogResponse },
         });
         const sendOTP = this.otpDialogRef.componentInstance.onSendOTP.subscribe(
           (data) => {
             this.otpResponse = data;
-            console.log(this.otpResponse);
+            // console.log(this.otpResponse);
             if (this.otpResponse.verified == true) {
               this.updateDialogRef = this.dialog.open(UpdatePasswordComponent, {
                 width: "500px",
@@ -208,11 +208,11 @@ export class LoginComponent implements OnInit {
               });
               this.updateDialogRef.afterClosed().subscribe((data) => {
                 this.resetPassword.password = data;
-                console.log(this.resetPassword);
+                // console.log(this.resetPassword);
                 this.authService
                   .updatePassword(this.resetPassword, "")
                   .subscribe((res) => {
-                    console.log(res.body);
+                    // console.log(res.body);
                   });
               });
             }
@@ -220,7 +220,7 @@ export class LoginComponent implements OnInit {
         );
         this.otpDialogRef.afterClosed().subscribe((result) => {
           this.resetPassword.otp = result;
-          console.log(this.resetPassword);
+          // console.log(this.resetPassword);
         });
       }
     });
@@ -270,7 +270,7 @@ export class ForgotPasswordDialog implements OnInit {
   submit(form) {
     this.dialogRef.close(`${form.value.phone}`);
     const data = Object.assign({}, this.resetMethod, this.form.value);
-    console.log(data);
+    // console.log(data);
     this.authService.forgotPassword(data, "").subscribe(
       (response) => {
         this.res = response.body;
@@ -278,7 +278,7 @@ export class ForgotPasswordDialog implements OnInit {
         // console.log(response.body);
       },
       (error) => {
-        console.log(error);
+        // console.log(error);
       }
     );
   }
@@ -309,9 +309,9 @@ export class OTPComponent implements OnInit {
     this.form = this.formBuilder.group({
       otp: "",
     });
-    console.log(this.data);
+    // console.log(this.data);
     this.userId = this.data.dialogResponse.user_id;
-    console.log(this.userId);
+    // console.log(this.userId);
   }
 
   onNoClick(): void {
@@ -324,13 +324,13 @@ export class OTPComponent implements OnInit {
     this.authService.sendOTP(data, "?id=" + this.userId).subscribe(
       (response) => {
         this.res = response.body;
-        console.log(response);
+        // console.log(response);
 
         this.onSendOTP.emit(this.res);
         return;
       },
       (error) => {
-        console.log(error);
+        // console.log(error);
       }
     );
   }
