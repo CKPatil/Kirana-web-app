@@ -1,15 +1,21 @@
+<div mat-dialog-actions class="row justify-content-end">
+  <button mat-mini-fab [mat-dialog-close]="'No Data'" cdkFocusInitial>
+    <mat-icon>clear</mat-icon>
+  </button>
+</div>
+
 <div
   class="row align-content-center justify-content-center"
-  style="height: 90%;background-color: rgb(236, 236, 236);"
+  style="height: 90%;"
 >
   <div
     id="carouselExampleIndicators"
-    class="carousel col-10"
+    class="carousel col-12"
     data-ride="carousel"
   >
     <div class="carousel-inner row justify-content-center">
       <div
-        class="carousel-item mr-0 h-100 p-2 w-75 text-center"
+        class="carousel-item mr-0 h-100 w-100 text-center"
         *ngFor="let img of data;let j=index"
         [ngClass]="{'active': j===0}"
       >
@@ -28,8 +34,11 @@
       role="button"
       data-slide="prev"
     >
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
+      <button mat-mini-fab>
+        <mat-icon>navigate_before</mat-icon>
+      </button>
+      <!-- <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span> -->
     </a>
     <a
       class="carousel-control-next"
@@ -37,19 +46,11 @@
       role="button"
       data-slide="next"
     >
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
+      <button mat-mini-fab>
+        <mat-icon>navigate_next</mat-icon>
+      </button>
+      <!-- <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span> -->
     </a>
   </div>
-</div>
-
-<div mat-dialog-actions class="row justify-content-center">
-  <!-- <button mat-button (click)="onNoClick()">Cancel</button> -->
-  <button
-    mat-raised-button
-    [mat-dialog-close]="'No Data'"
-    cdkFocusInitial
-  >
-    Close
-  </button>
 </div>
