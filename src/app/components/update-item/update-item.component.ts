@@ -7,6 +7,7 @@ import {
 import { FormBuilder, Validators } from "@angular/forms";
 import { ProductsService } from "src/app/services/products.service";
 import { Router } from "@angular/router";
+import { MatSnackBar } from "@angular/material";
 
 @Component({
   selector: "app-update-item",
@@ -19,7 +20,8 @@ export class UpdateItemComponent {
   constructor(
     public dialog: MatDialog,
     private productService: ProductsService,
-    private router: Router
+    private router: Router,
+    private _snackbar: MatSnackBar
   ) {}
 
   // for variant detail Update
@@ -35,7 +37,9 @@ export class UpdateItemComponent {
           .updateProduct(result, "?id=" + this.variant.p_id)
           .subscribe(
             (result) => {
-              alert("Product Variant Detail Updated");
+              this._snackbar.open("Product Variant Detail Updated", "", {
+                duration: 5000,
+              });
               this.router
                 .navigateByUrl("/login", { skipLocationChange: true })
                 .then(() => {
@@ -43,7 +47,9 @@ export class UpdateItemComponent {
                 });
             },
             (error) => {
-              alert("Error Occured while updating the Detail");
+              this._snackbar.open("Error Occured, try after sometime.", "", {
+                duration: 5000,
+              });
             }
           );
       }
