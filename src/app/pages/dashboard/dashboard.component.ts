@@ -17,10 +17,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   isSidePanelExpanded: boolean;
   analytics: { name: string; count: number }[];
   allTransactions: any;
-  packedOrders = [];
   orderStatus = "Packed";
   orderStatusPacked: boolean;
-  cancelledOrders: any;
   allOrders: any;
   currentDate: any;
   orderTime = [];
@@ -28,12 +26,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
   deliveryTime: any;
   allRetailers: any;
   currentTime: Date;
-  criticalOrders = [];
-  recentOrders = [];
 
   refresh: any;
   inviteRequests: any;
   timeDiffMins: number;
+  
+  packedOrders = [];
+  criticalOrders = [];
+  recentOrders = [];
+  cancelledOrders = [];
+  deliveredOrders = [];
   dispatchedOrders = [];
 
   constructor(
@@ -101,9 +103,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
         if (element.status == "Ordered") {
           this.recentOrders.push(element);
         }
-        // if(element.status=='Dispatched'){
-        //   this.dispatchedOrders.push(element);
-        // }
+        if(element.status=='Dispatched'){
+          this.dispatchedOrders.push(element);
+        }
+        if(element.status=="Delivered"){
+          this.deliveredOrders.push(element);
+        }
+        if(element.status=="Cancelled"){
+          this.cancelledOrders.push(element);
+        }
+
         //console.log(this.dispatchedOrders);
         //console.log(this.allTransactions);
       });
@@ -126,18 +135,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.analytics[4].count++;
       });
     });
-    // this.transactionService.buildURLS("?order=delivered");
-    // this.transactionService.getAllOrders().subscribe((res) => {
-    //   console.log("allOrders");
-    //   this.allOrders = res.body;
-    //   console.log(this.allOrders);
-    // });
-    // this.transactionService.buildURLS("?order=cancelled");
-    // this.transactionService.getAllOrders().subscribe((res) => {
-    //   console.log("cancelledOrders");
-    //   this.cancelledOrders = res.body;
-    //   console.log(this.cancelledOrders);
-    // });
+    
     this.refresh1 = setTimeout(() => {
       this.ngOnInit();
     }, 60000);

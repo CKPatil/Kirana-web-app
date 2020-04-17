@@ -78,9 +78,7 @@ export class RecentOrdersComponent implements OnInit {
       this.isSidePanelExpanded = res;
     });
     this.currentTime = new Date();
-    //console.log(this.orderStatus);
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+    
     this.transactionService.buildURLS();
     this.transactionService.getAllOrders().subscribe((res: any) => {
       //console.log(res);
@@ -118,47 +116,9 @@ export class RecentOrdersComponent implements OnInit {
           //console.log(element.remaining_time);
         }
       });
-      //console.log("allTransactions")
-      // this.allTransactions = res;
-      // this.dataSource=this.allTransactions;
-      // this.allTransactions.forEach(element => {
-      //   element.timestamp=new Date(element.timestamp);
-      //   this.deliveryTime=new Date(element.timestamp.getTime()+(2*60*60*1000));
-      //   //console.log(element.timestamp);
-      //   //console.log(this.deliveryTime);
-      //   this.timeDiff=this.deliveryTime-this.currentTime;
-      //   this.timeDiff=(((this.timeDiff/1000)/60)/60);
-      //   this.timeDiff=this.timeDiff.toFixed(2);
-      //   //console.log("timeDiff "+this.timeDiff);
-
-      //   //this.timeDiffMins=((this.timeDiff*100)%100)/100;
-      //   //this.timeDiffMins=this.timeDiffMins*60;
-      //   // console.log("timeDiffmins "+this.timeDiffMins);
-      //   this.timeDiffMins=this.timeDiff*60;
-
-      //   //this.timeDiffHours=(this.timeDiff/10)*10;
-      //   //console.log("timeDiffHours "+this.timeDiffHours);
-
-      //   element.remaining_time=+(this.timeDiffMins.toFixed(0));
-      //   //console.log(element.remaining_time);
-      // });
-      //console.log(this.allTransactions);
       this.allTransactions = new MatTableDataSource(this.tableData.reverse());
       this.allTransactions.paginator = this.paginator;
     });
-
-    // this.transactionService.buildURLS("?order=delivered");
-    // this.transactionService.getAllOrders().subscribe((res) => {
-    //   console.log("allOrders");
-    //   this.allOrders = res.body;
-    //   console.log(this.allOrders);
-    // });
-    // this.transactionService.buildURLS("?order=cancelled");
-    // this.transactionService.getAllOrders().subscribe((res) => {
-    //   console.log("cancelledOrders");
-    //   this.cancelledOrders = res.body;
-    //   console.log(this.cancelledOrders);
-    // });
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

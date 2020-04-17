@@ -19,6 +19,18 @@
             <app-recent-orders [tableData]="packedOrders"></app-recent-orders>
         </mat-card>
         </div>
+        <div class="packed-orders-container">
+          <mat-card>
+            <h5><b>Dispatched Orders</b></h5>
+            <app-recent-orders [tableData]="dispatchedOrders"></app-recent-orders>
+        </mat-card>
+        </div>
+        <div class="packed-orders-container">
+          <mat-card>
+            <h5><b>Delivered Orders</b></h5>
+            <app-recent-orders [tableData]="deliveredOrders"></app-recent-orders>
+        </mat-card>
+        </div>
         <div class="urgent-orders-container">
           <mat-card>
             <h5><b>Critical Orders</b></h5>
