@@ -158,16 +158,16 @@ export class ItemCardComponent {
         this.productService
           .updateProduct(result, "?p_id=" + this.item.variant_details[0].p_id)
           .subscribe(
-            (result) => {
-              alert("Product Detail Updated");
-              this.router
-                .navigateByUrl("/login", { skipLocationChange: true })
-                .then(() => {
-                  this.router.navigate(["/items"]);
-                });
+            (response) => {
+              this.item.details = result.description;
+              this._snackbar.open("Product Detail Updated", "", {
+                duration: 5000,
+              });
             },
             (error) => {
-              alert("Error Occured while Updating the Detail");
+              this._snackbar.open("Error Occured Try after sometime", "", {
+                duration: 5000,
+              });
             }
           );
       }
@@ -293,13 +293,11 @@ export class EditProductDetailDialog {
     private fb: FormBuilder
   ) {
     this.itemForm.setValue({
-      name: data.name,
       description: data.details,
     });
   }
 
   itemForm = this.fb.group({
-    name: ["", [Validators.required]],
     description: ["", [Validators.required]],
   });
 
