@@ -76,10 +76,14 @@ export class ItemCardComponent {
         this.productService.deleteProduct(deleteURL).subscribe(
           (result: any) => {
             if (result.error) {
-              alert("Error Occured in Deleting the Product");
+              this._snackbar.open("Error Occured try after sometime.", "", {
+                duration: 5000,
+              });
               return 0;
             }
-            alert("Product Deleted");
+            this._snackbar.open("Product Deleted", "", {
+              duration: 5000,
+            });
             this.router
               .navigateByUrl("/login", { skipLocationChange: true })
               .then(() => {
@@ -87,7 +91,9 @@ export class ItemCardComponent {
               });
           },
           (error) => {
-            alert("Error Occured in Deleting the Product");
+            this._snackbar.open("Error Occured try after sometime.", "", {
+              duration: 5000,
+            });
           }
         );
       }
@@ -127,7 +133,6 @@ export class ItemCardComponent {
             this._snackbar.open("Error Occured, Try after sometime.", "", {
               duration: 5000,
             });
-            alert("Error Occured In Image Upload");
           }
         );
       }
