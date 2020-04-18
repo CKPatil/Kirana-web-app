@@ -7,6 +7,7 @@ import {
 import { ProductsService } from "src/app/services/products.service";
 import { Router } from "@angular/router";
 import { FormBuilder, Validators } from "@angular/forms";
+import { MatSnackBar } from "@angular/material";
 
 @Component({
   selector: "app-item-card",
@@ -19,8 +20,27 @@ export class ItemCardComponent {
   constructor(
     private dialog: MatDialog,
     private productService: ProductsService,
-    private router: Router
+    private router: Router,
+    private _snackbar: MatSnackBar
   ) {}
+
+  updateStatus(e, variant) {
+    let orderId = variant.p_id;
+    let status = e.checked ? 1 : 0;
+    this.productService.toogleDisableVariant(orderId, status).subscribe(
+      (result) => {
+        variant.available = status ? "True" : "False";
+        this._snackbar.open("Status Updated", "", {
+          duration: 5000,
+        });
+      },
+      (error) => {
+        this._snackbar.open("Error Occured, Try after sometime.", "", {
+          duration: 5000,
+        });
+      }
+    );
+  }
 
   displayedColumns = ["variant", "quantity", "price", "edit"];
 
@@ -56,10 +76,14 @@ export class ItemCardComponent {
         this.productService.deleteProduct(deleteURL).subscribe(
           (result: any) => {
             if (result.error) {
-              alert("Error Occured in Deleting the Product");
+              this._snackbar.open("Error Occured try after sometime.", "", {
+                duration: 5000,
+              });
               return 0;
             }
-            alert("Product Deleted");
+            this._snackbar.open("Product Deleted", "", {
+              duration: 5000,
+            });
             this.router
               .navigateByUrl("/login", { skipLocationChange: true })
               .then(() => {
@@ -67,7 +91,9 @@ export class ItemCardComponent {
               });
           },
           (error) => {
-            alert("Error Occured in Deleting the Product");
+            this._snackbar.open("Error Occured try after sometime.", "", {
+              duration: 5000,
+            });
           }
         );
       }
@@ -87,13 +113,16 @@ export class ItemCardComponent {
 
         formData.append("type", "products");
         formData.append("category", this.item.category);
+        formData.append("name", this.item.name);
         formData.append("sub_category", this.item.sub_category);
         formData.append("brand", this.item.brand);
         formData.append("image", result.value.image);
 
         this.productService.uploadImage(formData).subscribe(
           (result) => {
-            alert("Image Uploaded");
+            this._snackbar.open("Image Uploaded", "", {
+              duration: 5000,
+            });
             this.router
               .navigateByUrl("/login", { skipLocationChange: true })
               .then(() => {
@@ -101,7 +130,9 @@ export class ItemCardComponent {
               });
           },
           (error) => {
-            alert("Error Occured In Image Upload");
+            this._snackbar.open("Error Occured, Try after sometime.", "", {
+              duration: 5000,
+            });
           }
         );
       }
@@ -132,16 +163,16 @@ export class ItemCardComponent {
         this.productService
           .updateProduct(result, "?p_id=" + this.item.variant_details[0].p_id)
           .subscribe(
-            (result) => {
-              alert("Product Detail Updated");
-              this.router
-                .navigateByUrl("/login", { skipLocationChange: true })
-                .then(() => {
-                  this.router.navigate(["/items"]);
-                });
+            (response) => {
+              this.item.details = result.description;
+              this._snackbar.open("Product Detail Updated", "", {
+                duration: 5000,
+              });
             },
             (error) => {
-              alert("Error Occured while Updating the Detail");
+              this._snackbar.open("Error Occured Try after sometime", "", {
+                duration: 5000,
+              });
             }
           );
       }
@@ -267,14 +298,12 @@ export class EditProductDetailDialog {
     private fb: FormBuilder
   ) {
     this.itemForm.setValue({
-      name: data.name,
       description: data.details,
     });
   }
 
   itemForm = this.fb.group({
-    name: ["", [Validators.required]],
-    description: ["", [Validators.required]],
+    description: ["", [Validators.required, Validators.maxLength(500)]],
   });
 
   onNoClick(): void {

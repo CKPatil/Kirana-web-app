@@ -4,11 +4,12 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from "@angular/material/dialog";
-import { Router } from "@angular/router";
+// import { Router } from "@angular/router";
 import { TransactionService } from "src/app/services/transaction.service";
 
 // STATUS Array
 import { STATUSES } from "./../../constants/constants";
+import { MatSnackBar } from "@angular/material";
 
 @Component({
   selector: "app-transactions-card",
@@ -21,7 +22,8 @@ export class TransactionsCardComponent {
   constructor(
     public dialog: MatDialog,
     private transactionService: TransactionService,
-    private router: Router
+    // private router: Router,
+    private _snackbar: MatSnackBar
   ) {}
 
   // for changing the status
@@ -37,15 +39,20 @@ export class TransactionsCardComponent {
           .updateOrderStatus(this.item.id, result)
           .subscribe(
             (res) => {
-              alert("Order Status Updated");
-              this.router
-                .navigateByUrl("/login", { skipLocationChange: true })
-                .then(() => {
-                  this.router.navigate(["/transactions"]);
-                });
+              this.item.status = STATUSES[result];
+              this._snackbar.open("Order Status Updated", "", {
+                duration: 5000,
+              });
+              // this.router
+              //   .navigateByUrl("/login", { skipLocationChange: true })
+              //   .then(() => {
+              //     this.router.navigate(["/transactions"]);
+              //   });
             },
             (err) => {
-              alert("Error Occured in Updating Status");
+              this._snackbar.open("Error Occured try after Sometime", "", {
+                duration: 5000,
+              });
             }
           );
       }

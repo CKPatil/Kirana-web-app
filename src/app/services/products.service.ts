@@ -91,4 +91,25 @@ export class ProductsService {
         })
       );
   }
+
+  toogleDisableVariant(productId: number, status: number) {
+    let URL =
+      environment.backend_end_point +
+      environment.disableVariant +
+      `?id=${productId}&status=${status}`;
+
+    return this.http
+      .put(
+        URL,
+        {},
+        {
+          headers: this.httpOptions,
+        }
+      )
+      .pipe(
+        catchError((error) => {
+          return throwError(error);
+        })
+      );
+  }
 }
