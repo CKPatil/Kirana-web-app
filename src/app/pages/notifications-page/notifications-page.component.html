@@ -5,79 +5,179 @@
        !!! ALL NOTIFICATIONS ARE TURNED OFF !!!
     </h6>
   </div>
-    <div class='notify' *ngIf="newOrderStatus =='true'">
-      <h6>
-        <b>
-          NEW ORDERS
-        </b>
-        <mat-chip *ngIf='newOrders > 0' color="#4CAF50" class="no" selected>{{newOrders}}</mat-chip>
-        <p class="ptag" *ngIf='newFilteredArray.length===0'>!!! NO NEW ORDER !!!</p>
-      </h6>
-      <div class="exp-body" *ngIf='newFilteredArray.length > 0'>
-        <div *ngFor="let i = index ;let newNotification of newFilteredArray" >
-          <mat-card mat-elevation-z1>
-            <div class="innerdiv">
-              <h5 >New Order for {{newNotification.retailer_name}}</h5>
-              <p class="od">Date: {{newOrderDate[i]}}</p>
-              </div>
-              <div class="innerdiv">
-              <small>OrderID: {{newNotification.bill_no}}</small>
-              <p class="od">Time: {{newOrderTime[i]}}</p>
-              </div>
-              <p>Customer Name: {{newNotification.customer_name}}</p>
-              <p> Customer Address: {{newNotification.customer_address}}</p>
-          </mat-card>
-        </div>
+  <div>
+    <mat-accordion>
+      <div class='notify' *ngIf="inviteStatus =='true'">
+        <mat-expansion-panel (opened)="panelOpenState = true " (closed)="panelOpenState = false" [hideToggle]='true' [expanded]='notificationToBeOpened == "0"'>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <h6>
+                <b>
+                  INVITE REQUESTS
+                </b>
+                <mat-chip color="#4CAF50" class="inv" selected>{{invitationFilteredArray.length}}</mat-chip>
+              </h6>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="exp-body" *ngIf='newFilteredArray.length > 0'>
+            <div *ngFor="let i = index ;let invitation of invitationFilteredArray" >
+              <mat-card mat-elevation-z1>
+                <div class="innerdiv">
+                  <h5 >New Enrollment Request</h5>
+                  </div>
+                  <div>
+                  <p><b>{{invitation.name}}</b> from <b>{{invitation.city}}</b>, <b>{{invitation.state}}</b> has requested to be enrolled onto the Kirana platform.</p>
+                  </div>
+              </mat-card>
+            </div>
+          </div>
+        </mat-expansion-panel>
       </div>
-    </div>
-    <div class='notify' *ngIf="criticalOrderStatus =='true'">
-      <h6>
-        <b>
-          CRITICAL ORDER
-        </b>
-        <mat-chip *ngIf='criticalOrders > 0' class="se" selected>{{criticalOrders}}</mat-chip>
-        <p class="ptag" *ngIf='criticalFilteredArray.length===0'>!!! NO CRITICAL ORDER !!!</p>
-      </h6>
-      <div class="exp-body" *ngIf='criticalFilteredArray.length > 0'>
-        <div  *ngFor="let i = index; let criticalNotification of criticalFilteredArray">
-          <mat-card>
-            <div class="innerdiv" style="overflow: hidden;">
-              <h5>New Critical Order for {{criticalNotification.ShopName}}</h5>
-              <p class="od">Date: {{criticalOrderDate[i]}}</p>
+      <hr>
+      <div class='notify' *ngIf="newOrderStatus =='true'">
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [hideToggle]='true' [expanded]='notificationToBeOpened == "1"'>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <h6>
+                <b>
+                  NEW ORDERS
+                </b>
+                <mat-chip color="#4CAF50" class="no" selected>{{newOrders}}</mat-chip>
+              </h6>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="exp-body" *ngIf='newFilteredArray.length > 0'>
+            <div *ngFor="let i = index ;let newNotification of newFilteredArray" >
+              <mat-card mat-elevation-z1>
+                <div class="innerdiv">
+                  <h5 >New Order for <b>{{newNotification.retailer_name}}</b></h5>
+                  <p class="od">Date: {{newOrderDate[i]}}</p>
+                  </div>
+                  <div class="innerdiv">
+                  <small>OrderID: {{newNotification.bill_no}}</small>
+                  <p class="od">Time: {{newOrderTime[i]}}</p>
+                  </div>
+                  <p>Customer Name: <b>{{newNotification.customer_name}}</b></p>
+                  <p> Customer Address: <b>{{newNotification.customer_address}}</b></p>
+              </mat-card>
             </div>
-            <div class="innerdiv" style="overflow: hidden;">
-              <small>OrderID: {{criticalNotification.bill_no}}</small>
-              <p class="od">Time: {{criticalOrderTime[i]}}</p>
-            </div>
-            <p>Customer Name: {{criticalNotification.CustomerName}}</p>
-            <p> Customer Address: {{criticalNotification.CustomerLocation}}</p>
-          </mat-card>
-        </div>
+          </div>
+        </mat-expansion-panel>
       </div>
-    </div>
-    <div class='notify' *ngIf="cancelOrderStatus =='true'">
-      <h6>
-        <b>
-          CANCELLED ORDER
-        </b>
-          <mat-chip *ngIf='cancelOrders > 0' color="warn" selected>{{cancelOrders}}</mat-chip>
-          <p class="ptag" *ngIf='cancelFilteredArray.length===0'>!!! NO CANCEL ORDER !!!</p>
-      </h6>
-      <div class="exp-body" *ngIf='cancelFilteredArray.length > 0'>
-        <div  *ngFor="let i = index; let cancelledNotification of cancelFilteredArray" >
-          <mat-card>
-            <div class="innerdiv">
-              <h5>New Cancelled Order for {{cancelledNotification.retailer_name}}</h5>
-              <p class="od">Date: {{cancelOrderDate[i]}}</p>
+      <div class='notify' *ngIf="criticalOrderStatus =='true'">
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [hideToggle]='true' [expanded]='notificationToBeOpened == "2"'>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <h6>
+                <b>
+                  CRITICAL ORDERS
+                </b>
+                <mat-chip  class="se" selected>{{criticalOrders}}</mat-chip>
+              </h6>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="exp-body" *ngIf='criticalFilteredArray.length > 0'>
+            <div  *ngFor="let i = index; let criticalNotification of criticalFilteredArray">
+              <mat-card>
+                <div class="innerdiv" style="overflow: hidden;">
+                  <h5>New Critical Order for <b>{{criticalNotification.ShopName}}</b></h5>
+                  <p class="od">Date: {{criticalOrderDate[i]}}</p>
+                </div>
+                <div class="innerdiv" style="overflow: hidden;">
+                  <small>OrderID: {{criticalNotification.bill_no}}</small>
+                  <p class="od">Time: {{criticalOrderTime[i]}}</p>
+                </div>
+                <p>Customer Name: <b>{{criticalNotification.CustomerName}}</b></p>
+                <p> Customer Address: <b>{{criticalNotification.CustomerLocation}}</b></p>
+              </mat-card>
             </div>
-            <div class="innerdiv">
-              <small>BillNo: {{cancelledNotification.bill_no}}</small>
-              <p class="od">Time: {{cancelOrderTime[i]}}</p>
-            </div>
-           <p>Customer Name: {{cancelledNotification.customer_name}}</p>
-            <p> Customer Address: {{cancelledNotification.customer_address}}</p>
-          </mat-card>
-        </div>
+          </div>
+        </mat-expansion-panel>
       </div>
-    </div>
+      <div class='notify' *ngIf="cancelOrderStatus =='true'">
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [hideToggle]='true' [expanded]='notificationToBeOpened == "3"'>
+          <mat-expansion-panel-header>
+            <h6>
+              <b>
+                CANCELLED ORDERS
+              </b>
+                <mat-chip color="warn" selected>{{cancelOrders}}</mat-chip>
+            </h6>
+          </mat-expansion-panel-header>
+          <div class="exp-body" *ngIf='cancelFilteredArray.length > 0'>
+            <div  *ngFor="let i = index; let cancelledNotification of cancelFilteredArray" >
+              <mat-card>
+                <div class="innerdiv">
+                  <h5>New Cancelled Order for <b>{{cancelledNotification.retailer_name}}</b></h5>
+                  <p class="od">Date: {{cancelOrderDate[i]}}</p>
+                </div>
+                <div class="innerdiv">
+                  <small>BillNo: {{cancelledNotification.bill_no}}</small>
+                  <p class="od">Time: {{cancelOrderTime[i]}}</p>
+                </div>
+               <p>Customer Name: <b>{{cancelledNotification.customer_name}}</b></p>
+                <p> Customer Address: <b>{{cancelledNotification.customer_address}}</b></p>
+              </mat-card>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </div>
+      <div class='notify' *ngIf="packedOrderStatus =='true'">
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [hideToggle]='true' [expanded]='notificationToBeOpened == "4"'>
+          <mat-expansion-panel-header>
+            <h6>
+              <b>
+                PACKED ORDERS
+              </b>
+                <mat-chip color="#4CAF50" class="pack" selected>{{packedOrders}}</mat-chip>
+            </h6>
+          </mat-expansion-panel-header>
+          <div class="exp-body" *ngIf='packedFilteredArray.length > 0'>
+            <div  *ngFor="let i = index; let packedNotification of packedFilteredArray" >
+              <mat-card>
+                <div class="innerdiv">
+                  <h5>New Order Packed for <b>{{packedNotification.retailer_name}}</b></h5>
+                  <p class="od">Date: {{packedOrderDate[i]}}</p>
+                </div>
+                <div class="innerdiv">
+                  <small>BillNo: {{packedNotification.bill_no}}</small>
+                  <p class="od">Time: {{packedOrderTime[i]}}</p>
+                </div>
+               <p>Customer Name: <b>{{packedNotification.customer_name}}</b></p>
+                <p> Customer Address: <b>{{packedNotification.customer_address}}</b></p>
+              </mat-card>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </div>
+      <div class='notify' *ngIf="dispatchedOrderStatus =='true'">
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [hideToggle]='true' [expanded]='notificationToBeOpened == "5"'>
+          <mat-expansion-panel-header>
+            <h6>
+              <b>
+                DISPATCHED ORDERS
+              </b>
+                <mat-chip color="#4CAF50" class="disp" selected>{{dispatchedOrders}}</mat-chip>
+            </h6>
+          </mat-expansion-panel-header>
+          <div class="exp-body" *ngIf='dispatchedFilteredArray.length > 0'>
+            <div  *ngFor="let i = index; let dispatchedNotification of dispatchedFilteredArray" >
+              <mat-card>
+                <div class="innerdiv">
+                  <h5>New Order Dispatched for <b>{{dispatchedNotification.retailer_name}}</b></h5>
+                  <p class="od">Date: {{dispatchedOrderDate[i]}}</p>
+                </div>
+                <div class="innerdiv">
+                  <small>BillNo: {{dispatchedNotification.bill_no}}</small>
+                  <p class="od">Time: {{dispatchedOrderTime[i]}}</p>
+                </div>
+               <p>Customer Name: <b>{{dispatchedNotification.customer_name}}</b></p>
+                <p> Customer Address: <b>{{dispatchedNotification.customer_address}}</b></p>
+              </mat-card>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </div>
+    </mat-accordion>
+  </div>
 </div>

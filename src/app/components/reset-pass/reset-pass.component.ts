@@ -36,7 +36,22 @@ export class ResetPassComponent {
     this.isSidePanelExpanded = this.interaction.getExpandedStatus();
     this.form1 = fb.group({
       oldPwd: [''],
-      newPwd: ['', Validators.required],
+      newPwd: ['', Validators.compose([
+        Validators.required,
+        // check whether the entered password has a number
+        OldPwdValidators.patternValidator(/\d/, {
+          hasNumber: true
+        }),
+        // check whether the entered password has upper case letter
+        OldPwdValidators.patternValidator(/[A-Z]/, {
+          hasCapitalCase: true
+        }),
+        // check whether the entered password has a lower case letter
+        OldPwdValidators.patternValidator(/[a-z]/, {
+          hasSmallCase: true
+        }),
+        Validators.minLength(8)
+      ])],
       confirmPwd: ['', Validators.required]
     }, {
       validator: OldPwdValidators.matchPwds
@@ -67,7 +82,7 @@ export class ResetPassComponent {
             this.snackBar.open(this.errMessage, this.actionButtonLabel);
           }
       }, (error) => {
-        this.snackBar.open(error.error.message, this.actionButtonLabel);
+        this.snackBar.open(this.errMessage, this.actionButtonLabel);
       });
     this.form1.reset();
   }

@@ -11,6 +11,7 @@ import { catchError } from 'rxjs/internal/operators/catchError';
 export class NotificationsService {
 
   NotificationURL: string;
+  InviteURL: string;
   httpOptions: any;
   constructor(private http: HttpClient) {
     const token = localStorage.getItem('access');
@@ -20,9 +21,21 @@ export class NotificationsService {
 
   buildURLS() {
     this.NotificationURL = environment.backend_end_point + environment.notification;
+    this.InviteURL = environment.backend_end_point + environment.inviteURL;
   }
   getAllNotifications(): Observable<Notifications[]> {
     return this.http.get<Notifications[]>(this.NotificationURL, {
+      headers: this.httpOptions
+    })
+    .pipe(
+      catchError(error => {
+        return throwError(error);
+      })
+    );
+  }
+
+  getInviteNotifications(): Observable<any[]> {
+    return this.http.get<any[]>(this.InviteURL, {
       headers: this.httpOptions
     })
     .pipe(
