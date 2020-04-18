@@ -13,11 +13,35 @@
             </div>
           </div>
           <div class="form-group">
-            <label>New Password</label>
-             <input formControlName="newPwd" id="newPwd" type="password" class="form-control" />
+            <label for="newPwd" [ngClass]="form1.controls['newPwd'].invalid ? 'text-danger' : ''">New Password</label>
+             <input formControlName="newPwd" id="newPwd" type="password" class="form-control" [ngClass]="form1.controls['newPwd'].invalid ? 'is-invalid' : ''">
             <div class="alert alert-danger" *ngIf="newPwd.touched && newPwd.invalid">
               <div *ngIf="newPwd.errors.required">New Password is required.</div>
             </div>
+            <label class="col" [ngClass]="form1.controls['newPwd'].hasError('required') || form1.controls['newPwd'].hasError('minlength')  ? 'text-danger' : 'text-success'">
+              <i class="material-icons">{{ form1.controls['newPwd'].hasError('required') ||
+                form1.controls['newPwd'].hasError('minlength') ? 'cancel' :
+                'check_circle' }}</i>
+              Must be at least 8 characters!
+            </label>
+            <label class="col" [ngClass]="form1.controls['newPwd'].hasError('required') || form1.controls['newPwd'].hasError('hasNumber')  ? 'text-danger' : 'text-success'">
+              <i class="material-icons">{{ form1.controls['newPwd'].hasError('required') ||
+                form1.controls['newPwd'].hasError('hasNumber') ? 'cancel' :
+                'check_circle' }}</i>
+              Must contain at least 1 number!
+            </label>
+            <label class="col" [ngClass]="form1.controls['newPwd'].hasError('required') || form1.controls['newPwd'].hasError('hasCapitalCase')  ? 'text-danger' : 'text-success'">
+              <i class="material-icons">{{ form1.controls['newPwd'].hasError('required') ||
+                form1.controls['newPwd'].hasError('hasCapitalCase') ? 'cancel' :
+                'check_circle' }}</i>
+              Must contain at least 1 in Capital Case!
+            </label>
+            <label class="col" [ngClass]="form1.controls['newPwd'].hasError('required') || form1.controls['newPwd'].hasError('hasSmallCase')  ? 'text-danger' : 'text-success'">
+              <i class="material-icons">{{ form1.controls['newPwd'].hasError('required') ||
+                form1.controls['newPwd'].hasError('hasSmallCase') ? 'cancel' :
+                'check_circle' }}</i>
+              Must contain at least 1 Letter in Small Case!
+            </label>
           </div>
           <div class="form-group">
             <label>Confirm Password</label>
@@ -29,7 +53,7 @@
               Passwords do not match.
             </div>
           </div>
-          <button mat-raised-button class="btn btn-primary"  type="submit" [disabled]="form1.invalid" (click)="openSnackBar()" >Change Password</button>
+          <button mat-raised-button class="btn btn-primary sub-btn"  type="submit" [disabled]="form1.invalid" (click)="openSnackBar()" >Change Password</button>
         </form>
       </div>
     </div>
