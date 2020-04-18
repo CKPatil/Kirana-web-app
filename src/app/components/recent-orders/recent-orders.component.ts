@@ -78,7 +78,7 @@ export class RecentOrdersComponent implements OnInit {
       this.isSidePanelExpanded = res;
     });
     this.currentTime = new Date();
-    
+
     this.transactionService.buildURLS();
     this.transactionService.getAllOrders().subscribe((res: any) => {
       //console.log(res);
@@ -116,7 +116,7 @@ export class RecentOrdersComponent implements OnInit {
           //console.log(element.remaining_time);
         }
       });
-      this.allTransactions = new MatTableDataSource(this.tableData.reverse());
+      this.allTransactions = new MatTableDataSource(this.allTransactions);
       this.allTransactions.paginator = this.paginator;
     });
   }
