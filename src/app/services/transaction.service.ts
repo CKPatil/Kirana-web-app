@@ -12,10 +12,10 @@ import { transactions } from "../constants/mockup-data";
 })
 export class TransactionService {
   getAllTransactionsURL: any;
-  tempURL: any;
+  // tempURL: any;
   httpOptions;
-  orderType;
-  getUpdateOrderStatusURL: string;
+  // orderType;
+  // getUpdateOrderStatusURL: string;
   buildURLS() {
     this.getAllTransactionsURL =
       environment.backend_end_point + environment.orders;

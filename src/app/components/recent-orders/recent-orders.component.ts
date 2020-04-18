@@ -10,21 +10,21 @@ import { MatDialog } from "@angular/material/dialog";
 import { TransactionService } from "./../../services/transaction.service";
 import { Router } from "@angular/router";
 
-export interface Order {
-  consumer: string;
-  shop: string;
-  phone: number;
-  status: any;
-  total: number;
-  time_left: string;
-}
+// export interface Order {
+//   consumer: string;
+//   shop: string;
+//   phone: number;
+//   status: any;
+//   total: number;
+//   time_left: string;
+// }
 
 interface StatusMenu {
   value: string;
   viewValue: string;
 }
 
-const ELEMENT_DATA: Order[] = Orders;
+// const ELEMENT_DATA: Order[] = Orders;
 
 @Component({
   selector: "app-recent-orders",
@@ -32,7 +32,6 @@ const ELEMENT_DATA: Order[] = Orders;
   styleUrls: ["./recent-orders.component.scss"],
 })
 export class RecentOrdersComponent implements OnInit {
-  // @Input('orderStatus') orderStatus:any;
   @Input("tableData") tableData: any;
   isSidePanelExpanded: boolean;
 
@@ -79,46 +78,33 @@ export class RecentOrdersComponent implements OnInit {
     });
     this.currentTime = new Date();
 
-    this.transactionService.buildURLS();
-    this.transactionService.getAllOrders().subscribe((res: any) => {
-      //console.log(res);
-      this.allTransactions = this.tableData.reverse();
+    this.allTransactions = this.tableData.reverse();
+    this.allTransactions.forEach((element) => {
+      if (element.remaining_time < 0) {
+        element.remaining_time = "-";
+      } else {
+        element.timestamp = new Date(element.timestamp);
+        this.deliveryTime = new Date(
+          element.timestamp.getTime() + 2 * 60 * 60 * 1000
+        );
+        this.timeDiff = this.deliveryTime - this.currentTime;
+        this.timeDiff = this.timeDiff / 1000 / 60 / 60;
+        this.timeDiff = this.timeDiff.toFixed(2);
 
-      //console.log(this.allTransactions);
+        this.timeDiffMins = ((this.timeDiff * 100) % 100) / 100;
+        this.timeDiffMins = this.timeDiffMins * 60;
 
-      this.allTransactions.forEach((element) => {
-        if (element.remaining_time < 0) {
-          element.remaining_time = "-";
-        } else {
-          element.timestamp = new Date(element.timestamp);
-          this.deliveryTime = new Date(
-            element.timestamp.getTime() + 2 * 60 * 60 * 1000
-          );
-          //console.log(element.timestamp);
-          //console.log(this.deliveryTime);
-          this.timeDiff = this.deliveryTime - this.currentTime;
-          this.timeDiff = this.timeDiff / 1000 / 60 / 60;
-          this.timeDiff = this.timeDiff.toFixed(2);
-          //console.log("timeDiff "+this.timeDiff);
+        this.timeDiffHours = Math.trunc(this.timeDiff);
 
-          this.timeDiffMins = ((this.timeDiff * 100) % 100) / 100;
-          this.timeDiffMins = this.timeDiffMins * 60;
-          //console.log("timeDiffmins "+this.timeDiffMins);
-
-          this.timeDiffHours = Math.trunc(this.timeDiff);
-          //console.log("timeDiffHours "+this.timeDiffHours);
-
-          element.remaining_time =
-            this.timeDiffHours.toFixed(0) +
-            " hours " +
-            this.timeDiffMins.toFixed(0) +
-            " mins ";
-          //console.log(element.remaining_time);
-        }
-      });
-      this.allTransactions = new MatTableDataSource(this.allTransactions);
-      this.allTransactions.paginator = this.paginator;
+        element.remaining_time =
+          this.timeDiffHours.toFixed(0) +
+          " hours " +
+          this.timeDiffMins.toFixed(0) +
+          " mins ";
+      }
     });
+    this.allTransactions = new MatTableDataSource(this.allTransactions);
+    this.allTransactions.paginator = this.paginator;
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
