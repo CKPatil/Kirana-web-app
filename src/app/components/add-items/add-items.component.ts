@@ -77,22 +77,22 @@ export class AddItemsComponent {
 })
 export class DialogAddItemComponent {
   itemForm = this.fb.group({
-    name: ["", Validators.required],
-    category: ["", Validators.required],
-    sub_category: ["", Validators.required],
-    brand: ["", Validators.required],
+    name: ["", [Validators.required, Validators.maxLength(150)]],
+    category: ["", [Validators.required, Validators.maxLength(50)]],
+    sub_category: ["", [Validators.required, Validators.maxLength(50)]],
+    brand: ["", [Validators.required, Validators.maxLength(50)]],
     quantity_type: ["", Validators.required],
     variant_details: this.fb.array(
       [
         this.fb.group({
-          variant: ["", [Validators.required]],
+          variant: ["", [Validators.required, Validators.maxLength(50)]],
           quantity: ["", [Validators.required]],
           price: ["", [Validators.required]],
         }),
       ],
       [Validators.required, Validators.minLength(1)]
     ),
-    details: ["", Validators.required],
+    details: ["", [Validators.required, Validators.maxLength(500)]],
   });
 
   quantity_types = ["ml", "ltr", "kg", "unit", "gm"];
@@ -129,7 +129,7 @@ export class DialogAddItemComponent {
     const varient = this.itemForm.controls.variant_details as FormArray;
     varient.push(
       this.fb.group({
-        variant: ["", [Validators.required]],
+        variant: ["", [Validators.required, Validators.maxLength(50)]],
         quantity: ["", [Validators.required]],
         price: ["", [Validators.required]],
       })

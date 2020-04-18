@@ -303,7 +303,7 @@ export class EditProductDetailDialog {
   }
 
   itemForm = this.fb.group({
-    description: ["", [Validators.required]],
+    description: ["", [Validators.required, Validators.maxLength(500)]],
   });
 
   onNoClick(): void {

@@ -63,7 +63,7 @@ export class UpdateItemComponent {
 })
 export class UpdateItemModal {
   itemForm = this.fb.group({
-    variant: ["", [Validators.required]],
+    variant: ["", [Validators.required, Validators.maxLength(50)]],
     quantity: ["", [Validators.required]],
     price: ["", [Validators.required]],
   });
