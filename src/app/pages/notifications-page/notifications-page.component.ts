@@ -101,6 +101,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   invitationFilteredArray = [];
   invitationRemove = [];
   newInvitee: any;
+  inviteStatus: any;
   notificationToBeOpened: any;
 
   ngOnInit() {
@@ -109,7 +110,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
     this.criticalOrderStatus = localStorage.getItem('criticalOrder');
     this.packedOrderStatus = localStorage.getItem('packedOrder');
     this.dispatchedOrderStatus = localStorage.getItem('dispatchedOrder');
-    // this.notificationToBeOpened = localStorage.getItem('notificationToBeOpened');
+    this.inviteStatus = localStorage.getItem('inviteStatus');
     this.change = 'false';
     localStorage.setItem('change', this.change);
     this.newNotify();
@@ -118,6 +119,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
     }, 10000);
   }
   newNotify() {
+    this.notificationToBeOpened = localStorage.getItem('notificationToBeOpened');
     this.notificationsService.getAllNotifications()
       .subscribe( data => {
         this.notifications = data;
@@ -160,8 +162,8 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
             this.newInvitee = this.invitationFilteredArray[0].name;
             localStorage.setItem('newInvitation', this.newInvitee);
             this.change = 'true';
-            // this.notificationToBeOpened = '1';
-            // localStorage.setItem('notificationToBeOpened', this.notificationToBeOpened);
+            this.notificationToBeOpened = '0';
+            localStorage.setItem('notificationToBeOpened', this.notificationToBeOpened);
             localStorage.setItem('change', this.change);
           }
           this.invitationRemove = this.invitationRemove.concat(this.invitationFilter);
@@ -193,8 +195,8 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
         this.newBillno = this.newFilteredArray[0].bill_no;
         localStorage.setItem('newnotify', this.newBillno);
         this.change = 'true';
-        // this.notificationToBeOpened = '1';
-        // localStorage.setItem('notificationToBeOpened', this.notificationToBeOpened);
+        this.notificationToBeOpened = '1';
+        localStorage.setItem('notificationToBeOpened', this.notificationToBeOpened);
         localStorage.setItem('change', this.change);
       }
       this.newOrderRemove = this.newOrderRemove.concat(this.newOrderFilter);
@@ -224,8 +226,8 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
         this.cancelBillno = this.cancelFilteredArray[0].bill_no;
         localStorage.setItem('cancelnotify', this.cancelBillno);
         this.change = 'true';
-        // this.notificationToBeOpened = '2';
-        // localStorage.setItem('notificationToBeOpened', this.notificationToBeOpened);
+        this.notificationToBeOpened = '2';
+        localStorage.setItem('notificationToBeOpened', this.notificationToBeOpened);
         localStorage.setItem('change', this.change);
       }
       this.cancelOrderRemove = this.cancelOrderRemove.concat(this.cancelOrderFilter);
@@ -266,8 +268,8 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
         this.criticalBillno = this.criticalFilteredArray[0].bill_no;
         localStorage.setItem('criticalnotify', this.criticalBillno);
         this.change = 'true';
-        // this.notificationToBeOpened = '3';
-        // localStorage.setItem('notificationToBeOpened', this.notificationToBeOpened);
+        this.notificationToBeOpened = '3';
+        localStorage.setItem('notificationToBeOpened', this.notificationToBeOpened);
         localStorage.setItem('change', this.change);
       }
       this.criticalOrderRemove = this.criticalOrderRemove.concat(this.criticalOrderFilter);
@@ -297,8 +299,8 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
         this.packedBillno = this.packedFilteredArray[0].bill_no;
         localStorage.setItem('packednotify', this.packedBillno);
         this.change = 'true';
-        // this.notificationToBeOpened = '4';
-        // localStorage.setItem('notificationToBeOpened', this.notificationToBeOpened);
+        this.notificationToBeOpened = '4';
+        localStorage.setItem('notificationToBeOpened', this.notificationToBeOpened);
         localStorage.setItem('change', this.change);
       }
       this.packedOrderRemove = this.packedOrderRemove.concat(this.packedOrderFilter);
@@ -328,8 +330,8 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
         this.dispatchedBillno = this.dispatchedFilteredArray[0].bill_no;
         localStorage.setItem('dispatchednotify', this.dispatchedBillno);
         this.change = 'true';
-        // this.notificationToBeOpened = '5';
-        // localStorage.setItem('notificationToBeOpened', this.notificationToBeOpened);
+        this.notificationToBeOpened = '5';
+        localStorage.setItem('notificationToBeOpened', this.notificationToBeOpened);
         localStorage.setItem('change', this.change);
       }
       this.dispatchedOrderRemove = this.dispatchedOrderRemove.concat(this.dispatchedOrderFilter);

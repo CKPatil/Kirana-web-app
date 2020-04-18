@@ -15,6 +15,7 @@ export class NotificationComponent implements OnInit  {
   checkedCriticalStatus: any = false;
   checkedPackedStatus: any = false;
   checkedDispatchedStatus: any = false;
+  checkedInviteStatus: any = false;
   disabled = false;
   constructor(public dialogRef: MatDialogRef<NotificationComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any, private router: Router) { }
@@ -25,6 +26,7 @@ export class NotificationComponent implements OnInit  {
     this.checkedCriticalStatus = localStorage.getItem('criticalOrder');
     this.checkedPackedStatus = localStorage.getItem('packedOrder');
     this.checkedDispatchedStatus = localStorage.getItem('dispatchedOrder');
+    this.checkedInviteStatus = localStorage.getItem('inviteStatus');
   }
 
   newOrdersChange(newNotificationEvent) {
@@ -69,6 +71,16 @@ export class NotificationComponent implements OnInit  {
   }
   DispatchedStatusChange(dispatchedNotificationEvent) {
     localStorage.setItem('dispatchedOrder', dispatchedNotificationEvent.checked.toString());
+    if (this.router.url === '/notifications') {
+      this.router.navigateByUrl('/login',
+      {skipLocationChange: true})
+      .then( () => {
+        this.router.navigate(['/notifications']);
+      });
+    }
+  }
+  InviteStatusChange(inviteNotificationEvent) {
+    localStorage.setItem('inviteStatus', inviteNotificationEvent.checked.toString());
     if (this.router.url === '/notifications') {
       this.router.navigateByUrl('/login',
       {skipLocationChange: true})
