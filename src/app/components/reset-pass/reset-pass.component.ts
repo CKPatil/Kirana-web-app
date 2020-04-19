@@ -12,6 +12,7 @@ import {
   MAT_DIALOG_DATA,
 } from '@angular/material';
 import { ResetPassword} from '../../models/models';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-reset-pass',
   templateUrl: './reset-pass.component.html',
@@ -30,7 +31,7 @@ export class ResetPassComponent {
   isSidePanelExpanded: boolean;
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
-  constructor(fb: FormBuilder, private interaction: InteractionService, public snackBar: MatSnackBar,
+  constructor(fb: FormBuilder, private interaction: InteractionService, public snackBar: MatSnackBar, private router: Router,
               private resetpasswordService: ResetpasswordService, public dialogRef: MatDialogRef<ResetPassComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
     this.isSidePanelExpanded = this.interaction.getExpandedStatus();
@@ -84,9 +85,9 @@ export class ResetPassComponent {
           console.log(this.mess);
           if (this.mess === 'password updated') {
             this.snackBar.open(this.message, this.actionButtonLabel);
-          }
-          if (this.mess === 'failed') {
-            this.snackBar.open(this.errMessage, this.actionButtonLabel);
+            this.dialogRef.close();
+            localStorage.clear();
+            window.location.reload();
           }
       }, (error) => {
         this.snackBar.open(this.errMessage, this.actionButtonLabel);
