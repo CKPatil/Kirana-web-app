@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { catchError } from "rxjs/operators";
 import { throwError } from "rxjs/internal/observable/throwError";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -18,6 +19,10 @@ export class RetailerService {
       Authorization: "Bearer " + token,
     });
     this.buildURLS();
+
+    // FOR Observable
+    this.allInviteRequests = new Array();
+    this.observeInviteRequests = new BehaviorSubject(this.allInviteRequests);
   }
 
   buildURLS() {
@@ -25,6 +30,7 @@ export class RetailerService {
       environment.backend_end_point + environment.retailers;
   }
 
+  // to get all the retailers
   getAllRetailers() {
     return this.http
       .get(this.getAllRetailerURL, {
@@ -38,6 +44,7 @@ export class RetailerService {
       );
   }
 
+  // to get the invitation requests from the server
   getAllInvitationRequests() {
     let inviteUrl = environment.backend_end_point + environment.inviteURL;
     return this.http
@@ -51,6 +58,40 @@ export class RetailerService {
         })
       );
   }
+
+  // //////////////// NEW CODE
+
+  allInviteRequests;
+  observeInviteRequests;
+
+  // to get the invite request from the server and save to observable
+  getAllInvitationRequestsFromServer() {
+    let inviteUrl = environment.backend_end_point + environment.inviteURL;
+    this.http
+      .get(inviteUrl, {
+        headers: this.httpOptions,
+      })
+      .pipe(
+        catchError((error) => {
+          return throwError(error);
+        })
+      )
+      .subscribe(
+        (response) => {
+          this.allInviteRequests = response;
+          this.eventChange();
+        },
+        (error) => {
+          console.log("Error");
+        }
+      );
+  }
+
+  eventChange() {
+    this.observeInviteRequests.next(this.allInviteRequests);
+  }
+
+  // ////////////// END NEW CODE
 
   inviteRequestResponse(data) {
     let inviteRespnseUrl =
