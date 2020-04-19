@@ -103,7 +103,12 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   newInvitee: any;
   inviteStatus: any;
   notificationToBeOpened: any;
-
+  invite = true;
+  new_ = false;
+  cancel = false;
+  packed = false;
+  dispatch = false;
+  critical = false;
   ngOnInit() {
     this.newOrderStatus = localStorage.getItem('newOrder');
     this.cancelOrderStatus = localStorage.getItem('cancelOrder');
@@ -337,7 +342,66 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
       this.dispatchedOrderRemove = this.dispatchedOrderRemove.concat(this.dispatchedOrderFilter);
     }
   }
-
+  onReq() {
+    this.invite = !this.invite;
+    if (this.invite === true) {
+      this.new_ = false;
+      this.critical = false;
+      this.cancel = false;
+      this.dispatch = false;
+      this.packed = false;
+    }
+  }
+  onNew() {
+    this.new_ = !this.new_;
+    if (this.new_ === true) {
+      this.critical = false;
+      this.cancel = false;
+      this.dispatch = false;
+      this.packed = false;
+      this.invite = false;
+    }
+  }
+  onCritical() {
+    this.critical = !this.critical;
+    if (this.critical === true) {
+      this.cancel = false;
+      this.dispatch = false;
+      this.packed = false;
+      this.invite = false;
+      this.new_ = false;
+    }
+  }
+  onCancel() {
+    this.cancel = !this.cancel;
+    if (this.cancel === true) {
+      this.dispatch = false;
+      this.packed = false;
+      this.invite = false;
+      this.new_ = false;
+      this.critical = false;
+    }
+  }
+  onDispatch() {
+    this.dispatch = !this.dispatch;
+    if (this.dispatch === true) {
+      this.packed = false;
+      this.invite = false;
+      this.new_ = false;
+      this.critical = false;
+      this.cancel = false;
+    }
+  }
+  onPacked() {
+    this.packed = !this.packed;
+    if (this.packed === true) {
+      this.invite = false;
+      this.new_ = false;
+      this.critical = false;
+      this.cancel = false;
+      this.dispatch = false;
+    }
+  }
   ngOnDestroy() {
     this.change = 'false';
     localStorage.setItem('change', this.change);

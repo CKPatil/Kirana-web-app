@@ -1,4 +1,5 @@
 <div mat-dialog-content>
+  <i (click)='onNoClick()' style='font-size: 0.95em; float: right !important; cursor: pointer;' class="fa fa-times"></i>
   <h2 class="example-h2">Notifications Setting</h2>
       <section class="example-section">
         <div>
@@ -85,6 +86,4 @@
         </div>
       </section>
 </div>
-<div mat-dialog-actions>
-  <button mat-raised-button id="hov" (click)="onNoClick()">CLOSE</button>
-</div>
+

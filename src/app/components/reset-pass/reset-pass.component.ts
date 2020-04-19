@@ -35,7 +35,7 @@ export class ResetPassComponent {
               @Inject(MAT_DIALOG_DATA) public data: any) {
     this.isSidePanelExpanded = this.interaction.getExpandedStatus();
     this.form1 = fb.group({
-      oldPwd: [''],
+      oldPwd: ['', Validators.required],
       newPwd: ['', Validators.compose([
         Validators.required,
         // check whether the entered password has a number
@@ -50,6 +50,13 @@ export class ResetPassComponent {
         OldPwdValidators.patternValidator(/[a-z]/, {
           hasSmallCase: true
         }),
+        // check whether the entered password has a special character
+        OldPwdValidators.patternValidator(
+          /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/,
+          {
+            hasSpecialCharacters: true
+          }
+        ),
         Validators.minLength(8)
       ])],
       confirmPwd: ['', Validators.required]

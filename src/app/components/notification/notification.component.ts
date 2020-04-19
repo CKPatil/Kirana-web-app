@@ -9,7 +9,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 })
 export class NotificationComponent implements OnInit  {
 
-  color: ThemePalette = 'accent';
+  color: ThemePalette = 'primary';
   checkedNewOrder: any = false;
   checkedCancelledStatus: any = false;
   checkedCriticalStatus: any = false;
