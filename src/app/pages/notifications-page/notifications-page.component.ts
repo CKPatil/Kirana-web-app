@@ -103,7 +103,12 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   newInvitee: any;
   inviteStatus: any;
   notificationToBeOpened: any;
-
+  invite = true;
+  new_ = false;
+  cancel = false;
+  packed = false;
+  dispatch = false;
+  critical = false;
   ngOnInit() {
     this.newOrderStatus = localStorage.getItem('newOrder');
     this.cancelOrderStatus = localStorage.getItem('cancelOrder');
@@ -161,10 +166,12 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
           if (this.newInvitee !== this.invitationFilteredArray[0].name) {
             this.newInvitee = this.invitationFilteredArray[0].name;
             localStorage.setItem('newInvitation', this.newInvitee);
-            this.change = 'true';
+            if (this.inviteStatus === 'true') {
+              this.change = 'true';
+              localStorage.setItem('change', this.change);
+            }
             this.notificationToBeOpened = '0';
             localStorage.setItem('notificationToBeOpened', this.notificationToBeOpened);
-            localStorage.setItem('change', this.change);
           }
           this.invitationRemove = this.invitationRemove.concat(this.invitationFilter);
         }
@@ -194,10 +201,12 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
       if (this.newBillno !== this.newFilteredArray[0].bill_no) {
         this.newBillno = this.newFilteredArray[0].bill_no;
         localStorage.setItem('newnotify', this.newBillno);
-        this.change = 'true';
+        if (this.newOrderStatus === 'true') {
+          this.change = 'true';
+          localStorage.setItem('change', this.change);
+        }
         this.notificationToBeOpened = '1';
         localStorage.setItem('notificationToBeOpened', this.notificationToBeOpened);
-        localStorage.setItem('change', this.change);
       }
       this.newOrderRemove = this.newOrderRemove.concat(this.newOrderFilter);
     }
@@ -225,10 +234,12 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
       if (this.cancelBillno !== this.cancelFilteredArray[0].bill_no) {
         this.cancelBillno = this.cancelFilteredArray[0].bill_no;
         localStorage.setItem('cancelnotify', this.cancelBillno);
-        this.change = 'true';
+        if (this.cancelOrderStatus === 'true') {
+          this.change = 'true';
+          localStorage.setItem('change', this.change);
+        }
         this.notificationToBeOpened = '2';
         localStorage.setItem('notificationToBeOpened', this.notificationToBeOpened);
-        localStorage.setItem('change', this.change);
       }
       this.cancelOrderRemove = this.cancelOrderRemove.concat(this.cancelOrderFilter);
     }
@@ -267,10 +278,12 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
       if (this.criticalBillno !== this.criticalFilteredArray[0].bill_no) {
         this.criticalBillno = this.criticalFilteredArray[0].bill_no;
         localStorage.setItem('criticalnotify', this.criticalBillno);
-        this.change = 'true';
+        if (this.criticalOrderStatus === 'true') {
+          this.change = 'true';
+          localStorage.setItem('change', this.change);
+        }
         this.notificationToBeOpened = '3';
         localStorage.setItem('notificationToBeOpened', this.notificationToBeOpened);
-        localStorage.setItem('change', this.change);
       }
       this.criticalOrderRemove = this.criticalOrderRemove.concat(this.criticalOrderFilter);
     }
@@ -298,10 +311,12 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
       if (this.packedBillno !== this.packedFilteredArray[0].bill_no) {
         this.packedBillno = this.packedFilteredArray[0].bill_no;
         localStorage.setItem('packednotify', this.packedBillno);
-        this.change = 'true';
+        if (this.packedOrderStatus === 'true') {
+          this.change = 'true';
+          localStorage.setItem('change', this.change);
+        }
         this.notificationToBeOpened = '4';
         localStorage.setItem('notificationToBeOpened', this.notificationToBeOpened);
-        localStorage.setItem('change', this.change);
       }
       this.packedOrderRemove = this.packedOrderRemove.concat(this.packedOrderFilter);
     }
@@ -329,15 +344,77 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
       if (this.dispatchedBillno !== this.dispatchedFilteredArray[0].bill_no) {
         this.dispatchedBillno = this.dispatchedFilteredArray[0].bill_no;
         localStorage.setItem('dispatchednotify', this.dispatchedBillno);
-        this.change = 'true';
+        if (this.dispatchedOrderStatus === 'true') {
+          this.change = 'true';
+          localStorage.setItem('change', this.change);
+          console.log('yes');
+        }
         this.notificationToBeOpened = '5';
         localStorage.setItem('notificationToBeOpened', this.notificationToBeOpened);
-        localStorage.setItem('change', this.change);
       }
       this.dispatchedOrderRemove = this.dispatchedOrderRemove.concat(this.dispatchedOrderFilter);
     }
   }
-
+  onReq() {
+    this.invite = !this.invite;
+    if (this.invite === true) {
+      this.new_ = false;
+      this.critical = false;
+      this.cancel = false;
+      this.dispatch = false;
+      this.packed = false;
+    }
+  }
+  onNew() {
+    this.new_ = !this.new_;
+    if (this.new_ === true) {
+      this.critical = false;
+      this.cancel = false;
+      this.dispatch = false;
+      this.packed = false;
+      this.invite = false;
+    }
+  }
+  onCritical() {
+    this.critical = !this.critical;
+    if (this.critical === true) {
+      this.cancel = false;
+      this.dispatch = false;
+      this.packed = false;
+      this.invite = false;
+      this.new_ = false;
+    }
+  }
+  onCancel() {
+    this.cancel = !this.cancel;
+    if (this.cancel === true) {
+      this.dispatch = false;
+      this.packed = false;
+      this.invite = false;
+      this.new_ = false;
+      this.critical = false;
+    }
+  }
+  onDispatch() {
+    this.dispatch = !this.dispatch;
+    if (this.dispatch === true) {
+      this.packed = false;
+      this.invite = false;
+      this.new_ = false;
+      this.critical = false;
+      this.cancel = false;
+    }
+  }
+  onPacked() {
+    this.packed = !this.packed;
+    if (this.packed === true) {
+      this.invite = false;
+      this.new_ = false;
+      this.critical = false;
+      this.cancel = false;
+      this.dispatch = false;
+    }
+  }
   ngOnDestroy() {
     this.change = 'false';
     localStorage.setItem('change', this.change);

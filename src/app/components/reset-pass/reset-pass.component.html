@@ -1,4 +1,9 @@
 <div mat-dialog-content>
+  <i
+    (click)="onNoClick()"
+    style="font-size: 0.95em; float: right !important; cursor: pointer;"
+    class="fa fa-times"
+  ></i>
   <h2 class="example-h2">Reset Password</h2>
   <mat-card class="pass-mat-card is-side-panel-expanded">
     <div class="pass-top-container">
@@ -19,23 +24,15 @@
               <div *ngIf="oldPwd.errors.required">
                 Old Password is required.
               </div>
-              <div *ngIf="oldPwd.errors.shouldBeOldOne">
-                Old Password is not valid.
-              </div>
             </div>
           </div>
           <div class="form-group">
-            <label
-              for="newPwd"
-              [ngClass]="form1.controls['newPwd'].invalid ? 'text-danger' : ''"
-              >New Password</label
-            >
+            <label for="newPwd">New Password</label>
             <input
               formControlName="newPwd"
               id="newPwd"
               type="password"
               class="form-control"
-              [ngClass]="form1.controls['newPwd'].invalid ? 'is-invalid' : ''"
             />
             <div
               class="alert alert-danger"
@@ -44,76 +41,21 @@
               <div *ngIf="newPwd.errors.required">
                 New Password is required.
               </div>
-            </div>
-            <div style="font-size: 90%;">
-              <label
-                class="col"
-                [ngClass]="
-                  form1.controls['newPwd'].hasError('required') ||
-                  form1.controls['newPwd'].hasError('minlength')
-                    ? 'text-danger'
-                    : 'text-success'
-                "
-              >
-                <i class="material-icons">{{
-                  form1.controls["newPwd"].hasError("required") ||
-                  form1.controls["newPwd"].hasError("minlength")
-                    ? "cancel"
-                    : "check_circle"
-                }}</i>
-                Must be at least 8 characters!
-              </label>
-              <label
-                class="col"
-                [ngClass]="
-                  form1.controls['newPwd'].hasError('required') ||
-                  form1.controls['newPwd'].hasError('hasNumber')
-                    ? 'text-danger'
-                    : 'text-success'
-                "
-              >
-                <i class="material-icons">{{
-                  form1.controls["newPwd"].hasError("required") ||
-                  form1.controls["newPwd"].hasError("hasNumber")
-                    ? "cancel"
-                    : "check_circle"
-                }}</i>
-                Must contain at least 1 number!
-              </label>
-              <label
-                class="col"
-                [ngClass]="
-                  form1.controls['newPwd'].hasError('required') ||
-                  form1.controls['newPwd'].hasError('hasCapitalCase')
-                    ? 'text-danger'
-                    : 'text-success'
-                "
-              >
-                <i class="material-icons">{{
-                  form1.controls["newPwd"].hasError("required") ||
-                  form1.controls["newPwd"].hasError("hasCapitalCase")
-                    ? "cancel"
-                    : "check_circle"
-                }}</i>
-                Must contain at least 1 in Capital Case!
-              </label>
-              <label
-                class="col"
-                [ngClass]="
-                  form1.controls['newPwd'].hasError('required') ||
-                  form1.controls['newPwd'].hasError('hasSmallCase')
-                    ? 'text-danger'
-                    : 'text-success'
-                "
-              >
-                <i class="material-icons">{{
-                  form1.controls["newPwd"].hasError("required") ||
-                  form1.controls["newPwd"].hasError("hasSmallCase")
-                    ? "cancel"
-                    : "check_circle"
-                }}</i>
-                Must contain at least 1 Letter in Small Case!
-              </label>
+              <div *ngIf="newPwd.errors.minlength">
+                Atleast 8 Characters Required!
+              </div>
+              <div *ngIf="newPwd.errors.hasNumber">
+                Atleast 1 Number Required!
+              </div>
+              <div *ngIf="newPwd.errors.hasCapitalCase">
+                Atleast 1 in Capital Case Required!
+              </div>
+              <div *ngIf="newPwd.errors.hasSmallCase">
+                Atleast 1 in Small Case Required!
+              </div>
+              <div *ngIf="newPwd.errors.hasSpecialCharacters">
+                Atleast 1 in Special Characters Required!
+              </div>
             </div>
           </div>
           <div class="form-group">
@@ -154,7 +96,4 @@
       </div>
     </div>
   </mat-card>
-</div>
-<div mat-dialog-actions>
-  <button mat-raised-button id="hov" (click)="onNoClick()">CLOSE</button>
 </div>
