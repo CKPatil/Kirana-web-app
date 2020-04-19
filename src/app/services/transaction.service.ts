@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "../../environments/environment";
 import { catchError } from "rxjs/operators";
 import { throwError } from "rxjs/internal/observable/throwError";
-import { Observable } from "rxjs";
+import { Observable, BehaviorSubject } from "rxjs";
 import { transactions } from "../constants/mockup-data";
 
 @Injectable({
@@ -28,6 +28,10 @@ export class TransactionService {
       Authorization: "Bearer " + token,
     });
     this.buildURLS();
+
+    // for Observer
+    this.allOrders = new Array();
+    this.observeOrders = new BehaviorSubject(this.allOrders);
   }
 
   getAllOrders(): Observable<Transaction[]> {
@@ -78,4 +82,36 @@ export class TransactionService {
         })
       );
   }
+
+
+  // ////////////// NEW CODE
+  allOrders;
+  observeOrders;
+
+  eventChange() {
+    this.observeOrders.next(this.allOrders);
+  }
+
+  getOrdersFromServer() {
+    this.http
+      .get(this.getAllTransactionsURL, {
+        headers: this.httpOptions,
+      })
+      .pipe(
+        catchError((error) => {
+          return throwError(error);
+        })
+      )
+      .subscribe(
+        (response: any) => {
+          this.allOrders = response;
+          this.eventChange();
+        },
+        (error) => {
+          console.log("Error");
+        }
+      );
+  }
+
+  // ///////////// END NEW CODE
 }
