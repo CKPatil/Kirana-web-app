@@ -32,16 +32,13 @@ export class AppComponent {
     this.isLoginObserver = new BehaviorSubject(this.isLogin);
 
     this.isLoginObserver.subscribe((result) => {
-      console.log("O", result);
       if (!result) {
         this.isRefreshActive = true;
         clearInterval(this.refreshInterval);
       }
       if (result) {
-        console.log(window.location.href);
         if (this.isRefreshActive && this.router.url.indexOf("login") === -1) {
           this.isRefreshActive = false;
-          console.log("I", result);
           this.startGettingData();
         }
       }
@@ -57,7 +54,6 @@ export class AppComponent {
   refreshInterval;
 
   startGettingData() {
-    console.log("Getting...");
     this.transitionService.getOrdersFromServer();
     this.rertailerService.getAllInvitationRequestsFromServer();
 
@@ -67,7 +63,7 @@ export class AppComponent {
       console.log("Refreshing...");
       this.rertailerService.getAllInvitationRequestsFromServer();
       this.transitionService.getOrdersFromServer();
-    }, 10000);
+    }, 60000);
   }
 
   routerEventsTrigger() {

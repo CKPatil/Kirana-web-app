@@ -222,7 +222,8 @@
 <div mat-dialog-actions class="row justify-content-around">
   <button mat-raised-button (click)="onNoClick()">Cancel</button>
   <button
-    mat-raised-button
+    mat-flat-button
+    color="primary"
     [mat-dialog-close]="itemForm.value"
     [disabled]="!itemForm.valid"
   >
