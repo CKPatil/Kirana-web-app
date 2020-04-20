@@ -197,59 +197,98 @@ export class LoginComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      let resetPassword = {
-        otp: "string",
-        phone: result.value.phone,
-        password: "string",
-      };
-      const data = {
-        reset_method: "mobile",
-        phone: result.value.phone,
-      };
-      this.authService.forgotPassword(data, "").subscribe(
-        (response: any) => {
-          if (response.body.message == "otp sent") {
-            let userId = response.body.user_id;
-            const otpDialog = this.dialog.open(OTPComponent, {
-              width: "90%",
-              maxWidth: "30em",
-            });
+      if (result) {
+        let resetPassword = {
+          otp: "string",
+          phone: result.value.phone,
+          password: "string",
+        };
+        const data = {
+          reset_method: "mobile",
+          phone: result.value.phone,
+        };
+        this.authService.forgotPassword(data, "").subscribe(
+          (response: any) => {
+            if (response.body.message == "otp sent") {
+              let userId = response.body.user_id;
+              const otpDialog = this.dialog.open(OTPComponent, {
+                width: "90%",
+                maxWidth: "30em",
+              });
 
-            otpDialog.afterClosed().subscribe((data) => {
-              resetPassword.otp = data.value.otp;
-              this.authService.sendOTP(data.value, "?id=" + userId).subscribe(
-                (response: any) => {
-                  if (response.verified == true) {
-                    const updateDialog = this.dialog.open(
-                      UpdatePasswordComponent,
-                      {
-                        width: "500px",
-                        height: "500px",
+              otpDialog.afterClosed().subscribe((data) => {
+                if (data) {
+                  resetPassword.otp = data.value.otp;
+                  this.authService
+                    .sendOTP(data.value, "?id=" + userId)
+                    .subscribe(
+                      (response: any) => {
+                        if (response.verified) {
+                          const updateDialog = this.dialog.open(
+                            UpdatePasswordComponent,
+                            {
+                              width: "90%",
+                              maxWidth: "30em",
+                            }
+                          );
+                          updateDialog.afterClosed().subscribe((data) => {
+                            if (data) {
+                              resetPassword.password = data.value.newPwd;
+                              this.authService
+                                .updatePassword(resetPassword, "")
+                                .subscribe(
+                                  (res) => {
+                                    this._snackbar.open(
+                                      "Password Updated, You can Login now",
+                                      "",
+                                      {
+                                        duration: 5000,
+                                      }
+                                    );
+                                  },
+                                  (error) => {
+                                    this._snackbar.open(
+                                      "Error Occured, try after sometime",
+                                      "",
+                                      {
+                                        duration: 5000,
+                                      }
+                                    );
+                                  }
+                                );
+                            }
+                          });
+                        } else {
+                          this._snackbar.open("Incorrect OTP", "", {
+                            duration: 5000,
+                          });
+                        }
+                      },
+                      (error) => {
+                        this._snackbar.open(
+                          "Error Occured, try after sometime",
+                          "",
+                          {
+                            duration: 5000,
+                          }
+                        );
                       }
                     );
-                    updateDialog.afterClosed().subscribe((data) => {
-                      console.log(data);
-                      resetPassword.password = data.value.newPwd;
-                      console.log(resetPassword);
-                      this.authService
-                        .updatePassword(resetPassword, "")
-                        .subscribe((res) => {
-                          console.log(res.body);
-                        });
-                    });
-                  }
-                },
-                (error) => {
-                  console.log("E", error);
                 }
-              );
+              });
+            } else {
+              this._snackbar.open("Incorrect Mobile Number", "", {
+                duration: 5000,
+              });
+            }
+          },
+          (error) => {
+            this._snackbar.open("Error Occured, try after sometime", "", {
+              duration: 5000,
             });
           }
-        },
-        (error) => {
-          console.log("E", error);
-        }
-      );
+        );
+      }
     });
   }
 }
@@ -340,11 +379,19 @@ export class UpdatePasswordComponent {
   ) {}
   form = this.fb.group(
     {
-      newPwd: ["", Validators.required],
+      newPwd: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern(
+            "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$"
+          ),
+        ],
+      ],
       confirmPwd: ["", Validators.required],
     },
     {
-      validator: OldPwdValidators.matchPwds,
+      validator: [OldPwdValidators.matchPwds],
     }
   );
 
