@@ -17,6 +17,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
     private router: Router,
     private retailerService: RetailerService
   ) {}
+
   newOrderStatus: any;
   criticalOrderStatus: any;
   cancelOrderStatus: any;
@@ -48,13 +49,13 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   cancelledStatus = 'Cancelled';
   packedStatus = 'Packed';
   dispatchedStatus = 'Dispatched';
-  orderedNotification: any;
+  orderedNotification: any = [];
   dupOrderedNotifcation: any;
   dupCancelNotifcation: any;
   dupCriticalNotifcation: any;
-  cancelNotification: any;
-  packedNotification: any;
-  dispatchedNotification: any;
+  cancelNotification: any = [];
+  packedNotification: any = [];
+  dispatchedNotification: any = [];
   newOrderedStatus: any;
   cancelOrderedStatus: any;
   packedOrderedStatus: any;
@@ -101,27 +102,37 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   dispatchedOrders: number;
   pos = true;
   change = 'false';
+  prevNewBillno: any;
+  prevCancelBillno: any;
+  prevCriticalBillno: any;
+  prevPackedBillno: any;
+  prevDispatchedBillno: any;
   newBillno: any;
   cancelBillno: any;
   criticalBillno: any;
   packedBillno: any;
   dispatchedBillno: any;
   deliveryTime: any;
-  invitation = [];
+  invitation: any;
   invitationStatus: any;
-  invitationFilter = [];
+  invitationFilter: any = [];
   invitationFilteredArray = [];
   invitationRemove = [];
   newInvitee: any;
   inviteStatus: any;
   notificationToBeOpened: any;
-  invite = true;
+  invite = false;
   // tslint:disable-next-line: variable-name
   new_ = false;
   cancel = false;
   packed = false;
   dispatch = false;
   critical = false;
+  newLen: any = 0;
+  cancelLen: any = 0;
+  packedLen: any = 0;
+  dispatchLen: any = 0;
+  invitationLen: any = 0;
   ngOnInit() {
     this.newOrderStatus = localStorage.getItem('newOrder');
     this.cancelOrderStatus = localStorage.getItem('cancelOrder');
@@ -169,125 +180,122 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
     this.retailerService.observeInviteRequests.subscribe((data) => {
       this.invitation = data;
       this.invitation = this.invitation.reverse();
-      if (this.invitation.length > 10) {
-        for (let i = 0; i < 10; i++) {
-          this.invitationFilter[i] = this.invitation[i];
-        }
-      } else {
-        for (let i = 0; i < this.invitation.length; i++) {
-          this.invitationFilter[i] = this.invitation[i];
-        }
+      this.invitationLen = localStorage.getItem('invitationLength');
+      for (let i = 0; i < this.invitation.length - this.invitationLen; i++) {
+        this.invitationFilter[i] = this.invitation[i];
       }
-      this.invitationFilteredArray = this.invitationFilter.filter(
-        (x) => this.invitationRemove.indexOf(x) < 0
-      );
-      this.newInvitee = localStorage.getItem('newInvitation');
-      if (this.invitationFilteredArray.length > 0) {
-        if (this.newInvitee !== this.invitationFilteredArray[0].name) {
-          this.newInvitee = this.invitationFilteredArray[0].name;
-          localStorage.setItem('newInvitation', this.newInvitee);
-          if (this.inviteStatus === 'true') {
-            this.change = 'true';
-            localStorage.setItem('change', this.change);
-          }
-          this.notificationToBeOpened = '0';
-          localStorage.setItem(
-            'notificationToBeOpened',
-            this.notificationToBeOpened
-          );
-        }
-        this.invitationRemove = this.invitationRemove.concat(
-          this.invitationFilter
-        );
-      }
+      // if (this.invitation.length > 10) {
+      //   for (let i = 0; i < 10; i++) {
+      //     this.invitationFilter[i] = this.invitation[i];
+      //   }
+      // } else {
+      //   for (let i = 0; i < this.invitation.length; i++) {
+      //     this.invitationFilter[i] = this.invitation[i];
+      //   }
+      // }
+      // this.invitationFilteredArray = this.invitationFilter.filter(
+      //   (x) => this.invitationRemove.indexOf(x) < 0
+      // );
+      // this.newInvitee = localStorage.getItem('newInvitation');
+      // if (this.invitationFilteredArray.length > 0) {
+      //   if (this.newInvitee !== this.invitationFilteredArray[0].name) {
+      //     this.newInvitee = this.invitationFilteredArray[0].name;
+      //     localStorage.setItem('newInvitation', this.newInvitee);
+      //     if (this.inviteStatus === 'true') {
+      //       this.change = 'true';
+      //       localStorage.setItem('change', this.change);
+      //     }
+      //     this.notificationToBeOpened = '0';
+      //     localStorage.setItem(
+      //       'notificationToBeOpened',
+      //       this.notificationToBeOpened
+      //     );
+      //   }
+      //   this.invitationRemove = this.invitationRemove.concat(
+      //     this.invitationFilter
+      //   );
+      // }
     });
   }
 
   newOrderFun() {
-    this.newOdd = false;
-    let i = 0;
-    this.orderedNotification.forEach((element) => {
-      i++;
-      this.date = new Date(element.timestamp);
+    this.newLen = localStorage.getItem('newLength');
+    for (let i = 0; i < this.orderedNotification.length - this.newLen; i++) {
+      this.newFilteredArray[i] = this.orderedNotification[i];
+      this.date = new Date(this.newFilteredArray[i].timestamp);
       this.formatDate =
         ('0' + this.date.getDate()).slice(-2) +
         '/' +
         ('0' + (this.date.getMonth() + 1)).slice(-2) +
         '/' +
         this.date.getFullYear();
-      if (i <= 30) {
-        this.newOrderFilter.push(element);
-        this.time = new Date(element.timestamp);
-        this.actualTime = this.time.toLocaleTimeString();
-        this.newOrderTime.push(this.actualTime);
-        this.newOrderDate.push(this.formatDate);
-      }
-    });
-    this.newFilteredArray = this.newOrderFilter.filter(
-      (x) => this.newOrderRemove.indexOf(x) < 0
-    );
-    this.newOrders = this.newFilteredArray.length;
-    this.newBillno = localStorage.getItem('newnotify');
-    if (this.newFilteredArray.length > 0) {
-      if (this.newBillno !== this.newFilteredArray[0].bill_no) {
-        this.newBillno = this.newFilteredArray[0].bill_no;
-        localStorage.setItem('newnotify', this.newBillno);
-        if (this.newOrderStatus === 'true') {
-          this.change = 'true';
-          localStorage.setItem('change', this.change);
-        }
-        this.notificationToBeOpened = '1';
-        localStorage.setItem(
-          'notificationToBeOpened',
-          this.notificationToBeOpened
-        );
-      }
-      this.newOrderRemove = this.newOrderRemove.concat(this.newOrderFilter);
+      this.time = new Date(this.newFilteredArray[i].timestamp);
+      this.actualTime = this.time.toLocaleTimeString();
+      this.newOrderTime.push(this.actualTime);
+      this.newOrderDate.push(this.formatDate);
     }
+    // this.newFilteredArray = this.newOrderFilter.filter(
+    //   (x) => this.newOrderRemove.indexOf(x) < 0
+    // );
+    // this.newOrders = this.newFilteredArray.length;
+    // this.newBillno = localStorage.getItem('newnotify');
+    // if (this.newFilteredArray.length > 0) {
+    //   if (this.newBillno !== this.newFilteredArray[0].bill_no) {
+    //     this.newBillno = this.newFilteredArray[0].bill_no;
+    //     localStorage.setItem('newnotify', this.newBillno);
+    //     if (this.newOrderStatus === 'true') {
+    //       this.change = 'true';
+    //       localStorage.setItem('change', this.change);
+    //     }
+    //     this.notificationToBeOpened = '1';
+    //     localStorage.setItem(
+    //       'notificationToBeOpened',
+    //       this.notificationToBeOpened
+    //     );
+    //   }
+    //   this.newOrderRemove = this.newOrderRemove.concat(this.newOrderFilter);
+    // }
   }
 
   cancelOrderFun() {
-    let i = 0;
-    this.cancelNotification.forEach((element) => {
-      i++;
-      this.date = new Date(element.timestamp);
+    this.cancelLen = localStorage.getItem('cancelLength');
+    for (let i = 0; i < this.cancelNotification.length - this.cancelLen; i++) {
+      this.cancelFilteredArray[i] = this.cancelNotification[i];
+      this.date = new Date(this.cancelFilteredArray[i].timestamp);
       this.formatDate =
         ('0' + this.date.getDate()).slice(-2) +
         '/' +
         ('0' + (this.date.getMonth() + 1)).slice(-2) +
         '/' +
         this.date.getFullYear();
-      if (i <= 30) {
-        this.cancelOrderFilter.push(element);
-        this.time = new Date(element.timestamp);
-        this.actualTime = this.time.toLocaleTimeString();
-        this.cancelOrderTime.push(this.actualTime);
-        this.cancelOrderDate.push(this.formatDate);
-      }
-    });
-    this.cancelFilteredArray = this.cancelOrderFilter.filter(
-      (x) => this.cancelOrderRemove.indexOf(x) < 0
-    );
-    this.cancelOrders = this.cancelFilteredArray.length;
-    this.cancelBillno = localStorage.getItem('cancelnotify');
-    if (this.cancelFilteredArray.length > 0) {
-      if (this.cancelBillno !== this.cancelFilteredArray[0].bill_no) {
-        this.cancelBillno = this.cancelFilteredArray[0].bill_no;
-        localStorage.setItem('cancelnotify', this.cancelBillno);
-        if (this.cancelOrderStatus === 'true') {
-          this.change = 'true';
-          localStorage.setItem('change', this.change);
-        }
-        this.notificationToBeOpened = '2';
-        localStorage.setItem(
-          'notificationToBeOpened',
-          this.notificationToBeOpened
-        );
-      }
-      this.cancelOrderRemove = this.cancelOrderRemove.concat(
-        this.cancelOrderFilter
-      );
+      this.time = new Date(this.cancelFilteredArray[i].timestamp);
+      this.actualTime = this.time.toLocaleTimeString();
+      this.newOrderTime.push(this.actualTime);
+      this.newOrderDate.push(this.formatDate);
     }
+    // this.cancelFilteredArray = this.cancelOrderFilter.filter(
+    //   (x) => this.cancelOrderRemove.indexOf(x) < 0
+    // );
+    // this.cancelOrders = this.cancelFilteredArray.length;
+    // this.cancelBillno = localStorage.getItem('cancelnotify');
+    // if (this.cancelFilteredArray.length > 0) {
+    //   if (this.cancelBillno !== this.cancelFilteredArray[0].bill_no) {
+    //     this.cancelBillno = this.cancelFilteredArray[0].bill_no;
+    //     localStorage.setItem('cancelnotify', this.cancelBillno);
+    //     if (this.cancelOrderStatus === 'true') {
+    //       this.change = 'true';
+    //       localStorage.setItem('change', this.change);
+    //     }
+    //     this.notificationToBeOpened = '2';
+    //     localStorage.setItem(
+    //       'notificationToBeOpened',
+    //       this.notificationToBeOpened
+    //     );
+    //   }
+    //   this.cancelOrderRemove = this.cancelOrderRemove.concat(
+    //     this.cancelOrderFilter
+    //   );
+    // }
   }
 
   criticalOrderFun() {
@@ -348,91 +356,85 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   }
 
   packedOrderFun() {
-    let i = 0;
-    this.packedNotification.forEach((element) => {
-      i++;
-      this.date = new Date(element.timestamp);
+    this.packedLen = localStorage.getItem('packedLength');
+    for (let i = 0; i < this.packedNotification.length - this.packedLen; i++) {
+      this.packedFilteredArray[i] = this.packedNotification[i];
+      this.date = new Date(this.packedFilteredArray[i].timestamp);
       this.formatDate =
         ('0' + this.date.getDate()).slice(-2) +
         '/' +
         ('0' + (this.date.getMonth() + 1)).slice(-2) +
         '/' +
         this.date.getFullYear();
-      if (i <= 30) {
-        this.packedOrderFilter.push(element);
-        this.time = new Date(element.timestamp);
-        this.actualTime = this.time.toLocaleTimeString();
-        this.packedOrderTime.push(this.actualTime);
-        this.packedOrderDate.push(this.formatDate);
-      }
-    });
-    this.packedFilteredArray = this.packedOrderFilter.filter(
-      (x) => this.packedOrderRemove.indexOf(x) < 0
-    );
-    this.packedOrders = this.packedFilteredArray.length;
-    this.packedBillno = localStorage.getItem('packednotify');
-    if (this.packedFilteredArray.length > 0) {
-      if (this.packedBillno !== this.packedFilteredArray[0].bill_no) {
-        this.packedBillno = this.packedFilteredArray[0].bill_no;
-        localStorage.setItem('packednotify', this.packedBillno);
-        if (this.packedOrderStatus === 'true') {
-          this.change = 'true';
-          localStorage.setItem('change', this.change);
-        }
-        this.notificationToBeOpened = '4';
-        localStorage.setItem(
-          'notificationToBeOpened',
-          this.notificationToBeOpened
-        );
-      }
-      this.packedOrderRemove = this.packedOrderRemove.concat(
-        this.packedOrderFilter
-      );
+      this.time = new Date(this.packedFilteredArray[i].timestamp);
+      this.actualTime = this.time.toLocaleTimeString();
+      this.newOrderTime.push(this.actualTime);
+      this.newOrderDate.push(this.formatDate);
     }
+    // this.packedFilteredArray = this.packedOrderFilter.filter(
+    //   (x) => this.packedOrderRemove.indexOf(x) < 0
+    // );
+    // this.packedOrders = this.packedFilteredArray.length;
+    // this.packedBillno = localStorage.getItem('packednotify');
+    // if (this.packedFilteredArray.length > 0) {
+    //   if (this.packedBillno !== this.packedFilteredArray[0].bill_no) {
+    //     this.packedBillno = this.packedFilteredArray[0].bill_no;
+    //     localStorage.setItem('packednotify', this.packedBillno);
+    //     if (this.packedOrderStatus === 'true') {
+    //       this.change = 'true';
+    //       localStorage.setItem('change', this.change);
+    //     }
+    //     this.notificationToBeOpened = '4';
+    //     localStorage.setItem(
+    //       'notificationToBeOpened',
+    //       this.notificationToBeOpened
+    //     );
+    //   }
+    //   this.packedOrderRemove = this.packedOrderRemove.concat(
+    //     this.packedOrderFilter
+    //   );
+    // }
   }
 
   dispatchedFun() {
-    let i = 0;
-    this.dispatchedNotification.forEach((element) => {
-      i++;
-      this.date = new Date(element.timestamp);
+    this.dispatchLen = localStorage.getItem('dispatchedLength');
+    for (let i = 0; i < this.dispatchedNotification.length - this.dispatchLen; i++) {
+      this.dispatchedFilteredArray[i] = this.dispatchedNotification[i];
+      this.date = new Date(this.dispatchedFilteredArray[i].timestamp);
       this.formatDate =
         ('0' + this.date.getDate()).slice(-2) +
         '/' +
         ('0' + (this.date.getMonth() + 1)).slice(-2) +
         '/' +
         this.date.getFullYear();
-      if (i <= 30) {
-        this.dispatchedOrderFilter.push(element);
-        this.time = new Date(element.timestamp);
-        this.actualTime = this.time.toLocaleTimeString();
-        this.dispatchedOrderTime.push(this.actualTime);
-        this.dispatchedOrderDate.push(this.formatDate);
-      }
-    });
-    this.dispatchedFilteredArray = this.dispatchedOrderFilter.filter(
-      (x) => this.dispatchedOrderRemove.indexOf(x) < 0
-    );
-    this.dispatchedOrders = this.dispatchedFilteredArray.length;
-    this.dispatchedBillno = localStorage.getItem('dispatchednotify');
-    if (this.dispatchedFilteredArray.length > 0) {
-      if (this.dispatchedBillno !== this.dispatchedFilteredArray[0].bill_no) {
-        this.dispatchedBillno = this.dispatchedFilteredArray[0].bill_no;
-        localStorage.setItem('dispatchednotify', this.dispatchedBillno);
-        if (this.dispatchedOrderStatus === 'true') {
-          this.change = 'true';
-          localStorage.setItem('change', this.change);
-        }
-        this.notificationToBeOpened = '5';
-        localStorage.setItem(
-          'notificationToBeOpened',
-          this.notificationToBeOpened
-        );
-      }
-      this.dispatchedOrderRemove = this.dispatchedOrderRemove.concat(
-        this.dispatchedOrderFilter
-      );
+      this.time = new Date(this.dispatchedFilteredArray[i].timestamp);
+      this.actualTime = this.time.toLocaleTimeString();
+      this.newOrderTime.push(this.actualTime);
+      this.newOrderDate.push(this.formatDate);
     }
+    // this.dispatchedFilteredArray = this.dispatchedOrderFilter.filter(
+    //   (x) => this.dispatchedOrderRemove.indexOf(x) < 0
+    // );
+    // this.dispatchedOrders = this.dispatchedFilteredArray.length;
+    // this.dispatchedBillno = localStorage.getItem('dispatchednotify');
+    // if (this.dispatchedFilteredArray.length > 0) {
+    //   if (this.dispatchedBillno !== this.dispatchedFilteredArray[0].bill_no) {
+    //     this.dispatchedBillno = this.dispatchedFilteredArray[0].bill_no;
+    //     localStorage.setItem('dispatchednotify', this.dispatchedBillno);
+    //     if (this.dispatchedOrderStatus === 'true') {
+    //       this.change = 'true';
+    //       localStorage.setItem('change', this.change);
+    //     }
+    //     this.notificationToBeOpened = '5';
+    //     localStorage.setItem(
+    //       'notificationToBeOpened',
+    //       this.notificationToBeOpened
+    //     );
+    //   }
+    //   this.dispatchedOrderRemove = this.dispatchedOrderRemove.concat(
+    //     this.dispatchedOrderFilter
+    //   );
+    // }
   }
   onReq() {
     this.invite = !this.invite;
@@ -494,8 +496,11 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
       this.dispatch = false;
     }
   }
-  ngOnDestroy() {
-    this.change = 'false';
-    localStorage.setItem('change', this.change);
+  ngOnDestroy(): void {
+    localStorage.setItem('newLength', this.orderedNotification.length);
+    localStorage.setItem('cancelLength', this.cancelNotification.length);
+    localStorage.setItem('packedLength', this.packedNotification.length);
+    localStorage.setItem('dispatchedLength', this.dispatchedNotification.length);
+    localStorage.setItem('invitationLength', this.invitation.length);
   }
 }

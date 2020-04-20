@@ -26,7 +26,7 @@
                   background-color: orange;
                   right: 0;
                 "
-                >{{invitationFilteredArray.length}}</span
+                >{{invitationFilter.length}}</span
               >
             </button>
             </div>
@@ -219,7 +219,7 @@
                   *ngFor="
                     let i = index;
                     let invitation;
-                    of: invitationFilteredArray
+                    of: invitationFilter
                   "
                 >
                   <mat-card class="card mat-elevation-z3" style="width: 40em;">
