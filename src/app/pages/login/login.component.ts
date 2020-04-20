@@ -20,6 +20,7 @@ import { Router } from "@angular/router";
 import { filter } from "rxjs/operators";
 import { EventEmitter } from "@angular/core";
 import { OldPwdValidators } from "./olPwdvalidator.component";
+import { MatSnackBar } from "@angular/material";
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
@@ -76,13 +77,21 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private fb: FormBuilder,
-    public dialog: MatDialog
-  ) // protected commonUtil: CommonUtil
-  {
+    private _snackbar: MatSnackBar,
+    public dialog: MatDialog // protected commonUtil: CommonUtil
+  ) {
     this.loginForm = this.fb.group({
-      username: ["", [Validators.required, Validators.email]],
-      // password: ['', [Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$')]],
-      password: ["", []],
+      username: ["", [Validators.required]],
+      password: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern(
+            "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$"
+          ),
+        ],
+      ],
+      // password: ["", []],
     });
   }
 
@@ -125,7 +134,10 @@ export class LoginComponent implements OnInit {
         },
         (error) => {
           this.errorMessage = "Please enter valid credentials";
-          alert(this.errorMessage)
+          // alert(this.errorMessage);
+          this._snackbar.open(this.errorMessage, "", {
+            duration: 5000,
+          });
           // this.commonUtil.openErrorSnackBar(this.errorMessage);
         }
       );

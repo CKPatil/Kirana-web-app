@@ -1,5 +1,6 @@
 import { ProductsService } from "./../../services/products.service";
 import { Component } from "@angular/core";
+import { MatSnackBar } from "@angular/material";
 
 @Component({
   selector: "app-items",
@@ -7,21 +8,23 @@ import { Component } from "@angular/core";
   styleUrls: ["./items.component.scss"],
 })
 export class ItemsComponent {
-  isSidePanelExpanded: boolean;
-
   searchText;
   allProducts: any = [];
   productsData: any;
 
-  constructor(private productService: ProductsService) {
+  constructor(
+    private productService: ProductsService,
+    private _snackBar: MatSnackBar
+  ) {
     this.productService.getAllProducts().subscribe(
       (result) => {
         this.allProducts = result.body;
         this.productsData = this.prepareDataForNewItem();
       },
       (error) => {
-        console.log("Error : ", error);
-        alert("Error Occured while Fetching the Products");
+        this._snackBar.open("Server can't be reached", "", {
+          duration: 5000,
+        });
       }
     );
   }

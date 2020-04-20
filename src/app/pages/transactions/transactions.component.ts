@@ -90,7 +90,7 @@ export class TransactionsComponent implements OnInit, OnDestroy {
   }
 
   getTransactionHistory() {
-    this.transactionService.getAllOrders().subscribe((res) => {
+    this.transactionService.observeOrders.subscribe((res) => {
       this.allTransaction = res;
       this.allTransaction.reverse();
 
@@ -151,7 +151,7 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     return `${date}/${month}/${year}`;
   };
 
-  trackByOrderId(index, item){
-    return item.id
+  trackByOrderId(index, item) {
+    return item.id;
   }
 }

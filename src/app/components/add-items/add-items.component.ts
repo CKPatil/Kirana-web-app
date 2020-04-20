@@ -7,6 +7,7 @@ import {
 import { Validators, FormBuilder, FormArray } from "@angular/forms";
 import { ProductsService } from "src/app/services/products.service";
 import { Router } from "@angular/router";
+import { MatSnackBar } from "@angular/material";
 
 @Component({
   selector: "app-add-items",
@@ -19,7 +20,8 @@ export class AddItemsComponent {
   constructor(
     public dialog: MatDialog,
     private productService: ProductsService,
-    private router: Router
+    private router: Router,
+    private _snackbar: MatSnackBar
   ) {}
 
   openDialog(): void {
@@ -43,8 +45,9 @@ export class AddItemsComponent {
         delete result.variant_details;
         this.productService.addProduct(result).subscribe(
           (result) => {
-            console.log("Result: ", result);
-            alert("Product Saved");
+            this._snackbar.open("Item Added", "", {
+              duration: 5000,
+            });
             this.router
               .navigateByUrl("/login", { skipLocationChange: true })
               .then(() => {
@@ -52,8 +55,13 @@ export class AddItemsComponent {
               });
           },
           (error) => {
-            console.log("Error : ", error);
-            alert("Error Occured while Adding New Item");
+            this._snackbar.open(
+              "Could not able to add the Item, Retry after sometime.",
+              "",
+              {
+                duration: 5000,
+              }
+            );
           }
         );
       }
@@ -69,22 +77,22 @@ export class AddItemsComponent {
 })
 export class DialogAddItemComponent {
   itemForm = this.fb.group({
-    name: ["", Validators.required],
-    category: ["", Validators.required],
-    sub_category: ["", Validators.required],
-    brand: ["", Validators.required],
+    name: ["", [Validators.required, Validators.maxLength(150)]],
+    category: ["", [Validators.required, Validators.maxLength(50)]],
+    sub_category: ["", [Validators.required, Validators.maxLength(50)]],
+    brand: ["", [Validators.required, Validators.maxLength(50)]],
     quantity_type: ["", Validators.required],
     variant_details: this.fb.array(
       [
         this.fb.group({
-          variant: ["", [Validators.required]],
+          variant: ["", [Validators.required, Validators.maxLength(50)]],
           quantity: ["", [Validators.required]],
           price: ["", [Validators.required]],
         }),
       ],
       [Validators.required, Validators.minLength(1)]
     ),
-    details: ["", Validators.required],
+    details: ["", [Validators.required, Validators.maxLength(500)]],
   });
 
   quantity_types = ["ml", "ltr", "kg", "unit", "gm"];
@@ -121,7 +129,7 @@ export class DialogAddItemComponent {
     const varient = this.itemForm.controls.variant_details as FormArray;
     varient.push(
       this.fb.group({
-        variant: ["", [Validators.required]],
+        variant: ["", [Validators.required, Validators.maxLength(50)]],
         quantity: ["", [Validators.required]],
         price: ["", [Validators.required]],
       })
@@ -129,7 +137,6 @@ export class DialogAddItemComponent {
   }
 
   removeVariant(i) {
-    console.log(i);
     const varient = this.itemForm.controls.variant_details as FormArray;
     varient.removeAt(i);
   }

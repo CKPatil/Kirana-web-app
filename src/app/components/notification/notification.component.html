@@ -1,5 +1,20 @@
 <div mat-dialog-content>
+  <i (click)='onNoClick()' style='font-size: 0.95em; float: right !important; cursor: pointer;' class="fa fa-times"></i>
   <h2 class="example-h2">Notifications Setting</h2>
+      <section class="example-section">
+        <div>
+          <h4>Invite Request</h4>
+        </div>
+        <div class="toggle">
+          <mat-slide-toggle
+            class="example-margin"
+            [color]="color"
+            [checked]="checkedInviteStatus"
+            [disabled]="disabled"
+            (change)="InviteStatusChange($event)">
+          </mat-slide-toggle>
+        </div>
+      </section>
       <section class="example-section">
         <div>
           <h4>New Order</h4>
@@ -42,7 +57,33 @@
           </mat-slide-toggle>
         </div>
       </section>
+      <section class="example-section">
+        <div>
+          <h4>Packed Order</h4>
+        </div>
+        <div class="toggle">
+          <mat-slide-toggle
+            class="example-margin"
+            [color]="color"
+            [checked]="checkedPackedStatus"
+            [disabled]="disabled"
+            (change)="PackedStatusChange($event)">
+          </mat-slide-toggle>
+        </div>
+      </section>
+      <section class="example-section">
+        <div>
+          <h4>Dispatched Order</h4>
+        </div>
+        <div class="toggle">
+          <mat-slide-toggle
+            class="example-margin"
+            [color]="color"
+            [checked]="checkedDispatchedStatus"
+            [disabled]="disabled"
+            (change)="DispatchedStatusChange($event)">
+          </mat-slide-toggle>
+        </div>
+      </section>
 </div>
-<div mat-dialog-actions>
-  <button mat-raised-button id="hov" (click)="onNoClick()">CLOSE</button>
-</div>
+
