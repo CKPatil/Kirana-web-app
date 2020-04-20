@@ -5,6 +5,7 @@ import { InteractionService } from "./services/interaction.service";
 import { TransactionService } from "./services/transaction.service";
 import { RetailerService } from "./services/retailer.service";
 import { NotificationsPageComponent } from "./pages/notifications-page/notifications-page.component";
+import { BehaviorSubject } from "rxjs";
 
 @Component({
   selector: "app-root",
@@ -28,23 +29,55 @@ export class AppComponent {
     this.navBarOptions = navOptions.admin_panel;
     this.routerEventsTrigger();
 
+    this.isLoginObserver = new BehaviorSubject(this.isLogin);
+
+    this.isLoginObserver.subscribe((result) => {
+      console.log("O", result);
+      if (!result) {
+        this.isRefreshActive = true;
+        clearInterval(this.refreshInterval);
+      }
+      if (result) {
+        console.log(window.location.href);
+        if (this.isRefreshActive && this.router.url.indexOf("login") === -1) {
+          this.isRefreshActive = false;
+          console.log("I", result);
+          this.startGettingData();
+        }
+      }
+    });
+  }
+
+  isRefreshActive = false;
+  eventChange() {
+    this.isLoginObserver.next(this.isLogin);
+  }
+
+  isLoginObserver;
+  refreshInterval;
+
+  startGettingData() {
+    console.log("Getting...");
     this.transitionService.getOrdersFromServer();
     this.rertailerService.getAllInvitationRequestsFromServer();
 
     this.notificationsPageComponent.ngOnInit();
 
-    setInterval(() => {
+    this.refreshInterval = setInterval(() => {
+      console.log("Refreshing...");
       this.rertailerService.getAllInvitationRequestsFromServer();
       this.transitionService.getOrdersFromServer();
-    }, 60000);
+    }, 10000);
   }
 
   routerEventsTrigger() {
     this.router.events.subscribe((event) => {
       if (window.location.href.indexOf("login") > -1) {
         this.isLogin = false;
+        this.eventChange();
       } else {
         this.isLogin = true;
+        this.eventChange();
       }
     });
   }
