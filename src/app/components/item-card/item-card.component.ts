@@ -240,6 +240,8 @@ export class SelectImageDialog {
     fileUpload.click();
   }
 
+  isImageSelected = false;
+
   // run when file field changes
   onFileSelect(event) {
     let previewImageContainer = document.querySelector(
@@ -260,6 +262,7 @@ export class SelectImageDialog {
       fr.readAsDataURL(file);
 
       this.picUploadForm.get("image").setValue(file);
+      this.isImageSelected = true;
     }
   }
 

@@ -13,11 +13,19 @@
       style="display: none;"
     />
   </div>
-  <div class="previewImageContainer"></div>
+  <div class="previewImageContainer text-center"></div>
 </div>
-<div mat-dialog-actions class="row justify-content-around">
-  <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button [mat-dialog-close]="picUploadForm" cdkFocusInitial>
-    Upload
-  </button>
-</div>
+
+<mat-dialog-actions class="mt-3 mb-2">
+  <div class="w-100 row justify-content-around">
+    <button mat-raised-button (click)="onNoClick()">Cancel</button>
+    <button
+      mat-flat-button
+      color="primary"
+      [mat-dialog-close]="picUploadForm"
+      [disabled]="!isImageSelected"
+    >
+      Ok
+    </button>
+  </div>
+</mat-dialog-actions>

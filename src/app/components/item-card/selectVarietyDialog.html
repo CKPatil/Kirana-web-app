@@ -3,7 +3,7 @@
 </h1>
 <div mat-dialog-content class="text-center">
   <form>
-    <mat-form-field>
+    <mat-form-field class="w-100">
       <mat-label>Select Product Variant</mat-label>
       <mat-select [(ngModel)]="selectedValue" name="product">
         <mat-option [value]="'all ' + data[0].p_id">All</mat-option>
@@ -14,10 +14,17 @@
     </mat-form-field>
   </form>
 </div>
-<div mat-dialog-actions class="row justify-content-around">
-  <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button [mat-dialog-close]="selectedValue"
-  [disabled]="!selectedValue">
-    Delete
-  </button>
-</div>
+
+<mat-dialog-actions class="mt-3 mb-2">
+  <div class="w-100 row justify-content-around">
+    <button mat-raised-button (click)="onNoClick()">Cancel</button>
+    <button
+      mat-flat-button
+      color="primary"
+      [mat-dialog-close]="selectedValue"
+      [disabled]="!selectedValue"
+    >
+      Delete
+    </button>
+  </div>
+</mat-dialog-actions>

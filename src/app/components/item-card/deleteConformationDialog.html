@@ -1,9 +1,12 @@
 <h1 mat-dialog-title class="text-center font-weight-bold">
   Do you really wanted to delete the product?
 </h1>
-<div mat-dialog-actions class="row justify-content-around">
-  <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>
-    Yes
-  </button>
-</div>
+
+<mat-dialog-actions class="mt-3 mb-2">
+  <div class="w-100 row justify-content-around">
+    <button mat-raised-button (click)="onNoClick()">Cancel</button>
+    <button mat-flat-button color="primary" [mat-dialog-close]="true">
+      Yes
+    </button>
+  </div>
+</mat-dialog-actions>
