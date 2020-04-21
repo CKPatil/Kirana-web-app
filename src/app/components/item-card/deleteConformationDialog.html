@@ -2,11 +2,9 @@
   Do you really wanted to delete the product?
 </h1>
 
-<mat-dialog-actions class="mt-3 mb-2">
-  <div class="w-100 row justify-content-around">
-    <button mat-raised-button (click)="onNoClick()">Cancel</button>
-    <button mat-flat-button color="primary" [mat-dialog-close]="true">
-      Yes
-    </button>
-  </div>
+<mat-dialog-actions class="mt-3 row justify-content-around">
+  <button mat-stroked-button (click)="onNoClick()">Cancel</button>
+  <button mat-flat-button color="primary" [mat-dialog-close]="true">
+    Yes
+  </button>
 </mat-dialog-actions>

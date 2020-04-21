@@ -1,6 +1,6 @@
 .outer {
   height: 90vh;
-  overflow: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
 }
 .example-full-width {
