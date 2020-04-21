@@ -92,7 +92,7 @@ export class TransactionsComponent implements OnInit, OnDestroy {
   getTransactionHistory() {
     this.transactionService.observeOrders.subscribe((res) => {
       this.allTransaction = res;
-      this.allTransaction.reverse();
+      // this.allTransaction.reverse();
 
       this.pageEvent = {
         pageIndex: 0,
