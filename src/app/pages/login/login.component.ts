@@ -11,14 +11,14 @@ import {
   Validators,
   FormBuilder,
   FormGroup,
-  ReactiveFormsModule,
+  // ReactiveFormsModule,
 } from "@angular/forms";
 import { AuthService } from "../../services/auth.service";
 //import { SharedLoginService } from '../../services/sharedLogin.service';
 import { ErrorStateMatcher } from "@angular/material/core";
 import { Router } from "@angular/router";
-import { filter } from "rxjs/operators";
-import { EventEmitter } from "@angular/core";
+// import { filter } from "rxjs/operators";
+// import { EventEmitter } from "@angular/core";
 import { OldPwdValidators } from "./olPwdvalidator.component";
 import { MatSnackBar } from "@angular/material";
 
@@ -81,9 +81,9 @@ export class LoginComponent implements OnInit {
         "",
         [
           Validators.required,
-          Validators.pattern(
-            "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$"
-          ),
+          // Validators.pattern(
+          //   "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$"
+          // ),
         ],
       ],
     });
@@ -189,7 +189,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  // to open forget password dialog
+  // to open forget password dialog then the OTP dialog, then the Update password Dialog
   openDialog() {
     const dialogRef = this.dialog.open(ForgotPasswordDialog, {
       width: "90%",
@@ -293,7 +293,7 @@ export class LoginComponent implements OnInit {
   }
 }
 
-// ForgotPasswordComponent
+// ForgotPassword dialog box
 @Component({
   selector: "app-forgot-password",
   templateUrl: "./forgotPasswordDialog.component.html",
@@ -330,7 +330,7 @@ export class ForgotPasswordDialog {
   // }
 }
 
-//OTPComponent
+// OTP dialog box
 @Component({
   selector: "app-otp",
   templateUrl: "./otp.component.html",
@@ -363,7 +363,7 @@ export class OTPComponent {
   // }
 }
 
-//UpdatePasswordComponent
+// UpdatePassword Dialog box
 @Component({
   selector: "app-update-password",
   templateUrl: "./updatePassword.component.html",
@@ -381,13 +381,40 @@ export class UpdatePasswordComponent {
     {
       newPwd: [
         "",
-        [
+        Validators.compose([
           Validators.required,
-          Validators.pattern(
-            "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$"
+          // check whether the entered password has a number
+          OldPwdValidators.patternValidator(/\d/, {
+            hasNumber: true,
+          }),
+          // check whether the entered password has upper case letter
+          OldPwdValidators.patternValidator(/[A-Z]/, {
+            hasCapitalCase: true,
+          }),
+          // check whether the entered password has a lower case letter
+          OldPwdValidators.patternValidator(/[a-z]/, {
+            hasSmallCase: true,
+          }),
+          // check whether the entered password has a special character
+          OldPwdValidators.patternValidator(
+            /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/,
+            {
+              hasSpecialCharacters: true,
+            }
           ),
-        ],
+          Validators.minLength(8),
+        ]),
       ],
+
+      // newPwd: [
+      //   "",
+      //   [
+      //     Validators.required,
+      //     Validators.pattern(
+      //       "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$"
+      //     ),
+      //   ],
+      // ],
       confirmPwd: ["", Validators.required],
     },
     {
@@ -408,10 +435,6 @@ export class UpdatePasswordComponent {
       ? null
       : { mismatch: true };
   }
-
-  // submit(form) {
-  //   this.dialogRef.close(`${form.value.newPwd}`);
-  // }
 
   onNoClick(): void {
     this.dialogRef.close();
