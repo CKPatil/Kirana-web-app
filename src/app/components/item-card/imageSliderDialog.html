@@ -1,24 +1,21 @@
 <div mat-dialog-actions class="row justify-content-end">
   <button
-    mat-mini-fab
+    mat-icon-button
     color="primary"
     [mat-dialog-close]=""
-    style="position: relative; top: -1em; transform: scale(0.9);"
+    style="position: relative; top: -1.5em;"
   >
     <mat-icon>clear</mat-icon>
   </button>
 </div>
 
-<div
-  class="row align-content-center justify-content-center"
-  style="height: 90%;"
->
+<div class="row">
   <div
     id="carouselExampleIndicators"
     class="carousel col-12"
     data-ride="carousel"
   >
-    <div class="carousel-inner row justify-content-center">
+    <div class="carousel-inner">
       <div
         class="carousel-item mr-0 h-100 w-100 text-center"
         *ngFor="let img of data;let j=index"
