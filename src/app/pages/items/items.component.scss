@@ -1,4 +1,5 @@
 .outer {
-  height: 90vh;
-  overflow: scroll;
+  height: 91vh;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
