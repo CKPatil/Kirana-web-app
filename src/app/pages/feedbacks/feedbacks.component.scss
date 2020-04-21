@@ -1,6 +1,7 @@
 .outer {
-  height: 90vh;
-  overflow: scroll;
+  height: 91vh;
+  overflow-y: auto;
+  overflow-x: hidden;
   // .mat-card {
   //   margin: 20px 2% 0px 2%;
   // }
