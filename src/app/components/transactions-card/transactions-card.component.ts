@@ -34,7 +34,8 @@ export class TransactionsCardComponent {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
+      // if (result) {
+      if (result >= 0) {
         this.transactionService
           .updateOrderStatus(this.item.id, result)
           .subscribe(
@@ -50,7 +51,7 @@ export class TransactionsCardComponent {
               //   });
             },
             (err) => {
-              this._snackbar.open("Error Occured try after Sometime", "", {
+              this._snackbar.open("Operation can't be Performed", "", {
                 duration: 5000,
               });
             }
