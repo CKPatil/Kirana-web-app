@@ -359,7 +359,7 @@ export class OTPComponent {
   }
 
   countDown: Subscription;
-  counter = 180;
+  counter = 600;
   tick = 1000;
   ngOnInit() {
     this.countDown = timer(0, this.tick).subscribe(() => {

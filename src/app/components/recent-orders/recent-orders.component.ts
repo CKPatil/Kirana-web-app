@@ -142,17 +142,19 @@ export class RecentOrdersComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
+      console.log("A",result)
       if (result) {
         this.transactionService
-          .updateOrderStatus(
-            result.data.row.id,
-            this.getStatusToKeyMap(result.data.statusValue)
+        .updateOrderStatus(
+          result.data.row.id,
+          this.getStatusToKeyMap(result.data.statusValue)
           )
           .subscribe((res) => {
-            // console.log(res);
+            console.log("B",res)
             this.router
-              .navigateByUrl("/login", { skipLocationChange: true })
-              .then(() => {
+            .navigateByUrl("/login", { skipLocationChange: true })
+            .then(() => {
+                console.log("C")
                 this.router.navigate(["/dashboard"]);
               });
           });
