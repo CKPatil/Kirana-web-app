@@ -71,9 +71,9 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     });
     this.getTransactionHistory();
 
-    this.refresh = setInterval(() => {
-      this.getTransactionHistory();
-    }, 60000);
+    // this.refresh = setInterval(() => {
+    //   this.getTransactionHistory();
+    // }, 60000);
   }
 
   // to clear the refresh interval
@@ -139,6 +139,13 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     this.retailerControl.setValue("");
     this.dateControl.setValue("");
     this.searchDate = "";
+    this.length = this.allTransaction.length;
+  }
+
+  updatePageSize(i, k) {
+    if (k) {
+      this.length = i + 1;
+    }
   }
 
   parseDate = (d) => {
