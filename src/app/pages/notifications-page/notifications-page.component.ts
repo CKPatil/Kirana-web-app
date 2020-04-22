@@ -139,7 +139,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
     } else {
       this.newLen = 0;
     }
-    if (this.orderedNotification.length - this.newLen > 0) {
+    if ((this.orderedNotification.length - this.newLen > 0) && this.newOrderStatus === 'true') {
       this.change = 'true';
       localStorage.setItem('change', this.change);
     }
@@ -165,7 +165,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
     } else {
       this.cancelLen = 0;
     }
-    if (this.cancelNotification.length - this.cancelLen > 0) {
+    if ((this.cancelNotification.length - this.cancelLen > 0) && this.cancelOrderStatus === 'true') {
       this.change = 'true';
       localStorage.setItem('change', this.change);
     }
@@ -223,7 +223,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
     this.criticalOrders = this.criticalFilteredArray.length;
     this.criticalBillno = localStorage.getItem('criticalnotify');
     if (this.criticalFilteredArray.length > 0) {
-      if (this.criticalBillno !== this.criticalFilteredArray[0].bill_no) {
+      if ((this.criticalBillno !== this.criticalFilteredArray[0].bill_no) && this.criticalOrderStatus === 'true') {
         this.criticalBillno = this.criticalFilteredArray[0].bill_no;
         localStorage.setItem('criticalnotify', this.criticalBillno);
         if (this.criticalOrderStatus === 'true') {
@@ -243,7 +243,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
     } else {
       this.packedLen = 0;
     }
-    if (this.packedNotification.length - this.packedLen > 0) {
+    if ((this.packedNotification.length - this.packedLen > 0) && this.packedOrderStatus === 'true') {
       this.change = 'true';
       localStorage.setItem('change', this.change);
     }
@@ -269,7 +269,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
     } else {
       this.dispatchLen = 0;
     }
-    if (this.dispatchedNotification.length - this.dispatchLen > 0) {
+    if ((this.dispatchedNotification.length - this.dispatchLen > 0) && this.dispatchedOrderStatus === 'true') {
       this.change = 'true';
       localStorage.setItem('change', this.change);
     }

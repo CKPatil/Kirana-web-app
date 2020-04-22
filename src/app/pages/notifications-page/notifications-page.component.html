@@ -247,6 +247,8 @@
                 let dispatchNotification
                 of dispatchedFilteredArray
               "
+              [routerLink]="['/dashboard']" [fragment]="'dispatchedOrders'"
+              style="cursor: pointer;"
             >
               <div class="innerdiv">
                 <div class="row">
@@ -287,6 +289,8 @@
             <mat-card
               class="mat-elevation-z3 my-2"
               *ngFor="let invitation of invitations"
+              [routerLink]="['/dashboard']" [fragment]="'inviteRequest'"
+              style="cursor: pointer;"
             >
               <div class="innerdiv">
                 <h5>New Enrollment Request</h5>
@@ -316,6 +320,8 @@
             <mat-card
               class="mat-elevation-z3"
               *ngFor="let i = index; let newNotification of newFilteredArray"
+              [routerLink]="['/dashboard']" [fragment]="'newOrders'"
+              style="cursor: pointer;"
             >
               <div class="innerdiv">
                 <div class="row">
@@ -359,6 +365,8 @@
                 let packedNotification
                 of packedFilteredArray
               "
+              [routerLink]="['/dashboard']" [fragment]="'packedOrders'"
+              style="cursor: pointer;"
             >
               <div class="innerdiv">
                 <div class="row">
@@ -403,6 +411,8 @@
                 let cancelledNotification
                 of cancelFilteredArray
               "
+              [routerLink]="['/dashboard']" [fragment]="'cancelOrders'"
+              style="cursor: pointer;"
             >
               <div class="innerdiv">
                 <div class="row">
@@ -447,6 +457,8 @@
                 let criticalNotification
                 of criticalFilteredArray
               "
+              [routerLink]="['/dashboard']" [fragment]="'criticalOrders'"
+              style="cursor: pointer;"
             >
               <div class="innerdiv">
                 <div class="row">
