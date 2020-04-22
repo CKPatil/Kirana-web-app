@@ -50,9 +50,10 @@ export class InviteRequestComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.approveInviteRequest();
-      }
+        if(result==true)
+          this.approveInviteRequest();
+        else if(result==false)
+          this.rejectInviteRequest();
     });
   }
 }
