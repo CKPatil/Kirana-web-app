@@ -249,15 +249,17 @@
               "
             >
               <div class="innerdiv">
-                <h5 style="line-height: 1em; word-wrap: break-word;">
-                  New Order for
-                  <b>{{ dispatchNotification.retailer_name }}</b>
-                </h5>
-                <p class="od">Date: {{ dispatchedOrderDate[i] }}</p>
+                <div class="row">
+                  <h5 class="col-12 col-md-8" style="line-height: 1em; word-wrap: break-word;">
+                    New Order for
+                    <b>{{ dispatchNotification.retailer_name }}</b>
+                  </h5>
+                  <p class="col-12 col-md-4 od">Date: {{dispatchedOrderDate[i]}}</p>
+                </div>
               </div>
               <div class="innerdiv">
                 <small>OrderID: {{ dispatchNotification.bill_no }}</small>
-                <p class="od">Time: {{ dispatchedOrderTime[i] }}</p>
+                <p class="od">Time: {{dispatchedOrderTime[i]}}</p>
               </div>
               <p style="line-height: 1em; word-wrap: break-word;">
                 Customer Name:
@@ -316,14 +318,17 @@
               *ngFor="let i = index; let newNotification of newFilteredArray"
             >
               <div class="innerdiv">
-                <h5 style="line-height: 1em; word-wrap: break-word;">
-                  New Order for <b>{{ newNotification.retailer_name }}</b>
-                </h5>
-                <p class="od">Date: {{ newOrderDate[i] }}</p>
+                <div class="row">
+                  <h5 class="col-12 col-md-8" style="line-height: 1em; word-wrap: break-word;">
+                    New Order for
+                    <b>{{ newNotification.retailer_name }}</b>
+                  </h5>
+                  <p class="col-12 col-md-4 od">Date: {{newOrderDate[i]}}</p>
+                </div>
               </div>
               <div class="innerdiv">
                 <small>OrderID: {{ newNotification.bill_no }}</small>
-                <p class="od">Time: {{ newOrderTime[i] }}</p>
+                <p class="od">Time: {{newOrderTime[i]}}</p>
               </div>
               <p style="line-height: 1em; word-wrap: break-word;">
                 Customer Name: <b>{{ newNotification.customer_name }}</b>
@@ -356,15 +361,17 @@
               "
             >
               <div class="innerdiv">
-                <h5 style="line-height: 1em; word-wrap: break-word;">
-                  New Order Packed for
-                  <b>{{ packedNotification.retailer_name }}</b>
-                </h5>
-                <p class="od">Date: {{ packedOrderDate[i] }}</p>
+                <div class="row">
+                  <h5 class="col-12 col-md-8" style="line-height: 1em; word-wrap: break-word;">
+                    New Order for
+                    <b>{{ packedNotification.retailer_name }}</b>
+                  </h5>
+                  <p class="col-12 col-md-4 od">Date: {{packedOrderDate[i]}}</p>
+                </div>
               </div>
               <div class="innerdiv">
                 <small>BillNo: {{ packedNotification.bill_no }}</small>
-                <p class="od">Time: {{ packedOrderTime[i] }}</p>
+                <p class="od">Time: {{packedOrderTime[i]}}</p>
               </div>
               <p style="line-height: 1em; word-wrap: break-word;">
                 Customer Name:
@@ -398,15 +405,17 @@
               "
             >
               <div class="innerdiv">
-                <h5 style="line-height: 1em; word-wrap: break-word;">
-                  New Cancelled Order for
-                  <b>{{ cancelledNotification.retailer_name }}</b>
-                </h5>
-                <p class="od">Date: {{ cancelOrderDate[i] }}</p>
+                <div class="row">
+                  <h5 class="col-12 col-md-8" style="line-height: 1em; word-wrap: break-word;">
+                    New Order for
+                    <b>{{ cancelledNotification.retailer_name }}</b>
+                  </h5>
+                  <p class="col-12 col-md-4 od">Date: {{cancelOrderDate[i]}}</p>
+                </div>
               </div>
               <div class="innerdiv">
                 <small>BillNo: {{ cancelledNotification.bill_no }}</small>
-                <p class="od">Time: {{ cancelOrderTime[i] }}</p>
+                <p class="od">Time: {{cancelOrderTime[i]}}</p>
               </div>
               <p style="line-height: 1em; word-wrap: break-word;">
                 Customer Name:
@@ -440,15 +449,17 @@
               "
             >
               <div class="innerdiv">
-                <h5 style="line-height: 1em; word-wrap: break-word;">
-                  New Critical Order for
-                  <b>{{ criticalNotification.ShopName }}</b>
-                </h5>
-                <p class="od">Date: {{ criticalOrderDate[i] }}</p>
+                <div class="row">
+                  <h5 class="col-12 col-md-8" style="line-height: 1em; word-wrap: break-word;">
+                    New Order for
+                    <b>{{ criticalNotification.retailer_name }}</b>
+                  </h5>
+                  <p class="col-12 col-md-4 od">Date: {{criticalOrderDate[i]}}</p>
+                </div>
               </div>
               <div class="innerdiv">
                 <small>OrderID: {{ criticalNotification.bill_no }}</small>
-                <p class="od">Time: {{ criticalOrderTime[i] }}</p>
+                <p class="od">Time: {{criticalOrderTime[i]}}</p>
               </div>
               <p style="line-height: 1em; word-wrap: break-word;">
                 Customer Name:

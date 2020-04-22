@@ -349,6 +349,8 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
     }
   }
   ngOnDestroy(): void {
+    this.change = 'false';
+    localStorage.setItem('change', this.change);
     localStorage.setItem('newLength', this.orderedNotification.length);
     localStorage.setItem('cancelLength', this.cancelNotification.length);
     localStorage.setItem('packedLength', this.packedNotification.length);
