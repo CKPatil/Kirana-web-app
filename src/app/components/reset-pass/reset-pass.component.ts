@@ -23,7 +23,7 @@ export class ResetPassComponent {
   form1: FormGroup;
   mess: string;
   message = 'Password changed sucessfully';
-  errMessage = 'Old Password not valid !!!';
+  errMessage = 'Old Password not valid !';
   actionButtonLabel = 'OK';
   action = true;
   setAutoHide = true;
