@@ -70,6 +70,7 @@ import {MatBadgeModule} from '@angular/material/badge';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatChipsModule} from '@angular/material/chips';
 import { TransactionsCardComponent, ChooseOrderStatusDialog } from './components/transactions-card/transactions-card.component';
+import { FormatTimePipe } from './pipes/formatTime.pipe';
 
 @NgModule({
   declarations: [
@@ -105,7 +106,8 @@ import { TransactionsCardComponent, ChooseOrderStatusDialog } from './components
     NotificationsPageComponent,
     EditProductDetailDialog,
     ImageSliderDialog,
-    DeleteConformationDialog
+    DeleteConformationDialog,
+    FormatTimePipe
   ],
   entryComponents: [
     DialogComponent

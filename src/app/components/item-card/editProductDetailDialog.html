@@ -4,7 +4,7 @@
 <div mat-dialog-content class="text-center">
   <form [formGroup]="itemForm">
     <div class="description-container">
-      <mat-form-field class="example-full-width">
+      <mat-form-field class="w-100">
         <mat-label>Description</mat-label>
         <textarea
           formControlName="description"
@@ -15,14 +15,15 @@
     </div>
   </form>
 </div>
-<div mat-dialog-actions class="row justify-content-around">
-  <button mat-button (click)="onNoClick()">Cancel</button>
+
+<mat-dialog-actions class="mt-3 justify-content-around">
+  <button mat-stroked-button (click)="onNoClick()">Cancel</button>
   <button
-    mat-button
+    mat-flat-button
+    color="primary"
     [disabled]="!itemForm.valid"
     [mat-dialog-close]="itemForm.value"
-    cdkFocusInitial
   >
     Update
   </button>
-</div>
+</mat-dialog-actions>

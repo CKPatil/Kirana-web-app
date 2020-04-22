@@ -86,8 +86,8 @@ export class DialogAddItemComponent {
       [
         this.fb.group({
           variant: ["", [Validators.required, Validators.maxLength(50)]],
-          quantity: ["", [Validators.required]],
-          price: ["", [Validators.required]],
+          quantity: ["", [Validators.required, Validators.min(0)]],
+          price: ["", [Validators.required, Validators.min(0)]],
         }),
       ],
       [Validators.required, Validators.minLength(1)]
@@ -130,8 +130,8 @@ export class DialogAddItemComponent {
     varient.push(
       this.fb.group({
         variant: ["", [Validators.required, Validators.maxLength(50)]],
-        quantity: ["", [Validators.required]],
-        price: ["", [Validators.required]],
+        quantity: ["", [Validators.required, Validators.min(0)]],
+        price: ["", [Validators.required, Validators.min(0)]],
       })
     );
   }

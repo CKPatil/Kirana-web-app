@@ -1,14 +1,6 @@
 <mat-card class="mat-elevation-z6">
   <div class="row justify-content-between align-items-center px-3 mb-4">
-    <h5><b>Retail Shop:</b> {{ item.retailer_name | titlecase }}</h5>
-    <button
-      class="btn text-white"
-      style="font-size: 90%;"
-      [ngClass]="item.status"
-      (click)="openChooseOrderStatusDialog()"
-    >
-      {{ item.status }}
-    </button>
+    <h5><b>Retail Shop - </b> {{ item.retailer_name | titlecase }}</h5>
   </div>
   <div class="row justify-content-center" style="font-size: 90%;">
     <div class="col-6 font-weight-bold pr-0">
@@ -44,6 +36,15 @@
     </div>
     <div class="col-6 pl-0">
       <p>₹ {{ item.price }}</p>
+    </div>
+    <div class="col-12">
+      <button
+        class="btn text-white d-block w-100"
+        [ngClass]="item.status"
+        (click)="openChooseOrderStatusDialog()"
+      >
+        Status {{ item.status }}
+      </button>
     </div>
   </div>
 </mat-card>

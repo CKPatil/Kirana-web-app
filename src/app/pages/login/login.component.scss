@@ -4,7 +4,7 @@
   width: -webkit-fill-available;
   height: 90vh;
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   justify-content: center;
 
   #login-mat-card {
@@ -15,7 +15,7 @@
   .inner-container {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    // justify-content: space-between;
     height: 500px;
 
     .left-container {
@@ -24,7 +24,8 @@
         $login-bottom-gradient,
         $login-top-gradient
       );
-      flex: 3;
+      // flex: 3;
+      border-radius: 4px;
       display: flex;
       color: white;
       flex-direction: column;
@@ -58,7 +59,7 @@
     }
 
     .right-container {
-      flex: 7;
+      // flex: 7;
       text-align: center;
       display: flex;
       flex-direction: column;
@@ -84,6 +85,21 @@
   }
 }
 
+.logo {
+  max-width: 4em;
+  width: 100%;
+}
+
+.resetPassBtn {
+  color: #5ebeb2;
+  font-weight: bold;
+  cursor: pointer;
+  &:hover {
+    color: #5ebeb2;
+    text-decoration: underline;
+  }
+}
+
 .left-btn {
   background-color: transparent;
   border: 2px solid white;
@@ -105,9 +121,15 @@
   padding: 5px 50px;
   border-radius: 100px;
   color: white;
-  text-transform: uppercase;
+  // text-transform: uppercase;
   font-weight: 800;
   transition: all 0.2s;
+  cursor: pointer;
+}
+
+.login-btn:disabled {
+  background-color: #90bbb6;
+  cursor: not-allowed;
 }
 
 .login-btn:hover {

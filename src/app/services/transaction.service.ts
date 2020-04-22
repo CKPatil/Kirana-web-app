@@ -22,11 +22,6 @@ export class TransactionService {
   }
 
   constructor(private http: HttpClient) {
-    const token = localStorage.getItem("access");
-    this.httpOptions = new HttpHeaders({
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    });
     this.buildURLS();
 
     // for Observer
@@ -34,35 +29,44 @@ export class TransactionService {
     this.observeOrders = new BehaviorSubject(this.allOrders);
   }
 
-  getAllOrders(): Observable<Transaction[]> {
-    return this.http
-      .get<Transaction[]>(this.getAllTransactionsURL, {
-        headers: this.httpOptions,
-      })
-      .pipe(
-        catchError((error) => {
-          return throwError(error);
-        })
-      );
-  }
-  getNextOrders(id) {
-    return this.http
-      .post(this.getAllTransactionsURL, JSON.stringify(id), {
-        headers: this.httpOptions,
-        observe: "response",
-      })
-      .pipe(
-        catchError((error) => {
-          return throwError(error);
-        })
-      );
+  refreshHttpOptions() {
+    const token = localStorage.getItem("access");
+    this.httpOptions = new HttpHeaders({
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    });
   }
 
-  getAllTransactions() {
-    return transactions;
-  }
+  // getAllOrders(): Observable<Transaction[]> {
+  //   return this.http
+  //     .get<Transaction[]>(this.getAllTransactionsURL, {
+  //       headers: this.httpOptions,
+  //     })
+  //     .pipe(
+  //       catchError((error) => {
+  //         return throwError(error);
+  //       })
+  //     );
+  // }
+  // getNextOrders(id) {
+  //   return this.http
+  //     .post(this.getAllTransactionsURL, JSON.stringify(id), {
+  //       headers: this.httpOptions,
+  //       observe: "response",
+  //     })
+  //     .pipe(
+  //       catchError((error) => {
+  //         return throwError(error);
+  //       })
+  //     );
+  // }
+
+  // getAllTransactions() {
+  //   return transactions;
+  // }
 
   updateOrderStatus(orderId, orderStatusCode) {
+    this.refreshHttpOptions();
     let updateURL =
       environment.backend_end_point +
       environment.order +
@@ -83,7 +87,6 @@ export class TransactionService {
       );
   }
 
-
   // ////////////// NEW CODE
   allOrders;
   observeOrders;
@@ -93,6 +96,7 @@ export class TransactionService {
   }
 
   getOrdersFromServer() {
+    this.refreshHttpOptions();
     this.http
       .get(this.getAllTransactionsURL, {
         headers: this.httpOptions,
