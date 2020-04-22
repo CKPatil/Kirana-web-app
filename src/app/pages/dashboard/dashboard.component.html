@@ -48,6 +48,15 @@
           ></app-recent-orders>
         </mat-card>
       </div>
+      <div class="urgent-orders-container" id="criticalOrders">
+        <mat-card>
+          <h5><b>Cancelled Orders</b></h5>
+          <app-recent-orders
+            *ngIf="isDataAvailable"
+            [tableData]="cancelledOrders"
+          ></app-recent-orders>
+        </mat-card>
+      </div>
       <div class="third-container row mt-3">
         <div class="recent-orders-container col-12 col-lg-8" id="newOrders">
           <mat-card>
