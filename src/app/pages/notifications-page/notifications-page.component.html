@@ -3,10 +3,10 @@
     <b>Notification</b>
   </h3>
   <div class="row d-flex justify-content-center">
-    <div class="col-12 col-md-10 col-lg-6 overflow-auto scrollb">
+    <div class="col-12 col-md-10 col-lg-6">
       <mat-card
-        class="mat-elevation-z8 overflow-auto"
-        style="height: 60vh; margin-top: 1vh;"
+        class="mat-elevation-z8"
+        style="height: 60vh; margin-top: 1vh; overflow-y: auto;"
       >
         <h5 class="col-12 text-center text-md-left" style="margin-bottom: 3vh;">
           <b>REQUESTS</b>
@@ -244,20 +244,24 @@
               class="mat-elevation-z3"
               *ngFor="
                 let i = index;
-                let dispatchNotification;
-                of: dispatchedFilteredArray
+                let dispatchNotification
+                of dispatchedFilteredArray
               "
+              [routerLink]="['/dashboard']" [fragment]="'dispatchedOrders'"
+              style="cursor: pointer;"
             >
               <div class="innerdiv">
-                <h5 style="line-height: 1em; word-wrap: break-word;">
-                  New Order for
-                  <b>{{ dispatchNotification.retailer_name }}</b>
-                </h5>
-                <p class="od">Date: {{ dispatchedOrderDate[i] }}</p>
+                <div class="row">
+                  <h5 class="col-12 col-md-8" style="line-height: 1em; word-wrap: break-word;">
+                    New Order for
+                    <b>{{ dispatchNotification.retailer_name }}</b>
+                  </h5>
+                  <p class="col-12 col-md-4 od">Date: {{dispatchedOrderDate[i]}}</p>
+                </div>
               </div>
               <div class="innerdiv">
                 <small>OrderID: {{ dispatchNotification.bill_no }}</small>
-                <p class="od">Time: {{ dispatchedOrderTime[i] }}</p>
+                <p class="od">Time: {{dispatchedOrderTime[i]}}</p>
               </div>
               <p style="line-height: 1em; word-wrap: break-word;">
                 Customer Name:
@@ -265,7 +269,7 @@
               </p>
               <p style="line-height: 1em; word-wrap: break-word;">
                 Customer Address:
-                <b>{{ packedNotification.customer_address }}</b>
+                <b>{{ dispatchNotification.customer_address }}</b>
               </p>
             </mat-card>
           </div>
@@ -285,6 +289,8 @@
             <mat-card
               class="mat-elevation-z3 my-2"
               *ngFor="let invitation of invitations"
+              [routerLink]="['/dashboard']" [fragment]="'inviteRequest'"
+              style="cursor: pointer;"
             >
               <div class="innerdiv">
                 <h5>New Enrollment Request</h5>
@@ -313,17 +319,22 @@
           >
             <mat-card
               class="mat-elevation-z3"
-              *ngFor="let i = index; let newNotification; of: newFilteredArray"
+              *ngFor="let i = index; let newNotification of newFilteredArray"
+              [routerLink]="['/dashboard']" [fragment]="'newOrders'"
+              style="cursor: pointer;"
             >
               <div class="innerdiv">
-                <h5 style="line-height: 1em; word-wrap: break-word;">
-                  New Order for <b>{{ newNotification.retailer_name }}</b>
-                </h5>
-                <p class="od">Date: {{ newOrderDate[i] }}</p>
+                <div class="row">
+                  <h5 class="col-12 col-md-8" style="line-height: 1em; word-wrap: break-word;">
+                    New Order for
+                    <b>{{ newNotification.retailer_name }}</b>
+                  </h5>
+                  <p class="col-12 col-md-4 od">Date: {{newOrderDate[i]}}</p>
+                </div>
               </div>
               <div class="innerdiv">
                 <small>OrderID: {{ newNotification.bill_no }}</small>
-                <p class="od">Time: {{ newOrderTime[i] }}</p>
+                <p class="od">Time: {{newOrderTime[i]}}</p>
               </div>
               <p style="line-height: 1em; word-wrap: break-word;">
                 Customer Name: <b>{{ newNotification.customer_name }}</b>
@@ -351,20 +362,24 @@
               class="mat-elevation-z3"
               *ngFor="
                 let i = index;
-                let packedNotification;
-                of: packedFilteredArray
+                let packedNotification
+                of packedFilteredArray
               "
+              [routerLink]="['/dashboard']" [fragment]="'packedOrders'"
+              style="cursor: pointer;"
             >
               <div class="innerdiv">
-                <h5 style="line-height: 1em; word-wrap: break-word;">
-                  New Order Packed for
-                  <b>{{ packedNotification.retailer_name }}</b>
-                </h5>
-                <p class="od">Date: {{ packedOrderDate[i] }}</p>
+                <div class="row">
+                  <h5 class="col-12 col-md-8" style="line-height: 1em; word-wrap: break-word;">
+                    New Order for
+                    <b>{{ packedNotification.retailer_name }}</b>
+                  </h5>
+                  <p class="col-12 col-md-4 od">Date: {{packedOrderDate[i]}}</p>
+                </div>
               </div>
               <div class="innerdiv">
                 <small>BillNo: {{ packedNotification.bill_no }}</small>
-                <p class="od">Time: {{ packedOrderTime[i] }}</p>
+                <p class="od">Time: {{packedOrderTime[i]}}</p>
               </div>
               <p style="line-height: 1em; word-wrap: break-word;">
                 Customer Name:
@@ -393,20 +408,24 @@
               class="mat-elevation-z3"
               *ngFor="
                 let i = index;
-                let cancelledNotification;
-                of: cancelFilteredArray
+                let cancelledNotification
+                of cancelFilteredArray
               "
+              [routerLink]="['/dashboard']" [fragment]="'cancelOrders'"
+              style="cursor: pointer;"
             >
               <div class="innerdiv">
-                <h5 style="line-height: 1em; word-wrap: break-word;">
-                  New Cancelled Order for
-                  <b>{{ cancelledNotification.retailer_name }}</b>
-                </h5>
-                <p class="od">Date: {{ cancelOrderDate[i] }}</p>
+                <div class="row">
+                  <h5 class="col-12 col-md-8" style="line-height: 1em; word-wrap: break-word;">
+                    New Order for
+                    <b>{{ cancelledNotification.retailer_name }}</b>
+                  </h5>
+                  <p class="col-12 col-md-4 od">Date: {{cancelOrderDate[i]}}</p>
+                </div>
               </div>
               <div class="innerdiv">
                 <small>BillNo: {{ cancelledNotification.bill_no }}</small>
-                <p class="od">Time: {{ cancelOrderTime[i] }}</p>
+                <p class="od">Time: {{cancelOrderTime[i]}}</p>
               </div>
               <p style="line-height: 1em; word-wrap: break-word;">
                 Customer Name:
@@ -435,28 +454,32 @@
               class="mat-elevation-z3"
               *ngFor="
                 let i = index;
-                let criticalNotification;
-                of: criticalFilteredArray
+                let criticalNotification
+                of criticalFilteredArray
               "
+              [routerLink]="['/dashboard']" [fragment]="'criticalOrders'"
+              style="cursor: pointer;"
             >
               <div class="innerdiv">
-                <h5 style="line-height: 1em; word-wrap: break-word;">
-                  New Critical Order for
-                  <b>{{ criticalNotification.ShopName }}</b>
-                </h5>
-                <p class="od">Date: {{ criticalOrderDate[i] }}</p>
+                <div class="row">
+                  <h5 class="col-12 col-md-8" style="line-height: 1em; word-wrap: break-word;">
+                    New Order for
+                    <b>{{ criticalNotification.retailer_name }}</b>
+                  </h5>
+                  <p class="col-12 col-md-4 od">Date: {{criticalOrderDate[i]}}</p>
+                </div>
               </div>
               <div class="innerdiv">
                 <small>OrderID: {{ criticalNotification.bill_no }}</small>
-                <p class="od">Time: {{ criticalOrderTime[i] }}</p>
+                <p class="od">Time: {{criticalOrderTime[i]}}</p>
               </div>
               <p style="line-height: 1em; word-wrap: break-word;">
                 Customer Name:
-                <b>{{ criticalNotification.CustomerName }}</b>
+                <b>{{ criticalNotification.customer_name }}</b>
               </p>
               <p style="line-height: 1em; word-wrap: break-word;">
                 Customer Address:
-                <b>{{ criticalNotification.CustomerLocation }}</b>
+                <b>{{ criticalNotification.customer_address }}</b>
               </p>
             </mat-card>
           </div>
