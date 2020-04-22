@@ -9,11 +9,14 @@
           placeholder="Enter the OTP sent to your registered phone-number"
         />
       </mat-form-field>
+      <p [ngStyle]="{ color: counter < 30 ? 'red' : '', fontSize: '90%' }">
+        Time Left : {{ counter | formatTime }}
+      </p>
     </form>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions class="mt-3 row justify-content-around">
-  <button mat-raised-button (click)="onNoClick()">Cancel</button>
+  <button mat-stroked-button (click)="onNoClick()">Cancel</button>
   <button
     mat-flat-button
     color="primary"

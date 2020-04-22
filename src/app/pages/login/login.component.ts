@@ -21,6 +21,7 @@ import { Router } from "@angular/router";
 // import { EventEmitter } from "@angular/core";
 import { OldPwdValidators } from "./olPwdvalidator.component";
 import { MatSnackBar } from "@angular/material";
+import { timer, Subscription } from "rxjs";
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
@@ -357,6 +358,20 @@ export class OTPComponent {
     this.dialogRef.close();
   }
 
+  countDown: Subscription;
+  counter = 180;
+  tick = 1000;
+  ngOnInit() {
+    this.countDown = timer(0, this.tick).subscribe(() => {
+      if (this.counter === 0) {
+        this.onNoClick();
+      }
+      --this.counter;
+    });
+  }
+  ngOnDestroy() {
+    this.countDown = null;
+  }
   // submit(form) {
   //   this.dialogRef.close(`${form.value.otp}`);
   //   const data = Object.assign({}, this.form.value);
