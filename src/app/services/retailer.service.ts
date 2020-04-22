@@ -80,6 +80,7 @@ export class RetailerService {
       .subscribe(
         (response) => {
           this.allInviteRequests = response;
+          this.allInviteRequests = this.allInviteRequests.reverse();
           this.eventChange();
         },
         (error) => {
