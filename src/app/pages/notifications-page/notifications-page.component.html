@@ -3,10 +3,10 @@
     <b>Notification</b>
   </h3>
   <div class="row d-flex justify-content-center">
-    <div class="col-12 col-md-10 col-lg-6 overflow-auto scrollb">
+    <div class="col-12 col-md-10 col-lg-6">
       <mat-card
-        class="mat-elevation-z8 overflow-auto"
-        style="height: 60vh; margin-top: 1vh;"
+        class="mat-elevation-z8"
+        style="height: 60vh; margin-top: 1vh; overflow-y: auto;"
       >
         <h5 class="col-12 text-center text-md-left" style="margin-bottom: 3vh;">
           <b>REQUESTS</b>
@@ -244,8 +244,8 @@
               class="mat-elevation-z3"
               *ngFor="
                 let i = index;
-                let dispatchNotification;
-                of: dispatchedFilteredArray
+                let dispatchNotification
+                of dispatchedFilteredArray
               "
             >
               <div class="innerdiv">
@@ -265,7 +265,7 @@
               </p>
               <p style="line-height: 1em; word-wrap: break-word;">
                 Customer Address:
-                <b>{{ packedNotification.customer_address }}</b>
+                <b>{{ dispatchNotification.customer_address }}</b>
               </p>
             </mat-card>
           </div>
@@ -313,7 +313,7 @@
           >
             <mat-card
               class="mat-elevation-z3"
-              *ngFor="let i = index; let newNotification; of: newFilteredArray"
+              *ngFor="let i = index; let newNotification of newFilteredArray"
             >
               <div class="innerdiv">
                 <h5 style="line-height: 1em; word-wrap: break-word;">
@@ -351,8 +351,8 @@
               class="mat-elevation-z3"
               *ngFor="
                 let i = index;
-                let packedNotification;
-                of: packedFilteredArray
+                let packedNotification
+                of packedFilteredArray
               "
             >
               <div class="innerdiv">
@@ -393,8 +393,8 @@
               class="mat-elevation-z3"
               *ngFor="
                 let i = index;
-                let cancelledNotification;
-                of: cancelFilteredArray
+                let cancelledNotification
+                of cancelFilteredArray
               "
             >
               <div class="innerdiv">
@@ -435,8 +435,8 @@
               class="mat-elevation-z3"
               *ngFor="
                 let i = index;
-                let criticalNotification;
-                of: criticalFilteredArray
+                let criticalNotification
+                of criticalFilteredArray
               "
             >
               <div class="innerdiv">
@@ -452,11 +452,11 @@
               </div>
               <p style="line-height: 1em; word-wrap: break-word;">
                 Customer Name:
-                <b>{{ criticalNotification.CustomerName }}</b>
+                <b>{{ criticalNotification.customer_name }}</b>
               </p>
               <p style="line-height: 1em; word-wrap: break-word;">
                 Customer Address:
-                <b>{{ criticalNotification.CustomerLocation }}</b>
+                <b>{{ criticalNotification.customer_address }}</b>
               </p>
             </mat-card>
           </div>
