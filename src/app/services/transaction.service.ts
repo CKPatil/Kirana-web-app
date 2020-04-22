@@ -105,6 +105,7 @@ export class TransactionService {
       .subscribe(
         (response: any) => {
           this.allOrders = response;
+          this.allOrders = this.allOrders.reverse();
           this.eventChange();
         },
         (error) => {
