@@ -5,7 +5,7 @@
       <div class="col-8">
         <h4>{{ item.name }}</h4>
       </div>
-      <div class="col-4 row justify-content-around text-center">
+      <div class="col-4 row p-0 justify-content-around text-center">
         <button
           mat-icon-button
           color="primary"
@@ -24,7 +24,7 @@
     </div>
     <!-- img, other itme detail container -->
     <div class="row">
-      <div class="col-4">
+      <div class="col-12 col-sm-4">
         <div
           *ngIf="item.image_url.length"
           style="height: 10em;"
@@ -46,30 +46,64 @@
           </button>
         </div>
       </div>
-      <div class="col-8 row text-90">
-        <p class="text-muted col-12">{{ item.details }}</p>
-        <div class="col-6 pr-0 font-weight-bold">
+      <div class="col-12 col-sm-8 row text-90">
+        <div class="col-12 my-4 my-sm-0">
+          <div>
+            <div
+              class="text-muted"
+              [ngClass]="{
+                'text-truncate': isDetailVisible,
+                'd-inline-block': isDetailVisible,
+                'd-inline': !isDetailVisible,
+                'w-75': isDetailVisible,
+                'w-100': !isDetailVisible
+              }"
+            >
+              {{ item.details }}
+            </div>
+            <div
+              class="d-inline text-center text-90"
+              [ngStyle]="{
+                position: isDetailVisible ? 'relative' : '',
+                top: isDetailVisible ? '-5px' : ''
+              }"
+            >
+              <a
+                class="ml-2"
+                style="
+                  color: rgb(69, 1, 255);
+                  text-decoration: underline;
+                  cursor: pointer;
+                "
+                (click)="showMore()"
+              >
+                {{ isDetailVisible ? "Show More" : "Hide" }}
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 text-90 pr-0 font-weight-bold">
           <p>Category</p>
         </div>
-        <div class="col-6 pl-0">
+        <div class="col-6 text-90 text-center pl-0">
           <p>{{ item.category }}</p>
         </div>
-        <div class="col-6 pr-0 font-weight-bold">
+        <div class="col-6 text-90 pr-0 font-weight-bold">
           <p>Sub Category</p>
         </div>
-        <div class="col-6 pl-0">
+        <div class="col-6 text-90 text-center pl-0">
           <p>{{ item.sub_category }}</p>
         </div>
-        <div class="col-6 pr-0 font-weight-bold">
+        <div class="col-6 text-90 pr-0 font-weight-bold">
           <p>Brand</p>
         </div>
-        <div class="col-6 pl-0">
+        <div class="col-6 text-90 text-center pl-0">
           <p>{{ item.brand }}</p>
         </div>
-        <div class="col-6 pr-0 font-weight-bold">
+        <div class="col-6 text-90 pr-0 font-weight-bold">
           <p>Quantity Type</p>
         </div>
-        <div class="col-6 pl-0">
+        <div class="col-6 text-90 text-center pl-0">
           <p>{{ item.quantity_type }}</p>
         </div>
       </div>
