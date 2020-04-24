@@ -178,6 +178,11 @@ export class ItemCardComponent {
       }
     });
   }
+
+  isDetailVisible = true;
+  showMore() {
+    this.isDetailVisible = !this.isDetailVisible;
+  }
 }
 
 // //////////// Delete Conformation Dialog

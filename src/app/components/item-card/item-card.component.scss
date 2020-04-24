@@ -18,12 +18,18 @@ table {
   width: 100%;
 }
 
+.table-fixed thead{
+  min-width: 32em;
+  overflow-y: auto;
+}
+
 .table-fixed thead,
 .table-fixed tbody,
 .table-fixed tr,
 .table-fixed td,
 .table-fixed th {
   display: block;
+  text-align: center;
 }
 
 .table-fixed tbody >tr>  td,
