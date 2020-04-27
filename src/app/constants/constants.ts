@@ -29,4 +29,5 @@ export const STATUSES = [
   "Dispatched",
   "Delivered",
   "Cancelled",
+  "Payment failure",
 ];
