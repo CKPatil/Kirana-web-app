@@ -178,6 +178,11 @@ export class ItemCardComponent {
       }
     });
   }
+
+  isDetailVisible = true;
+  showMore() {
+    this.isDetailVisible = !this.isDetailVisible;
+  }
 }
 
 // //////////// Delete Conformation Dialog
@@ -240,6 +245,8 @@ export class SelectImageDialog {
     fileUpload.click();
   }
 
+  isImageSelected = false;
+
   // run when file field changes
   onFileSelect(event) {
     let previewImageContainer = document.querySelector(
@@ -252,7 +259,7 @@ export class SelectImageDialog {
       let fr = new FileReader();
       fr.onload = (e) => {
         img1.src = e.target.result.toString();
-        img1.width = 100;
+        img1.width = 150;
         previewImageContainer.innerHTML = "";
         previewImageContainer.appendChild(img1);
       };
@@ -260,6 +267,7 @@ export class SelectImageDialog {
       fr.readAsDataURL(file);
 
       this.picUploadForm.get("image").setValue(file);
+      this.isImageSelected = true;
     }
   }
 

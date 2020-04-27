@@ -9,6 +9,8 @@ import { MatTableDataSource } from "@angular/material/table";
 import { MatDialog } from "@angular/material/dialog";
 import { TransactionService } from "./../../services/transaction.service";
 import { Router } from "@angular/router";
+import { MatSnackBar } from "@angular/material";
+
 
 // export interface Order {
 //   consumer: string;
@@ -67,7 +69,9 @@ export class RecentOrdersComponent implements OnInit {
     private interaction: InteractionService,
     public dialog: MatDialog,
     private transactionService: TransactionService,
-    private router: Router
+    private router: Router,
+    private _snackbar: MatSnackBar
+
   ) {
     this.isSidePanelExpanded = this.interaction.getExpandedStatus();
   }
@@ -80,7 +84,7 @@ export class RecentOrdersComponent implements OnInit {
 
     this.allTransactions = this.tableData.reverse();
     this.allTransactions.forEach((element) => {
-      if (element.remaining_time < 0) {
+      if (element.remaining_time < 0 || element.status=="Delivered"|| element.status=="Cancelled") {
         element.remaining_time = "-";
       } else {
         element.timestamp = new Date(element.timestamp);
@@ -105,6 +109,7 @@ export class RecentOrdersComponent implements OnInit {
     });
     this.allTransactions = new MatTableDataSource(this.allTransactions);
     this.allTransactions.paginator = this.paginator;
+    this.allTransactions.sort=this.sort;
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -148,14 +153,29 @@ export class RecentOrdersComponent implements OnInit {
             result.data.row.id,
             this.getStatusToKeyMap(result.data.statusValue)
           )
-          .subscribe((res) => {
-            // console.log(res);
-            this.router
-              .navigateByUrl("/login", { skipLocationChange: true })
-              .then(() => {
-                this.router.navigate(["/dashboard"]);
+          .subscribe(
+            (res) => {
+              result.data.row.status = result.data.statusValue;
+              this._snackbar.open("Status Updated", "", {
+                duration: 5000,
               });
-          });
+              this.router
+                .navigateByUrl("/login", { skipLocationChange: true })
+                .then(() => {
+                  this.router.navigate(["/dashboard"]);
+                });
+            },
+            (error) => {
+              this.router
+                .navigateByUrl("/login", { skipLocationChange: true })
+                .then(() => {
+                  this.router.navigate(["/dashboard"]);
+                });
+              this._snackbar.open("Could not perform this Operation", "", {
+                duration: 5000,
+              });
+            }
+          );
       }
     });
   }

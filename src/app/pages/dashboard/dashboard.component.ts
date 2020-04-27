@@ -60,6 +60,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     this.currentDate = new Date();
     this.transactionService.observeOrders.subscribe((res: any) => {
+      this.isDataAvailable = false;
       this.allTransactions = res;
 
       this.packedOrders = [];

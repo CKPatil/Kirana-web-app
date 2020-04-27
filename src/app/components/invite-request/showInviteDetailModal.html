@@ -1,3 +1,12 @@
+<div mat-dialog-actions class="row justify-content-end">
+  <button
+    mat-icon-button
+    color="primary"
+    [mat-dialog-close]=""
+    style="position: relative; top: -1.5em;">
+    <mat-icon>clear</mat-icon>
+  </button>
+</div>
 <h1 mat-dialog-title class="text-center">Invitation Request Detail</h1>
 <div mat-dialog-content>
   <div class="row mb-4">
@@ -40,8 +49,11 @@
   </div>
 </div>
 <div mat-dialog-actions class="row justify-content-around">
-  <button mat-raised-button (click)="onNoClick()">Cancel</button>
+  <!-- <button mat-raised-button (click)="onNoClick()">Cancel</button> -->
   <button mat-raised-button [mat-dialog-close]="true" cdkFocusInitial>
-    Accept invite
+    Accept
+  </button>
+  <button mat-raised-button [mat-dialog-close]="false" cdkFocusInitial>
+    Reject
   </button>
 </div>

@@ -13,25 +13,25 @@ export class RetailerService {
   httpOptions: any;
 
   constructor(private http: HttpClient) {
-    const token = localStorage.getItem("access");
-    this.httpOptions = new HttpHeaders({
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    });
-    this.buildURLS();
+    this.getAllRetailerURL =
+      environment.backend_end_point + environment.retailers;
 
     // FOR Observable
     this.allInviteRequests = new Array();
     this.observeInviteRequests = new BehaviorSubject(this.allInviteRequests);
   }
 
-  buildURLS() {
-    this.getAllRetailerURL =
-      environment.backend_end_point + environment.retailers;
+  refreshHttpOptions() {
+    const token = localStorage.getItem("access");
+    this.httpOptions = new HttpHeaders({
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    });
   }
 
   // to get all the retailers
   getAllRetailers() {
+    this.refreshHttpOptions();
     return this.http
       .get(this.getAllRetailerURL, {
         headers: this.httpOptions,
@@ -44,20 +44,20 @@ export class RetailerService {
       );
   }
 
-  // to get the invitation requests from the server
-  getAllInvitationRequests() {
-    let inviteUrl = environment.backend_end_point + environment.inviteURL;
-    return this.http
-      .get(inviteUrl, {
-        headers: this.httpOptions,
-        observe: "response",
-      })
-      .pipe(
-        catchError((error) => {
-          return throwError(error);
-        })
-      );
-  }
+  // // to get the invitation requests from the server
+  // getAllInvitationRequests() {
+  //   let inviteUrl = environment.backend_end_point + environment.inviteURL;
+  //   return this.http
+  //     .get(inviteUrl, {
+  //       headers: this.httpOptions,
+  //       observe: "response",
+  //     })
+  //     .pipe(
+  //       catchError((error) => {
+  //         return throwError(error);
+  //       })
+  //     );
+  // }
 
   // //////////////// NEW CODE
 
@@ -66,6 +66,7 @@ export class RetailerService {
 
   // to get the invite request from the server and save to observable
   getAllInvitationRequestsFromServer() {
+    this.refreshHttpOptions();
     let inviteUrl = environment.backend_end_point + environment.inviteURL;
     this.http
       .get(inviteUrl, {
@@ -79,6 +80,7 @@ export class RetailerService {
       .subscribe(
         (response) => {
           this.allInviteRequests = response;
+          this.allInviteRequests = this.allInviteRequests.reverse();
           this.eventChange();
         },
         (error) => {
@@ -94,6 +96,7 @@ export class RetailerService {
   // ////////////// END NEW CODE
 
   inviteRequestResponse(data) {
+    this.refreshHttpOptions();
     let inviteRespnseUrl =
       environment.backend_end_point + environment.inviteResponseURL;
     return this.http

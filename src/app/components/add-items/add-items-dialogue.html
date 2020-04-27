@@ -172,6 +172,7 @@
                   <input
                     matInput
                     type="number"
+                    min="0"
                     formControlName="quantity"
                     placeholder="Enter Quantity"
                   />
@@ -184,6 +185,7 @@
                   <input
                     matInput
                     type="number"
+                    min="0"
                     formControlName="price"
                     placeholder="Enter Price"
                   />
@@ -219,10 +221,11 @@
     </div>
   </form>
 </div>
-<div mat-dialog-actions class="row justify-content-around">
-  <button mat-raised-button (click)="onNoClick()">Cancel</button>
+<div mat-dialog-actions class="mt-2 row justify-content-around">
+  <button mat-stroked-button (click)="onNoClick()">Cancel</button>
   <button
-    mat-raised-button
+    mat-flat-button
+    color="primary"
     [mat-dialog-close]="itemForm.value"
     [disabled]="!itemForm.valid"
   >

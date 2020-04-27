@@ -14,8 +14,13 @@
   </form>
 </div>
 <div mat-dialog-actions class="row justify-content-around">
-  <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button [mat-dialog-close]="selectedValue" cdkFocusInitial>
+  <button mat-stroked-button (click)="onNoClick()">Cancel</button>
+  <button
+    mat-flat-button
+    color="primary"
+    [mat-dialog-close]="selectedValue"
+    cdkFocusInitial
+  >
     Update
   </button>
 </div>

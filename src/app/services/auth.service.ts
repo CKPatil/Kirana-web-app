@@ -65,7 +65,7 @@ export class AuthService {
 
   forgotPassword(data,param) {
     const url = environment.backend_end_point + environment.forgotPassword+param;
-    
+
     return this.http
       .post(url, JSON.stringify(data), {
         headers: this.httpOptions,
@@ -80,11 +80,10 @@ export class AuthService {
 
   sendOTP(data,param){
     const url = environment.backend_end_point + environment.forgotPassword+param;
-    
+
     return this.http
       .put(url, JSON.stringify(data), {
         headers: this.httpOptions,
-        observe: 'response'
       })
       .pipe(
         catchError(error => {
@@ -95,7 +94,7 @@ export class AuthService {
 
   updatePassword(data,param){
     const url = environment.backend_end_point + environment.updatePassword+param;
-    
+
     return this.http
       .post(url, JSON.stringify(data), {
         headers: this.httpOptions,

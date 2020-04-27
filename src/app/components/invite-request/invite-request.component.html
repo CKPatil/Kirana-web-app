@@ -6,12 +6,11 @@
   <div class="more-option">
     <button
       mat-icon-button
-      [matMenuTriggerFor]="menu"
       aria-label="Example icon-button with a menu"
-    >
-      <mat-icon>more_vert</mat-icon>
+      (click)="openDialog()">
+      <mat-icon>add</mat-icon>
     </button>
-    <mat-menu #menu="matMenu">
+    <!-- <mat-menu #menu="matMenu">
       <button mat-menu-item (click)="approveInviteRequest()">
         <mat-icon>done</mat-icon>
         <span>Accept invite</span>
@@ -24,6 +23,6 @@
         <mat-icon>more_horiz</mat-icon>
         <span>More details</span>
       </button>
-    </mat-menu>
+    </mat-menu> -->
   </div>
 </div>

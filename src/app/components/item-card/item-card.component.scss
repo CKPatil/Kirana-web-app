@@ -18,23 +18,29 @@ table {
   width: 100%;
 }
 
+.table-fixed thead{
+  min-width: 32em;
+  overflow-y: auto;
+}
+
 .table-fixed thead,
 .table-fixed tbody,
 .table-fixed tr,
 .table-fixed td,
 .table-fixed th {
   display: block;
+  text-align: center;
 }
 
-.table-fixed tbody td,
-.table-fixed tbody th,
+.table-fixed tbody >tr>  td,
+// .table-fixed tbody th,
 .table-fixed thead > tr > th {
   float: left;
   position: relative;
 
   &::after {
-      content: '';
-      clear: both;
-      display: block;
+    content: "";
+    clear: both;
+    display: block;
   }
 }

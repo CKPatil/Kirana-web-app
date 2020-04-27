@@ -1,19 +1,21 @@
 <div mat-dialog-actions class="row justify-content-end">
-  <button mat-mini-fab [mat-dialog-close]="'No Data'" cdkFocusInitial>
+  <button
+    mat-icon-button
+    color="primary"
+    [mat-dialog-close]=""
+    style="position: relative; top: -1.5em;"
+  >
     <mat-icon>clear</mat-icon>
   </button>
 </div>
 
-<div
-  class="row align-content-center justify-content-center"
-  style="height: 90%;"
->
+<div class="row">
   <div
     id="carouselExampleIndicators"
     class="carousel col-12"
     data-ride="carousel"
   >
-    <div class="carousel-inner row justify-content-center">
+    <div class="carousel-inner">
       <div
         class="carousel-item mr-0 h-100 w-100 text-center"
         *ngFor="let img of data;let j=index"
@@ -34,11 +36,9 @@
       role="button"
       data-slide="prev"
     >
-      <button mat-mini-fab>
+      <button mat-mini-fab color="primary">
         <mat-icon>navigate_before</mat-icon>
       </button>
-      <!-- <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span> -->
     </a>
     <a
       class="carousel-control-next"
@@ -46,11 +46,9 @@
       role="button"
       data-slide="next"
     >
-      <button mat-mini-fab>
+      <button mat-mini-fab color="primary">
         <mat-icon>navigate_next</mat-icon>
       </button>
-      <!-- <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="sr-only">Next</span> -->
     </a>
   </div>
 </div>
