@@ -72,7 +72,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   change = 'false';
   criticalBillno: any;
   deliveryTime: any;
-  invitations: any;
+  invitations: any[] = [];
   invitationStatus: any;
   inviteStatus: any;
   invite = false;
@@ -87,7 +87,8 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   packedLen: any = 0;
   dispatchLen: any = 0;
   initial: any;
-
+  newInvitationId = '0';
+  ph_no: any;
   ngOnInit() {
     this.newOrderStatus = localStorage.getItem('newOrder');
     this.cancelOrderStatus = localStorage.getItem('cancelOrder');
@@ -130,6 +131,18 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
 
     this.retailerService.observeInviteRequests.subscribe((data) => {
       this.invitations = data;
+      if (this.inviteStatus === 'true') {
+        if (this.invitations.length > 0) {
+          this.newInvitationId = localStorage.getItem('newRequestId');
+          this.ph_no = this.invitations[0].ph_no;
+          if (this.newInvitationId != this.ph_no) {
+            this.change = 'true';
+            localStorage.setItem('change', this.change);
+            this.newInvitationId = this.invitations[0].ph_no;
+            localStorage.setItem('newRequestId', this.newInvitationId);
+          }
+        }
+      }
     });
   }
 
