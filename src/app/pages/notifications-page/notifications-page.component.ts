@@ -89,6 +89,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   initial: any;
   newInvitationId = '0';
   ph_no: any;
+  allnotify: boolean = false;
   ngOnInit() {
     this.newOrderStatus = localStorage.getItem('newOrder');
     this.cancelOrderStatus = localStorage.getItem('cancelOrder');
@@ -104,6 +105,11 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
     }, 60000);
   }
   newNotify() {
+    if (this.newOrderStatus == 'false' && this.cancelOrderStatus == 'false' && this.criticalOrderStatus == 'false' &&
+      this.inviteStatus == 'false' && this.packedOrderStatus == 'false' && this.dispatchedOrderStatus == 'false') {
+        this.allnotify = true;
+      }
+    console.log(this.allnotify);
     this.transactionService.observeOrders.subscribe((data) => {
       this.notifications = data;
       this.newOrderedStatus = { records: this.notifications };
