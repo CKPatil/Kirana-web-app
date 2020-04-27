@@ -1,34 +1,18 @@
 .outer {
-  height: 90vh;
-  overflow: scroll;
+  height: 91vh;
+  overflow-y: auto;
+  overflow-x: hidden;
   .dashboard-container {
     margin: 20px 2% 0px 2%;
     display: flex;
     flex-direction: column;
-    // justify-content: space-around;
     height: -webkit-fill-available;
-
-    .head-section {
-      margin: 10px 0;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      .heading {
-        align-self: center;
-        line-height: 1;
-        margin: 0;
-      }
-      .invite-retailer {
-        background-color: #109cf1;
-        color: white !important;
-      }
-    }
 
     .analytics-container {
       display: flex;
       flex-direction: row;
       justify-content: space-around;
-      width: 100%;
+      // width: 100%;
       margin: 10px 0px;
       flex-wrap: wrap;
       > div {
@@ -36,61 +20,10 @@
       }
     }
 
-    .order-container{
-      .packed-orders-container{
-        margin: 20px;
-      }
-      .urgent-orders-container{
-        margin: 20px;
+    .order-container {
+      > div {
+        margin: 20px 0;
       }
     }
-
-    // .order-container {
-    //   display: flex;
-    //   justify-content: space-between;
-    //   // margin: 10px 0px;
-    //   .packed-orders-container {
-    //     width: -webkit-fill-available;
-    //     // margin-right: 20px;
-    //   }
-    //   .urgent-orders-container {
-    //     width: -webkit-fill-available;
-    //   }
-    // }
-
-    .third-container {
-      display: flex;
-      justify-content: space-between;
-      width: -webkit-fill-available;
-      margin: 10px 0px;
-      .recent-orders-container {
-        width: 70%;
-        margin-right: 20px;
-      }
-      .invite-requests-container {
-        width: 30%;
-        .invite-requests {
-          height: 313px;
-          overflow: auto;
-        }
-      }
-    }
-  }
-
-  .is-side-panel-expanded {
-    margin-left: 2%;
   }
 }
-
-// @media (max-width: 632px) {
-//   .outer {
-//     .dashboard-container {
-//       .order-container {
-//         .packed-orders-container{
-//           width: 100%;
-//           background-color: red;
-//         }
-//       }
-//     }
-//   }
-// }

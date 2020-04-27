@@ -13,11 +13,11 @@ export class InviteRequestComponent implements OnInit {
     private retailerService: RetailerService,
     public dialog: MatDialog,
     private router: Router
-  ) {}
+  ) { }
 
   @Input() inviteRequest;
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   approveInviteRequest() {
     let data = { requestId: this.inviteRequest.id, approved: true };
@@ -45,15 +45,16 @@ export class InviteRequestComponent implements OnInit {
 
   openDialog() {
     const dialogRef = this.dialog.open(ShowInviteDetailModal, {
-      width: "350px",
+      width: "90%",
+      maxWidth: "450px",
       data: this.inviteRequest,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-        if(result==true)
-          this.approveInviteRequest();
-        else if(result==false)
-          this.rejectInviteRequest();
+      if (result == true)
+        this.approveInviteRequest();
+      else if (result == false)
+        this.rejectInviteRequest();
     });
   }
 }
@@ -66,7 +67,7 @@ export class ShowInviteDetailModal {
   constructor(
     public dialogRef: MatDialogRef<ShowInviteDetailModal>,
     @Inject(MAT_DIALOG_DATA) public data
-  ) {}
+  ) { }
 
   onNoClick(): void {
     this.dialogRef.close();

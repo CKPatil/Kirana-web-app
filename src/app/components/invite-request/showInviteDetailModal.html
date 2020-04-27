@@ -1,46 +1,45 @@
-<div mat-dialog-actions class="row justify-content-end">
-  <button
-    mat-icon-button
-    color="primary"
-    [mat-dialog-close]=""
-    style="position: relative; top: -1.5em;">
-    <mat-icon>clear</mat-icon>
-  </button>
+<div class="row">
+  <h1 mat-dialog-title class="col-11 text-center font-weight-bold">Invitation Request Detail</h1>
+  <div mat-dialog-actions class="col-1">
+    <button mat-icon-button color="primary" [mat-dialog-close]="" style="position: relative; top: -2.2em;">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
 </div>
-<h1 mat-dialog-title class="text-center">Invitation Request Detail</h1>
 <div mat-dialog-content>
   <div class="row mb-4">
-    <div class="col-6 font-weight-bold">
+    <div class="col-4 font-weight-bold">
       <p>Name</p>
     </div>
-    <div class="col-6">
+    <div class="col-8">
       <p>{{data.name | titlecase}}</p>
     </div>
 
-    <div class="col-6 font-weight-bold">
+    <div class="col-4 font-weight-bold">
       <p>Request</p>
     </div>
-    <div class="col-6">
+    <div class="col-8">
       <p>{{data.request}}</p>
     </div>
 
-    <div class="col-6 font-weight-bold">
-      <p>Phone No.</p></div>
-    <div class="col-6">
+    <div class="col-4 font-weight-bold">
+      <p>Phone No.</p>
+    </div>
+    <div class="col-8">
       <p>{{data.ph_no}}</p>
     </div>
 
-    <div class="col-6 font-weight-bold">
+    <div class="col-4 font-weight-bold">
       <p>Email</p>
     </div>
-    <div class="col-6">
+    <div class="col-8">
       <p>{{data.email}}</p>
     </div>
 
-    <div class="col-6 font-weight-bold">
+    <div class="col-4 font-weight-bold">
       <p>Address</p>
     </div>
-    <div class="col-6" style="font-size: 95%;">
+    <div class="col-8" style="font-size: 95%;">
       <p class="m-0">{{data.line1}}</p>
       <p class="m-0">{{data.line2}}</p>
       <p class="m-0">{{data.city}}</p>
@@ -48,12 +47,12 @@
     </div>
   </div>
 </div>
-<div mat-dialog-actions class="row justify-content-around">
+<div mat-dialog-actions class="mt-2 row justify-content-around">
   <!-- <button mat-raised-button (click)="onNoClick()">Cancel</button> -->
-  <button mat-raised-button [mat-dialog-close]="true" cdkFocusInitial>
-    Accept
-  </button>
-  <button mat-raised-button [mat-dialog-close]="false" cdkFocusInitial>
+  <button mat-flat-button style="background-color: red;color: white;" [mat-dialog-close]="false">
     Reject
+  </button>
+  <button mat-flat-button style="background-color: green;color: white;" [mat-dialog-close]="true">
+    Accept
   </button>
 </div>

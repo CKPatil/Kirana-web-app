@@ -12,7 +12,7 @@ import { EmptyError } from "rxjs";
   styleUrls: ["./dashboard.component.scss"],
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  isSidePanelExpanded: boolean;
+  // isSidePanelExpanded: boolean;
   analytics: { name: string; count: number }[];
   allTransactions: any;
   orderStatus = "Packed";
@@ -39,17 +39,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
   isDataAvailable = false;
 
   constructor(
-    private interaction: InteractionService,
+    // private interaction: InteractionService,
     private transactionService: TransactionService,
     private retailerService: RetailerService
   ) {
-    this.isSidePanelExpanded = this.interaction.getExpandedStatus();
+    // this.isSidePanelExpanded = this.interaction.getExpandedStatus();
   }
 
   ngOnInit() {
-    this.interaction.expandedStatus$.subscribe((res) => {
-      this.isSidePanelExpanded = res;
-    });
+    // this.interaction.expandedStatus$.subscribe((res) => {
+    //   this.isSidePanelExpanded = res;
+    // });
 
     // to get the invitaition request from the observer from the service
     this.retailerService.observeInviteRequests.subscribe((result) => {
@@ -62,7 +62,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.transactionService.observeOrders.subscribe((res: any) => {
       this.isDataAvailable = false;
       this.allTransactions = res;
-
       this.packedOrders = [];
       this.criticalOrders = [];
       this.recentOrders = [];
@@ -123,8 +122,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     });
 
     this.refresh = setTimeout(() => {
+      console.log('refreshing dashboard...')
       this.ngOnInit();
-    }, 60000);
+    }, 30000);
   }
 
   ngOnDestroy() {
