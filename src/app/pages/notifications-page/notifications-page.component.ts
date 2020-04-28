@@ -72,7 +72,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   change = 'false';
   criticalBillno: any;
   deliveryTime: any;
-  invitations: any;
+  invitations: any[] = [];
   invitationStatus: any;
   inviteStatus: any;
   invite = false;
@@ -87,7 +87,9 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   packedLen: any = 0;
   dispatchLen: any = 0;
   initial: any;
-
+  newInvitationId = '0';
+  ph_no: any;
+  allnotify: boolean = false;
   ngOnInit() {
     this.newOrderStatus = localStorage.getItem('newOrder');
     this.cancelOrderStatus = localStorage.getItem('cancelOrder');
@@ -103,6 +105,11 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
     }, 60000);
   }
   newNotify() {
+    if (this.newOrderStatus == 'false' && this.cancelOrderStatus == 'false' && this.criticalOrderStatus == 'false' &&
+      this.inviteStatus == 'false' && this.packedOrderStatus == 'false' && this.dispatchedOrderStatus == 'false') {
+        this.allnotify = true;
+      }
+    console.log(this.allnotify);
     this.transactionService.observeOrders.subscribe((data) => {
       this.notifications = data;
       this.newOrderedStatus = { records: this.notifications };
@@ -130,6 +137,18 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
 
     this.retailerService.observeInviteRequests.subscribe((data) => {
       this.invitations = data;
+      if (this.inviteStatus === 'true') {
+        if (this.invitations.length > 0) {
+          this.newInvitationId = localStorage.getItem('newRequestId');
+          this.ph_no = this.invitations[0].ph_no;
+          if (this.newInvitationId != this.ph_no) {
+            this.change = 'true';
+            localStorage.setItem('change', this.change);
+            this.newInvitationId = this.invitations[0].ph_no;
+            localStorage.setItem('newRequestId', this.newInvitationId);
+          }
+        }
+      }
     });
   }
 

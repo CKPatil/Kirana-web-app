@@ -1,510 +1,532 @@
 <div class="outer" style="overflow-x: hidden;">
-  <h3 style="text-align: center; margin-bottom: 7vh;">
+  <div  style="overflow-y:auto; overflow-x: hidden; margin-right: 10%;">
+  <h3 style="text-align: center; margin-bottom: 7vh;;">
     <b>Notification</b>
   </h3>
-  <div class="row d-flex justify-content-center">
-    <div class="col-12 col-md-10 col-lg-6">
-      <mat-card
-        class="mat-elevation-z8"
-        style="height: 60vh; margin-top: 1vh; overflow-y: auto;"
-      >
-        <h5 class="col-12 text-center text-md-left" style="margin-bottom: 3vh;">
-          <b>REQUESTS</b>
-        </h5>
-        <div class="row">
-          <div class="col-12 col-md-10 col-lg-6 text-center text-md-left">
-            <button
-              *ngIf="inviteStatus == 'true'"
-              mat-raised-button
-              class="button button1"
-              style="
-                margin-left: 1em;
-                width: 12.7em;
-                border-radius: 0.5em;
-                padding: 1em;
-                display: inline-block;
-              "
-              (click)="onReq()"
-            >
-              Invite Request &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <span
-                style="
-                  padding: 0.5em;
-                  margin-left: 0.5em;
-                  border-radius: 0.5em;
-                  background-color: orange;
-                  right: 0;
-                "
-                >{{ invitations.length }}</span
-              >
-            </button>
-          </div>
-        </div>
-        <h5
-          class="col-12 text-center text-md-left"
-          style="margin-bottom: 2vh; margin-top: 4vh;"
+    <div class="row d-flex justify-content-center">
+      <div class="col-12 col-md-10 col-lg-6">
+        <mat-card
+          style="box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.5), 0 10px 20px 0 rgba(0, 0, 0, 0.5);
+           height: 60vh; margin-top: 1vh; overflow-y: auto; overflow-x: hidden;"
         >
-          <b>ORDERS</b>
-        </h5>
-        <div class="row">
-          <div class="col-12 col-md-10 col-lg-6 text-center text-md-left">
-            <button
-              *ngIf="newOrderStatus == 'true'"
-              mat-raised-button
-              class="btn-block button2"
-              style="
-                margin-left: 1em;
-                width: 12.7em;
-                border-radius: 0.5em;
-                padding: 1em;
-                background-color: white;
-                display: inline-block;
-                vertical-align: top;
-                margin-top: 1em;
-                /* font-size: 1vw; */
-              "
-              (click)="onNew()"
-            >
-              New Orders &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <span
+          <h5 class="col-12 text-center text-md-left" style="margin-bottom: 3vh;">
+            <b>REQUESTS</b>
+          </h5>
+          <div class="row">
+            <div class="col-12 col-md-10 col-lg-6 text-center text-md-left">
+              <button
+                *ngIf="inviteStatus == 'true'"
+                mat-raised-button
+                class="button button1"
                 style="
-                  padding: 0.5em;
-                  margin-left: 1.2em;
-                  border-radius: 0.5em;
-                  background-color: #52e88e;
-                "
-                >{{ newFilteredArray.length }}</span
-              >
-            </button>
-          </div>
-          <div class="col-12 col-md-10 col-lg-6 text-center text-md-left">
-            <button
-              *ngIf="criticalOrderStatus == 'true'"
-              mat-raised-button
-              class="btn-block button3"
-              style="
-                margin-left: 1em;
-                width: 12.7em;
-                border-radius: 0.5em;
-                padding: 1em;
-                background-color: white;
-                display: inline-block;
-                vertical-align: top;
-                /* font-size: 1vw; */
-                margin-top: 1em;
-              "
-              (click)="onCritical()"
-            >
-              Critical Orders &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <span
-                style="
-                  padding: 0.5em;
                   margin-left: 1em;
+                  width: 12.7em;
                   border-radius: 0.5em;
-                  background-color: #c683fc;
-                  right: 0 !important;
-                  color: white;
+                  padding: 1em;
+                  display: inline-block;
                 "
-                >{{ criticalFilteredArray.length }}</span
+                (click)="onReq()"
               >
-            </button>
+                Invite Request &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span
+                  style="
+                    padding: 0.5em;
+                    margin-left: 0.5em;
+                    border-radius: 0.5em;
+                    background-color: orange;
+                    right: 0;
+                  "
+                  >{{ invitations.length }}</span
+                >
+              </button>
+            </div>
           </div>
-          <div class="col-12 col-md-10 col-lg-6 text-center text-md-left">
-            <button
-              *ngIf="packedOrderStatus == 'true'"
-              mat-raised-button
-              class="btn-block button4"
-              style="
-                margin-left: 1em;
-                width: 12.7em;
-                border-radius: 0.5em;
-                padding: 1em;
-                background-color: white;
-                display: inline-block;
-                vertical-align: top;
-                margin-top: 1em;
-                /* font-size: 1vw; */
-              "
-              (click)="onPacked()"
-            >
-              Packed Orders &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <span
-                style="
-                  padding: 0.5em;
-                  margin-left: 1em;
-                  border-radius: 0.5em;
-                  background-color: #18a7f8;
-                "
-                >{{ packedFilteredArray.length }}</span
-              >
-            </button>
-          </div>
-          <div class="col-12 col-md-10 col-lg-6 text-center text-md-left">
-            <button
-              *ngIf="dispatchedOrderStatus == 'true'"
-              mat-raised-button
-              class="btn-block button5"
-              style="
-                margin-left: 1em;
-                width: 12.7em;
-                border-radius: 0.5em;
-                padding: 1em;
-                background-color: white;
-                display: inline-block;
-                vertical-align: top;
-                margin-top: 1em;
-                /* font-size: 1vw; */
-              "
-              (click)="onDispatch()"
-            >
-              Dispatched Orders
-              <span
-                style="
-                  padding: 0.5em;
-                  margin-left: 1em;
-                  border-radius: 0.5em;
-                  background-color: #ade32b;
-                "
-                >{{ dispatchedFilteredArray.length }}</span
-              >
-            </button>
-          </div>
-        </div>
-        <div class="row"></div>
-        <div class="row">
-          <div class="col-12 col-md-10 col-lg-6 text-center text-md-left">
-            <button
-              *ngIf="cancelOrderStatus == 'true'"
-              mat-raised-button
-              class="btn-block button6"
-              style="
-                margin-left: 1em;
-                width: 12.7em;
-                border-radius: 0.5em;
-                padding: 1em;
-                background-color: white;
-                display: inline-block;
-                vertical-align: top;
-                margin-top: 1em;
-                /* font-size: 1vw; */
-              "
-              (click)="onCancel()"
-            >
-              Cancelled Orders &nbsp;
-              <span
-                style="
-                  padding: 0.5em;
-                  margin-left: 1em;
-                  border-radius: 0.5em;
-                  background-color: #fb4549;
-                  color: white;
-                "
-                >{{ cancelFilteredArray.length }}</span
-              >
-            </button>
-          </div>
-        </div>
-      </mat-card>
-    </div>
-    <div class="col-12 col-md-10 col-lg-6">
-      <mat-card class="mat-elevation-z8" style="height: 60vh; margin-top: 1vh;overflow-y: auto;">
-        <div>
-          <h6 style="text-align: center;" *ngIf="invite">
-            <b>Invite Requests</b>
-          </h6>
-          <h6 style="text-align: center;" *ngIf="new_">
-            <b>New Orders</b>
-          </h6>
-          <h6 style="text-align: center;" *ngIf="critical">
-            <b>Critical Orders</b>
-          </h6>
-          <h6 style="text-align: center;" *ngIf="cancel">
-            <b>Cancelled Orders</b>
-          </h6>
-          <h6 style="text-align: center;" *ngIf="packed">
-            <b>Packed Orders</b>
-          </h6>
-          <h6 style="text-align: center;" *ngIf="dispatch">
-            <b>Dispatch Orders</b>
-          </h6>
-        </div>
-        <div *ngIf="dispatch">
-          <div *ngIf="dispatchedFilteredArray.length === 0">
-            <p style="text-align: center; justify-content: center;">
-              <b>No new notifications</b>
-            </p>
-          </div>
-          <div
-            fxLayout="row wrap"
-            fxLayout.xs="column"
-            fxLayoutAlign="space-around center"
-            fxLayoutGap="25px"
+          <h5
+            class="col-12 text-center text-md-left"
+            style="margin-bottom: 2vh; margin-top: 4vh;"
           >
-            <mat-card
-              class="mat-elevation-z3"
-              *ngFor="
-                let i = index;
-                let dispatchNotification
-                of dispatchedFilteredArray
-              "
-              [routerLink]="['/dashboard']" [fragment]="'dispatchedOrders'"
-              style="cursor: pointer; margin-bottom: 1em;"
+            <b>ORDERS</b>
+          </h5>
+          <div class="row">
+            <div class="col-12 col-md-10 col-lg-6 text-center text-md-left">
+              <button
+                *ngIf="newOrderStatus == 'true'"
+                mat-raised-button
+                class="btn-block button2"
+                style="
+                  margin-left: 1em;
+                  width: 12.7em;
+                  border-radius: 0.5em;
+                  padding: 1em;
+                  background-color: white;
+                  display: inline-block;
+                  vertical-align: top;
+                  margin-top: 1em;
+                  /* font-size: 1vw; */
+                "
+                (click)="onNew()"
+              >
+                New Orders &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span
+                  style="
+                    padding: 0.5em;
+                    margin-left: 1.2em;
+                    border-radius: 0.5em;
+                    background-color: #52e88e;
+                  "
+                  >{{ newFilteredArray.length }}</span
+                >
+              </button>
+            </div>
+            <div class="col-12 col-md-10 col-lg-6 text-center text-md-left">
+              <button
+                *ngIf="criticalOrderStatus == 'true'"
+                mat-raised-button
+                class="btn-block button3"
+                style="
+                  margin-left: 1em;
+                  width: 12.7em;
+                  border-radius: 0.5em;
+                  padding: 1em;
+                  background-color: white;
+                  display: inline-block;
+                  vertical-align: top;
+                  /* font-size: 1vw; */
+                  margin-top: 1em;
+                "
+                (click)="onCritical()"
+              >
+                Critical Orders &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span
+                  style="
+                    padding: 0.5em;
+                    margin-left: 1em;
+                    border-radius: 0.5em;
+                    background-color: #c683fc;
+                    right: 0 !important;
+                    color: white;
+                  "
+                  >{{ criticalFilteredArray.length }}</span
+                >
+              </button>
+            </div>
+            <div class="col-12 col-md-10 col-lg-6 text-center text-md-left">
+              <button
+                *ngIf="packedOrderStatus == 'true'"
+                mat-raised-button
+                class="btn-block button4"
+                style="
+                  margin-left: 1em;
+                  width: 12.7em;
+                  border-radius: 0.5em;
+                  padding: 1em;
+                  background-color: white;
+                  display: inline-block;
+                  vertical-align: top;
+                  margin-top: 1em;
+                  /* font-size: 1vw; */
+                "
+                (click)="onPacked()"
+              >
+                Packed Orders &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span
+                  style="
+                    padding: 0.5em;
+                    margin-left: 1em;
+                    border-radius: 0.5em;
+                    background-color: #18a7f8;
+                  "
+                  >{{ packedFilteredArray.length }}</span
+                >
+              </button>
+            </div>
+            <div class="col-12 col-md-10 col-lg-6 text-center text-md-left">
+              <button
+                *ngIf="dispatchedOrderStatus == 'true'"
+                mat-raised-button
+                class="btn-block button5"
+                style="
+                  margin-left: 1em;
+                  width: 12.7em;
+                  border-radius: 0.5em;
+                  padding: 1em;
+                  background-color: white;
+                  display: inline-block;
+                  vertical-align: top;
+                  margin-top: 1em;
+                  /* font-size: 1vw; */
+                "
+                (click)="onDispatch()"
+              >
+                Dispatched Orders
+                <span
+                  style="
+                    padding: 0.5em;
+                    margin-left: 1em;
+                    border-radius: 0.5em;
+                    background-color: #ade32b;
+                  "
+                  >{{ dispatchedFilteredArray.length }}</span
+                >
+              </button>
+            </div>
+          </div>
+          <div class="row"></div>
+          <div class="row">
+            <div class="col-12 col-md-10 col-lg-6 text-center text-md-left">
+              <button
+                *ngIf="cancelOrderStatus == 'true'"
+                mat-raised-button
+                class="btn-block button6"
+                style="
+                  margin-left: 1em;
+                  width: 12.7em;
+                  border-radius: 0.5em;
+                  padding: 1em;
+                  background-color: white;
+                  display: inline-block;
+                  vertical-align: top;
+                  margin-top: 1em;
+                  /* font-size: 1vw; */
+                "
+                (click)="onCancel()"
+              >
+                Cancelled Orders &nbsp;
+                <span
+                  style="
+                    padding: 0.5em;
+                    margin-left: 1em;
+                    border-radius: 0.5em;
+                    background-color: #fb4549;
+                    color: white;
+                  "
+                  >{{ cancelFilteredArray.length }}</span
+                >
+              </button>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+      <div class="col-12 col-md-10 col-lg-6">
+        <mat-card style="box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.5), 0 10px 20px 0 rgba(0, 0, 0, 0.5);
+                    height: 60vh; margin-top: 1vh;overflow-y: auto; position: relative;">
+          <div>
+            <h4 style="text-align: center; margin-bottom: 20px;" *ngIf="invite">
+              <b>Invite Requests</b>
+            </h4>
+            <h4 style="text-align: center; margin-bottom: 20px;" *ngIf="new_">
+              <b>New Orders</b>
+            </h4>
+            <h4 style="text-align: center; margin-bottom: 20px;" *ngIf="critical">
+              <b>Critical Orders</b>
+            </h4>
+            <h4 style="text-align: center; margin-bottom: 20px;" *ngIf="cancel">
+              <b>Cancelled Orders</b>
+            </h4>
+            <h4 style="text-align: center; margin-bottom: 20px;" *ngIf="packed">
+              <b>Packed Orders</b>
+            </h4>
+            <h4 style="text-align: center; margin-bottom: 20px;" *ngIf="dispatch">
+              <b>Dispatch Orders</b>
+            </h4>
+          </div>
+          <div *ngIf="dispatch">
+            <div *ngIf="dispatchedFilteredArray.length === 0">
+              <p style="text-align: center; justify-content: center;">
+                <b>No new notifications</b>
+              </p>
+            </div>
+            <div
+              fxLayout="row wrap"
+              fxLayout.xs="column"
+              fxLayoutAlign="space-around center"
+              fxLayoutGap="25px"
             >
-              <div class="innerdiv">
-                <div class="row">
-                  <div class="col-12 col-md-8">
-                    <h5 style="line-height: 1em; word-wrap: break-word;">
-                      New Order for
-                      <b>{{ dispatchNotification.retailer_name }}</b>
-                    </h5>
-                  </div>
-                  <div class="col-12 col-md-4">
-                    <p style="margin-top: 5px; float: right;">Date: {{dispatchedOrderDate[i]}}</p>
+              <mat-card
+                class="mat-elevation-z3"
+                *ngFor="
+                  let i = index;
+                  let dispatchNotification
+                  of dispatchedFilteredArray
+                "
+                [routerLink]="['../dashboard']" fragment="dispatchedOrders"
+                style="cursor: pointer; margin-bottom: 1em;"
+              >
+                <div class="innerdiv">
+                  <div class="row">
+                    <div class="col-12 col-md-8">
+                      <h5 style="line-height: 1em; word-wrap: break-word;">
+                        New Order for
+                        <b>{{ dispatchNotification.retailer_name }}</b>
+                      </h5>
+                    </div>
+                    <div class="col-12 col-md-4">
+                      <p style="margin-top: 5px; float: right;">Date: {{dispatchedOrderDate[i]}}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="innerdiv">
-                <small>OrderID: {{ dispatchNotification.bill_no }}</small>
-                <p class="od">Time: {{dispatchedOrderTime[i]}}</p>
-              </div>
-              <p style="line-height: 1em; word-wrap: break-word;">
-                Customer Name:
-                <b>{{ dispatchNotification.customer_name }}</b>
-              </p>
-              <p style="line-height: 1em; word-wrap: break-word;">
-                Customer Address:
-                <b>{{ dispatchNotification.customer_address }}</b>
-              </p>
-            </mat-card>
-          </div>
-        </div>
-        <div *ngIf="invite">
-          <div *ngIf="invitations.length === 0">
-            <p style="text-align: center; justify-content: center;">
-              <b>No new notifications</b>
-            </p>
-          </div>
-          <div
-            fxLayout="row wrap"
-            fxLayout.xs="column"
-            fxLayoutAlign="space-around center"
-            fxLayoutGap="25px"
-          >
-            <mat-card
-              class="mat-elevation-z3 my-2"
-              *ngFor="let invitation of invitations"
-              [routerLink]="['/dashboard']" [fragment]="'inviteRequest'"
-              style="cursor: pointer; margin-bottom: 1em;"
-            >
-              <div class="innerdiv">
-                <h5>New Enrollment Request</h5>
-              </div>
-              <div>
+                <div class="innerdiv">
+                  <small>OrderID: {{ dispatchNotification.bill_no }}</small>
+                  <p class="od">Time: {{dispatchedOrderTime[i]}}</p>
+                </div>
                 <p style="line-height: 1em; word-wrap: break-word;">
-                  <b>{{ invitation.name }}</b> from <b>{{ invitation.city }}</b
-                  >, <b>{{ invitation.state }}</b> has requested to be enrolled
-                  onto the Kirana platform.
+                  Customer Name:
+                  <b>{{ dispatchNotification.customer_name }}</b>
                 </p>
-              </div>
-            </mat-card>
+                <p style="line-height: 1em; word-wrap: break-word;">
+                  Customer Address:
+                  <b>{{ dispatchNotification.customer_address }}</b>
+                </p>
+              </mat-card>
+            </div>
           </div>
-        </div>
-        <div *ngIf="new_">
-          <div *ngIf="newFilteredArray.length === 0">
-            <p style="text-align: center; justify-content: center;">
-              <b>No new notifications</b>
-            </p>
-          </div>
-          <div
-            fxLayout="row wrap"
-            fxLayout.xs="column"
-            fxLayoutAlign="space-around center"
-            fxLayoutGap="25px"
-          >
-            <mat-card
-              class="mat-elevation-z3"
-              *ngFor="let i = index; let newNotification of newFilteredArray"
-              [routerLink]="['/dashboard']" [fragment]="'newOrders'"
-              style="cursor: pointer; margin-bottom: 1em;"
+          <div *ngIf="invite">
+            <div *ngIf="invitations.length === 0">
+              <p style="text-align: center; justify-content: center;">
+                <b>No new notifications</b>
+              </p>
+            </div>
+            <div
+              fxLayout="row wrap"
+              fxLayout.xs="column"
+              fxLayoutAlign="space-around center"
+              fxLayoutGap="25px"
             >
-              <div class="innerdiv">
-                <div class="row">
-                  <div class="col-12 col-md-8" >
-                    <h5 style="line-height: 1em; word-wrap: break-word;">
-                      New Order for
-                      <b>{{ newNotification.retailer_name }}</b>
-                    </h5>
-                  </div>
-                  <div class="col-12 col-md-4 od">
-                    <p style="margin-top: 5px; float: right;">Date: {{newOrderDate[i]}}</p>
+              <mat-card
+                class="mat-elevation-z3 my-2"
+                *ngFor="let invitation of invitations"
+                [routerLink]="['../dashboard']" [fragment]="'inviteRequest'"
+                style="cursor: pointer; margin-bottom: 1em;"
+              >
+                <div class="innerdiv">
+                  <h5>New Enrollment Request</h5>
+                </div>
+                <div>
+                  <p style="line-height: 1em; word-wrap: break-word;">
+                    <b>{{ invitation.name }}</b> from <b>{{ invitation.city }}</b
+                    >, <b>{{ invitation.state }}</b> has requested to be enrolled
+                    onto the Kirana platform.
+                  </p>
+                </div>
+              </mat-card>
+            </div>
+          </div>
+          <div *ngIf="new_">
+            <div *ngIf="newFilteredArray.length === 0">
+              <p style="text-align: center; justify-content: center;">
+                <b>No new notifications</b>
+              </p>
+            </div>
+            <div
+              fxLayout="row wrap"
+              fxLayout.xs="column"
+              fxLayoutAlign="space-around center"
+              fxLayoutGap="25px"
+            >
+              <mat-card
+                class="mat-elevation-z3"
+                *ngFor="let i = index; let newNotification of newFilteredArray"
+                [routerLink]="['../dashboard']" [fragment]="'newOrders'"
+                style="cursor: pointer; margin-bottom: 1em;"
+              >
+                <div class="innerdiv">
+                  <div class="row">
+                    <div class="col-12 col-md-8" >
+                      <h5 style="line-height: 1em; word-wrap: break-word;">
+                        New Order for
+                        <b>{{ newNotification.retailer_name }}</b>
+                      </h5>
+                    </div>
+                    <div class="col-12 col-md-4 od">
+                      <p style="margin-top: 5px; float: right;">Date: {{newOrderDate[i]}}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="innerdiv">
-                <small>OrderID: {{ newNotification.bill_no }}</small>
-                <p class="od">Time: {{newOrderTime[i]}}</p>
-              </div>
-              <p style="line-height: 1em; word-wrap: break-word;">
-                Customer Name: <b>{{ newNotification.customer_name }}</b>
-              </p>
-              <p style="line-height: 1em; word-wrap: break-word;">
-                Customer Address:
-                <b>{{ newNotification.customer_address }}</b>
-              </p>
-            </mat-card>
+                <div class="innerdiv">
+                  <small>OrderID: {{ newNotification.bill_no }}</small>
+                  <p class="od">Time: {{newOrderTime[i]}}</p>
+                </div>
+                <p style="line-height: 1em; word-wrap: break-word;">
+                  Customer Name: <b>{{ newNotification.customer_name }}</b>
+                </p>
+                <p style="line-height: 1em; word-wrap: break-word;">
+                  Customer Address:
+                  <b>{{ newNotification.customer_address }}</b>
+                </p>
+              </mat-card>
+            </div>
           </div>
-        </div>
-        <div *ngIf="packed">
-          <div *ngIf="packedFilteredArray.length === 0">
-            <p style="text-align: center; justify-content: center;">
-              <b>No new notifications</b>
-            </p>
-          </div>
-          <div
-            fxLayout="row wrap"
-            fxLayout.xs="column"
-            fxLayoutAlign="space-around center"
-            fxLayoutGap="25px"
-          >
-            <mat-card
-              class="mat-elevation-z3"
-              *ngFor="
-                let i = index;
-                let packedNotification
-                of packedFilteredArray
-              "
-              [routerLink]="['/dashboard']" [fragment]="'packedOrders'"
-              style="cursor: pointer; margin-bottom: 1em;"
+          <div *ngIf="packed">
+            <div *ngIf="packedFilteredArray.length === 0">
+              <p style="text-align: center; justify-content: center;">
+                <b>No new notifications</b>
+              </p>
+            </div>
+            <div
+              fxLayout="row wrap"
+              fxLayout.xs="column"
+              fxLayoutAlign="space-around center"
+              fxLayoutGap="25px"
             >
-              <div class="innerdiv">
-                <div class="row">
-                  <div  class="col-12 col-md-8">
-                    <h5 style="line-height: 1em; word-wrap: break-word;">
-                      New Order for
-                      <b>{{ packedNotification.retailer_name }}</b>
-                    </h5>
-                  </div>
-                  <div class="col-12 col-md-4 od">
-                    <p style="margin-top: 5px; float: right;">Date: {{packedOrderDate[i]}}</p>
+              <mat-card
+                class="mat-elevation-z3"
+                *ngFor="
+                  let i = index;
+                  let packedNotification
+                  of packedFilteredArray
+                "
+                [routerLink]="['../dashboard']" [fragment]="'packedOrders'"
+                style="cursor: pointer; margin-bottom: 1em;"
+              >
+                <div class="innerdiv">
+                  <div class="row">
+                    <div  class="col-12 col-md-8">
+                      <h5 style="line-height: 1em; word-wrap: break-word;">
+                        New Order for
+                        <b>{{ packedNotification.retailer_name }}</b>
+                      </h5>
+                    </div>
+                    <div class="col-12 col-md-4 od">
+                      <p style="margin-top: 5px; float: right;">Date: {{packedOrderDate[i]}}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="innerdiv">
-                <small>BillNo: {{ packedNotification.bill_no }}</small>
-                <p class="od">Time: {{packedOrderTime[i]}}</p>
-              </div>
-              <p style="line-height: 1em; word-wrap: break-word;">
-                Customer Name:
-                <b>{{ packedNotification.customer_name }}</b>
-              </p>
-              <p style="line-height: 1em; word-wrap: break-word;">
-                Customer Address:
-                <b>{{ packedNotification.customer_address }}</b>
-              </p>
-            </mat-card>
+                <div class="innerdiv">
+                  <small>BillNo: {{ packedNotification.bill_no }}</small>
+                  <p class="od">Time: {{packedOrderTime[i]}}</p>
+                </div>
+                <p style="line-height: 1em; word-wrap: break-word;">
+                  Customer Name:
+                  <b>{{ packedNotification.customer_name }}</b>
+                </p>
+                <p style="line-height: 1em; word-wrap: break-word;">
+                  Customer Address:
+                  <b>{{ packedNotification.customer_address }}</b>
+                </p>
+              </mat-card>
+            </div>
           </div>
-        </div>
-        <div *ngIf="cancel">
-          <div *ngIf="cancelFilteredArray.length === 0">
-            <p style="text-align: center; justify-content: center;">
-              <b>No new notifications</b>
-            </p>
-          </div>
-          <div
-            fxLayout="row wrap"
-            fxLayout.xs="column"
-            fxLayoutAlign="space-around center"
-            fxLayoutGap="25px"
-          >
-            <mat-card
-              class="mat-elevation-z3"
-              *ngFor="
-                let i = index;
-                let cancelledNotification
-                of cancelFilteredArray
-              "
-              [routerLink]="['/dashboard']" [fragment]="'cancelOrders'"
-              style="cursor: pointer; margin-bottom: 1em;"
+          <div *ngIf="cancel">
+            <div *ngIf="cancelFilteredArray.length === 0">
+              <p style="text-align: center; justify-content: center;">
+                <b>No new notifications</b>
+              </p>
+            </div>
+            <div
+              fxLayout="row wrap"
+              fxLayout.xs="column"
+              fxLayoutAlign="space-around center"
+              fxLayoutGap="25px"
             >
-              <div class="innerdiv">
-                <div class="row">
-                  <div class="col-12 col-md-8" >
-                    <h5 style="line-height: 1em; word-wrap: break-word;">
-                      New Order for
-                      <b>{{ cancelledNotification.retailer_name }}</b>
-                    </h5>
-                  </div>
-                  <div class="col-12 col-md-4 od">
-                    <p style="margin-top: 5px; float: right;">Date: {{cancelOrderDate[i]}}</p>
+              <mat-card
+                class="mat-elevation-z3"
+                *ngFor="
+                  let i = index;
+                  let cancelledNotification
+                  of cancelFilteredArray
+                "
+                [routerLink]="['../dashboard']" [fragment]="'cancelOrders'"
+                style="cursor: pointer; margin-bottom: 1em;"
+              >
+                <div class="innerdiv">
+                  <div class="row">
+                    <div class="col-12 col-md-8" >
+                      <h5 style="line-height: 1em; word-wrap: break-word;">
+                        New Order for
+                        <b>{{ cancelledNotification.retailer_name }}</b>
+                      </h5>
+                    </div>
+                    <div class="col-12 col-md-4 od">
+                      <p style="margin-top: 5px; float: right;">Date: {{cancelOrderDate[i]}}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="innerdiv">
-                <small>BillNo: {{ cancelledNotification.bill_no }}</small>
-                <p class="od">Time: {{cancelOrderTime[i]}}</p>
-              </div>
-              <p style="line-height: 1em; word-wrap: break-word;">
-                Customer Name:
-                <b>{{ cancelledNotification.customer_name }}</b>
-              </p>
-              <p style="line-height: 1em; word-wrap: break-word;">
-                Customer Address:
-                <b>{{ cancelledNotification.customer_address }}</b>
-              </p>
-            </mat-card>
+                <div class="innerdiv">
+                  <small>BillNo: {{ cancelledNotification.bill_no }}</small>
+                  <p class="od">Time: {{cancelOrderTime[i]}}</p>
+                </div>
+                <p style="line-height: 1em; word-wrap: break-word;">
+                  Customer Name:
+                  <b>{{ cancelledNotification.customer_name }}</b>
+                </p>
+                <p style="line-height: 1em; word-wrap: break-word;">
+                  Customer Address:
+                  <b>{{ cancelledNotification.customer_address }}</b>
+                </p>
+              </mat-card>
+            </div>
           </div>
-        </div>
-        <div *ngIf="critical">
-          <div *ngIf="criticalFilteredArray.length === 0">
-            <p style="text-align: center; justify-content: center;">
-              <b>No new notifications</b>
-            </p>
-          </div>
-          <div
-            fxLayout="row wrap"
-            fxLayout.xs="column"
-            fxLayoutAlign="space-around center"
-            fxLayoutGap="25px"
-          >
-            <mat-card
-              class="mat-elevation-z3"
-              *ngFor="
-                let i = index;
-                let criticalNotification
-                of criticalFilteredArray
-              "
-              [routerLink]="['/dashboard']" [fragment]="'criticalOrders'"
-              style="cursor: pointer; margin-bottom: 1em;"
+          <div *ngIf="critical">
+            <div *ngIf="criticalFilteredArray.length === 0">
+              <p style="text-align: center; justify-content: center;">
+                <b>No new notifications</b>
+              </p>
+            </div>
+            <div
+              fxLayout="row wrap"
+              fxLayout.xs="column"
+              fxLayoutAlign="space-around center"
+              fxLayoutGap="25px"
             >
-              <div class="innerdiv">
-                <div class="row">
-                  <div class="col-12 col-md-8">
-                    <h5  style="line-height: 1em; word-wrap: break-word;">
-                      New Order for
-                      <b>{{ criticalNotification.retailer_name }}</b>
-                    </h5>
-                  </div>
-                  <div class="col-12 col-md-4 od">
-                    <p style="margin-top: 5px; float: right;">Date: {{criticalOrderDate[i]}}</p>
+              <mat-card
+                class="mat-elevation-z3"
+                *ngFor="
+                  let i = index;
+                  let criticalNotification
+                  of criticalFilteredArray
+                "
+                [routerLink]="['../dashboard']" [fragment]="'criticalOrders'"
+                style="cursor: pointer; margin-bottom: 1em;"
+              >
+                <div class="innerdiv">
+                  <div class="row">
+                    <div class="col-12 col-md-8">
+                      <h5  style="line-height: 1em; word-wrap: break-word;">
+                        New Order for
+                        <b>{{ criticalNotification.retailer_name }}</b>
+                      </h5>
+                    </div>
+                    <div class="col-12 col-md-4 od">
+                      <p style="margin-top: 5px; float: right;">Date: {{criticalOrderDate[i]}}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="innerdiv">
-                <small>OrderID: {{ criticalNotification.bill_no }}</small>
-                <p class="od">Time: {{criticalOrderTime[i]}}</p>
-              </div>
-              <p style="line-height: 1em; word-wrap: break-word;">
-                Customer Name:
-                <b>{{ criticalNotification.customer_name }}</b>
-              </p>
-              <p style="line-height: 1em; word-wrap: break-word;">
-                Customer Address:
-                <b>{{ criticalNotification.customer_address }}</b>
-              </p>
-            </mat-card>
+                <div class="innerdiv">
+                  <small>OrderID: {{ criticalNotification.bill_no }}</small>
+                  <p class="od">Time: {{criticalOrderTime[i]}}</p>
+                </div>
+                <p style="line-height: 1em; word-wrap: break-word;">
+                  Customer Name:
+                  <b>{{ criticalNotification.customer_name }}</b>
+                </p>
+                <p style="line-height: 1em; word-wrap: break-word;">
+                  Customer Address:
+                  <b>{{ criticalNotification.customer_address }}</b>
+                </p>
+              </mat-card>
+            </div>
+
           </div>
-        </div>
-      </mat-card>
+          <div *ngIf='allnotify'>
+            <h4 style="
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            height: 30%;
+            width: 50%;
+            margin: -8% 0 0 -25%;">All notifications are turned off</h4>
+          </div>
+          <div *ngIf='!new_ && !packed && !cancel && !critical && !invite && !dispatch && !allnotify'>
+            <h4 style="
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            height: 30%;
+            width: 50%;
+            margin: -8% 0 0 -25%;">Select Notifications to be shown</h4>
+          </div>
+        </mat-card>
+      </div>
     </div>
   </div>
 </div>
