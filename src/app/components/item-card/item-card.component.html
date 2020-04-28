@@ -1,15 +1,16 @@
 <mat-card class="">
   <div>
     <!-- name, edit, delete container -->
-    <div class="row justify-content-between align-items-center mt-3 mb-4">
+    <div class="row justify-content-between align-items-center mb-2">
       <div class="col-8">
         <h4 class="text-truncate" [title]="item.name">{{ item.name }}</h4>
+        <p class="text-90 text-muted m-0" title="Brand">By <b>{{ item.brand }}</b></p>
       </div>
       <div class="col-4 row p-0 justify-content-around text-center">
-        <button mat-icon-button color="primary" (click)="openEditProductDetailDialog()">
+        <button class="col-6 p-0" mat-icon-button color="primary" (click)="openEditProductDetailDialog()">
           <mat-icon>create</mat-icon>
         </button>
-        <button mat-icon-button color="primary" (click)="openConfirmDeleteDialog()">
+        <button class="col-6 p-0" mat-icon-button color="primary" (click)="openConfirmDeleteDialog()">
           <mat-icon>delete</mat-icon>
         </button>
       </div>
@@ -27,9 +28,22 @@
           </button>
         </div>
       </div>
-      <div class="col-12 col-sm-8 row text-90">
-        <div class="col-12 my-4 my-sm-0">
-          <div>
+      <div class="col-12 col-sm-8 row text-90 align-content-start">
+        <div class="col-12 text-muted font-weight-bold">
+          <div class="d-inline-block" title="Category">
+            {{ item.category }}
+          </div>
+          /
+          <div class="d-inline-block" title="Sub Category">
+            {{ item.sub_category }}
+          </div>
+        </div>
+        <div class="col-12 my-3">
+          <div class="text-muted" style="height: auto;max-height: 12em;
+          overflow: auto;">
+            {{ item.details }}
+          </div>
+          <!-- <div>
             <div class="text-muted" [ngClass]="{
                 'text-truncate': isDetailVisible,
                 'd-inline-block': isDetailVisible,
@@ -51,9 +65,9 @@
                 {{ isDetailVisible ? "Show More" : "Hide" }}
               </a>
             </div>
-          </div>
+          </div> -->
         </div>
-        <div class="col-6 text-90 pr-0 font-weight-bold">
+        <!-- <div class="col-6 text-90 pr-0 font-weight-bold">
           <p>Category</p>
         </div>
         <div class="col-6 text-90 text-center pl-0">
@@ -76,17 +90,17 @@
         </div>
         <div class="col-6 text-90 text-center pl-0">
           <p>{{ item.quantity_type }}</p>
-        </div>
+        </div> -->
       </div>
     </div>
     <!-- variant detail container -->
     <div class="mt-3">
-      <h5 class="text-center font-weight-bold">Variants List</h5>
+      <!-- <h5 class="text-center font-weight-bold">Variants List</h5> -->
       <div class="table-responsive">
         <table class="table table-sm table-fixed text-90">
           <thead>
             <tr>
-              <th class="col-4">Name</th>
+              <th class="col-4">Variant name</th>
               <th class="col-2">Quantity</th>
               <th class="col-2">Price</th>
               <th class="col-2">Availability</th>
@@ -96,7 +110,7 @@
           <tbody>
             <tr *ngFor="let i of item.variant_details">
               <td class="col-4">{{ i.variant }}</td>
-              <td class="col-2">{{ i.quantity }}</td>
+              <td class="col-2">{{ i.quantity }} {{ item.quantity_type }}</td>
               <td class="col-2">{{ i.price }}</td>
               <td class="col-2">
                 <mat-slide-toggle color="primary" [checked]="i.available === 'True' ? true : false"
