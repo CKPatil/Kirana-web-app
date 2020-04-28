@@ -38,12 +38,12 @@ export class RecentOrdersComponent implements OnInit, OnChanges {
   // isSidePanelExpanded: boolean;
 
   displayedColumns: string[] = [
-    "consumer",
-    "shop",
-    "phone",
+    "customer_name",
+    "retailer_name",
+    "customer_phone",
     "status",
-    "total",
-    "time_left",
+    "price",
+    "remaining_time",
   ];
   dataSource = new MatTableDataSource();
   @ViewChild(MatSort, { static: true }) sort: MatSort;

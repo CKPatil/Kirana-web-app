@@ -122,9 +122,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     });
 
     this.refresh = setTimeout(() => {
-      console.log('refreshing dashboard...')
       this.ngOnInit();
-    }, 30000);
+    }, 60000);
   }
 
   ngOnDestroy() {
