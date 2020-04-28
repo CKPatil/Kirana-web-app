@@ -1,12 +1,12 @@
 .outer {
     height: 90vh;
-  overflow: scroll;
+  overflow: hidden;
   .mat-card {
     margin: 50px 2% 0px 2%;
     table {
       width: 100%;
     }
-    
+
     .mat-form-field {
       font-size: 14px;
       width: 100%;
@@ -19,4 +19,11 @@
   .is-side-panel-expanded {
     margin-left: 2% !important;
   }
+}
+.mat-cell {
+  padding-right: 15px;
+}
+.mat-header-cell {
+  justify-content: center !important;
+  text-align: center;
 }

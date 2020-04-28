@@ -33,18 +33,17 @@ export class RetailerComponent implements OnInit {
     "name",
     "email",
     "phone",
-    "shop",
-    "totalBusiness",
-    "location",
+    "retailer_name",
+    "profit",
+    "address",
   ];
-  dataSource;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   allRetailers: any;
+  dataSource;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   record: any;
   comp1val: string;
   comp2val: string;
-
   constructor(
     private interaction: InteractionService,
     private retailerService: RetailerService,
@@ -52,15 +51,6 @@ export class RetailerComponent implements OnInit {
     private router: Router
   ) {
     this.isSidePanelExpanded = this.interaction.getExpandedStatus();
-    this.retailerService.getAllRetailers().subscribe((res) => {
-      console.log(res);
-      this.allRetailers = res.body;
-      this.allRetailers=new MatTableDataSource(this.allRetailers);
-      this.allRetailers.sort=this.sort;
-      this.allRetailers.paginator=this.paginator;
-      // console.log(this.allRetailers);
-    });
-    this.dataSource = new MatTableDataSource();
     this.sharedService.comp1Val = "";
   }
 
@@ -68,22 +58,26 @@ export class RetailerComponent implements OnInit {
     this.interaction.expandedStatus$.subscribe((res) => {
       this.isSidePanelExpanded = res;
     });
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+    this.retailerService.getAllRetailers().subscribe((res) => {
+      this.allRetailers = res.body;
+      this.dataSource=new MatTableDataSource(this.allRetailers);
+      this.dataSource.sort=this.sort;
+      this.dataSource.paginator=this.paginator;
+    });
   }
+  // tslint:disable-next-line: use-lifecycle-interface
   ngAfterContentChecked() {
     this.comp2val = this.sharedService.comp2Val;
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    if (filterValue)
-      this.allRetailers.filter = filterValue.trim().toLowerCase();
+    if (filterValue) {
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
   }
   getRecord(selectRow: any) {
     this.record = selectRow;
     this.sharedService.updateComp1Val(selectRow);
-    // console.log(this.record);
-    // console.log(this.sharedService.comp1Val);
     this.router.navigate(["/transactions"]);
   }
 }
