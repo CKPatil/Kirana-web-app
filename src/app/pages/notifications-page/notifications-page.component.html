@@ -5,9 +5,8 @@
   </h3>
     <div class="row d-flex justify-content-center">
       <div class="col-12 col-md-10 col-lg-6">
-        <mat-card
-          style="box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.5), 0 10px 20px 0 rgba(0, 0, 0, 0.5);
-           height: 60vh; margin-top: 1vh; overflow-y: auto; overflow-x: hidden;"
+        <mat-card class="mat-elevation-z8"
+          style=" height: 60vh; margin-top: 1vh; overflow-y: auto; overflow-x: hidden;"
         >
           <h5 class="col-12 text-center text-md-left" style="margin-bottom: 3vh;">
             <b>REQUESTS</b>
@@ -208,8 +207,7 @@
         </mat-card>
       </div>
       <div class="col-12 col-md-10 col-lg-6">
-        <mat-card style="box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.5), 0 10px 20px 0 rgba(0, 0, 0, 0.5);
-                    height: 60vh; margin-top: 1vh;overflow-y: auto; position: relative;">
+        <mat-card class="mat-elevation-z8" style="height: 60vh; margin-top: 1vh;overflow-y: auto; position: relative;">
           <div>
             <h4 style="text-align: center; margin-bottom: 20px;" *ngIf="invite">
               <b>Invite Requests</b>
@@ -514,7 +512,7 @@
             left: 50%;
             height: 30%;
             width: 50%;
-            margin: -8% 0 0 -25%;">All notifications are turned off</h4>
+            margin: -4% 0 0 -25%;opacity: 0.5;">All notifications are turned off</h4>
           </div>
           <div *ngIf='!new_ && !packed && !cancel && !critical && !invite && !dispatch && !allnotify'>
             <h4 style="
@@ -523,7 +521,7 @@
             left: 50%;
             height: 30%;
             width: 50%;
-            margin: -8% 0 0 -25%;">Select Notifications to be shown</h4>
+            margin: -4% 0 0 -25%;opacity: 0.5;">Select Notifications to be shown</h4>
           </div>
         </mat-card>
       </div>
