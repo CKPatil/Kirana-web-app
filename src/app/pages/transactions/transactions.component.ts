@@ -24,7 +24,7 @@ export class TransactionsComponent implements OnInit, OnDestroy {
 
   retailers = [];
 
-  status = ["Ordered", "Packed", "Dispatched", "Delivered", "Cancelled"];
+  status = ["Ordered", "Packed", "Dispatched", "Delivered", "Cancelled", "Payment failure"];
 
   isSidePanelExpanded: boolean;
 
@@ -93,7 +93,7 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     this.transactionService.observeOrders.subscribe((res) => {
       this.allTransaction = res;
       // this.allTransaction.reverse();
-
+      console.log(this.allTransaction);
       this.pageEvent = {
         pageIndex: 0,
         pageSize: 25,
