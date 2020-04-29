@@ -16,7 +16,7 @@
       </div>
     </div>
     <!-- img, other item detail container -->
-    <div class="row" style="height: 12em;">
+    <div class="row">
       <div class="col-12 col-sm-4">
         <div *ngIf="item.image_url.length" style="height: 10em;"
           class="text-center d-flex align-items-center justify-content-center">
@@ -28,8 +28,8 @@
           </button>
         </div>
       </div>
-      <div class="col-12 col-sm-8 row text-90 align-content-start pr-0">
-        <div class="col-12 text-muted font-weight-bold">
+      <div class="col-12 col-sm-8 row text-90 align-content-start pr-sm-0 mx-1 mx-sm-0 mt-4 mt-sm-0">
+        <div class="col-12 pl-0 pl-sm-2 text-muted font-weight-bold">
           <div class="d-inline-block mr-1" title="Category">
             {{ item.category }}
           </div>
@@ -41,9 +41,8 @@
             {{ item.sub_category }}
           </div>
         </div>
-        <div class="col-12 my-2">
-          <div class="text-muted" style="height: auto;max-height: 12em;
-          overflow: auto;">
+        <div class="col-12 my-2 pl-0 pl-sm-2">
+          <div class="detail-container text-muted">
             {{ item.details }}
           </div>
         </div>
