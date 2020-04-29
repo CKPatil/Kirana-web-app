@@ -44,7 +44,7 @@
           [ngClass]="item.status"
           (click)="openChooseOrderStatusDialog()"
         >
-          Status {{ item.status }}
+          Order {{ item.status }}
         </button>
       </div>
       <div *ngIf='item.status == "Payment failure"'>
@@ -55,7 +55,7 @@
           disabled
           style="background-color:indigo; cursor: default;"
         >
-          Status Payment Failure
+          Order Payment Failure
         </button>
       </div>
     </div>

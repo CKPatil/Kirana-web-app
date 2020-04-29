@@ -24,7 +24,7 @@ export class TransactionsComponent implements OnInit, OnDestroy {
 
   retailers = [];
 
-  status = ["Ordered", "Packed", "Dispatched", "Delivered", "Cancelled", "Payment failure"];
+  status = ["Ordered", "Packed", "Dispatched", "Delivered", "Cancelled"];
 
   isSidePanelExpanded: boolean;
 
