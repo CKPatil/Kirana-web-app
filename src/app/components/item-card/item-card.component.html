@@ -1,23 +1,16 @@
 <mat-card class="">
   <div>
     <!-- name, edit, delete container -->
-    <div class="row justify-content-between align-items-center mt-3 mb-4">
+    <div class="row justify-content-between align-items-center mb-2">
       <div class="col-8">
-        <h4>{{ item.name }}</h4>
+        <h4 class="text-truncate" [title]="item.name">{{ item.name }}</h4>
+        <p class="text-90 text-muted m-0" title="Brand">By <b>{{ item.brand }}</b></p>
       </div>
       <div class="col-4 row p-0 justify-content-around text-center">
-        <button
-          mat-icon-button
-          color="primary"
-          (click)="openEditProductDetailDialog()"
-        >
+        <button class="col-6 p-0" mat-icon-button color="primary" (click)="openEditProductDetailDialog()">
           <mat-icon>create</mat-icon>
         </button>
-        <button
-          mat-icon-button
-          color="primary"
-          (click)="openConfirmDeleteDialog()"
-        >
+        <button class="col-6 p-0" mat-icon-button color="primary" (click)="openConfirmDeleteDialog()">
           <mat-icon>delete</mat-icon>
         </button>
       </div>
@@ -25,64 +18,56 @@
     <!-- img, other itme detail container -->
     <div class="row">
       <div class="col-12 col-sm-4">
-        <div
-          *ngIf="item.image_url.length"
-          style="height: 10em;"
-          class="text-center d-flex align-items-center justify-content-center"
-        >
-          <img
-            [src]="item.image_url[0]"
-            alt="{{ item.name }} Image"
-            (click)="openImageSliderDialog()"
-          />
+        <div *ngIf="item.image_url.length" style="height: 10em;"
+          class="text-center d-flex align-items-center justify-content-center">
+          <img [src]="item.image_url[0]" alt="{{ item.name }} Image" (click)="openImageSliderDialog()" />
         </div>
         <div class="text text-center">
-          <button
-            mat-raised-button
-            aria-label="Example icon-button with delete icon"
-            (click)="openSelectImageDialog()"
-          >
+          <button mat-raised-button aria-label="Example icon-button with delete icon" (click)="openSelectImageDialog()">
             <mat-icon>add</mat-icon>
           </button>
         </div>
       </div>
-      <div class="col-12 col-sm-8 row text-90">
-        <div class="col-12 my-4 my-sm-0">
-          <div>
-            <div
-              class="text-muted"
-              [ngClass]="{
+      <div class="col-12 col-sm-8 row text-90 align-content-start">
+        <div class="col-12 text-muted font-weight-bold">
+          <div class="d-inline-block" title="Category">
+            {{ item.category }}
+          </div>
+          /
+          <div class="d-inline-block" title="Sub Category">
+            {{ item.sub_category }}
+          </div>
+        </div>
+        <div class="col-12 my-3">
+          <div class="text-muted" style="height: auto;max-height: 12em;
+          overflow: auto;">
+            {{ item.details }}
+          </div>
+          <!-- <div>
+            <div class="text-muted" [ngClass]="{
                 'text-truncate': isDetailVisible,
                 'd-inline-block': isDetailVisible,
                 'd-inline': !isDetailVisible,
                 'w-75': isDetailVisible,
                 'w-100': !isDetailVisible
-              }"
-            >
+              }">
               {{ item.details }}
             </div>
-            <div
-              class="d-inline text-center text-90"
-              [ngStyle]="{
+            <div class="d-inline text-center text-90" [ngStyle]="{
                 position: isDetailVisible ? 'relative' : '',
                 top: isDetailVisible ? '-5px' : ''
-              }"
-            >
-              <a
-                class="ml-2"
-                style="
+              }">
+              <a class="ml-2" style="
                   color: rgb(69, 1, 255);
                   text-decoration: underline;
                   cursor: pointer;
-                "
-                (click)="showMore()"
-              >
+                " (click)="showMore()">
                 {{ isDetailVisible ? "Show More" : "Hide" }}
               </a>
             </div>
-          </div>
+          </div> -->
         </div>
-        <div class="col-6 text-90 pr-0 font-weight-bold">
+        <!-- <div class="col-6 text-90 pr-0 font-weight-bold">
           <p>Category</p>
         </div>
         <div class="col-6 text-90 text-center pl-0">
@@ -105,17 +90,17 @@
         </div>
         <div class="col-6 text-90 text-center pl-0">
           <p>{{ item.quantity_type }}</p>
-        </div>
+        </div> -->
       </div>
     </div>
     <!-- variant detail container -->
     <div class="mt-3">
-      <h5 class="text-center font-weight-bold">Variants List</h5>
+      <!-- <h5 class="text-center font-weight-bold">Variants List</h5> -->
       <div class="table-responsive">
         <table class="table table-sm table-fixed text-90">
           <thead>
             <tr>
-              <th class="col-4">Name</th>
+              <th class="col-4">Variant name</th>
               <th class="col-2">Quantity</th>
               <th class="col-2">Price</th>
               <th class="col-2">Availability</th>
@@ -125,14 +110,11 @@
           <tbody>
             <tr *ngFor="let i of item.variant_details">
               <td class="col-4">{{ i.variant }}</td>
-              <td class="col-2">{{ i.quantity }}</td>
+              <td class="col-2">{{ i.quantity }} {{ item.quantity_type }}</td>
               <td class="col-2">{{ i.price }}</td>
               <td class="col-2">
-                <mat-slide-toggle
-                  color="primary"
-                  [checked]="i.available === 'True' ? true : false"
-                  (change)="updateStatus($event, i)"
-                ></mat-slide-toggle>
+                <mat-slide-toggle color="primary" [checked]="i.available === 'True' ? true : false"
+                  (change)="updateStatus($event, i)"></mat-slide-toggle>
               </td>
               <td class="col-2">
                 <app-update-item [variant]="i"></app-update-item>
