@@ -109,7 +109,6 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
       this.inviteStatus == 'false' && this.packedOrderStatus == 'false' && this.dispatchedOrderStatus == 'false') {
         this.allnotify = true;
       }
-    console.log(this.allnotify);
     this.transactionService.observeOrders.subscribe((data) => {
       this.notifications = data;
       this.newOrderedStatus = { records: this.notifications };

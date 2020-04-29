@@ -46,7 +46,7 @@
               </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)=getRecord(row.name)></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['/transactions']" [queryParams]="{retailer: row.name}"></tr>
           </table>
         </div>
         <mat-paginator [pageSizeOptions]="[10, 20]" showFirstLastButtons></mat-paginator>
