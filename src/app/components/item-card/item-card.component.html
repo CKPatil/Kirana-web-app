@@ -1,7 +1,7 @@
 <mat-card class="">
   <div>
     <!-- name, edit, delete container -->
-    <div class="row justify-content-between align-items-center mb-2">
+    <div class="row justify-content-between align-items-center">
       <div class="col-8">
         <h4 class="text-truncate" [title]="item.name">{{ item.name }}</h4>
         <p class="text-90 text-muted m-0" title="Brand">By <b>{{ item.brand }}</b></p>
@@ -15,8 +15,8 @@
         </button>
       </div>
     </div>
-    <!-- img, other itme detail container -->
-    <div class="row">
+    <!-- img, other item detail container -->
+    <div class="row" style="height: 12em;">
       <div class="col-12 col-sm-4">
         <div *ngIf="item.image_url.length" style="height: 10em;"
           class="text-center d-flex align-items-center justify-content-center">
@@ -28,69 +28,25 @@
           </button>
         </div>
       </div>
-      <div class="col-12 col-sm-8 row text-90 align-content-start">
+      <div class="col-12 col-sm-8 row text-90 align-content-start pr-0">
         <div class="col-12 text-muted font-weight-bold">
-          <div class="d-inline-block" title="Category">
+          <div class="d-inline-block mr-1" title="Category">
             {{ item.category }}
           </div>
-          /
-          <div class="d-inline-block" title="Sub Category">
+          <div class="d-inline-block" style="position: relative;
+          top: .4em;">
+            <mat-icon style="font-size: 20px;">arrow_forward</mat-icon>
+          </div>
+          <div class="d-inline-block ml-1" title="Sub Category">
             {{ item.sub_category }}
           </div>
         </div>
-        <div class="col-12 my-3">
+        <div class="col-12 my-2">
           <div class="text-muted" style="height: auto;max-height: 12em;
           overflow: auto;">
             {{ item.details }}
           </div>
-          <!-- <div>
-            <div class="text-muted" [ngClass]="{
-                'text-truncate': isDetailVisible,
-                'd-inline-block': isDetailVisible,
-                'd-inline': !isDetailVisible,
-                'w-75': isDetailVisible,
-                'w-100': !isDetailVisible
-              }">
-              {{ item.details }}
-            </div>
-            <div class="d-inline text-center text-90" [ngStyle]="{
-                position: isDetailVisible ? 'relative' : '',
-                top: isDetailVisible ? '-5px' : ''
-              }">
-              <a class="ml-2" style="
-                  color: rgb(69, 1, 255);
-                  text-decoration: underline;
-                  cursor: pointer;
-                " (click)="showMore()">
-                {{ isDetailVisible ? "Show More" : "Hide" }}
-              </a>
-            </div>
-          </div> -->
         </div>
-        <!-- <div class="col-6 text-90 pr-0 font-weight-bold">
-          <p>Category</p>
-        </div>
-        <div class="col-6 text-90 text-center pl-0">
-          <p>{{ item.category }}</p>
-        </div>
-        <div class="col-6 text-90 pr-0 font-weight-bold">
-          <p>Sub Category</p>
-        </div>
-        <div class="col-6 text-90 text-center pl-0">
-          <p>{{ item.sub_category }}</p>
-        </div>
-        <div class="col-6 text-90 pr-0 font-weight-bold">
-          <p>Brand</p>
-        </div>
-        <div class="col-6 text-90 text-center pl-0">
-          <p>{{ item.brand }}</p>
-        </div>
-        <div class="col-6 text-90 pr-0 font-weight-bold">
-          <p>Quantity Type</p>
-        </div>
-        <div class="col-6 text-90 text-center pl-0">
-          <p>{{ item.quantity_type }}</p>
-        </div> -->
       </div>
     </div>
     <!-- variant detail container -->
