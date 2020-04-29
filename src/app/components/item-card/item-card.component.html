@@ -117,7 +117,7 @@
                   (change)="updateStatus($event, i)"></mat-slide-toggle>
               </td>
               <td class="col-2">
-                <app-update-item [variant]="i"></app-update-item>
+                <app-update-item [variant]="i" [unit]="item.quantity_type"></app-update-item>
               </td>
             </tr>
           </tbody>
