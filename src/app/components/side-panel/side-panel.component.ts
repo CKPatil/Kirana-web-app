@@ -16,7 +16,7 @@ import {
       state(
         'start',
         style({
-          width: '50px'
+          width: '72px'
         })
       ),
       state(
