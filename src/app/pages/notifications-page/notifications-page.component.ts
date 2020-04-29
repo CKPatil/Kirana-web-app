@@ -90,6 +90,11 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   newInvitationId = '0';
   ph_no: any;
   allnotify: boolean = false;
+  isNew = false;
+  isCancel = false;
+  isPacked = false;
+  isDispatch = false;
+
   ngOnInit() {
     this.newOrderStatus = localStorage.getItem('newOrder');
     this.cancelOrderStatus = localStorage.getItem('cancelOrder');
@@ -109,7 +114,6 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
       this.inviteStatus == 'false' && this.packedOrderStatus == 'false' && this.dispatchedOrderStatus == 'false') {
         this.allnotify = true;
       }
-    console.log(this.allnotify);
     this.transactionService.observeOrders.subscribe((data) => {
       this.notifications = data;
       this.newOrderedStatus = { records: this.notifications };
@@ -318,6 +322,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
     }
   }
   onNew() {
+    this.isNew = true;
     this.new_ = !this.new_;
     if (this.new_ === true) {
       this.critical = false;
@@ -338,6 +343,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
     }
   }
   onCancel() {
+    this.isCancel= true;
     this.cancel = !this.cancel;
     if (this.cancel === true) {
       this.dispatch = false;
@@ -348,6 +354,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
     }
   }
   onDispatch() {
+    this.isDispatch = true;
     this.dispatch = !this.dispatch;
     if (this.dispatch === true) {
       this.packed = false;
@@ -358,6 +365,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
     }
   }
   onPacked() {
+    this.isDispatch = true;
     this.packed = !this.packed;
     if (this.packed === true) {
       this.invite = false;
@@ -370,9 +378,17 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.change = 'false';
     localStorage.setItem('change', this.change);
-    localStorage.setItem('newLength', this.orderedNotification.length);
-    localStorage.setItem('cancelLength', this.cancelNotification.length);
-    localStorage.setItem('packedLength', this.packedNotification.length);
-    localStorage.setItem('dispatchedLength', this.dispatchedNotification.length);
+    if (this.isNew) {
+      localStorage.setItem('newLength', this.orderedNotification.length);
+    }
+    if (this.isCancel) {
+      localStorage.setItem('cancelLength', this.cancelNotification.length);
+    }
+    if (this.isPacked) {
+      localStorage.setItem('packedLength', this.packedNotification.length);
+    }
+    if (this.isDispatch) {
+      localStorage.setItem('dispatchedLength', this.dispatchedNotification.length);
+    }
   }
 }
