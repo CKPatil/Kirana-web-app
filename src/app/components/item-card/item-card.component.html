@@ -109,7 +109,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let i of item.variant_details">
-              <td class="col-4">{{ i.variant }}</td>
+              <td class="col-4 text-truncate" [title]="i.variant">{{ i.variant }}</td>
               <td class="col-2">{{ i.quantity }} {{ item.quantity_type }}</td>
               <td class="col-2">{{ i.price }}</td>
               <td class="col-2">
