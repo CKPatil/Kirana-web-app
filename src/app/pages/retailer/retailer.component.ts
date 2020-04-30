@@ -1,17 +1,23 @@
-import { SharedService } from "./../../services/shared.service";
-import { RetailerService } from "./../../services/retailer.service";
+import { SharedService } from './../../services/shared.service';
+import { RetailerService } from './../../services/retailer.service';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import {
   Component,
   OnInit,
   ViewChild,
   AfterContentChecked,
-} from "@angular/core";
-import { InteractionService } from "src/app/services/interaction.service";
-import { MatSort } from "@angular/material/sort";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatTableDataSource } from "@angular/material/table";
-import { Router } from "@angular/router";
-import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
+  Inject,
+} from '@angular/core';
+import { InteractionService } from 'src/app/services/interaction.service';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 export interface Retailer {
   name: string;
@@ -22,20 +28,39 @@ export interface Retailer {
   recentActivity: string;
 }
 
+
 @Component({
-  selector: "app-retailer",
-  templateUrl: "./retailer.component.html",
-  styleUrls: ["./retailer.component.scss"],
+  // tslint:disable-next-line: component-selector
+  selector: 'blockConformationDialog',
+  templateUrl: 'blockConformationDialog.html',
+})
+// tslint:disable-next-line: component-class-suffix
+export class BlockConformationDialog {
+  constructor(
+    public dialogRef: MatDialogRef<BlockConformationDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: 'app-retailer',
+  templateUrl: './retailer.component.html',
+  styleUrls: ['./retailer.component.scss'],
 })
 export class RetailerComponent implements OnInit {
   isSidePanelExpanded: boolean;
   displayedColumns: string[] = [
-    "name",
-    "email",
-    "phone",
-    "retailer_name",
-    "profit",
-    "address",
+    'name',
+    'email',
+    'phone',
+    'retailer_name',
+    'profit',
+    'address',
+    'blocked',
   ];
   allRetailers: any;
   dataSource;
@@ -48,10 +73,12 @@ export class RetailerComponent implements OnInit {
     private interaction: InteractionService,
     private retailerService: RetailerService,
     private sharedService: SharedService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog,
+    private snackbar: MatSnackBar,
   ) {
     this.isSidePanelExpanded = this.interaction.getExpandedStatus();
-    this.sharedService.comp1Val = "";
+    this.sharedService.comp1Val = '';
   }
 
   ngOnInit() {
@@ -60,9 +87,10 @@ export class RetailerComponent implements OnInit {
     });
     this.retailerService.getAllRetailers().subscribe((res) => {
       this.allRetailers = res.body;
-      this.dataSource=new MatTableDataSource(this.allRetailers);
-      this.dataSource.sort=this.sort;
-      this.dataSource.paginator=this.paginator;
+      this.dataSource = new MatTableDataSource(this.allRetailers);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+
     });
   }
   // tslint:disable-next-line: use-lifecycle-interface
@@ -75,9 +103,42 @@ export class RetailerComponent implements OnInit {
       this.dataSource.filter = filterValue.trim().toLowerCase();
     }
   }
-  getRecord(selectRow: any) {
-    this.record = selectRow;
-    this.sharedService.updateComp1Val(selectRow);
-    this.router.navigate(["/transactions"]);
+
+  openConfirmBlockDialog(vendorId, set) {
+    const dialogRef = this.dialog.open(BlockConformationDialog, {
+      width: '20em',
+      data: '',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.retailerService.blockVendor(vendorId, set)
+        .subscribe((res) => {
+          console.log(res);
+          if (res.body.message === 'vendor blocked') {
+            this.snackbar.open('Retailer blocked', '', {
+              duration: 5000,
+            });
+          } else {
+            this.snackbar.open('Retailer unblocked', '', {
+              duration: 5000,
+            });
+          }
+          this.router
+            .navigateByUrl('/login', { skipLocationChange: true })
+            .then(() => {
+              this.router.navigate(['/retailers']);
+            });
+          },
+          (error) => {
+            this.snackbar.open('Error Occured, Try after sometime.', '', {
+              duration: 5000,
+            });
+          }
+        );
+      }
+    });
   }
+
 }
+

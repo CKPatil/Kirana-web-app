@@ -10,12 +10,13 @@ import { BehaviorSubject } from "rxjs";
 })
 export class RetailerService {
   getAllRetailerURL: string;
+  getBlockRetailersURL: string;
   httpOptions: any;
 
   constructor(private http: HttpClient) {
     this.getAllRetailerURL =
       environment.backend_end_point + environment.retailers;
-
+    this.getBlockRetailersURL = environment.backend_end_point + environment.blockVendorURL;
     // FOR Observable
     this.allInviteRequests = new Array();
     this.observeInviteRequests = new BehaviorSubject(this.allInviteRequests);
@@ -44,6 +45,18 @@ export class RetailerService {
       );
   }
 
+  blockVendor(vendorId, set) {
+    return this.http
+      .put(this.getBlockRetailersURL + vendorId + '&set=' + set, {
+        headers: this.httpOptions,
+        observe: "response",
+      })
+      .pipe(
+        catchError((error) => {
+          return throwError(error);
+        })
+      );
+  }
   // // to get the invitation requests from the server
   // getAllInvitationRequests() {
   //   let inviteUrl = environment.backend_end_point + environment.inviteURL;

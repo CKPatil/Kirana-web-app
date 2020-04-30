@@ -1,0 +1,10 @@
+<h1 mat-dialog-title class="text-center font-weight-bold">
+  Do you really wanted to block the Retailer?
+</h1>
+
+<mat-dialog-actions class="mt-3 row justify-content-around">
+  <button mat-stroked-button (click)="onNoClick()">Cancel</button>
+  <button mat-flat-button color="primary" [mat-dialog-close]="true">
+    Yes
+  </button>
+</mat-dialog-actions>
