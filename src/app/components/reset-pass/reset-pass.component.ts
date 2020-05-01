@@ -82,7 +82,6 @@ export class ResetPassComponent {
     this.resetpasswordService.addNewPassword(this.resetPass)
       .subscribe(res => {
           this.mess = res.body.message;
-          console.log(this.mess);
           if (this.mess === 'password updated') {
             this.snackBar.open(this.message, this.actionButtonLabel);
             this.dialogRef.close();
