@@ -67,6 +67,7 @@ export class RetailerComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   record: any;
+  blockMsg: any;
   comp1val: string;
   comp2val: string;
   constructor(
@@ -86,7 +87,6 @@ export class RetailerComponent implements OnInit {
       this.isSidePanelExpanded = res;
     });
     this.retailerService.getAllRetailers().subscribe((res) => {
-      console.log(res);
       this.allRetailers = res.body;
       this.dataSource = new MatTableDataSource(this.allRetailers);
       this.dataSource.sort = this.sort;
@@ -108,23 +108,26 @@ export class RetailerComponent implements OnInit {
   openConfirmBlockDialog(vendorId, set) {
     const dialogRef = this.dialog.open(BlockConformationDialog, {
       width: '20em',
-      data: '',
+      data: set,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.retailerService.blockVendor(vendorId, set)
         .subscribe( (res) => {
-          console.log(res);
-          // if (res.body.message === 'vendor blocked') {
-          //   this.snackbar.open('Retailer blocked', '', {
-          //     duration: 5000,
-          //   });
-          // } else {
-          //   this.snackbar.open('Retailer unblocked', '', {
-          //     duration: 5000,
-          //   });
-          // }
+          this.blockMsg = res;
+          console.log(this.blockMsg);
+          if (this.blockMsg === 'vendor blocked') {
+            this.snackbar.open('Retailer blocked', '', {
+              duration: 2000,
+              panelClass: 'snackbar',
+            });
+          } else {
+            this.snackbar.open('Retailer unblocked', '', {
+              duration: 2000,
+              panelClass: 'snackbar',
+            });
+          }
           this.router
             .navigateByUrl('/login', { skipLocationChange: true })
             .then(() => {

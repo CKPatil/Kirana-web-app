@@ -50,6 +50,7 @@
                   formControlName="password"
                   placeholder="Enter your password"
                   [type]="hide ? 'password' : 'text'"
+                  (keyup.enter)="login()"
                 />
                 <mat-error
                   *ngIf="

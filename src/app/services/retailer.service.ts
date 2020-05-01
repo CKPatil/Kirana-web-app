@@ -64,12 +64,11 @@ export class RetailerService {
 
   blockVendor(vendorId, set) {
     const getBlockRetailersURL = environment.backend_end_point +
-    environment.blockVendorURL + `?v_id=${vendorId}&set=${set}/`;
+    environment.blockVendorURL + `?v_id=${vendorId}&set=${set}`;
     this.refreshHttpOptions();
     return this.http
-      .put(getBlockRetailersURL, {} , {
+      .put(getBlockRetailersURL, {}, {
         headers: this.httpOptions,
-        observe: 'response'
       })
       .pipe(
         catchError((error) => {
