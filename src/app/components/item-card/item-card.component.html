@@ -7,12 +7,16 @@
         <p class="text-90 text-muted m-0" title="Brand">By <b>{{ item.brand }}</b></p>
       </div>
       <div class="col-4 row p-0 justify-content-around text-center">
-        <button class="col-6 p-0" mat-icon-button color="primary" (click)="openEditProductDetailDialog()">
-          <mat-icon>create</mat-icon>
-        </button>
-        <button class="col-6 p-0" mat-icon-button color="primary" (click)="openConfirmDeleteDialog()">
-          <mat-icon>delete</mat-icon>
-        </button>
+        <div class="col-6 p-0">
+          <button mat-icon-button color="primary" (click)="openEditProductDetailDialog()">
+            <mat-icon>create</mat-icon>
+          </button>
+        </div>
+        <div class="col-6 p-0">
+          <button mat-icon-button color="primary" (click)="openConfirmDeleteDialog()">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
       </div>
     </div>
     <!-- img, other item detail container -->
