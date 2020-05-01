@@ -43,17 +43,24 @@ export class SidePanelComponent implements OnInit {
 
     this.router.events.forEach((event) => {
       if (event instanceof NavigationStart) {
-        this.navOptions.forEach(val => {
-          if (event.url.includes(val.link)) {
-            this.selectedOption = val
-          }
-        })
+        this.selectedOption = this.getNavOptionFromUrl(this.navOptions, event.url)
       }
     });
   }
 
   ngOnInit() {
-    this.selectedOption = this.navOptions[0];
+    // this.selectedOption = this.navOptions[0];
+    this.selectedOption = this.getNavOptionFromUrl(this.navOptions, this.router.url);
+  }
+
+  getNavOptionFromUrl(navOptions: [any], url: string) {
+    let navoption = ''
+    navOptions.forEach(val => {
+      if (url.includes(val.link)) {
+        navoption = val
+      }
+    })
+    return navoption
   }
 
   expandSidePanel() {
