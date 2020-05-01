@@ -1,5 +1,5 @@
-import { Component, OnInit, EventEmitter, Input, Output, SimpleChanges, OnChanges } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
+import { Router, ActivatedRoute, NavigationStart } from '@angular/router';
 import {
   trigger,
   state,
@@ -39,7 +39,18 @@ export class SidePanelComponent implements OnInit {
   selectedOption: any;
   clickedDivState = 'start';
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private activeroute: ActivatedRoute) {
+
+    this.router.events.forEach((event) => {
+      if (event instanceof NavigationStart) {
+        this.navOptions.forEach(val => {
+          if (event.url.includes(val.link)) {
+            this.selectedOption = val
+          }
+        })
+      }
+    });
+  }
 
   ngOnInit() {
     this.selectedOption = this.navOptions[0];
