@@ -86,6 +86,7 @@ export class RetailerComponent implements OnInit {
       this.isSidePanelExpanded = res;
     });
     this.retailerService.getAllRetailers().subscribe((res) => {
+      console.log(res);
       this.allRetailers = res.body;
       this.dataSource = new MatTableDataSource(this.allRetailers);
       this.dataSource.sort = this.sort;
@@ -113,21 +114,21 @@ export class RetailerComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.retailerService.blockVendor(vendorId, set)
-        .subscribe((res) => {
+        .subscribe( (res) => {
           console.log(res);
-          if (res.body.message === 'vendor blocked') {
-            this.snackbar.open('Retailer blocked', '', {
-              duration: 5000,
-            });
-          } else {
-            this.snackbar.open('Retailer unblocked', '', {
-              duration: 5000,
-            });
-          }
+          // if (res.body.message === 'vendor blocked') {
+          //   this.snackbar.open('Retailer blocked', '', {
+          //     duration: 5000,
+          //   });
+          // } else {
+          //   this.snackbar.open('Retailer unblocked', '', {
+          //     duration: 5000,
+          //   });
+          // }
           this.router
             .navigateByUrl('/login', { skipLocationChange: true })
             .then(() => {
-              this.router.navigate(['/retailers']);
+              this.router.navigate(['/retailer']);
             });
           },
           (error) => {

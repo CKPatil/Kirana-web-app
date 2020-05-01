@@ -25,7 +25,7 @@ export const environment = {
   resetPassURL: 'api/v1/update_password/',
   notification: 'api/v1/vendor/order/',
   disableVariant: "api/v1/disabled_products/",
-  blockVendorURL: 'api/v1/block_vendor/?v_id='
+  blockVendorURL: 'api/v1/block_vendor/'
 };
 
 /*1/
