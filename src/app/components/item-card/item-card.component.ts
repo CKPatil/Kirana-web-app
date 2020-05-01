@@ -154,7 +154,8 @@ export class ItemCardComponent {
   // for updating the product detail
   openEditProductDetailDialog() {
     const dialogRef = this.dialog.open(EditProductDetailDialog, {
-      width: "20em",
+      width: "90%",
+      maxWidth: "30em",
       data: this.item,
     });
 
