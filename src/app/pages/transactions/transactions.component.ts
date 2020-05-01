@@ -1,18 +1,27 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { InteractionService } from "src/app/services/interaction.service";
-import { TransactionService } from "src/app/services/transaction.service";
-import { FormControl } from "@angular/forms";
-import { MatDatepickerInputEvent } from "@angular/material";
-import { Observable } from "rxjs";
-import { startWith, map } from "rxjs/operators";
-import { PageEvent } from "@angular/material/paginator";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { InteractionService } from 'src/app/services/interaction.service';
+import { TransactionService } from 'src/app/services/transaction.service';
+import { FormControl } from '@angular/forms';
+import { MatDatepickerInputEvent } from '@angular/material';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
+import { PageEvent } from '@angular/material/paginator';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: "app-transactions",
-  templateUrl: "./transactions.component.html",
-  styleUrls: ["./transactions.component.scss"],
+  selector: 'app-transactions',
+  templateUrl: './transactions.component.html',
+  styleUrls: ['./transactions.component.scss'],
 })
 export class TransactionsComponent implements OnInit, OnDestroy {
+
+  constructor(
+    private interaction: InteractionService,
+    private transactionService: TransactionService,
+    private route: ActivatedRoute
+  ) {
+    this.isSidePanelExpanded = this.interaction.getExpandedStatus();
+  }
   pageEvent: PageEvent;
   pageSize = 25;
   pageSizeOptions: number[] = [25, 50, 100];
@@ -24,13 +33,13 @@ export class TransactionsComponent implements OnInit, OnDestroy {
 
   retailers = [];
 
-  status = ["Ordered", "Packed", "Dispatched", "Delivered", "Cancelled", "Payment failure"];
+  status = ['Ordered', 'Packed', 'Dispatched', 'Delivered', 'Cancelled'];
 
   isSidePanelExpanded: boolean;
 
   allTransaction: any = [];
   removeDuplicate: string[] = [];
-  temp = "";
+  temp = '';
 
   retailerControl = new FormControl();
   statusControl = new FormControl();
@@ -38,9 +47,10 @@ export class TransactionsComponent implements OnInit, OnDestroy {
 
   date: Date[] = [];
   orderDate: string[] = [];
-
   retailerFilteredOptions: Observable<string[]>;
   statusFilteredOptions: Observable<string[]>;
+
+  refresh;
 
   private _retailerfilter(value: string): string[] {
     const retailerFilterValue = value.toLocaleLowerCase();
@@ -56,24 +66,16 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     );
   }
 
-  constructor(
-    private interaction: InteractionService,
-    private transactionService: TransactionService
-  ) {
-    this.isSidePanelExpanded = this.interaction.getExpandedStatus();
-  }
-
-  refresh;
-
   ngOnInit() {
     this.interaction.expandedStatus$.subscribe((res) => {
       this.isSidePanelExpanded = res;
     });
     this.getTransactionHistory();
-
-    // this.refresh = setInterval(() => {
-    //   this.getTransactionHistory();
-    // }, 60000);
+    this.route.queryParams.subscribe(query => {
+      if (query.retailer) {
+        this.retailerControl.setValue(query.retailer);
+      }
+    });
   }
 
   // to clear the refresh interval
@@ -85,15 +87,13 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     if (event.value) {
       this.searchDate = this.parseDate(event.value);
     } else {
-      this.searchDate = "";
+      this.searchDate = '';
     }
   }
 
   getTransactionHistory() {
     this.transactionService.observeOrders.subscribe((res) => {
       this.allTransaction = res;
-      // this.allTransaction.reverse();
-      console.log(this.allTransaction);
       this.pageEvent = {
         pageIndex: 0,
         pageSize: 25,
@@ -120,11 +120,11 @@ export class TransactionsComponent implements OnInit, OnDestroy {
       }
 
       this.statusFilteredOptions = this.statusControl.valueChanges.pipe(
-        startWith(""),
+        startWith(''),
         map((value) => this._statusFilter(value))
       );
       this.retailerFilteredOptions = this.retailerControl.valueChanges.pipe(
-        startWith(""),
+        startWith(''),
         map((value) => this._retailerfilter(value))
       );
     });
@@ -135,10 +135,10 @@ export class TransactionsComponent implements OnInit, OnDestroy {
   }
 
   onReset() {
-    this.statusControl.setValue("");
-    this.retailerControl.setValue("");
-    this.dateControl.setValue("");
-    this.searchDate = "";
+    this.statusControl.setValue('');
+    this.retailerControl.setValue('');
+    this.dateControl.setValue('');
+    this.searchDate = '';
     this.length = this.allTransaction.length;
   }
 
@@ -151,9 +151,9 @@ export class TransactionsComponent implements OnInit, OnDestroy {
   parseDate = (d) => {
     d = new Date(d);
     let date = d.getDate();
-    date = ("" + date).length === 1 ? "" + 0 + date : date;
+    date = ('' + date).length === 1 ? '' + 0 + date : date;
     let month = d.getMonth();
-    month = ("" + (month + 1)).length === 1 ? "" + 0 + (month + 1) : month + 1;
+    month = ('' + (month + 1)).length === 1 ? '' + 0 + (month + 1) : month + 1;
     const year = d.getFullYear();
     return `${date}/${month}/${year}`;
   };

@@ -38,3 +38,13 @@ $candy-app-theme: mat-light-theme(
 );
 
 @include angular-material-theme($candy-app-theme);
+.snackbar {
+  padding: 10px !important; // spacing between the text and boundary
+  color: #f7f0cf;
+  width: 100px;
+  text-align: center;
+  .mat-button-wrapper {
+      color: black !important; // action text color
+  }
+}
+
