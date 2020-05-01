@@ -16,6 +16,7 @@ import { MatSnackBar } from "@angular/material";
 })
 export class UpdateItemComponent {
   @Input() variant: any;
+  @Input() unit: any;
 
   constructor(
     public dialog: MatDialog,
@@ -28,7 +29,7 @@ export class UpdateItemComponent {
   openDialog() {
     const dialogRef = this.dialog.open(UpdateItemModal, {
       width: "350px",
-      data: this.variant,
+      data: { variant: this.variant, unit: this.unit },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -74,9 +75,9 @@ export class UpdateItemModal {
     private fb: FormBuilder
   ) {
     this.itemForm.setValue({
-      variant: data.variant,
-      quantity: data.quantity,
-      price: data.price,
+      variant: data.variant.variant,
+      quantity: data.variant.quantity,
+      price: data.variant.price,
     });
   }
 

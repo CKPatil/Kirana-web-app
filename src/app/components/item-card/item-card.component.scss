@@ -18,7 +18,7 @@ table {
   width: 100%;
 }
 
-.table-fixed thead{
+.table-fixed thead {
   min-width: 32em;
   overflow-y: auto;
 }
@@ -42,5 +42,17 @@ table {
     content: "";
     clear: both;
     display: block;
+  }
+}
+
+.detail-container {
+  height: auto;
+  text-align: justify;
+}
+
+@media (min-width: 575px) {
+  .detail-container {
+    overflow: auto;
+    height: 12em;
   }
 }
