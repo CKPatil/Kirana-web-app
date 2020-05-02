@@ -19,13 +19,6 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   cancelOrderStatus: any;
   packedOrderStatus: any;
   dispatchedOrderStatus: any;
-  today = new Date();
-  formattedTodayDate =
-    ('0' + this.today.getDate()).slice(-2) +
-    '/' +
-    ('0' + (this.today.getMonth() + 1)).slice(-2) +
-    '/' +
-    this.today.getFullYear();
   criticalOrder: any = [];
   criticalOrderFilter: any = [];
   notifications: any[];
@@ -36,7 +29,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   orderedNotification: any = [];
   cancelNotification: any = [];
   packedNotification: any = [];
-  dispatchedNotification: any = [];
+  dispatchedNotification: any = [];new
   newOrderedStatus: any;
   cancelOrderedStatus: any;
   packedOrderedStatus: any;
@@ -94,6 +87,13 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   isCancel = false;
   isPacked = false;
   isDispatch = false;
+  today = new Date();
+  formattedTodayDate =
+    ('0' + this.today.getDate()).slice(-2) +
+    '/' +
+    ('0' + (this.today.getMonth() + 1)).slice(-2) +
+    '/' +
+    this.today.getFullYear();
 
   ngOnInit() {
     this.newOrderStatus = localStorage.getItem('newOrder');
@@ -157,25 +157,16 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   }
 
   newOrderFun() {
-    if (this.newLen !== null) {
-      this.newLen = localStorage.getItem('newLength');
-    } else {
-      this.newLen = 0;
-    }
-    if ((this.orderedNotification.length - this.newLen > 0) && this.newOrderStatus === 'true') {
-      this.change = 'true';
-      localStorage.setItem('change', this.change);
-    }
-    for (let i = 0; i < this.orderedNotification.length - this.newLen; i++) {
-      this.newFilteredArray[i] = this.orderedNotification[i];
-      this.date = new Date(this.newFilteredArray[i].timestamp);
+    for (let i = 0; i < this.orderedNotification.length; i++) {
+      this.newLen++;
+      this.date = new Date(this.orderedNotification[i].timestamp);
       this.formatDate =
         ('0' + this.date.getDate()).slice(-2) +
         '/' +
         ('0' + (this.date.getMonth() + 1)).slice(-2) +
         '/' +
         this.date.getFullYear();
-      this.time = new Date(this.newFilteredArray[i].timestamp);
+      this.time = new Date(this.orderedNotification[i].timestamp);
       this.actualTime = this.time.toLocaleTimeString();
       this.newOrderTime.push(this.actualTime);
       this.newOrderDate.push(this.formatDate);
@@ -183,25 +174,16 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   }
 
   cancelOrderFun() {
-    if (this.cancelLen !== null) {
-      this.cancelLen = localStorage.getItem('cancelLength');
-    } else {
-      this.cancelLen = 0;
-    }
-    if ((this.cancelNotification.length - this.cancelLen > 0) && this.cancelOrderStatus === 'true') {
-      this.change = 'true';
-      localStorage.setItem('change', this.change);
-    }
-    for (let i = 0; i < this.cancelNotification.length - this.cancelLen; i++) {
-      this.cancelFilteredArray[i] = this.cancelNotification[i];
-      this.date = new Date(this.cancelFilteredArray[i].timestamp);
+    for (let i = 0; i < this.cancelNotification.length; i++) {
+      this.cancelLen++;
+      this.date = new Date(this.cancelNotification[i].timestamp);
       this.formatDate =
         ('0' + this.date.getDate()).slice(-2) +
         '/' +
         ('0' + (this.date.getMonth() + 1)).slice(-2) +
         '/' +
         this.date.getFullYear();
-      this.time = new Date(this.cancelFilteredArray[i].timestamp);
+      this.time = new Date(this.cancelNotification[i].timestamp);
       this.actualTime = this.time.toLocaleTimeString();
       this.cancelOrderTime.push(this.actualTime);
       this.cancelOrderDate.push(this.formatDate);
@@ -261,25 +243,16 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   }
 
   packedOrderFun() {
-    if (this.packedLen !== null) {
-      this.packedLen = localStorage.getItem('packedLength');
-    } else {
-      this.packedLen = 0;
-    }
-    if ((this.packedNotification.length - this.packedLen > 0) && this.packedOrderStatus === 'true') {
-      this.change = 'true';
-      localStorage.setItem('change', this.change);
-    }
-    for (let i = 0; i < this.packedNotification.length - this.packedLen; i++) {
-      this.packedFilteredArray[i] = this.packedNotification[i];
-      this.date = new Date(this.packedFilteredArray[i].timestamp);
+    for (let i = 0; i < this.packedNotification.length ; i++) {
+      this.packedLen++;
+      this.date = new Date(this.packedNotification[i].timestamp);
       this.formatDate =
         ('0' + this.date.getDate()).slice(-2) +
         '/' +
         ('0' + (this.date.getMonth() + 1)).slice(-2) +
         '/' +
         this.date.getFullYear();
-      this.time = new Date(this.packedFilteredArray[i].timestamp);
+      this.time = new Date(this.packedNotification[i].timestamp);
       this.actualTime = this.time.toLocaleTimeString();
       this.packedOrderTime.push(this.actualTime);
       this.packedOrderDate.push(this.formatDate);
@@ -287,25 +260,16 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   }
 
   dispatchedFun() {
-    if (this.dispatchLen !== null) {
-      this.dispatchLen = localStorage.getItem('dispatchedLength');
-    } else {
-      this.dispatchLen = 0;
-    }
-    if ((this.dispatchedNotification.length - this.dispatchLen > 0) && this.dispatchedOrderStatus === 'true') {
-      this.change = 'true';
-      localStorage.setItem('change', this.change);
-    }
-    for (let i = 0; i < this.dispatchedNotification.length - this.dispatchLen; i++) {
-      this.dispatchedFilteredArray[i] = this.dispatchedNotification[i];
-      this.date = new Date(this.dispatchedFilteredArray[i].timestamp);
+    for (let i = 0; i < this.dispatchedNotification.length; i++) {
+      this.dispatchLen++;
+      this.date = new Date(this.dispatchedNotification[i].timestamp);
       this.formatDate =
         ('0' + this.date.getDate()).slice(-2) +
         '/' +
         ('0' + (this.date.getMonth() + 1)).slice(-2) +
         '/' +
         this.date.getFullYear();
-      this.time = new Date(this.dispatchedFilteredArray[i].timestamp);
+      this.time = new Date(this.dispatchedNotification[i].timestamp);
       this.actualTime = this.time.toLocaleTimeString();
       this.dispatchedOrderTime.push(this.actualTime);
       this.dispatchedOrderDate.push(this.formatDate);
