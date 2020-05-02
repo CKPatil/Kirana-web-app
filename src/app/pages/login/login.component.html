@@ -50,8 +50,8 @@
                   formControlName="password"
                   placeholder="Enter your password"
                   [type]="hide ? 'password' : 'text'"
-                  (keyup.enter)="login()"
-                />
+                  (keyup.enter)="loginForm.valid?login():''"
+                  />
                 <mat-error
                   *ngIf="
                     loginForm.controls['password']?.errors?.required &&
@@ -63,7 +63,7 @@
                 <button
                   mat-icon-button
                   matSuffix
-                  (click)="hide = !hide"
+                  (click)="togglePasswordView($event)"
                   [attr.aria-label]="'Hide password'"
                   [attr.aria-pressed]="hide"
                 >
