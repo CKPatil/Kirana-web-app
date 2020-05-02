@@ -1,26 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
-@import './_var';
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import "./_var";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   // font-size: 15px;
   // color: #333344;
 }
 
 body {
-    background-color: $color-primary2;
-    overflow: hidden;
+  background-color: $color-primary2;
+  overflow: hidden;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 .cursorPointer {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 @import "~@angular/material/theming";
@@ -28,7 +28,7 @@ a {
 
 $candy-app-primary: mat-palette($mat-green, A400, A500, 900, A400);
 $candy-app-accent: mat-palette($mat-pink, A700, A400, A400);
-$candy-app-warn:    mat-palette($mat-red);
+$candy-app-warn: mat-palette($mat-red);
 
 // // Create the theme object (a Sass map containing all of the palettes).
 $candy-app-theme: mat-light-theme(
@@ -38,13 +38,12 @@ $candy-app-theme: mat-light-theme(
 );
 
 @include angular-material-theme($candy-app-theme);
-.snackbar {
-  padding: 10px !important; // spacing between the text and boundary
-  color: #f7f0cf;
-  width: 100px;
-  text-align: center;
-  .mat-button-wrapper {
-      color: black !important; // action text color
-  }
-}
-
+// .snackbar {
+//   padding: 10px !important; // spacing between the text and boundary
+//   color: #f7f0cf;
+//   width: 100px;
+//   text-align: center;
+//   .mat-button-wrapper {
+//       color: black !important; // action text color
+//   }
+// }

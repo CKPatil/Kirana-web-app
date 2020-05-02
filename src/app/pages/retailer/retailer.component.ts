@@ -39,7 +39,7 @@ export class BlockConformationDialog {
   constructor(
     public dialogRef: MatDialogRef<BlockConformationDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  ) { }
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -114,31 +114,31 @@ export class RetailerComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.retailerService.blockVendor(vendorId, set)
-        .subscribe( (res) => {
-          this.blockMsg = res;
-          if (this.blockMsg === 'vendor blocked') {
-            this.snackbar.open('Retailer blocked', '', {
-              duration: 2000,
-              panelClass: 'snackbar',
-            });
-          } else {
-            this.snackbar.open('Retailer unblocked', '', {
-              duration: 2000,
-              panelClass: 'snackbar',
-            });
-          }
-          this.router
-            .navigateByUrl('/login', { skipLocationChange: true })
-            .then(() => {
-              this.router.navigate(['/retailer']);
-            });
+          .subscribe((res) => {
+            this.blockMsg = res;
+            if (this.blockMsg.message === 'vendor blocked') {
+              this.snackbar.open('Retailer blocked', '', {
+                duration: 2000,
+                panelClass: 'snackbar',
+              });
+            } else {
+              this.snackbar.open('Retailer unblocked', '', {
+                duration: 2000,
+                panelClass: 'snackbar',
+              });
+            }
+            this.router
+              .navigateByUrl('/login', { skipLocationChange: true })
+              .then(() => {
+                this.router.navigate(['/retailer']);
+              });
           },
-          (error) => {
-            this.snackbar.open('Error Occured, Try after sometime.', '', {
-              duration: 5000,
-            });
-          }
-        );
+            (error) => {
+              this.snackbar.open('Error Occured, Try after sometime.', '', {
+                duration: 5000,
+              });
+            }
+          );
       }
     });
   }

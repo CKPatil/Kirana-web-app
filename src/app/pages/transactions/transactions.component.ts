@@ -142,9 +142,12 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     this.length = this.allTransaction.length;
   }
 
-  updatePageSize(i, k) {
+  updatePageSize(i, k, length) {
     if (k) {
-      this.length = i + 1;
+      console.log(k)
+      console.log(i)
+      console.log(length)
+      // this.length = i + 1;
     }
   }
 
