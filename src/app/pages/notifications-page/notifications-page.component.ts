@@ -26,10 +26,10 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   cancelledStatus = 'Cancelled';
   packedStatus = 'Packed';
   dispatchedStatus = 'Dispatched';
-  orderedNotification: any = [];
-  cancelNotification: any = [];
-  packedNotification: any = [];
-  dispatchedNotification: any = [];new
+  orderedNotifications: any = [];
+  cancelNotifications: any = [];
+  packedNotifications: any = [];
+  dispatchedNotifications: any = [];
   newOrderedStatus: any;
   cancelOrderedStatus: any;
   packedOrderedStatus: any;
@@ -49,11 +49,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   criticalOrderSet: any;
   criticalOrderDateSet: any;
   criticalOrderTimeSet: any;
-  newFilteredArray = [];
-  cancelFilteredArray = [];
   criticalFilteredArray = [];
-  packedFilteredArray = [];
-  dispatchedFilteredArray = [];
   notifylen: number;
   newOrderDate = [];
   cancelOrderDate = [];
@@ -82,7 +78,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   initial: any;
   newInvitationId = '0';
   ph_no: any;
-  allnotify: boolean = false;
+  allnotify = false;
   isNew = false;
   isCancel = false;
   isPacked = false;
@@ -117,19 +113,19 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
     this.transactionService.observeOrders.subscribe((data) => {
       this.notifications = data;
       this.newOrderedStatus = { records: this.notifications };
-      this.orderedNotification = this.newOrderedStatus.records.filter(
+      this.orderedNotifications = this.newOrderedStatus.records.filter(
         (i: { status: string }) => this.newStatus.includes(i.status)
       );
       this.cancelOrderedStatus = { records: this.notifications };
-      this.cancelNotification = this.cancelOrderedStatus.records.filter(
+      this.cancelNotifications = this.cancelOrderedStatus.records.filter(
         (i: { status: string }) => this.cancelledStatus.includes(i.status)
       );
       this.packedOrderedStatus = { records: this.notifications };
-      this.packedNotification = this.packedOrderedStatus.records.filter(
+      this.packedNotifications = this.packedOrderedStatus.records.filter(
         (i: { status: string }) => this.packedStatus.includes(i.status)
       );
       this.dispatchedOrderedStatus = { records: this.notifications };
-      this.dispatchedNotification = this.dispatchedOrderedStatus.records.filter(
+      this.dispatchedNotifications = this.dispatchedOrderedStatus.records.filter(
         (i: { status: string }) => this.dispatchedStatus.includes(i.status)
       );
       this.newOrderFun();
@@ -157,16 +153,19 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   }
 
   newOrderFun() {
-    for (let i = 0; i < this.orderedNotification.length; i++) {
-      this.newLen++;
-      this.date = new Date(this.orderedNotification[i].timestamp);
+    this.newLen = 0;
+    for (let i = 0; i < this.orderedNotifications.length; i++) {
+      if (this.orderedNotifications[i].is_read === false) {
+        this.newLen++;
+      }
+      this.date = new Date(this.orderedNotifications[i].timestamp);
       this.formatDate =
         ('0' + this.date.getDate()).slice(-2) +
         '/' +
         ('0' + (this.date.getMonth() + 1)).slice(-2) +
         '/' +
         this.date.getFullYear();
-      this.time = new Date(this.orderedNotification[i].timestamp);
+      this.time = new Date(this.orderedNotifications[i].timestamp);
       this.actualTime = this.time.toLocaleTimeString();
       this.newOrderTime.push(this.actualTime);
       this.newOrderDate.push(this.formatDate);
@@ -174,16 +173,19 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   }
 
   cancelOrderFun() {
-    for (let i = 0; i < this.cancelNotification.length; i++) {
-      this.cancelLen++;
-      this.date = new Date(this.cancelNotification[i].timestamp);
+    this.cancelLen = 0;
+    for (let i = 0; i < this.cancelNotifications.length; i++) {
+      if (this.cancelNotifications[i].is_read === false) {
+        this.cancelLen++;
+      }
+      this.date = new Date(this.cancelNotifications[i].timestamp);
       this.formatDate =
         ('0' + this.date.getDate()).slice(-2) +
         '/' +
         ('0' + (this.date.getMonth() + 1)).slice(-2) +
         '/' +
         this.date.getFullYear();
-      this.time = new Date(this.cancelNotification[i].timestamp);
+      this.time = new Date(this.cancelNotifications[i].timestamp);
       this.actualTime = this.time.toLocaleTimeString();
       this.cancelOrderTime.push(this.actualTime);
       this.cancelOrderDate.push(this.formatDate);
@@ -243,16 +245,19 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   }
 
   packedOrderFun() {
-    for (let i = 0; i < this.packedNotification.length ; i++) {
-      this.packedLen++;
-      this.date = new Date(this.packedNotification[i].timestamp);
+    this.packedLen = 0;
+    for (let i = 0; i < this.packedNotifications.length ; i++) {
+      if (this.packedNotifications[i].is_read === false) {
+        this.packedLen++;
+      }
+      this.date = new Date(this.packedNotifications[i].timestamp);
       this.formatDate =
         ('0' + this.date.getDate()).slice(-2) +
         '/' +
         ('0' + (this.date.getMonth() + 1)).slice(-2) +
         '/' +
         this.date.getFullYear();
-      this.time = new Date(this.packedNotification[i].timestamp);
+      this.time = new Date(this.packedNotifications[i].timestamp);
       this.actualTime = this.time.toLocaleTimeString();
       this.packedOrderTime.push(this.actualTime);
       this.packedOrderDate.push(this.formatDate);
@@ -260,20 +265,29 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   }
 
   dispatchedFun() {
-    for (let i = 0; i < this.dispatchedNotification.length; i++) {
-      this.dispatchLen++;
-      this.date = new Date(this.dispatchedNotification[i].timestamp);
+    this.dispatchLen = 0;
+    for (let i = 0; i < this.dispatchedNotifications.length; i++) {
+      if (this.dispatchedNotifications[i].is_read === false) {
+        this.dispatchLen++;
+      }
+      this.date = new Date(this.dispatchedNotifications[i].timestamp);
       this.formatDate =
         ('0' + this.date.getDate()).slice(-2) +
         '/' +
         ('0' + (this.date.getMonth() + 1)).slice(-2) +
         '/' +
         this.date.getFullYear();
-      this.time = new Date(this.dispatchedNotification[i].timestamp);
+      this.time = new Date(this.dispatchedNotifications[i].timestamp);
       this.actualTime = this.time.toLocaleTimeString();
       this.dispatchedOrderTime.push(this.actualTime);
       this.dispatchedOrderDate.push(this.formatDate);
     }
+  }
+  onClick(orderId) {
+    this.transactionService.readNotification(orderId)
+      .subscribe( (res) => {
+        console.log(res);
+      });
   }
   onReq() {
     this.invite = !this.invite;
@@ -307,7 +321,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
     }
   }
   onCancel() {
-    this.isCancel= true;
+    this.isCancel = true;
     this.cancel = !this.cancel;
     if (this.cancel === true) {
       this.dispatch = false;
@@ -342,17 +356,5 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.change = 'false';
     localStorage.setItem('change', this.change);
-    if (this.isNew) {
-      localStorage.setItem('newLength', this.orderedNotification.length);
-    }
-    if (this.isCancel) {
-      localStorage.setItem('cancelLength', this.cancelNotification.length);
-    }
-    if (this.isPacked) {
-      localStorage.setItem('packedLength', this.packedNotification.length);
-    }
-    if (this.isDispatch) {
-      localStorage.setItem('dispatchedLength', this.dispatchedNotification.length);
-    }
   }
 }

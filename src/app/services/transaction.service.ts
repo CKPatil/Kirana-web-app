@@ -118,5 +118,20 @@ export class TransactionService {
       );
   }
 
+  readNotification(orderId) {
+    const getReadNotification = environment.backend_end_point
+          + environment.readNotification + `/?order_id=${orderId}`;
+    this.refreshHttpOptions();
+    return this.http
+    .get(getReadNotification, {
+      headers: this.httpOptions,
+    })
+    .pipe(
+      catchError((error) => {
+        return throwError(error);
+      })
+    );
+
+  }
   // ///////////// END NEW CODE
 }
