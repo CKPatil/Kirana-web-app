@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  backend_end_point: 'http://54.197.216.47/',
+  backend_end_point: 'http://13.233.33.65/',
   port_number: '8000',
   userDetails: 'api/v1/userDetails/',
   order: "api/v1/vendor/order/",

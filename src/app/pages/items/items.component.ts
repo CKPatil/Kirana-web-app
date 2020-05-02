@@ -10,7 +10,7 @@ import { MatSnackBar } from "@angular/material";
 export class ItemsComponent {
   searchText;
   allProducts: any = [];
-  productsData: any;
+  productsData: any = { categories: [], sub_categories: {}, brands: {} }
 
   constructor(
     private productService: ProductsService,
