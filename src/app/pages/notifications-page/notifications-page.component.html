@@ -250,6 +250,7 @@
                 [routerLink]="['../dashboard']" fragment="dispatchedOrders"
                 (click)='onClick(dispatchNotification.id)'
                 style="cursor: pointer; margin-bottom: 1em;"
+                [ngStyle]='dispatchObject'
               >
                 <div class="innerdiv">
                   <div class="row">
@@ -325,9 +326,9 @@
               <mat-card
                 class="mat-elevation-z3"
                 *ngFor="let i = index; let newNotification of orderedNotifications"
-                [routerLink]="['../dashboard']" [fragment]="'newOrders'"
                 (click)='onClick(newNotification.id)'
                 style="cursor: pointer; margin-bottom: 1em;"
+                [ngStyle]='newObject'
               >
                 <div class="innerdiv">
                   <div class="row">
@@ -378,6 +379,7 @@
                 [routerLink]="['../dashboard']" [fragment]="'packedOrders'"
                 (click)='onClick(packedNotification.id)'
                 style="cursor: pointer; margin-bottom: 1em;"
+                [ngStyle]='packedObject'
               >
                 <div class="innerdiv">
                   <div class="row">
@@ -428,6 +430,7 @@
                 "
                 (click)='onClick(cancelledNotification.id)'
                 style="cursor: pointer; margin-bottom: 1em;"
+                [ngStyle]='cancelObject'
               >
                 <div class="innerdiv">
                   <div class="row">

@@ -84,6 +84,10 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   isPacked = false;
   isDispatch = false;
   today = new Date();
+  newObject: any;
+  cancelObject: any;
+  packedObject: any;
+  dispatchObject: any;
   formattedTodayDate =
     ('0' + this.today.getDate()).slice(-2) +
     '/' +
@@ -158,6 +162,15 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
       if (this.orderedNotifications[i].is_read === false) {
         this.newLen++;
       }
+      if (this.orderedNotifications[i].is_read === false) {
+        this.newObject = {
+          ['border-left']: '3px solid lightgreen'
+        };
+      } else {
+        this.newObject = {
+          ['border-left']: '3px solid red'
+        };
+      }
       this.date = new Date(this.orderedNotifications[i].timestamp);
       this.formatDate =
         ('0' + this.date.getDate()).slice(-2) +
@@ -177,6 +190,15 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.cancelNotifications.length; i++) {
       if (this.cancelNotifications[i].is_read === false) {
         this.cancelLen++;
+      }
+      if (this.cancelNotifications[i].is_read === false) {
+        this.cancelObject = {
+          ['border-left']: '3px solid lightgreen'
+        };
+      } else {
+        this.cancelObject = {
+          ['border-left']: '3px solid red'
+        };
       }
       this.date = new Date(this.cancelNotifications[i].timestamp);
       this.formatDate =
@@ -250,6 +272,15 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
       if (this.packedNotifications[i].is_read === false) {
         this.packedLen++;
       }
+      if (this.packedNotifications[i].is_read === false) {
+        this.packedObject = {
+          ['border-left']: '3px solid lightgreen'
+        };
+      } else {
+        this.packedObject = {
+          ['border-left']: '3px solid red'
+        };
+      }
       this.date = new Date(this.packedNotifications[i].timestamp);
       this.formatDate =
         ('0' + this.date.getDate()).slice(-2) +
@@ -269,6 +300,15 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.dispatchedNotifications.length; i++) {
       if (this.dispatchedNotifications[i].is_read === false) {
         this.dispatchLen++;
+      }
+      if (this.dispatchedNotifications[i].is_read === false) {
+        this.dispatchObject = {
+          ['border-left']: '3px solid lightgreen'
+        };
+      } else {
+        this.dispatchObject = {
+          ['border-left']: '3px solid red'
+        };
       }
       this.date = new Date(this.dispatchedNotifications[i].timestamp);
       this.formatDate =
