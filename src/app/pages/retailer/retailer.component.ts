@@ -116,7 +116,6 @@ export class RetailerComponent implements OnInit {
         this.retailerService.blockVendor(vendorId, set)
           .subscribe((res) => {
             this.blockMsg = res;
-            // console.log(this.blockMsg);
             if (this.blockMsg.message === 'vendor blocked') {
               this.snackbar.open('Retailer blocked', '', {
                 duration: 2000,
