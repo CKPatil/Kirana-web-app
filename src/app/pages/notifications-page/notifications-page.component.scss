@@ -96,3 +96,10 @@ h6 {
 .scrollb::-webkit-scrollbar {
   width: 8px;   // for vertical scroll bar
 }
+.positive {
+  background-color: green;
+}
+
+.negative {
+  background-color: red;
+}
