@@ -1,7 +1,7 @@
 <div class="row">
   <h1 mat-dialog-title class="col-11 text-center font-weight-bold">Invitation Request Detail</h1>
   <div mat-dialog-actions class="col-1">
-    <button mat-icon-button color="primary" [mat-dialog-close]="" style="position: relative; top: -2.2em;">
+    <button mat-icon-button [mat-dialog-close]="" style="position: relative; top: -2.2em;">
       <mat-icon>clear</mat-icon>
     </button>
   </div>
@@ -49,10 +49,10 @@
 </div>
 <div mat-dialog-actions class="mt-2 row justify-content-around">
   <!-- <button mat-raised-button (click)="onNoClick()">Cancel</button> -->
-  <button mat-flat-button style="background-color: red;color: white;" [mat-dialog-close]="false">
+  <button mat-raised-button class="border border-danger" style="color: black;" [mat-dialog-close]="false">
     Reject
   </button>
-  <button mat-flat-button style="background-color: green;color: white;" [mat-dialog-close]="true">
+  <button mat-raised-button class="border border-success" style="border-style: 5px; color: black;" [mat-dialog-close]="true">
     Accept
   </button>
 </div>
