@@ -1,8 +1,8 @@
 <div class="outer" style="overflow-x: hidden;">
   <div  style="overflow-y:auto; overflow-x: hidden; margin-right: 10%;">
-  <h3 style="text-align: center; margin-bottom: 7vh;">
-    <b>Notification</b>
-  </h3>
+  <h2 style="text-align: center; margin-bottom: 7vh;">
+    <b>Notifications</b>
+  </h2>
     <div class="row d-flex justify-content-center">
       <div class="col-12 col-md-10 col-lg-6">
         <mat-card class="mat-elevation-z8"
@@ -250,10 +250,7 @@
                 [routerLink]="['../dashboard']" fragment="dispatchedOrders"
                 (click)='onClick(dispatchNotification.id)'
                 style="cursor: pointer; margin-bottom: 1em;"
-                [ngClass]="{
-                  readed : dispatchObject == 'true',
-                  unreaded : dispatchObject == 'false'
-                }"
+                [ngClass]=" dispatchObject ? 'positive' : 'negative'"
               >
                 <div class="innerdiv">
                   <div class="row">
@@ -331,10 +328,7 @@
                 *ngFor="let i = index; let newNotification of orderedNotifications"
                 (click)='onClick(newNotification.id)'
                 style="cursor: pointer; margin-bottom: 1em;"
-                [ngClass]="{
-                  readed : newObject == 'true',
-                  unreaded : newObject == 'false'
-                }"
+                [ngClass]=" newObject ? 'positive' : 'negative'"
               >
                 <div class="innerdiv">
                   <div class="row">
@@ -385,10 +379,7 @@
                 [routerLink]="['../dashboard']" [fragment]="'packedOrders'"
                 (click)='onClick(packedNotification.id)'
                 style="cursor: pointer; margin-bottom: 1em;"
-                [ngClass]="{
-                  readed : packedObject == 'true',
-                  unreaded : packedObject == 'false'
-                }"
+                [ngClass]=" packedObject ? 'positive' : 'negative'"
               >
                 <div class="innerdiv">
                   <div class="row">
@@ -439,10 +430,7 @@
                 "
                 (click)='onClick(cancelledNotification.id)'
                 style="cursor: pointer; margin-bottom: 1em;"
-                [ngClass]="{
-                  readed : cancelObject == 'true',
-                  unreaded : cancelObject == 'false'
-                }"
+                [ngClass]=" cancelObject ? 'positive' : 'negative'"
               >
                 <div class="innerdiv">
                   <div class="row">

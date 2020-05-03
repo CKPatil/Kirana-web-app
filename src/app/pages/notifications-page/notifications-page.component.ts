@@ -162,6 +162,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
       if (this.orderedNotifications[i].is_read === false) {
         this.newLen++;
       }
+      this.newObject = this.orderedNotifications[i].is_read;
       this.date = new Date(this.orderedNotifications[i].timestamp);
       this.formatDate =
         ('0' + this.date.getDate()).slice(-2) +
@@ -182,6 +183,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
       if (this.cancelNotifications[i].is_read === false) {
         this.cancelLen++;
       }
+      this.cancelObject = this.cancelNotifications[i].is_read;
       this.date = new Date(this.cancelNotifications[i].timestamp);
       this.formatDate =
         ('0' + this.date.getDate()).slice(-2) +
@@ -254,6 +256,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
       if (this.packedNotifications[i].is_read === false) {
         this.packedLen++;
       }
+      this.packedObject = this.packedNotifications[i].is_read;
       this.date = new Date(this.packedNotifications[i].timestamp);
       this.formatDate =
         ('0' + this.date.getDate()).slice(-2) +
@@ -274,6 +277,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
       if (this.dispatchedNotifications[i].is_read === false) {
         this.dispatchLen++;
       }
+      this.dispatchObject = this.dispatchedNotifications[i].is_read;
       this.date = new Date(this.dispatchedNotifications[i].timestamp);
       this.formatDate =
         ('0' + this.date.getDate()).slice(-2) +
