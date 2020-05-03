@@ -41,7 +41,7 @@ export class HeaderComponent implements OnInit {
         for (let i = 0 ; i < this.notification.length ; i++ ) {
           // tslint:disable-next-line: radix
           if ((this.notification[i].status_change.getTime() - parseInt(localStorage.getItem('previousVisited')))
-              > 0 && this.notification[i].status !== 'Ordered') {
+              > 0 && this.notification[i].status !== 'Ordered' && this.notification[i].is_read !== true) {
             this.change = true;
             localStorage.setItem('change', this.change);
             break;
