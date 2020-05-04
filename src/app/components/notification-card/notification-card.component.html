@@ -1,0 +1,31 @@
+<mat-card
+  class="mat-elevation-z3"
+  (click)='onClick(notification.id)'
+  style="cursor: pointer; margin-bottom: 1em;"
+  [ngClass]=" notification.is_read ? 'positive' : 'negative'"
+>
+  <div class="innerdiv">
+    <div class="row">
+      <div class="col-12 col-md-8" >
+        <h5 style="line-height: 1em; word-wrap: break-word;">
+          New Order for
+          <b>{{ notification.retailer_name }}</b>
+        </h5>
+      </div>
+      <div class="col-12 col-md-4 od">
+        <p style="margin-top: 5px; float: right;">Date: {{notification.timestamp | date:'mediumDate'}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="innerdiv">
+    <small>OrderID: {{ notification.bill_no }}</small>
+    <p class="od">Time: {{notification.timestamp | date:'mediumTime'}}</p>
+  </div>
+  <p style="line-height: 1em; word-wrap: break-word;">
+    Customer Name: <b>{{ notification.customer_name }}</b>
+  </p>
+  <p style="line-height: 1em; word-wrap: break-word;">
+    Customer Address:
+    <b>{{ notification.customer_address }}</b>
+  </p>
+</mat-card>
