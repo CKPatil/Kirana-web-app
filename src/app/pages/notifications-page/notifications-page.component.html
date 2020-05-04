@@ -6,7 +6,7 @@
     <div class="row d-flex justify-content-center">
       <div class="col-12 col-md-10 col-lg-6">
         <mat-card class="mat-elevation-z8"
-          style=" height: 60vh; margin-top: 1vh; overflow-y: auto; overflow-x: hidden;"
+          style=" height: 68vh; margin-top: 1vh; overflow-y: auto; overflow-x: hidden;"
         >
           <h5 class="col-12 text-center text-md-left" style="margin-bottom: 3vh;">
             <b>REQUESTS</b>
@@ -61,7 +61,7 @@
                   background-color: white;
                   display: inline-block;
                   vertical-align: top;
-                  margin-top: 1em;
+                  margin-top: 1.5em;
                   /* font-size: 1vw; */
                 "
                 (click)="onNew()"
@@ -92,7 +92,7 @@
                   display: inline-block;
                   vertical-align: top;
                   /* font-size: 1vw; */
-                  margin-top: 1em;
+                  margin-top: 1.5em;
                 "
                 (click)="onCritical()"
               >
@@ -123,7 +123,7 @@
                   background-color: white;
                   display: inline-block;
                   vertical-align: top;
-                  margin-top: 1em;
+                  margin-top: 1.5em;
                   /* font-size: 1vw; */
                 "
                 (click)="onPacked()"
@@ -153,7 +153,7 @@
                   background-color: white;
                   display: inline-block;
                   vertical-align: top;
-                  margin-top: 1em;
+                  margin-top: 1.5em;
                   /* font-size: 1vw; */
                 "
                 (click)="onDispatch()"
@@ -186,7 +186,7 @@
                   background-color: white;
                   display: inline-block;
                   vertical-align: top;
-                  margin-top: 1em;
+                  margin-top: 1.5em;
                   /* font-size: 1vw; */
                 "
                 (click)="onCancel()"
@@ -208,7 +208,7 @@
         </mat-card>
       </div>
       <div class="col-12 col-md-10 col-lg-6">
-        <mat-card class="mat-elevation-z8" style="height: 60vh; margin-top: 1vh;overflow-y: auto; position: relative;">
+        <mat-card class="mat-elevation-z8" style="height: 68vh; margin-top: 1vh;overflow-y: auto; position: relative;">
           <div>
             <h4 style="text-align: center; margin-bottom: 20px;" *ngIf="invite">
               <b>Invite Requests</b>
@@ -246,7 +246,7 @@
                 of dispatchedNotifications
               "
             >
-              <app-notification-card [notification]='dispatchNotification'></app-notification-card>
+              <app-notification-card [notification]='dispatchNotification' [message]='dispatchedMessage'></app-notification-card>
             </div>
           </div>
           <div *ngIf="invite">
@@ -293,7 +293,7 @@
               fxLayoutGap="25px"
               *ngFor="let i = index; let newNotification of orderedNotifications"
             >
-              <app-notification-card [notification]='newNotification'></app-notification-card>
+              <app-notification-card [notification]='newNotification' [message]='newMessage'></app-notification-card>
             </div>
           </div>
           <div *ngIf="packed">
@@ -310,7 +310,7 @@
               *ngFor="
                 let i = index;let packedNotification of packedNotification"
             >
-              <app-notification-card [notification]='packedNotification'></app-notification-card>
+              <app-notification-card [notification]='packedNotification' [message]='packedMessage'></app-notification-card>
             </div>
           </div>
           <div *ngIf="cancel">
@@ -330,7 +330,7 @@
                 of cancelNotifications
               "
             >
-              <app-notification-card [notification]='cancelledNotification'></app-notification-card>
+              <app-notification-card [notification]='cancelledNotification' [message]='cancelMessage'></app-notification-card>
             </div>
           </div>
           <div *ngIf="critical">
@@ -364,13 +364,13 @@
                       </h5>
                     </div>
                     <div class="col-12 col-md-4 od">
-                      <p style="margin-top: 5px; float: right;">Date: {{criticalOrderDate[i]}}</p>
+                      <p style="margin-top: 5px; float: right;">Date:{{criticalNotification.timestamp | date:'mediumDate'}}</p>
                     </div>
                   </div>
                 </div>
                 <div class="innerdiv">
                   <small>OrderID: {{ criticalNotification.bill_no }}</small>
-                  <p class="od">Time: {{criticalOrderTime[i]}}</p>
+                  <p class="od">Time: {{criticalNotification.timestamp | date:'mediumTime'}}</p>
                 </div>
                 <p style="line-height: 1em; word-wrap: break-word;">
                   Customer Name:

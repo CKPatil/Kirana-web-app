@@ -8,6 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class NotificationCardComponent implements OnInit {
   @Input() notification: any;
+  @Input() message: any;
   constructor(private transactionService: TransactionService) { }
 
   ngOnInit(): void {
