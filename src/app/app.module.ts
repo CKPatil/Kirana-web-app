@@ -71,6 +71,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatChipsModule} from '@angular/material/chips';
 import { TransactionsCardComponent, ChooseOrderStatusDialog } from './components/transactions-card/transactions-card.component';
 import { FormatTimePipe } from './pipes/formatTime.pipe';
+import { NotificationCardComponent } from './components/notification-card/notification-card.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -107,7 +108,8 @@ import { FormatTimePipe } from './pipes/formatTime.pipe';
     ImageSliderDialog,
     DeleteConformationDialog,
     FormatTimePipe,
-    BlockConformationDialog
+    BlockConformationDialog,
+    NotificationCardComponent
   ],
   entryComponents: [
     DialogComponent

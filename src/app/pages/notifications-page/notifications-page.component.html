@@ -6,7 +6,7 @@
     <div class="row d-flex justify-content-center">
       <div class="col-12 col-md-10 col-lg-6">
         <mat-card class="mat-elevation-z8"
-          style=" height: 60vh; margin-top: 1vh; overflow-y: auto; overflow-x: hidden;"
+          style=" height: 68vh; margin-top: 1vh; overflow-y: auto; overflow-x: hidden;"
         >
           <h5 class="col-12 text-center text-md-left" style="margin-bottom: 3vh;">
             <b>REQUESTS</b>
@@ -28,7 +28,8 @@
               >
                 Invite Request &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span
-                  style="
+
+   style="
                     padding: 0.5em;
                     margin-left: 0.5em;
                     border-radius: 0.5em;
@@ -60,7 +61,7 @@
                   background-color: white;
                   display: inline-block;
                   vertical-align: top;
-                  margin-top: 1em;
+                  margin-top: 1.5em;
                   /* font-size: 1vw; */
                 "
                 (click)="onNew()"
@@ -91,7 +92,7 @@
                   display: inline-block;
                   vertical-align: top;
                   /* font-size: 1vw; */
-                  margin-top: 1em;
+                  margin-top: 1.5em;
                 "
                 (click)="onCritical()"
               >
@@ -122,7 +123,7 @@
                   background-color: white;
                   display: inline-block;
                   vertical-align: top;
-                  margin-top: 1em;
+                  margin-top: 1.5em;
                   /* font-size: 1vw; */
                 "
                 (click)="onPacked()"
@@ -152,7 +153,7 @@
                   background-color: white;
                   display: inline-block;
                   vertical-align: top;
-                  margin-top: 1em;
+                  margin-top: 1.5em;
                   /* font-size: 1vw; */
                 "
                 (click)="onDispatch()"
@@ -185,7 +186,7 @@
                   background-color: white;
                   display: inline-block;
                   vertical-align: top;
-                  margin-top: 1em;
+                  margin-top: 1.5em;
                   /* font-size: 1vw; */
                 "
                 (click)="onCancel()"
@@ -207,7 +208,7 @@
         </mat-card>
       </div>
       <div class="col-12 col-md-10 col-lg-6">
-        <mat-card class="mat-elevation-z8" style="height: 60vh; margin-top: 1vh;overflow-y: auto; position: relative;">
+        <mat-card class="mat-elevation-z8" style="height: 68vh; margin-top: 1vh;overflow-y: auto; position: relative;">
           <div>
             <h4 style="text-align: center; margin-bottom: 20px;" *ngIf="invite">
               <b>Invite Requests</b>
@@ -239,45 +240,13 @@
               fxLayout.xs="column"
               fxLayoutAlign="space-around center"
               fxLayoutGap="25px"
+              *ngFor="
+                let i = index;
+                let dispatchNotification
+                of dispatchedNotifications
+              "
             >
-              <mat-card
-                class="mat-elevation-z3"
-                *ngFor="
-                  let i = index;
-                  let dispatchNotification
-                  of dispatchedNotifications
-                "
-                [routerLink]="['../dashboard']" fragment="dispatchedOrders"
-                (click)='onClick(dispatchNotification.id)'
-                style="cursor: pointer; margin-bottom: 1em;"
-                [ngClass]=" dispatchObject ? 'positive' : 'negative'"
-              >
-                <div class="innerdiv">
-                  <div class="row">
-                    <div class="col-12 col-md-8">
-                      <h5 style="line-height: 1em; word-wrap: break-word;">
-                        New Order for
-                        <b>{{ dispatchNotification.retailer_name }}</b>
-                      </h5>
-                    </div>
-                    <div class="col-12 col-md-4">
-                      <p style="margin-top: 5px; float: right;">Date: {{dispatchedOrderDate[i]}}</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="innerdiv">
-                  <small>OrderID: {{ dispatchNotification.bill_no }}</small>
-                  <p class="od">Time: {{dispatchedOrderTime[i]}}</p>
-                </div>
-                <p style="line-height: 1em; word-wrap: break-word;">
-                  Customer Name:
-                  <b>{{ dispatchNotification.customer_name }}</b>
-                </p>
-                <p style="line-height: 1em; word-wrap: break-word;">
-                  Customer Address:
-                  <b>{{ dispatchNotification.customer_address }}</b>
-                </p>
-              </mat-card>
+              <app-notification-card [notification]='dispatchNotification' [message]='dispatchedMessage'></app-notification-card>
             </div>
           </div>
           <div *ngIf="invite">
@@ -322,39 +291,9 @@
               fxLayout.xs="column"
               fxLayoutAlign="space-around center"
               fxLayoutGap="25px"
+              *ngFor="let i = index; let newNotification of orderedNotifications"
             >
-              <mat-card
-                class="mat-elevation-z3"
-                *ngFor="let i = index; let newNotification of orderedNotifications"
-                (click)='onClick(newNotification.id)'
-                style="cursor: pointer; margin-bottom: 1em;"
-                [ngClass]=" newObject ? 'positive' : 'negative'"
-              >
-                <div class="innerdiv">
-                  <div class="row">
-                    <div class="col-12 col-md-8" >
-                      <h5 style="line-height: 1em; word-wrap: break-word;">
-                        New Order for
-                        <b>{{ newNotification.retailer_name }}</b>
-                      </h5>
-                    </div>
-                    <div class="col-12 col-md-4 od">
-                      <p style="margin-top: 5px; float: right;">Date: {{newOrderDate[i]}}</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="innerdiv">
-                  <small>OrderID: {{ newNotification.bill_no }}</small>
-                  <p class="od">Time: {{newOrderTime[i]}}</p>
-                </div>
-                <p style="line-height: 1em; word-wrap: break-word;">
-                  Customer Name: <b>{{ newNotification.customer_name }}</b>
-                </p>
-                <p style="line-height: 1em; word-wrap: break-word;">
-                  Customer Address:
-                  <b>{{ newNotification.customer_address }}</b>
-                </p>
-              </mat-card>
+              <app-notification-card [notification]='newNotification' [message]='newMessage'></app-notification-card>
             </div>
           </div>
           <div *ngIf="packed">
@@ -368,45 +307,10 @@
               fxLayout.xs="column"
               fxLayoutAlign="space-around center"
               fxLayoutGap="25px"
+              *ngFor="
+                let i = index;let packedNotification of packedNotification"
             >
-              <mat-card
-                class="mat-elevation-z3"
-                *ngFor="
-                  let i = index;
-                  let packedNotification
-                  of packedNotification
-                "
-                [routerLink]="['../dashboard']" [fragment]="'packedOrders'"
-                (click)='onClick(packedNotification.id)'
-                style="cursor: pointer; margin-bottom: 1em;"
-                [ngClass]=" packedObject ? 'positive' : 'negative'"
-              >
-                <div class="innerdiv">
-                  <div class="row">
-                    <div  class="col-12 col-md-8">
-                      <h5 style="line-height: 1em; word-wrap: break-word;">
-                        New Order for
-                        <b>{{ packedNotification.retailer_name }}</b>
-                      </h5>
-                    </div>
-                    <div class="col-12 col-md-4 od">
-                      <p style="margin-top: 5px; float: right;">Date: {{packedOrderDate[i]}}</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="innerdiv">
-                  <small>BillNo: {{ packedNotification.bill_no }}</small>
-                  <p class="od">Time: {{packedOrderTime[i]}}</p>
-                </div>
-                <p style="line-height: 1em; word-wrap: break-word;">
-                  Customer Name:
-                  <b>{{ packedNotification.customer_name }}</b>
-                </p>
-                <p style="line-height: 1em; word-wrap: break-word;">
-                  Customer Address:
-                  <b>{{ packedNotification.customer_address }}</b>
-                </p>
-              </mat-card>
+              <app-notification-card [notification]='packedNotification' [message]='packedMessage'></app-notification-card>
             </div>
           </div>
           <div *ngIf="cancel">
@@ -420,44 +324,13 @@
               fxLayout.xs="column"
               fxLayoutAlign="space-around center"
               fxLayoutGap="25px"
+              *ngFor="
+                let i = index;
+                let cancelledNotification
+                of cancelNotifications
+              "
             >
-              <mat-card
-                class="mat-elevation-z3"
-                *ngFor="
-                  let i = index;
-                  let cancelledNotification
-                  of cancelNotifications
-                "
-                (click)='onClick(cancelledNotification.id)'
-                style="cursor: pointer; margin-bottom: 1em;"
-                [ngClass]=" cancelObject ? 'positive' : 'negative'"
-              >
-                <div class="innerdiv">
-                  <div class="row">
-                    <div class="col-12 col-md-8" >
-                      <h5 style="line-height: 1em; word-wrap: break-word;">
-                        New Order for
-                        <b>{{ cancelledNotification.retailer_name }}</b>
-                      </h5>
-                    </div>
-                    <div class="col-12 col-md-4 od">
-                      <p style="margin-top: 5px; float: right;">Date: {{cancelOrderDate[i]}}</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="innerdiv">
-                  <small>BillNo: {{ cancelledNotification.bill_no }}</small>
-                  <p class="od">Time: {{cancelOrderTime[i]}}</p>
-                </div>
-                <p style="line-height: 1em; word-wrap: break-word;">
-                  Customer Name:
-                  <b>{{ cancelledNotification.customer_name }}</b>
-                </p>
-                <p style="line-height: 1em; word-wrap: break-word;">
-                  Customer Address:
-                  <b>{{ cancelledNotification.customer_address }}</b>
-                </p>
-              </mat-card>
+              <app-notification-card [notification]='cancelledNotification' [message]='cancelMessage'></app-notification-card>
             </div>
           </div>
           <div *ngIf="critical">
@@ -491,13 +364,13 @@
                       </h5>
                     </div>
                     <div class="col-12 col-md-4 od">
-                      <p style="margin-top: 5px; float: right;">Date: {{criticalOrderDate[i]}}</p>
+                      <p style="margin-top: 5px; float: right;">Date:{{criticalNotification.timestamp | date:'mediumDate'}}</p>
                     </div>
                   </div>
                 </div>
                 <div class="innerdiv">
                   <small>OrderID: {{ criticalNotification.bill_no }}</small>
-                  <p class="od">Time: {{criticalOrderTime[i]}}</p>
+                  <p class="od">Time: {{criticalNotification.timestamp | date:'mediumTime'}}</p>
                 </div>
                 <p style="line-height: 1em; word-wrap: break-word;">
                   Customer Name:
