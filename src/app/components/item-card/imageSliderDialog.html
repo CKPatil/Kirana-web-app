@@ -9,7 +9,9 @@
   </button>
 </div>
 
-<div class="row">
+<div class="row" style="align-items: center;
+align-content: center;
+height: 90%;">
   <div
     id="carouselExampleIndicators"
     class="carousel col-12"
@@ -24,7 +26,8 @@
         <img
           [src]="img"
           (error)="handleImageUrlError($event)"
-          class="w-75 h-auto"
+          class="h-auto"
+          style="max-height: 23em;width: auto;max-width: 75%;"
           [ngClass]="{'active': j===0}"
           alt="No Image Found"
         />

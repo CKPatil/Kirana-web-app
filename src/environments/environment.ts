@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  backend_end_point: 'http://54.197.216.47/',
+  backend_end_point: 'http://13.233.33.65/',
   port_number: '8000',
   userDetails: 'api/v1/userDetails/',
   order: "api/v1/vendor/order/",
@@ -24,7 +24,9 @@ export const environment = {
   feedbackURL:"api/v1/ratings/",
   resetPassURL: 'api/v1/update_password/',
   notification: 'api/v1/vendor/order/',
-  disableVariant: "api/v1/disabled_products/"
+  disableVariant: "api/v1/disabled_products/",
+  blockVendorURL: 'api/v1/block_vendor/',
+  readNotification: 'api/v1/read_notification'
 };
 
 /*1/

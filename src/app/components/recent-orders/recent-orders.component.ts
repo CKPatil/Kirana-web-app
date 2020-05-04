@@ -1,7 +1,7 @@
 import { DialogComponent } from "./../../components/dialog/dialog.component";
 import { Orders } from "./../../constants/mockup-data";
 import { Status } from "./../../models/models";
-import { Component, OnInit, ViewChild, Inject, Input } from "@angular/core";
+import { Component, OnInit, ViewChild, Inject, Input, OnChanges } from "@angular/core";
 import { InteractionService } from "src/app/services/interaction.service";
 import { MatSort } from "@angular/material/sort";
 import { MatPaginator } from "@angular/material/paginator";
@@ -33,22 +33,23 @@ interface StatusMenu {
   templateUrl: "./recent-orders.component.html",
   styleUrls: ["./recent-orders.component.scss"],
 })
-export class RecentOrdersComponent implements OnInit {
+export class RecentOrdersComponent implements OnInit, OnChanges {
   @Input("tableData") tableData: any;
-  isSidePanelExpanded: boolean;
+  // isSidePanelExpanded: boolean;
 
   displayedColumns: string[] = [
-    "consumer",
-    "shop",
-    "phone",
+    "customer_name",
+    "retailer_name",
+    "customer_phone",
     "status",
-    "total",
-    "time_left",
+    "price",
+    "remaining_time",
   ];
   dataSource = new MatTableDataSource();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  allTransactions: any;
+
+  // allTransactions: any;
   filterData: string;
 
   selectedValue: string;
@@ -65,26 +66,37 @@ export class RecentOrdersComponent implements OnInit {
   timeDiffMins: any;
   timeDiffHours: Number;
 
+  oldStatus
+
   constructor(
-    private interaction: InteractionService,
+    // private interaction: InteractionService,
     public dialog: MatDialog,
     private transactionService: TransactionService,
     private router: Router,
     private _snackbar: MatSnackBar
 
   ) {
-    this.isSidePanelExpanded = this.interaction.getExpandedStatus();
+    // this.isSidePanelExpanded = this.interaction.getExpandedStatus();
   }
 
   ngOnInit() {
-    this.interaction.expandedStatus$.subscribe((res) => {
-      this.isSidePanelExpanded = res;
-    });
+    if (this.tableData.length) {
+      this.oldStatus = this.tableData[0].status
+    }
+
+    // this.interaction.expandedStatus$.subscribe((res) => {
+    //   this.isSidePanelExpanded = res;
+    // });
+    this.showTableData()
+  }
+
+  showTableData() {
     this.currentTime = new Date();
 
-    this.allTransactions = this.tableData.reverse();
-    this.allTransactions.forEach((element) => {
-      if (element.remaining_time < 0 || element.status=="Delivered"|| element.status=="Cancelled") {
+    // this.dataSource = this.tableData.reverse();
+
+    this.tableData.forEach((element) => {
+      if (element.remaining_time < 0 || element.status == "Delivered" || element.status == "Cancelled" || element.remaining_time === '-') {
         element.remaining_time = "-";
       } else {
         element.timestamp = new Date(element.timestamp);
@@ -107,17 +119,29 @@ export class RecentOrdersComponent implements OnInit {
           " mins ";
       }
     });
-    this.allTransactions = new MatTableDataSource(this.allTransactions);
-    this.allTransactions.paginator = this.paginator;
-    this.allTransactions.sort=this.sort;
+
+    this.dataSource = new MatTableDataSource(this.tableData);
   }
+
+  ngOnChanges() {
+    this.showTableData()
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    if (filterValue)
-      this.allTransactions.filter = filterValue.trim().toLowerCase();
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+    // if (filterValue)
+    //   this.dataSource.filter = filterValue.trim().toLowerCase();
   }
+
   onStatusChange(event: any, row: any) {
-    this.openDialog(event.value, row);
+    this.openDialog(event, row);
   }
 
   getStatusToKeyMap(status: string) {
@@ -140,13 +164,14 @@ export class RecentOrdersComponent implements OnInit {
     }
   }
 
-  openDialog(status: any, row: any): void {
+  openDialog(event: any, row: any): void {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: "300px",
-      data: { statusValue: status, row: row },
+      data: { statusValue: event.value, row: row },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
+      event.source.value = this.oldStatus
       if (result) {
         this.transactionService
           .updateOrderStatus(

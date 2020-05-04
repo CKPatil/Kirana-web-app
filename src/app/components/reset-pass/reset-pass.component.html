@@ -1,13 +1,15 @@
+<div class="row">
+  <h1 mat-dialog-title class="col-11 text-center font-weight-bold">Reset your password</h1>
+  <div mat-dialog-actions class="col-1">
+    <button mat-icon-button color="primary" [mat-dialog-close]="" style="position: relative; top: -2.2em;">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
+</div>
 <div mat-dialog-content>
-  <i
-    (click)="onNoClick()"
-    style="font-size: 0.95em; float: right !important; cursor: pointer;"
-    class="fa fa-times"
-  ></i>
-  <h2 class="example-h2" style="text-align: center;"><b>Reset Password</b></h2>
   <mat-card class="pass-mat-card is-side-panel-expanded">
     <div class="pass-top-container">
-      <div class="user-details-container">
+      <div class="user-details-container text-center">
         <form [formGroup]="form1">
           <div class="form-group">
             <label>Old Password</label>
@@ -83,16 +85,16 @@
               Passwords do not match.
             </div>
           </div>
-          <button
-            mat-raised-button
-            class="btn btn-primary sub-btn"
-            type="submit"
-            [disabled]="form1.invalid"
-            (click)="openSnackBar()"
-          >
-            Change Password
-          </button>
         </form>
+        <button
+          mat-raised-button
+          class="btn btn-primary"
+          type="submit"
+          [disabled]="form1.invalid"
+          (click)="openSnackBar()"
+        >
+          Change Password
+        </button>
       </div>
     </div>
   </mat-card>

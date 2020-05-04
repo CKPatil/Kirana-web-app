@@ -1,121 +1,65 @@
 <mat-card class="">
   <div>
     <!-- name, edit, delete container -->
-    <div class="row justify-content-between align-items-center mt-3 mb-4">
+    <div class="row justify-content-between align-items-center">
       <div class="col-8">
-        <h4>{{ item.name }}</h4>
+        <h4 class="text-truncate" [title]="item.name">{{ item.name }}</h4>
+        <p class="text-90 text-muted m-0" title="Brand">By <b>{{ item.brand }}</b></p>
       </div>
       <div class="col-4 row p-0 justify-content-around text-center">
-        <button
-          mat-icon-button
-          color="primary"
-          (click)="openEditProductDetailDialog()"
-        >
-          <mat-icon>create</mat-icon>
-        </button>
-        <button
-          mat-icon-button
-          color="primary"
-          (click)="openConfirmDeleteDialog()"
-        >
-          <mat-icon>delete</mat-icon>
-        </button>
+        <div class="col-6 p-0">
+          <button mat-icon-button color="primary" (click)="openEditProductDetailDialog()">
+            <mat-icon>create</mat-icon>
+          </button>
+        </div>
+        <div class="col-6 p-0">
+          <button mat-icon-button color="primary" (click)="openConfirmDeleteDialog()">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
       </div>
     </div>
-    <!-- img, other itme detail container -->
+    <!-- img, other item detail container -->
     <div class="row">
       <div class="col-12 col-sm-4">
-        <div
-          *ngIf="item.image_url.length"
-          style="height: 10em;"
-          class="text-center d-flex align-items-center justify-content-center"
-        >
-          <img
-            [src]="item.image_url[0]"
-            alt="{{ item.name }} Image"
-            (click)="openImageSliderDialog()"
-          />
+        <div *ngIf="item.image_url.length" style="height: 10em;"
+          class="text-center d-flex align-items-center justify-content-center">
+          <img [src]="item.image_url[0]" alt="{{ item.name }} Image" (click)="openImageSliderDialog()" />
         </div>
         <div class="text text-center">
-          <button
-            mat-raised-button
-            aria-label="Example icon-button with delete icon"
-            (click)="openSelectImageDialog()"
-          >
+          <button mat-raised-button aria-label="Example icon-button with delete icon" (click)="openSelectImageDialog()">
             <mat-icon>add</mat-icon>
           </button>
         </div>
       </div>
-      <div class="col-12 col-sm-8 row text-90">
-        <div class="col-12 my-4 my-sm-0">
-          <div>
-            <div
-              class="text-muted"
-              [ngClass]="{
-                'text-truncate': isDetailVisible,
-                'd-inline-block': isDetailVisible,
-                'd-inline': !isDetailVisible,
-                'w-75': isDetailVisible,
-                'w-100': !isDetailVisible
-              }"
-            >
-              {{ item.details }}
-            </div>
-            <div
-              class="d-inline text-center text-90"
-              [ngStyle]="{
-                position: isDetailVisible ? 'relative' : '',
-                top: isDetailVisible ? '-5px' : ''
-              }"
-            >
-              <a
-                class="ml-2"
-                style="
-                  color: rgb(69, 1, 255);
-                  text-decoration: underline;
-                  cursor: pointer;
-                "
-                (click)="showMore()"
-              >
-                {{ isDetailVisible ? "Show More" : "Hide" }}
-              </a>
-            </div>
+      <div class="col-12 col-sm-8 row text-90 align-content-start pr-sm-0 mx-1 mx-sm-0 mt-4 mt-sm-0">
+        <div class="col-12 pl-0 pl-sm-2 text-muted font-weight-bold">
+          <div class="d-inline-block mr-1" title="Category">
+            {{ item.category }}
+          </div>
+          <div class="d-inline-block" style="position: relative;
+          top: .4em;">
+            <mat-icon style="font-size: 20px;">arrow_forward</mat-icon>
+          </div>
+          <div class="d-inline-block ml-1" title="Sub Category">
+            {{ item.sub_category }}
           </div>
         </div>
-        <div class="col-6 text-90 pr-0 font-weight-bold">
-          <p>Category</p>
-        </div>
-        <div class="col-6 text-90 text-center pl-0">
-          <p>{{ item.category }}</p>
-        </div>
-        <div class="col-6 text-90 pr-0 font-weight-bold">
-          <p>Sub Category</p>
-        </div>
-        <div class="col-6 text-90 text-center pl-0">
-          <p>{{ item.sub_category }}</p>
-        </div>
-        <div class="col-6 text-90 pr-0 font-weight-bold">
-          <p>Brand</p>
-        </div>
-        <div class="col-6 text-90 text-center pl-0">
-          <p>{{ item.brand }}</p>
-        </div>
-        <div class="col-6 text-90 pr-0 font-weight-bold">
-          <p>Quantity Type</p>
-        </div>
-        <div class="col-6 text-90 text-center pl-0">
-          <p>{{ item.quantity_type }}</p>
+        <div class="col-12 my-2 pl-0 pl-sm-2">
+          <div class="detail-container text-muted">
+            {{ item.details }}
+          </div>
         </div>
       </div>
     </div>
     <!-- variant detail container -->
     <div class="mt-3">
-      <h5 class="text-center font-weight-bold">Variants List</h5>
+      <!-- <h5 class="text-center font-weight-bold">Variants List</h5> -->
       <div class="table-responsive">
         <table class="table table-sm table-fixed text-90">
           <thead>
             <tr>
-              <th class="col-4">Name</th>
+              <th class="col-4">Variant name</th>
               <th class="col-2">Quantity</th>
               <th class="col-2">Price</th>
               <th class="col-2">Availability</th>
@@ -124,18 +68,15 @@
           </thead>
           <tbody>
             <tr *ngFor="let i of item.variant_details">
-              <td class="col-4">{{ i.variant }}</td>
-              <td class="col-2">{{ i.quantity }}</td>
+              <td class="col-4 text-truncate" [title]="i.variant">{{ i.variant }}</td>
+              <td class="col-2">{{ i.quantity }} {{ item.quantity_type }}</td>
               <td class="col-2">{{ i.price }}</td>
               <td class="col-2">
-                <mat-slide-toggle
-                  color="primary"
-                  [checked]="i.available === 'True' ? true : false"
-                  (change)="updateStatus($event, i)"
-                ></mat-slide-toggle>
+                <mat-slide-toggle color="primary" [checked]="i.available === 'True' ? true : false"
+                  (change)="updateStatus($event, i)"></mat-slide-toggle>
               </td>
               <td class="col-2">
-                <app-update-item [variant]="i"></app-update-item>
+                <app-update-item [variant]="i" [unit]="item.quantity_type"></app-update-item>
               </td>
             </tr>
           </tbody>

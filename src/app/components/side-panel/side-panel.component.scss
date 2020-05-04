@@ -1,69 +1,77 @@
-@import '../../../var';
+@import "../../../var";
 
 .side-panel-container {
-
-  width: 50px;
-  background-color: #7b84fc;
+  width: 72px;
+  background-color: $side-panel-color;
   float: left;
   animation-name: moveInLeft;
   animation-duration: 1s;
   animation-timing-function: ease-out;
-  
-
-  .side-panel{
+  .side-panel {
     height: 91.75vh;
-    padding: 10px;
+    // padding: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 8px 8px 0 rgba(0,0,0,0.5);
+    box-shadow: 0 8px 8px 0 #00000080;
 
-    .main-logo-container {
-      .main-logo {
-        height: 0px;
-      }
-
-      flex: 9;
-    }
+    // .main-logo-container {
+    //   .main-logo {
+    //     height: 0px;
+    //   }
+    //   flex: 9;
+    // }
 
     .nav-options {
-      flex: 18;
-      justify-content: space-around;
-      display: flex;
-      flex-direction: column;
+      // flex: 18;
+      // justify-content: space-around;
+      // display: flex;
+      // flex-direction: column;
+      // margin-bottom: 2em;
+      text-align: center;
 
       .nav-option {
-        color: #333344;
-        padding: 3px;
+        color: $text-dark;
+        padding: 1.3em 3px;
         text-decoration: none;
-
+        display: block;
+        // margin-bottom: 3em;
         span {
-          padding: 0 5px;
+          display: block;
+          padding: 0;
+        }
+        .logo {
+          i {
+            font-size: 1.6em;
+          }
+        }
+        .logotext {
+          font-size: 11px;
+          font-weight: bold;
         }
       }
 
       .nav-option:hover,
       .active {
-        background-color: #8a9bfc;
-        border-radius: 5px;
+        background-color: $side-panel-active-color;
+        // border-radius: 5px;
       }
     }
 
-    .expand-arrow-container {
-      flex: 16;
-      transition: all 1s;
-      display: flex;
-      flex-direction: column-reverse;
+    // .expand-arrow-container {
+    //   flex: 16;
+    //   transition: all 1s;
+    //   display: flex;
+    //   flex-direction: column-reverse;
 
-      span {
+    //   span {
 
-        i {
-          color: #333344;
-        }
-      }
-    }
-
+    //     i {
+    //       color: #333344;
+    //     }
+    //   }
+    // }
   }
 }
 

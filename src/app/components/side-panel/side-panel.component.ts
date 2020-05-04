@@ -1,5 +1,5 @@
-import { Component, OnInit, EventEmitter, Input, Output, SimpleChanges, OnChanges } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
+import { Router, ActivatedRoute, NavigationStart } from '@angular/router';
 import {
   trigger,
   state,
@@ -16,7 +16,7 @@ import {
       state(
         'start',
         style({
-          width: '50px'
+          width: '72px'
         })
       ),
       state(
@@ -39,10 +39,28 @@ export class SidePanelComponent implements OnInit {
   selectedOption: any;
   clickedDivState = 'start';
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private activeroute: ActivatedRoute) {
+
+    this.router.events.forEach((event) => {
+      if (event instanceof NavigationStart) {
+        this.selectedOption = this.getNavOptionFromUrl(this.navOptions, event.url)
+      }
+    });
+  }
 
   ngOnInit() {
-    this.selectedOption = this.navOptions[0];
+    // this.selectedOption = this.navOptions[0];
+    this.selectedOption = this.getNavOptionFromUrl(this.navOptions, this.router.url);
+  }
+
+  getNavOptionFromUrl(navOptions: [any], url: string) {
+    let navoption = ''
+    navOptions.forEach(val => {
+      if (url.includes(val.link)) {
+        navoption = val
+      }
+    })
+    return navoption
   }
 
   expandSidePanel() {

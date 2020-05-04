@@ -104,12 +104,24 @@ export class LoginComponent implements OnInit {
     if (!this.role) {
       this.existingLogin();
     }
+    localStorage.setItem('inviteStatus', 'true');
+    localStorage.setItem('newOrder', 'true');
+    localStorage.setItem('cancelOrder', 'true');
+    localStorage.setItem('criticalOrder', 'true');
+    localStorage.setItem('packedOrder', 'true');
+    localStorage.setItem('dispatchedOrder', 'true');
   }
 
   public existingLogin() {
     this.isLogin = this.isLogin ? false : true;
     // this.loginForm.controls.emailId.setValue(null);
     // this.loginForm.controls.password.setValue(null);
+  }
+
+  togglePasswordView(e){
+    if(!e.target.matches('button')){
+      this.hide = !this.hide
+    }
   }
 
   public login() {

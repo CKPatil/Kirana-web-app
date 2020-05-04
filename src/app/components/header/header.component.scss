@@ -1,29 +1,39 @@
-.mat-toolbar{
-    background-color: #7b84fc;
-    color: #333344;
-    box-shadow: 0 8px 8px 0 rgba(0,0,0,0.5);
-    .head-main {
-        width: 100%;
-        display:  flex;
-        justify-content: space-between;
-        .logout-btn-container {
-            width: 80px;
-            display: flex;
-            justify-content: space-between;
-            margin-right: 70px;
-        }
+@import "../../../var";
+
+.mat-toolbar {
+  background-color: $side-panel-color;
+  color: $text-dark;
+  box-shadow: 0 8px 8px 0 #00000080;
+  .head-main {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    .logo {
+      > div > h2 {
+        font-size: 1.2em;
+        font-weight: bold;
+        margin-top: 6px;
+        text-transform: uppercase;
+      }
     }
+    .logout-btn-container {
+      width: 80px;
+      display: flex;
+      justify-content: space-between;
+      margin-right: 70px;
+    }
+  }
 }
-#logout{
+#logout {
   margin-right: 20px;
 }
 #feedback {
   padding-right: 20px;
 }
-span{
+span {
   margin-left: 1rem;
 }
-.container{
+.container {
   display: flexbox;
   margin-top: 50px;
   margin-left: 50px;
@@ -45,9 +55,8 @@ span{
   position: absolute;
   right: 150px;
 }
-.toggle{
+.toggle {
   padding-bottom: 50px;
-
 }
 .fa-bell {
   padding-right: 20px;
