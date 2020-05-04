@@ -1,8 +1,8 @@
 <div class="outer" style="overflow-x: hidden;">
   <div  style="overflow-y:auto; overflow-x: hidden; margin-right: 10%;">
-  <h3 style="text-align: center; margin-bottom: 7vh;;">
-    <b>Notification</b>
-  </h3>
+  <h2 style="text-align: center; margin-bottom: 7vh;">
+    <b>Notifications</b>
+  </h2>
     <div class="row d-flex justify-content-center">
       <div class="col-12 col-md-10 col-lg-6">
         <mat-card class="mat-elevation-z8"
@@ -73,7 +73,7 @@
                     border-radius: 0.5em;
                     background-color: #52e88e;
                   "
-                  >{{ newFilteredArray.length }}</span
+                  >{{ newLen }}</span
                 >
               </button>
             </div>
@@ -135,7 +135,7 @@
                     border-radius: 0.5em;
                     background-color: #18a7f8;
                   "
-                  >{{ packedFilteredArray.length }}</span
+                  >{{ packedLen }}</span
                 >
               </button>
             </div>
@@ -165,7 +165,7 @@
                     border-radius: 0.5em;
                     background-color: #ade32b;
                   "
-                  >{{ dispatchedFilteredArray.length }}</span
+                  >{{ dispatchLen }}</span
                 >
               </button>
             </div>
@@ -199,7 +199,7 @@
                     background-color: #fb4549;
                     color: white;
                   "
-                  >{{ cancelFilteredArray.length }}</span
+                  >{{ cancelLen }}</span
                 >
               </button>
             </div>
@@ -229,7 +229,7 @@
             </h4>
           </div>
           <div *ngIf="dispatch">
-            <div *ngIf="dispatchedFilteredArray.length === 0">
+            <div *ngIf="dispatchedNotifications.length === 0">
               <p style="text-align: center; justify-content: center;">
                 <b>No new notifications</b>
               </p>
@@ -245,10 +245,12 @@
                 *ngFor="
                   let i = index;
                   let dispatchNotification
-                  of dispatchedFilteredArray
+                  of dispatchedNotifications
                 "
                 [routerLink]="['../dashboard']" fragment="dispatchedOrders"
+                (click)='onClick(dispatchNotification.id)'
                 style="cursor: pointer; margin-bottom: 1em;"
+                [ngClass]=" dispatchObject ? 'positive' : 'negative'"
               >
                 <div class="innerdiv">
                   <div class="row">
@@ -310,7 +312,7 @@
             </div>
           </div>
           <div *ngIf="new_">
-            <div *ngIf="newFilteredArray.length === 0">
+            <div *ngIf="orderedNotifications.length === 0">
               <p style="text-align: center; justify-content: center;">
                 <b>No new notifications</b>
               </p>
@@ -323,9 +325,10 @@
             >
               <mat-card
                 class="mat-elevation-z3"
-                *ngFor="let i = index; let newNotification of newFilteredArray"
-                [routerLink]="['../dashboard']" [fragment]="'newOrders'"
+                *ngFor="let i = index; let newNotification of orderedNotifications"
+                (click)='onClick(newNotification.id)'
                 style="cursor: pointer; margin-bottom: 1em;"
+                [ngClass]=" newObject ? 'positive' : 'negative'"
               >
                 <div class="innerdiv">
                   <div class="row">
@@ -355,7 +358,7 @@
             </div>
           </div>
           <div *ngIf="packed">
-            <div *ngIf="packedFilteredArray.length === 0">
+            <div *ngIf="packedNotifications.length === 0">
               <p style="text-align: center; justify-content: center;">
                 <b>No new notifications</b>
               </p>
@@ -371,10 +374,12 @@
                 *ngFor="
                   let i = index;
                   let packedNotification
-                  of packedFilteredArray
+                  of packedNotification
                 "
                 [routerLink]="['../dashboard']" [fragment]="'packedOrders'"
+                (click)='onClick(packedNotification.id)'
                 style="cursor: pointer; margin-bottom: 1em;"
+                [ngClass]=" packedObject ? 'positive' : 'negative'"
               >
                 <div class="innerdiv">
                   <div class="row">
@@ -405,7 +410,7 @@
             </div>
           </div>
           <div *ngIf="cancel">
-            <div *ngIf="cancelFilteredArray.length === 0">
+            <div *ngIf="cancelNotifications.length === 0">
               <p style="text-align: center; justify-content: center;">
                 <b>No new notifications</b>
               </p>
@@ -421,10 +426,11 @@
                 *ngFor="
                   let i = index;
                   let cancelledNotification
-                  of cancelFilteredArray
+                  of cancelNotifications
                 "
-                [routerLink]="['../dashboard']" [fragment]="'cancelOrders'"
+                (click)='onClick(cancelledNotification.id)'
                 style="cursor: pointer; margin-bottom: 1em;"
+                [ngClass]=" cancelObject ? 'positive' : 'negative'"
               >
                 <div class="innerdiv">
                   <div class="row">
