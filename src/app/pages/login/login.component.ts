@@ -118,6 +118,12 @@ export class LoginComponent implements OnInit {
     // this.loginForm.controls.password.setValue(null);
   }
 
+  togglePasswordView(e){
+    if(!e.target.matches('button')){
+      this.hide = !this.hide
+    }
+  }
+
   public login() {
     if (this.loginBtn === "Sign in") {
       const data = Object.assign({}, this.loginForm.value);
