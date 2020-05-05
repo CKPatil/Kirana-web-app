@@ -8,18 +8,18 @@
     <div class="row">
       <div class="col-12 col-md-8" >
         <h5 style="line-height: 1em; word-wrap: break-word;">
-          {{message}} Order for
+          Order {{message}} for
           <b>{{ notification.retailer_name }}</b>
         </h5>
       </div>
-      <div class="col-12 col-md-4 od">
-        <p style="margin-top: 5px; float: right;">Date: {{notification.timestamp | date:'mediumDate'}}</p>
+      <div class="col-12 col-md-4">
+        <p style="float: right; margin-top: 5px;">Date: {{notification.timestamp | date:'mediumDate'}}</p>
       </div>
     </div>
   </div>
   <div class="innerdiv">
     <small>OrderID: {{ notification.bill_no }}</small>
-    <p class="od">Time: {{notification.timestamp | date:'mediumTime'}}</p>
+    <p style="float: right; margin-top: 5px;">Time: {{notification.timestamp | date:'mediumTime'}}</p>
   </div>
   <p style="line-height: 1em; word-wrap: break-word;">
     Customer Name: <b>{{ notification.customer_name }}</b>
