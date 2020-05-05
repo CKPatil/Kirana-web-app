@@ -8,6 +8,7 @@ import { Validators, FormBuilder, FormArray } from "@angular/forms";
 import { ProductsService } from "src/app/services/products.service";
 import { Router } from "@angular/router";
 import { MatSnackBar } from "@angular/material";
+import { PRODUCTS_UNITS } from './../../constants/constants'
 
 @Component({
   selector: "app-add-items",
@@ -22,7 +23,7 @@ export class AddItemsComponent {
     private productService: ProductsService,
     private router: Router,
     private _snackbar: MatSnackBar
-  ) {}
+  ) { }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogAddItemComponent, {
@@ -37,12 +38,15 @@ export class AddItemsComponent {
         result["variants"] = [];
         result["quantity"] = [];
         result["price"] = [];
+        result["quantity_type"] = [];
         variant_details.forEach((val) => {
           result["variants"].push(val.variant);
           result["quantity"].push(parseInt(val.quantity));
           result["price"].push(parseInt(val.price));
+          result["quantity_type"].push(val.quantity_type);
         });
         delete result.variant_details;
+        console.log(result)
         this.productService.addProduct(result).subscribe(
           (result) => {
             this._snackbar.open("Item Added", "", {
@@ -81,12 +85,13 @@ export class DialogAddItemComponent {
     category: ["", [Validators.required, Validators.maxLength(50)]],
     sub_category: ["", [Validators.required, Validators.maxLength(50)]],
     brand: ["", [Validators.required, Validators.maxLength(50)]],
-    quantity_type: ["", Validators.required],
+    // quantity_type: ["", Validators.required],
     variant_details: this.fb.array(
       [
         this.fb.group({
           variant: ["", [Validators.required, Validators.maxLength(50)]],
           quantity: ["", [Validators.required, Validators.min(0)]],
+          quantity_type: ["", Validators.required],
           price: ["", [Validators.required, Validators.min(0)]],
         }),
       ],
@@ -95,7 +100,8 @@ export class DialogAddItemComponent {
     details: ["", [Validators.required, Validators.maxLength(500)]],
   });
 
-  quantity_types = ["ml", "ltr", "kg", "unit", "gm"];
+  // quantity_types = ["ml", "ltr", "kg", "unit", "gm"];
+  quantity_types = PRODUCTS_UNITS;
 
   isAddCategory: boolean;
   isAddSubCategory: boolean;
@@ -105,7 +111,7 @@ export class DialogAddItemComponent {
     public dialogRef: MatDialogRef<DialogAddItemComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
     private fb: FormBuilder
-  ) {}
+  ) { }
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -131,6 +137,7 @@ export class DialogAddItemComponent {
       this.fb.group({
         variant: ["", [Validators.required, Validators.maxLength(50)]],
         quantity: ["", [Validators.required, Validators.min(0)]],
+        quantity_type: ["", Validators.required],
         price: ["", [Validators.required, Validators.min(0)]],
       })
     );

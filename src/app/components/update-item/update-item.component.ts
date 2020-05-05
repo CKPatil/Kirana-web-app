@@ -9,6 +9,8 @@ import { ProductsService } from "src/app/services/products.service";
 import { Router } from "@angular/router";
 import { MatSnackBar } from "@angular/material";
 
+import { PRODUCTS_UNITS } from "./../../constants/constants";
+
 @Component({
   selector: "app-update-item",
   templateUrl: "./update-item.component.html",
@@ -16,7 +18,7 @@ import { MatSnackBar } from "@angular/material";
 })
 export class UpdateItemComponent {
   @Input() variant: any;
-  @Input() unit: any;
+  // @Input() unit: any;
 
   constructor(
     public dialog: MatDialog,
@@ -29,7 +31,7 @@ export class UpdateItemComponent {
   openDialog() {
     const dialogRef = this.dialog.open(UpdateItemModal, {
       width: "350px",
-      data: { variant: this.variant, unit: this.unit },
+      data: { variant: this.variant },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -66,8 +68,11 @@ export class UpdateItemModal {
   itemForm = this.fb.group({
     variant: ["", [Validators.required, Validators.maxLength(50)]],
     quantity: ["", [Validators.required, Validators.min(0)]],
+    quantity_type: ["", Validators.required],
     price: ["", [Validators.required, Validators.min(0)]],
   });
+
+  products_unit = PRODUCTS_UNITS
 
   constructor(
     public dialogRef: MatDialogRef<UpdateItemModal>,
@@ -78,6 +83,7 @@ export class UpdateItemModal {
       variant: data.variant.variant,
       quantity: data.variant.quantity,
       price: data.variant.price,
+      quantity_type: data.variant.quantity_type
     });
   }
 
