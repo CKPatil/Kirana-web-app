@@ -33,7 +33,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.change = localStorage.getItem('change');
     this.repeat();
-    this.notifications();
+    this.getAllNotifications();
   }
   repeat() {
     setInterval(() => {
