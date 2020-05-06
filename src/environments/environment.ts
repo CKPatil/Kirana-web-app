@@ -26,7 +26,8 @@ export const environment = {
   notification: 'api/v1/vendor/order/',
   disableVariant: "api/v1/disabled_products/",
   blockVendorURL: 'api/v1/block_vendor/',
-  readNotification: 'api/v1/read_notification'
+  readNotification: 'api/v1/read_notification',
+  readAllNotifications: 'api/v1/read_all'
 };
 
 /*1/

@@ -239,9 +239,10 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
       this.dispatchedChecked = false;
     }
   }
-  onClick(orderId) {
-    this.transactionService.readNotification(orderId)
+  onChecked(status) {
+    this.transactionService.readAllNotifications(status)
       .subscribe( (res) => {
+        console.log(res);
       });
   }
   onReq() {

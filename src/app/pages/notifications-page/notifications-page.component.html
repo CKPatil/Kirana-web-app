@@ -219,7 +219,7 @@
               <h4 style="text-align: center; margin-bottom: 20px;">
                 <b>New Orders</b>
               </h4>
-              <mat-checkbox *ngIf="orderedNotifications.length != 0" color='primary' class="example-margin" [(ngModel)]="newChecked">Mark all as read</mat-checkbox>
+              <mat-checkbox *ngIf="orderedNotifications.length != 0" color='primary' class="example-margin" (click)='onChecked("Ordered")'  [(ngModel)]="newChecked">Mark all as read</mat-checkbox>
             </div>
             <div *ngIf="critical">
               <h4 style="text-align: center; margin-bottom: 20px;">
@@ -230,19 +230,19 @@
               <h4 style="text-align: center; margin-bottom: 20px;" >
                 <b>Cancelled Orders</b>
               </h4>
-              <mat-checkbox *ngIf="cancelNotifications.length != 0" color='primary' class="example-margin" [(ngModel)]="cancelChecked">Mark all as read</mat-checkbox>
+              <mat-checkbox *ngIf="cancelNotifications.length != 0"  color='primary' class="example-margin" (click)='onChecked("Cancelled")' [(ngModel)]="cancelChecked">Mark all as read</mat-checkbox>
             </div>
             <div *ngIf="packed">
               <h4 style="text-align: center; margin-bottom: 20px;">
                 <b>Packed Orders</b>
               </h4>
-              <mat-checkbox *ngIf="packedNotifications.length != 0" color='primary' class="example-margin" [(ngModel)]="packedChecked">Mark all as read</mat-checkbox>
+              <mat-checkbox *ngIf="packedNotifications.length != 0" color='primary' (click)='onChecked("Packed")' class="example-margin" [(ngModel)]="packedChecked">Mark all as read</mat-checkbox>
             </div>
             <div *ngIf="dispatch">
               <h4 style="text-align: center; margin-bottom: 20px;">
                 <b>Dispatch Orders</b>
               </h4>
-              <mat-checkbox *ngIf="dispatchedNotifications.length != 0" color='primary' class="example-margin" [(ngModel)]="dispatchedChecked">Mark all as read</mat-checkbox>
+              <mat-checkbox *ngIf="dispatchedNotifications.length != 0" color='primary' (click)='onChecked("Dispatched")' class="example-margin" [(ngModel)]="dispatchedChecked">Mark all as read</mat-checkbox>
             </div>
           </div>
           <div *ngIf="dispatch">
