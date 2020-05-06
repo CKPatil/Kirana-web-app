@@ -210,24 +210,40 @@
       <div class="col-12 col-md-10 col-lg-6">
         <mat-card class="mat-elevation-z8" style="height: 68vh; margin-top: 1vh;overflow-y: auto; position: relative;">
           <div>
-            <h4 style="text-align: center; margin-bottom: 20px;" *ngIf="invite">
-              <b>Invite Requests</b>
-            </h4>
-            <h4 style="text-align: center; margin-bottom: 20px;" *ngIf="new_">
-              <b>New Orders</b>
-            </h4>
-            <h4 style="text-align: center; margin-bottom: 20px;" *ngIf="critical">
-              <b>Critical Orders</b>
-            </h4>
-            <h4 style="text-align: center; margin-bottom: 20px;" *ngIf="cancel">
-              <b>Cancelled Orders</b>
-            </h4>
-            <h4 style="text-align: center; margin-bottom: 20px;" *ngIf="packed">
-              <b>Packed Orders</b>
-            </h4>
-            <h4 style="text-align: center; margin-bottom: 20px;" *ngIf="dispatch">
-              <b>Dispatch Orders</b>
-            </h4>
+            <div *ngIf="invite">
+              <h4 style="text-align: center; margin-bottom: 20px;" >
+                <b>Invite Requests</b>
+              </h4>
+            </div>
+            <div *ngIf="new_">
+              <h4 style="text-align: center; margin-bottom: 20px;">
+                <b>New Orders</b>
+              </h4>
+              <mat-checkbox *ngIf="orderedNotifications.length != 0" class="example-margin" [(ngModel)]="checked">Mark all as read</mat-checkbox>
+            </div>
+            <div *ngIf="critical">
+              <h4 style="text-align: center; margin-bottom: 20px;">
+                <b>Critical Orders</b>
+              </h4>
+            </div>
+            <div *ngIf="cancel">
+              <h4 style="text-align: center; margin-bottom: 20px;" >
+                <b>Cancelled Orders</b>
+              </h4>
+              <mat-checkbox *ngIf="cancelNotifications.length != 0" class="example-margin" [(ngModel)]="checked">Mark all as read</mat-checkbox>
+            </div>
+            <div *ngIf="packed">
+              <h4 style="text-align: center; margin-bottom: 20px;">
+                <b>Packed Orders</b>
+              </h4>
+              <mat-checkbox *ngIf="packedNotifications.length != 0" class="example-margin" [(ngModel)]="checked">Mark all as read</mat-checkbox>
+            </div>
+            <div *ngIf="dispatch">
+              <h4 style="text-align: center; margin-bottom: 20px;">
+                <b>Dispatch Orders</b>
+              </h4>
+              <mat-checkbox *ngIf="dispatchedNotifications.length != 0" class="example-margin" [(ngModel)]="checked">Mark all as read</mat-checkbox>
+            </div>
           </div>
           <div *ngIf="dispatch">
             <div *ngIf="dispatchedNotifications.length === 0">

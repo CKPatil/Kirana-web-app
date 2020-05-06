@@ -78,6 +78,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   cancelMessage  = 'Cancelled';
   packedMessage = 'Packed';
   dispatchedMessage = 'Dispatched';
+  checked = false;
   ngOnInit() {
     this.newOrderStatus = localStorage.getItem('newOrder');
     this.cancelOrderStatus = localStorage.getItem('cancelOrder');

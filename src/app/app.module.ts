@@ -72,6 +72,7 @@ import {MatChipsModule} from '@angular/material/chips';
 import { TransactionsCardComponent, ChooseOrderStatusDialog } from './components/transactions-card/transactions-card.component';
 import { FormatTimePipe } from './pipes/formatTime.pipe';
 import { NotificationCardComponent } from './components/notification-card/notification-card.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 @NgModule({
   declarations: [
     AppComponent,
@@ -151,7 +152,8 @@ import { NotificationCardComponent } from './components/notification-card/notifi
     MatSliderModule,
     MatSlideToggleModule,
     MatChipsModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatCheckboxModule
   ],
   providers: [
     ProductsService,
