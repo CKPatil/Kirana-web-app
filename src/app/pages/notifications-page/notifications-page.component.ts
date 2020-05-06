@@ -78,7 +78,11 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   cancelMessage  = 'Cancelled';
   packedMessage = 'Packed';
   dispatchedMessage = 'Dispatched';
-  checked = false;
+  newChecked = true;
+  cancelChecked = true;
+  packedChecked = true;
+  dispatchedChecked = true;
+
   ngOnInit() {
     this.newOrderStatus = localStorage.getItem('newOrder');
     this.cancelOrderStatus = localStorage.getItem('cancelOrder');
@@ -147,6 +151,9 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
         this.newLen++;
       }
     }
+    if (this.newLen > 0) {
+      this.newChecked = false;
+    }
   }
 
   cancelOrderFun() {
@@ -155,6 +162,9 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
       if (this.cancelNotifications[i].is_read === false) {
         this.cancelLen++;
       }
+    }
+    if (this.newLen > 0) {
+      this.cancelChecked = false;
     }
   }
 
@@ -213,6 +223,9 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
         this.packedLen++;
       }
     }
+    if (this.newLen > 0) {
+      this.packedChecked = false;
+    }
   }
 
   dispatchedFun() {
@@ -221,6 +234,9 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
       if (this.dispatchedNotifications[i].is_read === false) {
         this.dispatchLen++;
       }
+    }
+    if (this.newLen > 0) {
+      this.dispatchedChecked = false;
     }
   }
   onClick(orderId) {
