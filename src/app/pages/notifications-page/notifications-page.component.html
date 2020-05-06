@@ -262,7 +262,9 @@
                 of dispatchedNotifications
               "
             >
-              <app-notification-card [notification]='dispatchNotification' [message]='dispatchedMessage'></app-notification-card>
+              <app-notification-card [notification]='dispatchNotification'
+                [routerLink]="['../dashboard']" [fragment]="'dispatchedOrders'"
+                [message]='dispatchedMessage'></app-notification-card>
             </div>
           </div>
           <div *ngIf="invite">
@@ -309,7 +311,9 @@
               fxLayoutGap="25px"
               *ngFor="let i = index; let newNotification of orderedNotifications"
             >
-              <app-notification-card [notification]='newNotification' [message]='newMessage'></app-notification-card>
+              <app-notification-card [notification]='newNotification'
+              [routerLink]="['../dashboard']" [fragment]="'newOrders'"
+                [message]='newMessage'></app-notification-card>
             </div>
           </div>
           <div *ngIf="packed">
@@ -326,7 +330,9 @@
               *ngFor="
                 let i = index;let packedNotification of packedNotification"
             >
-              <app-notification-card [notification]='packedNotification' [message]='packedMessage'></app-notification-card>
+              <app-notification-card [notification]='packedNotification'
+                [routerLink]="['../dashboard']" [fragment]="'packedOrders'"
+                [message]='packedMessage'></app-notification-card>
             </div>
           </div>
           <div *ngIf="cancel">
@@ -346,7 +352,9 @@
                 of cancelNotifications
               "
             >
-              <app-notification-card [notification]='cancelledNotification' [message]='cancelMessage'></app-notification-card>
+              <app-notification-card [notification]='cancelledNotification'
+                [routerLink]="['../dashboard']" [fragment]="'cancelOrders'"
+                [message]='cancelMessage'></app-notification-card>
             </div>
           </div>
           <div *ngIf="critical">
