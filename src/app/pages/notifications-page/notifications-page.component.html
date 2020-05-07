@@ -210,24 +210,40 @@
       <div class="col-12 col-md-10 col-lg-6">
         <mat-card class="mat-elevation-z8" style="height: 68vh; margin-top: 1vh;overflow-y: auto; position: relative;">
           <div>
-            <h4 style="text-align: center; margin-bottom: 20px;" *ngIf="invite">
-              <b>Invite Requests</b>
-            </h4>
-            <h4 style="text-align: center; margin-bottom: 20px;" *ngIf="new_">
-              <b>New Orders</b>
-            </h4>
-            <h4 style="text-align: center; margin-bottom: 20px;" *ngIf="critical">
-              <b>Critical Orders</b>
-            </h4>
-            <h4 style="text-align: center; margin-bottom: 20px;" *ngIf="cancel">
-              <b>Cancelled Orders</b>
-            </h4>
-            <h4 style="text-align: center; margin-bottom: 20px;" *ngIf="packed">
-              <b>Packed Orders</b>
-            </h4>
-            <h4 style="text-align: center; margin-bottom: 20px;" *ngIf="dispatch">
-              <b>Dispatch Orders</b>
-            </h4>
+            <div *ngIf="invite">
+              <h4 style="text-align: center; margin-bottom: 20px;" >
+                <b>Invite Requests</b>
+              </h4>
+            </div>
+            <div *ngIf="new_">
+              <h4 style="text-align: center; margin-bottom: 20px;">
+                <b>New Orders</b>
+              </h4>
+              <mat-checkbox *ngIf="orderedNotifications.length != 0" color='primary' class="example-margin" (click)='onChecked("Ordered")'  [(ngModel)]="newChecked">Mark all as read</mat-checkbox>
+            </div>
+            <div *ngIf="critical">
+              <h4 style="text-align: center; margin-bottom: 20px;">
+                <b>Critical Orders</b>
+              </h4>
+            </div>
+            <div *ngIf="cancel">
+              <h4 style="text-align: center; margin-bottom: 20px;" >
+                <b>Cancelled Orders</b>
+              </h4>
+              <mat-checkbox *ngIf="cancelNotifications.length != 0"  color='primary' class="example-margin" (click)='onChecked("Cancelled")' [(ngModel)]="cancelChecked">Mark all as read</mat-checkbox>
+            </div>
+            <div *ngIf="packed">
+              <h4 style="text-align: center; margin-bottom: 20px;">
+                <b>Packed Orders</b>
+              </h4>
+              <mat-checkbox *ngIf="packedNotifications.length != 0" color='primary' (click)='onChecked("Packed")' class="example-margin" [(ngModel)]="packedChecked">Mark all as read</mat-checkbox>
+            </div>
+            <div *ngIf="dispatch">
+              <h4 style="text-align: center; margin-bottom: 20px;">
+                <b>Dispatch Orders</b>
+              </h4>
+              <mat-checkbox *ngIf="dispatchedNotifications.length != 0" color='primary' (click)='onChecked("Dispatched")' class="example-margin" [(ngModel)]="dispatchedChecked">Mark all as read</mat-checkbox>
+            </div>
           </div>
           <div *ngIf="dispatch">
             <div *ngIf="dispatchedNotifications.length === 0">
@@ -246,7 +262,9 @@
                 of dispatchedNotifications
               "
             >
-              <app-notification-card [notification]='dispatchNotification' [message]='dispatchedMessage'></app-notification-card>
+              <app-notification-card [notification]='dispatchNotification'
+                [routerLink]="['../dashboard']" [fragment]="'dispatchedOrders'"
+                [message]='dispatchedMessage'></app-notification-card>
             </div>
           </div>
           <div *ngIf="invite">
@@ -293,7 +311,9 @@
               fxLayoutGap="25px"
               *ngFor="let i = index; let newNotification of orderedNotifications"
             >
-              <app-notification-card [notification]='newNotification' [message]='newMessage'></app-notification-card>
+              <app-notification-card [notification]='newNotification'
+              [routerLink]="['../dashboard']" [fragment]="'newOrders'"
+                [message]='newMessage'></app-notification-card>
             </div>
           </div>
           <div *ngIf="packed">
@@ -310,7 +330,9 @@
               *ngFor="
                 let i = index;let packedNotification of packedNotification"
             >
-              <app-notification-card [notification]='packedNotification' [message]='packedMessage'></app-notification-card>
+              <app-notification-card [notification]='packedNotification'
+                [routerLink]="['../dashboard']" [fragment]="'packedOrders'"
+                [message]='packedMessage'></app-notification-card>
             </div>
           </div>
           <div *ngIf="cancel">
@@ -330,7 +352,9 @@
                 of cancelNotifications
               "
             >
-              <app-notification-card [notification]='cancelledNotification' [message]='cancelMessage'></app-notification-card>
+              <app-notification-card [notification]='cancelledNotification'
+                [routerLink]="['../dashboard']" [fragment]="'cancelOrders'"
+                [message]='cancelMessage'></app-notification-card>
             </div>
           </div>
           <div *ngIf="critical">

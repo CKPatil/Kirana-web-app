@@ -133,5 +133,19 @@ export class TransactionService {
     );
 
   }
+  readAllNotifications(status) {
+    const getAllNotifications = environment.backend_end_point + environment.readAllNotifications +
+    `/?status=${status}`;
+    this.refreshHttpOptions();
+    return this.http
+    .get(getAllNotifications, {
+      headers: this.httpOptions,
+    })
+    .pipe(
+      catchError((error) => {
+        return throwError(error);
+      })
+    );
+  }
   // ///////////// END NEW CODE
 }

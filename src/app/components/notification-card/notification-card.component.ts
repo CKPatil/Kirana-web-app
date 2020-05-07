@@ -16,7 +16,7 @@ export class NotificationCardComponent implements OnInit {
   onClick(orderId) {
     this.transactionService.readNotification(orderId)
       .subscribe( (res) => {
-        console.log(res);
+        this.transactionService.getOrdersFromServer();
       });
   }
 }

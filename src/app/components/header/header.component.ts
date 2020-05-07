@@ -33,7 +33,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.change = localStorage.getItem('change');
     this.repeat();
-    this.notifications();
+    this.getAllNotifications();
   }
   repeat() {
     setInterval(() => {
@@ -52,32 +52,27 @@ export class HeaderComponent implements OnInit {
           ) {
             switch (this.notification[i].status) {
               case 'Ordered':
-                if (localStorage.getItem('newOrder')) {
-                  this.change = true;
-                  localStorage.setItem('change', this.change);
+                if (localStorage.getItem('newOrder') === 'true') {
+                  localStorage.setItem('change', 'true');
                 }
                 break;
               case 'Cancelled':
-                if (localStorage.getItem('cancelOrder')) {
-                  this.change = true;
-                  localStorage.setItem('change', this.change);
+                if (localStorage.getItem('cancelOrder') === 'true') {
+                  localStorage.setItem('change', 'true');
                 }
                 break;
               case 'Packed':
-                if (localStorage.getItem('packedOrder')) {
-                  this.change = true;
-                  localStorage.setItem('change', this.change);
+                if (localStorage.getItem('packedOrder') === 'true') {
+                  localStorage.setItem('change', 'true');
                 }
                 break;
               case 'Dispatched':
-                if (localStorage.getItem('dispatchedOrder')) {
-                  this.change = true;
-                  localStorage.setItem('change', this.change);
+                if (localStorage.getItem('dispatchedOrder') === 'true') {
+                  localStorage.setItem('change', 'true');
                 }
                 break;
               default:
-                this.change = true;
-                localStorage.setItem('change', this.change);
+                localStorage.setItem('change', 'false');
                 break;
             }
             break;
