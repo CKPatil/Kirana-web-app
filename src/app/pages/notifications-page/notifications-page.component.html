@@ -328,7 +328,7 @@
               fxLayoutAlign="space-around center"
               fxLayoutGap="25px"
               *ngFor="
-                let i = index;let packedNotification of packedNotification"
+                let i = index;let packedNotification of packedNotifications"
             >
               <app-notification-card [notification]='packedNotification'
                 [routerLink]="['../dashboard']" [fragment]="'packedOrders'"

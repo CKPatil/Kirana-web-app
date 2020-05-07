@@ -78,10 +78,10 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   cancelMessage  = 'Cancelled';
   packedMessage = 'Packed';
   dispatchedMessage = 'Dispatched';
-  newChecked = true;
-  cancelChecked = true;
-  packedChecked = true;
-  dispatchedChecked = true;
+  newChecked = false;
+  cancelChecked = false;
+  packedChecked = false;
+  dispatchedChecked = false;
 
   ngOnInit() {
     this.newOrderStatus = localStorage.getItem('newOrder');
@@ -242,7 +242,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   onChecked(status) {
     this.transactionService.readAllNotifications(status)
       .subscribe( (res) => {
-        console.log(res);
+        this.transactionService.getOrdersFromServer();
       });
   }
   onReq() {
