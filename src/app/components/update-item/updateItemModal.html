@@ -12,9 +12,20 @@
     </div>
     <div class="quantity-container">
       <mat-form-field class="w-100">
-        <mat-label>Variant quantity({{data.unit}})</mat-label>
+        <mat-label>Variant quantity</mat-label>
         <input matInput formControlName="quantity" type="number" placeholder="Enter Variant Quantity" />
         <mat-error> Variant Quantity is <strong>not Valid</strong> </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="quantity-type-container">
+      <mat-form-field class="w-100">
+        <mat-label>Quantity Unit</mat-label>
+        <mat-select formControlName="quantity_type">
+          <mat-option *ngFor="let quantity of products_unit" [value]="quantity">
+            {{quantity}}
+          </mat-option>
+        </mat-select>
+        <mat-error><strong>Invalid</strong></mat-error>
       </mat-form-field>
     </div>
     <div class="price-container">

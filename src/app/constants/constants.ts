@@ -30,3 +30,6 @@ export const STATUSES = [
   "Delivered",
   "Cancelled",
 ];
+
+
+export const PRODUCTS_UNITS = ["ml", "ltr", "kg", "unit", "gm"]
