@@ -4,28 +4,20 @@
   style="cursor: pointer; margin-bottom: 1.5em;"
   [ngClass]=" notification.is_read ? 'positive' : 'negative'"
 >
-  <div class="innerdiv">
-    <div class="row align-itms-center">
-      <div class="col-12 col-md-8" >
-        <h5 style="line-height: 1em; word-wrap: break-word;">
-          Order {{message}} for
-          <b>{{ notification.retailer_name }}</b>
-        </h5>
-      </div>
-      <div class="col-12 col-md-4">
-        <p style="float: right; margin-top: 5px;">Date: {{notification.timestamp | date:'mediumDate'}}</p>
-      </div>
+  <div class="row innerdiv">
+    <div class="col-12">
+      <h5>Order {{ message }} for <b>{{notification.retailer_name}}</b></h5>
+    </div>
+    <div class="col-12">
+      <small>{{notification.bill_no}}</small><br>
+      <i class="fa fa-user" style="font-size: 20px; vertical-align: bottom;"></i>&nbsp;&nbsp;&nbsp;
+      <b>{{notification.customer_name}}</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <i class="fa fa-phone" style="font-size: 20px; vertical-align: bottom;"></i>&nbsp;&nbsp;&nbsp;{{notification.customer_phone}}
+      <p style="float: right; line-height: 80%;">{{notification.timestamp | date:'mediumDate'}}</p>
+    </div>
+    <div class="col-12">
+      <i class="fa fa-home" style="font-size: 20px; vertical-align: bottom;"></i>&nbsp;&nbsp;&nbsp;{{notification.customer_address}}
+      <p style="float: right;">{{notification.timestamp | date:'mediumTime'}}</p>
     </div>
   </div>
-  <div class="innerdiv">
-    <small>OrderID: {{ notification.bill_no }}</small>
-    <p style="float: right; margin-top: 5px;">Time: {{notification.timestamp | date:'mediumTime'}}</p>
-  </div>
-  <p style="line-height: 1em; word-wrap: break-word;">
-    Customer Name: <b>{{ notification.customer_name }}</b>
-  </p>
-  <p style="line-height: 1em; word-wrap: break-word;">
-    Customer Address:
-    <b>{{ notification.customer_address }}</b>
-  </p>
 </mat-card>
