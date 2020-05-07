@@ -34,7 +34,7 @@
           <app-recent-orders *ngIf="isDataAvailable" [tableData]="criticalOrders"></app-recent-orders>
         </mat-card>
       </div>
-      <div class="urgent-orders-container" id="criticalOrders">
+      <div class="urgent-orders-container" id="cancelOrders">
         <mat-card>
           <h5><b>Cancelled Orders</b></h5>
           <app-recent-orders *ngIf="isDataAvailable" [tableData]="cancelledOrders"></app-recent-orders>
