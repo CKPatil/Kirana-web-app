@@ -220,7 +220,7 @@
                 <b>New Orders</b>
               </h4>
               <div class="ml-auto p-2">
-                <mat-checkbox *ngIf="orderedNotifications.length != 0" color='primary' class="example-margin" (click)='onChecked("Ordered")'  [(ngModel)]="newChecked">Mark all as read</mat-checkbox>
+                <a *ngIf="orderedNotifications.length != 0" class="markall" (click)='onChecked("Ordered")'>Mark all as read</a>
               </div>
             </div>
             <div *ngIf="critical">
@@ -232,19 +232,19 @@
               <h4 class="p-2" style="text-align: center; margin-bottom: 20px;" >
                 <b>Cancelled Orders</b>
               </h4>
-              <mat-checkbox *ngIf="cancelNotifications.length != 0"  color='primary' class="example-margin ml-auto p-2" (click)='onChecked("Cancelled")' [(ngModel)]="cancelChecked">Mark all as read</mat-checkbox>
+              <a *ngIf="cancelNotifications.length != 0" class="markall ml-auto p-2" (click)='onChecked("Cancelled")'>Mark all as read</a>
             </div>
             <div *ngIf="packed" class="d-flex">
               <h4 class="p-2" style="text-align: center; margin-bottom: 20px;">
                 <b>Packed Orders</b>
               </h4>
-              <mat-checkbox *ngIf="packedNotifications.length != 0" color='primary' (click)='onChecked("Packed")' class="example-margin ml-auto p-2" [(ngModel)]="packedChecked">Mark all as read</mat-checkbox>
+              <a *ngIf="packedNotifications.length != 0" (click)='onChecked("Packed")' class="markall ml-auto p-2">Mark all as read</a>
             </div>
             <div *ngIf="dispatch" class="d-flex">
               <h4 class="p-2" style="text-align: center; margin-bottom: 20px;">
                 <b>Dispatch Orders</b>
               </h4>
-              <mat-checkbox *ngIf="dispatchedNotifications.length != 0" color='primary' (click)='onChecked("Dispatched")' class="example-margin ml-auto p-2" [(ngModel)]="dispatchedChecked">Mark all as read</mat-checkbox>
+              <a *ngIf="dispatchedNotifications.length != 0" (click)='onChecked("Dispatched")' class="markall ml-auto p-2">Mark all as read</a>
             </div>
           </div>
           <div *ngIf="dispatch">
