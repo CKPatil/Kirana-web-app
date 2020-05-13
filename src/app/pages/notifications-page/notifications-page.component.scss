@@ -103,3 +103,12 @@ h6 {
 .negative {
   background-color: #f5f5f5;
 }
+.markall {
+  color: #5ebeb2;
+  font-weight: bold;
+  cursor: pointer;
+  &:hover {
+    color: #5ebeb2;
+    text-decoration: underline;
+  }
+}
