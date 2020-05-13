@@ -5,7 +5,11 @@
     <div class="col-12">
       <mat-form-field class="example-full-width">
         <mat-label>Product Name</mat-label>
-        <input matInput formControlName="name" placeholder="Enter Product Name" />
+        <input
+          matInput
+          formControlName="name"
+          placeholder="Enter Product Name"
+        />
         <mat-error>Product Name is <strong>Invalid</strong> </mat-error>
       </mat-form-field>
     </div>
@@ -23,13 +27,18 @@
       <div class="col-8" *ngIf="isAddCategory">
         <mat-form-field class="example-full-width">
           <mat-label>New Category</mat-label>
-          <input matInput formControlName="category" placeholder="Enter new Category" />
+          <input
+            matInput
+            formControlName="category"
+            placeholder="Enter new Category"
+          />
           <mat-error> Category is <strong>Invalid</strong> </mat-error>
         </mat-form-field>
       </div>
       <div class="col-4 text-center">
         <button mat-raised-button (click)="addCategory()">
-          <mat-icon aria-hidden="false" aria-label="Example home icon">{{isAddCategory == true ? 'remove':'add'}}
+          <mat-icon aria-hidden="false" aria-label="Example home icon"
+            >{{isAddCategory == true ? 'remove':'add'}}
           </mat-icon>
         </button>
       </div>
@@ -39,7 +48,10 @@
       <mat-form-field class="col-8" *ngIf="!isAddSubCategory">
         <mat-label>Sub-category</mat-label>
         <mat-select formControlName="sub_category">
-          <mat-option *ngFor="let sub of data.sub_categories[itemForm.controls.category.value]" [value]="sub">
+          <mat-option
+            *ngFor="let sub of data.sub_categories[itemForm.controls.category.value]"
+            [value]="sub"
+          >
             {{sub}}
           </mat-option>
         </mat-select>
@@ -50,7 +62,11 @@
       <div class="col-8" *ngIf="isAddSubCategory">
         <mat-form-field class="example-full-width">
           <mat-label>New Sub-category</mat-label>
-          <input matInput placeholder="Enter new Sub-category" formControlName="sub_category" />
+          <input
+            matInput
+            placeholder="Enter new Sub-category"
+            formControlName="sub_category"
+          />
           <mat-error *ngIf="itemForm.controls.sub_category.errors">
             Sub-category is <strong>Invalid</strong>
           </mat-error>
@@ -58,7 +74,8 @@
       </div>
       <div class="col-4 text-center">
         <button mat-raised-button (click)="addSubCategory()">
-          <mat-icon aria-hidden="false" aria-label="Example home icon">{{isAddSubCategory == true ? 'remove':'add'}}
+          <mat-icon aria-hidden="false" aria-label="Example home icon"
+            >{{isAddSubCategory == true ? 'remove':'add'}}
           </mat-icon>
         </button>
       </div>
@@ -68,7 +85,10 @@
       <mat-form-field class="col-8" *ngIf="!isAddBrand">
         <mat-label>Brand</mat-label>
         <mat-select formControlName="brand">
-          <mat-option *ngFor="let brand of data.brands[itemForm.controls.sub_category.value]" [value]="brand">
+          <mat-option
+            *ngFor="let brand of data.brands[itemForm.controls.sub_category.value]"
+            [value]="brand"
+          >
             {{brand}}
           </mat-option>
         </mat-select>
@@ -79,7 +99,11 @@
       <div class="col-8" *ngIf="isAddBrand">
         <mat-form-field class="example-full-width">
           <mat-label>New Brand</mat-label>
-          <input matInput placeholder="Enter new Brand" formControlName="brand" />
+          <input
+            matInput
+            placeholder="Enter new Brand"
+            formControlName="brand"
+          />
           <mat-error *ngIf="itemForm.controls.brand.errors">
             Brand is <strong>Invalid</strong>
           </mat-error>
@@ -87,29 +111,12 @@
       </div>
       <div class="col-4 text-center">
         <button mat-raised-button (click)="addBrand()">
-          <mat-icon aria-hidden="false" aria-label="Example home icon">{{isAddBrand == true ? 'remove':'add'}}
+          <mat-icon aria-hidden="false" aria-label="Example home icon"
+            >{{isAddBrand == true ? 'remove':'add'}}
           </mat-icon>
         </button>
       </div>
     </div>
-    <!-- Qunatity Unit Container -->
-    <!-- <div class="col-12 row pr-0">
-      <mat-form-field class="col-8">
-        <mat-label>Quantity Unit</mat-label>
-        <mat-select formControlName="quantity_type">
-          <mat-option
-            *ngFor="let quantity of quantity_types"
-            [value]="quantity"
-          >
-            {{quantity}}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="itemForm.controls.quantity_type.errors">
-          Quantity Unit is <strong>Required</strong>
-        </mat-error>
-      </mat-form-field>
-    </div> -->
-    <!-- Variant Container -->
     <div class="col-12 row mt-2 pr-0" formArrayName="variant_details">
       <div class="row col-12 justify-content-between align-items-center mb-2">
         <p class="col-8 font-weight-bold m-0" style="font-size: 1.15em;">
@@ -124,20 +131,33 @@
         </div>
       </div>
       <div class="row col-12 pr-0">
-        <div class="col-12 pr-0" *ngFor="let v of allVariants.controls; let i = index">
+        <div
+          class="col-12 pr-0"
+          *ngFor="let v of allVariants.controls; let i = index"
+        >
           <table cellspacing="0" [formGroupName]="i">
             <tr class="row px-0">
               <td class="col-3 pr-0">
                 <mat-form-field class="example-full-width">
                   <mat-label>Variants</mat-label>
-                  <input matInput formControlName="variant" placeholder="Enter Variant" />
+                  <input
+                    matInput
+                    formControlName="variant"
+                    placeholder="Enter Variant"
+                  />
                   <mat-error><strong>Invalid</strong> </mat-error>
                 </mat-form-field>
               </td>
               <td class="col-3 pr-0">
                 <mat-form-field class="example-full-width">
                   <mat-label>Quantity Type</mat-label>
-                  <input matInput type="number" min="0" formControlName="quantity" placeholder="Enter Quantity" />
+                  <input
+                    matInput
+                    type="number"
+                    min="0"
+                    formControlName="quantity"
+                    placeholder="Enter Quantity"
+                  />
                   <mat-error><strong>Invalid</strong> </mat-error>
                 </mat-form-field>
               </td>
@@ -145,7 +165,10 @@
                 <mat-form-field class="example-full-width">
                   <mat-label>Quantity Unit</mat-label>
                   <mat-select formControlName="quantity_type">
-                    <mat-option *ngFor="let quantity of quantity_types" [value]="quantity">
+                    <mat-option
+                      *ngFor="let quantity of quantity_types"
+                      [value]="quantity"
+                    >
                       {{quantity}}
                     </mat-option>
                   </mat-select>
@@ -155,13 +178,23 @@
               <td class="col-2">
                 <mat-form-field class="example-full-width">
                   <mat-label>Price</mat-label>
-                  <input matInput type="number" min="0" formControlName="price" placeholder="Enter Price" />
+                  <input
+                    matInput
+                    type="number"
+                    min="0"
+                    formControlName="price"
+                    placeholder="Enter Price"
+                  />
                   <mat-error><strong>Invalid</strong> </mat-error>
                 </mat-form-field>
               </td>
               <td class="pl-0 col-1">
-                <button mat-icon-button color="primary" aria-label="Example icon-button with delete icon"
-                  (click)="removeVariant(i)">
+                <button
+                  mat-icon-button
+                  color="primary"
+                  aria-label="Example icon-button with delete icon"
+                  (click)="removeVariant(i)"
+                >
                   <mat-icon>delete</mat-icon>
                 </button>
               </td>
@@ -174,7 +207,11 @@
     <div class="col-12">
       <mat-form-field class="example-full-width">
         <mat-label>Detail</mat-label>
-        <textarea formControlName="details" matInput placeholder="Description of Item"></textarea>
+        <textarea
+          formControlName="details"
+          matInput
+          placeholder="Description of Item"
+        ></textarea>
         <mat-error>Detail is <strong>Invalid</strong> </mat-error>
       </mat-form-field>
     </div>
@@ -182,7 +219,12 @@
 </div>
 <div mat-dialog-actions class="mt-2 row justify-content-around">
   <button mat-stroked-button (click)="onNoClick()">Cancel</button>
-  <button mat-flat-button color="primary" [mat-dialog-close]="itemForm.value" [disabled]="!itemForm.valid">
+  <button
+    mat-flat-button
+    color="primary"
+    [mat-dialog-close]="itemForm.value"
+    [disabled]="!itemForm.valid"
+  >
     Add
   </button>
 </div>
