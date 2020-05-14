@@ -30,18 +30,6 @@ export class DeleteItems {
   name: string;
   id: number;
 }
-// class Consumer {
-
-// }
-// class Retailer
-// class ItemsPurchased
-// class OrderDetails
-// export class Transactions {
-//   Consumer: Consumer;
-//   Retailer: Retailer;
-//   OrderDetails: OrderDetails;
-//   Status: string;
-// }
 export class Sent {
   category: string;
   sub_catogery: string;
@@ -80,19 +68,4 @@ export class Notifications {
   ShopName: string;
   CustomerName: string;
   CustomerLocation: string;
-}
-export class _Items  {
-  name: string;
-  category: string;
-  sub_category: string;
-  brand: string;
-  variant_details: variants_details[];
-  quantity_type: string;
-  details: string;
-}
-class variants_details {
-  p_id: number;
-  variant: string;
-  quantity: string;
-
 }

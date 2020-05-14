@@ -32,4 +32,4 @@ export const STATUSES = [
 ];
 
 
-export const PRODUCTS_UNITS = ["ml", "ltr", "kg", "unit", "gm"]
+export const PRODUCTS_UNITS = ["ml", "ltr", "kg", "unit", "gm"];

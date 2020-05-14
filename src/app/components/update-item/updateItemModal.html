@@ -6,14 +6,23 @@
     <div class="name-container">
       <mat-form-field class="w-100">
         <mat-label>Variant name</mat-label>
-        <input matInput formControlName="variant" placeholder="Enter Variant Name" />
+        <input
+          matInput
+          formControlName="variant"
+          placeholder="Enter Variant Name"
+        />
         <mat-error> Variant Name is <strong>not Valid</strong> </mat-error>
       </mat-form-field>
     </div>
     <div class="quantity-container">
       <mat-form-field class="w-100">
         <mat-label>Variant quantity</mat-label>
-        <input matInput formControlName="quantity" type="number" placeholder="Enter Variant Quantity" />
+        <input
+          matInput
+          formControlName="quantity"
+          type="number"
+          placeholder="Enter Variant Quantity"
+        />
         <mat-error> Variant Quantity is <strong>not Valid</strong> </mat-error>
       </mat-form-field>
     </div>
@@ -21,7 +30,7 @@
       <mat-form-field class="w-100">
         <mat-label>Quantity Unit</mat-label>
         <mat-select formControlName="quantity_type">
-          <mat-option *ngFor="let quantity of products_unit" [value]="quantity">
+          <mat-option *ngFor="let quantity of productsUnit" [value]="quantity">
             {{quantity}}
           </mat-option>
         </mat-select>
@@ -31,7 +40,12 @@
     <div class="price-container">
       <mat-form-field class="w-100">
         <mat-label>Variant price</mat-label>
-        <input matInput formControlName="price" type="number" placeholder="Enter Variant Name" />
+        <input
+          matInput
+          formControlName="price"
+          type="number"
+          placeholder="Enter Variant Name"
+        />
         <mat-error> Variant Price is <strong>not Valid</strong> </mat-error>
       </mat-form-field>
     </div>
@@ -39,7 +53,12 @@
 </div>
 <mat-dialog-actions class="mt-3 row justify-content-around">
   <button mat-stroked-button (click)="onNoClick()">Cancel</button>
-  <button mat-flat-button color="primary" [disabled]="itemForm.invalid" [mat-dialog-close]="itemForm.value">
+  <button
+    mat-flat-button
+    color="primary"
+    [disabled]="itemForm.invalid"
+    [mat-dialog-close]="itemForm.value"
+  >
     Update
   </button>
 </mat-dialog-actions>
