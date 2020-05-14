@@ -26,7 +26,6 @@ import {
         })
       ),
       transition('start => end', animate(0)),
-      // transition('end => start', animate('0.4s ease-out'))
     ])
   ]
 })
@@ -43,24 +42,23 @@ export class SidePanelComponent implements OnInit {
 
     this.router.events.forEach((event) => {
       if (event instanceof NavigationStart) {
-        this.selectedOption = this.getNavOptionFromUrl(this.navOptions, event.url)
+        this.selectedOption = this.getNavOptionFromUrl(this.navOptions, event.url);
       }
     });
   }
 
   ngOnInit() {
-    // this.selectedOption = this.navOptions[0];
     this.selectedOption = this.getNavOptionFromUrl(this.navOptions, this.router.url);
   }
 
   getNavOptionFromUrl(navOptions: [any], url: string) {
-    let navoption = ''
+    let navoption = '';
     navOptions.forEach(val => {
       if (url.includes(val.link)) {
-        navoption = val
+        navoption = val;
       }
-    })
-    return navoption
+    });
+    return navoption;
   }
 
   expandSidePanel() {

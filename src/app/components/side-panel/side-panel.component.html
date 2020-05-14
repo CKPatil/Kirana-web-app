@@ -1,8 +1,5 @@
 <div class="side-panel-container" [@animationOption1]="clickedDivState">
   <div class="side-panel">
-    <!-- <div class="main-logo-container">
-        <img src="../../../assets/images/Logo.jpg" alt="logo" class="main-logo" />
-      </div> -->
     <div class="nav-options" *ngIf="!isExpanded">
       <a *ngFor="let item of navOptions" class="nav-option cursorPointer"
         [ngClass]="{'active': item.title == selectedOption.title}" (click)="navBarSelected(item)" [title]="item.title">
@@ -11,14 +8,5 @@
         <span class="logotext">{{item.title}}</span>
       </a>
     </div>
-    <!-- <div class="nav-options" *ngIf="isExpanded">
-      <a *ngFor="let item of navOptions" class="nav-option cursorPointer"
-        [ngClass]="{'active': item.title == selectedOption.title}" (click)="navBarSelected(item)"><span class="px-2"><i
-            class={{item.icon}}></i></span>{{item.title}}</a>
-    </div> -->
-    <!-- <div class="expand-arrow-container">
-      <a (click)="expandSidePanel()" class="expand-arrow cursorPointer"><span><i *ngIf="!isExpanded"
-            class="fa fa-long-arrow-right"></i><i *ngIf="isExpanded" class="fa fa-long-arrow-left"></i></span></a>
-    </div> -->
   </div>
 </div>

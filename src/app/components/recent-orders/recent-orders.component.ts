@@ -1,8 +1,13 @@
 import { DialogComponent } from "./../../components/dialog/dialog.component";
-import { Orders } from "./../../constants/mockup-data";
 import { Status } from "./../../models/models";
-import { Component, OnInit, ViewChild, Inject, Input, OnChanges } from "@angular/core";
-import { InteractionService } from "src/app/services/interaction.service";
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  Inject,
+  Input,
+  OnChanges,
+} from "@angular/core";
 import { MatSort } from "@angular/material/sort";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
@@ -11,22 +16,10 @@ import { TransactionService } from "./../../services/transaction.service";
 import { Router } from "@angular/router";
 import { MatSnackBar } from "@angular/material";
 
-
-// export interface Order {
-//   consumer: string;
-//   shop: string;
-//   phone: number;
-//   status: any;
-//   total: number;
-//   time_left: string;
-// }
-
 interface StatusMenu {
   value: string;
   viewValue: string;
 }
-
-// const ELEMENT_DATA: Order[] = Orders;
 
 @Component({
   selector: "app-recent-orders",
@@ -35,7 +28,6 @@ interface StatusMenu {
 })
 export class RecentOrdersComponent implements OnInit, OnChanges {
   @Input("tableData") tableData: any;
-  // isSidePanelExpanded: boolean;
 
   displayedColumns: string[] = [
     "customer_name",
@@ -64,39 +56,34 @@ export class RecentOrdersComponent implements OnInit, OnChanges {
   timeDiff: any;
   currentTime: any;
   timeDiffMins: any;
-  timeDiffHours: Number;
-
-  oldStatus
+  timeDiffHours: number;
+  oldStatus: any;
 
   constructor(
-    // private interaction: InteractionService,
     public dialog: MatDialog,
     private transactionService: TransactionService,
     private router: Router,
-    private _snackbar: MatSnackBar
-
-  ) {
-    // this.isSidePanelExpanded = this.interaction.getExpandedStatus();
-  }
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {
     if (this.tableData.length) {
-      this.oldStatus = this.tableData[0].status
+      this.oldStatus = this.tableData[0].status;
     }
-
-    // this.interaction.expandedStatus$.subscribe((res) => {
-    //   this.isSidePanelExpanded = res;
-    // });
-    this.showTableData()
+    this.showTableData();
   }
 
+  // show table data
   showTableData() {
     this.currentTime = new Date();
 
-    // this.dataSource = this.tableData.reverse();
-
     this.tableData.forEach((element) => {
-      if (element.remaining_time < 0 || element.status == "Delivered" || element.status == "Cancelled" || element.remaining_time === '-') {
+      if (
+        element.remaining_time < 0 ||
+        element.status == "Delivered" ||
+        element.status == "Cancelled" ||
+        element.remaining_time === "-"
+      ) {
         element.remaining_time = "-";
       } else {
         element.timestamp = new Date(element.timestamp);
@@ -124,7 +111,7 @@ export class RecentOrdersComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    this.showTableData()
+    this.showTableData();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -136,8 +123,6 @@ export class RecentOrdersComponent implements OnInit, OnChanges {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
-    // if (filterValue)
-    //   this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   onStatusChange(event: any, row: any) {
@@ -148,30 +133,25 @@ export class RecentOrdersComponent implements OnInit, OnChanges {
     switch (status) {
       case "Delivered":
         return 3;
-        break;
       case "Packed":
         return 1;
-        break;
       case "Dispatched":
         return 2;
-        break;
       case "Cancelled":
         return 4;
-        break;
       case "Ordered":
         return 0;
-        break;
     }
   }
 
   openDialog(event: any, row: any): void {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: "300px",
-      data: { statusValue: event.value, row: row },
+      data: { statusValue: event.value, row },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      event.source.value = this.oldStatus
+      event.source.value = this.oldStatus;
       if (result) {
         this.transactionService
           .updateOrderStatus(
@@ -181,7 +161,7 @@ export class RecentOrdersComponent implements OnInit, OnChanges {
           .subscribe(
             (res) => {
               result.data.row.status = result.data.statusValue;
-              this._snackbar.open("Status Updated", "", {
+              this.snackBar.open("Status Updated", "", {
                 duration: 5000,
               });
               this.router
@@ -196,7 +176,7 @@ export class RecentOrdersComponent implements OnInit, OnChanges {
                 .then(() => {
                   this.router.navigate(["/dashboard"]);
                 });
-              this._snackbar.open("Could not perform this Operation", "", {
+              this.snackBar.open("Could not perform this Operation", "", {
                 duration: 5000,
               });
             }

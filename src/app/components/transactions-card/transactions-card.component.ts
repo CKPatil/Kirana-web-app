@@ -4,62 +4,9 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from "@angular/material/dialog";
-// import { Router } from "@angular/router";
 import { TransactionService } from "src/app/services/transaction.service";
-
-// STATUS Array
 import { STATUSES } from "./../../constants/constants";
 import { MatSnackBar } from "@angular/material";
-
-@Component({
-  selector: "app-transactions-card",
-  templateUrl: "./transactions-card.component.html",
-  styleUrls: ["./transactions-card.component.scss"],
-})
-export class TransactionsCardComponent {
-  @Input() item: any;
-
-  constructor(
-    public dialog: MatDialog,
-    private transactionService: TransactionService,
-    // private router: Router,
-    private _snackbar: MatSnackBar
-  ) {}
-
-  // for changing the status
-  openChooseOrderStatusDialog() {
-    const dialogRef = this.dialog.open(ChooseOrderStatusDialog, {
-      width: "20em",
-      data: this.item.status,
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      // if (result) {
-      if (result >= 0) {
-        this.transactionService
-          .updateOrderStatus(this.item.id, result)
-          .subscribe(
-            (res) => {
-              this.item.status = STATUSES[result];
-              this._snackbar.open("Order Status Updated", "", {
-                duration: 5000,
-              });
-              // this.router
-              //   .navigateByUrl("/login", { skipLocationChange: true })
-              //   .then(() => {
-              //     this.router.navigate(["/transactions"]);
-              //   });
-            },
-            (err) => {
-              this._snackbar.open("Operation can't be Performed", "", {
-                duration: 5000,
-              });
-            }
-          );
-      }
-    });
-  }
-}
 
 // //////////// Select the Status Dialog
 @Component({
@@ -81,3 +28,54 @@ export class ChooseOrderStatusDialog {
     this.dialogRef.close();
   }
 }
+
+@Component({
+  selector: "app-transactions-card",
+  templateUrl: "./transactions-card.component.html",
+  styleUrls: ["./transactions-card.component.scss"],
+})
+export class TransactionsCardComponent {
+  @Input() item: any;
+
+  constructor(
+    public dialog: MatDialog,
+    private transactionService: TransactionService,
+    // private router: Router,
+    private snackBar: MatSnackBar
+  ) {}
+
+  // for changing the status
+  openChooseOrderStatusDialog() {
+    const dialogRef = this.dialog.open(ChooseOrderStatusDialog, {
+      width: "20em",
+      data: this.item.status,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      // if (result) {
+      if (result >= 0) {
+        this.transactionService
+          .updateOrderStatus(this.item.id, result)
+          .subscribe(
+            (res) => {
+              this.item.status = STATUSES[result];
+              this.snackBar.open("Order Status Updated", "", {
+                duration: 5000,
+              });
+              // this.router
+              //   .navigateByUrl("/login", { skipLocationChange: true })
+              //   .then(() => {
+              //     this.router.navigate(["/transactions"]);
+              //   });
+            },
+            (err) => {
+              this.snackBar.open("Operation can't be Performed", "", {
+                duration: 5000,
+              });
+            }
+          );
+      }
+    });
+  }
+}
+

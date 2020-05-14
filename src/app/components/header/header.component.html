@@ -2,21 +2,40 @@
   <div class="head-main">
     <div class="logo row align-items-center">
       <div class="col">
-        <img src="./../../../assets/icon.png" alt="Logo" width="35">
+        <img src="./../../../assets/icon.png" alt="Logo" width="35" />
       </div>
       <div class="col pl-1">
         <h2>K<small class="font-weight-bold">irana</small></h2>
       </div>
     </div>
     <div class="logout-btn-container">
-      <a *ngIf='change === "true"' class="cursorPointer" (click)="notifications()" matBadge="!"
-        matBadgePosition="before" matBadgeColor="accent" matTooltip="Notifications"><i class="fa fa-bell"></i></a>
-      <a *ngIf='change === "false"' class="cursorPointer" (click)="notifications()" matTooltip="Notifications"><i
-          class="fa fa-bell"></i></a>
-      <a *ngIf='!change' class="cursorPointer" (click)="notifications()" matTooltip="Notifications"><i
-          class="fa fa-bell"></i></a>
-      <a class="cursorPointer" [matMenuTriggerFor]="menu" matTooltip="Settings"><i class="fa fa-cog"
-          aria-hidden="true"></i></a>
+      <a
+        *ngIf="change === 'true'"
+        class="cursorPointer"
+        (click)="notifications()"
+        matBadge="!"
+        matBadgePosition="before"
+        matBadgeColor="accent"
+        matTooltip="Notifications"
+        ><i class="fa fa-bell"></i
+      ></a>
+      <a
+        *ngIf="change === 'false'"
+        class="cursorPointer"
+        (click)="notifications()"
+        matTooltip="Notifications"
+        ><i class="fa fa-bell"></i
+      ></a>
+      <a
+        *ngIf="!change"
+        class="cursorPointer"
+        (click)="notifications()"
+        matTooltip="Notifications"
+        ><i class="fa fa-bell"></i
+      ></a>
+      <a class="cursorPointer" [matMenuTriggerFor]="menu" matTooltip="Settings"
+        ><i class="fa fa-cog" aria-hidden="true"></i
+      ></a>
       <mat-menu #menu="matMenu">
         <button (click)="ResetPass()" mat-menu-item>
           <i class="fa fa-key"></i>
@@ -27,10 +46,20 @@
           <span>Notifications</span>
         </button>
       </mat-menu>
-      <a class="cursorPointer" id="feedback" (click)="feedbacks()" matTooltip="Feedback"><i class="fa fa-comments-o"
-          aria-hidden="true"></i></a>
-      <a class="cursorPointer" id="logout" (click)="logout()" matTooltip="Logout"><i class="fa fa-sign-out"
-          aria-hidden="true"></i></a>
+      <a
+        class="cursorPointer"
+        id="feedback"
+        (click)="feedbacks()"
+        matTooltip="Feedback"
+        ><i class="fa fa-comments-o" aria-hidden="true"></i
+      ></a>
+      <a
+        class="cursorPointer"
+        id="logout"
+        (click)="logout()"
+        matTooltip="Logout"
+        ><i class="fa fa-sign-out" aria-hidden="true"></i
+      ></a>
     </div>
   </div>
 </mat-toolbar>

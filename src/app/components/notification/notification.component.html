@@ -1,22 +1,32 @@
 <div class="row">
-  <h1 mat-dialog-title class="col-11 text-center font-weight-bold">Notification Settings</h1>
+  <h1 mat-dialog-title class="col-11 text-center font-weight-bold">
+    Notification Settings
+  </h1>
   <div mat-dialog-actions class="col-1">
-    <button mat-icon-button color="primary" [mat-dialog-close]="" style="position: relative; top: -2.2em;">
+    <button
+      mat-icon-button
+      color="primary"
+      [mat-dialog-close]=""
+      style="position: relative; top: -2.2em;"
+    >
       <mat-icon>clear</mat-icon>
     </button>
   </div>
 </div>
 
 <div mat-dialog-content>
-  <!-- <i (click)='onNoClick()' style='font-size: 0.95em; float: right !important; cursor: pointer;' class="fa fa-times"></i>
-  <h2 class="example-h2">Notifications Setting</h2> -->
   <section class="example-section">
     <div>
       <h4>Invite Request</h4>
     </div>
     <div class="toggle">
-      <mat-slide-toggle class="example-margin" [color]="color" [checked]="checkedInviteStatus" [disabled]="disabled"
-        (change)="InviteStatusChange($event)">
+      <mat-slide-toggle
+        class="example-margin"
+        [color]="color"
+        [checked]="checkedInviteStatus"
+        [disabled]="disabled"
+        (change)="InviteStatusChange($event)"
+      >
       </mat-slide-toggle>
     </div>
   </section>
@@ -25,8 +35,13 @@
       <h4>New Order</h4>
     </div>
     <div class="toggle">
-      <mat-slide-toggle class="example-margin" [color]="color" [checked]="checkedNewOrder" [disabled]="disabled"
-        (change)="newOrdersChange($event)">
+      <mat-slide-toggle
+        class="example-margin"
+        [color]="color"
+        [checked]="checkedNewOrder"
+        [disabled]="disabled"
+        (change)="newOrdersChange($event)"
+      >
       </mat-slide-toggle>
     </div>
   </section>
@@ -35,8 +50,13 @@
       <h4>Critical Status</h4>
     </div>
     <div class="toggle">
-      <mat-slide-toggle class="example-margin" [color]="color" [checked]="checkedCriticalStatus" [disabled]="disabled"
-        (change)="CriticalStatusChange($event)">
+      <mat-slide-toggle
+        class="example-margin"
+        [color]="color"
+        [checked]="checkedCriticalStatus"
+        [disabled]="disabled"
+        (change)="CriticalStatusChange($event)"
+      >
       </mat-slide-toggle>
     </div>
   </section>
@@ -45,8 +65,13 @@
       <h4>Cancelled Order</h4>
     </div>
     <div class="toggle">
-      <mat-slide-toggle class="example-margin" [color]="color" [checked]="checkedCancelledStatus" [disabled]="disabled"
-        (change)="CancelledStatusChange($event)">
+      <mat-slide-toggle
+        class="example-margin"
+        [color]="color"
+        [checked]="checkedCancelledStatus"
+        [disabled]="disabled"
+        (change)="CancelledStatusChange($event)"
+      >
       </mat-slide-toggle>
     </div>
   </section>
@@ -55,8 +80,13 @@
       <h4>Packed Order</h4>
     </div>
     <div class="toggle">
-      <mat-slide-toggle class="example-margin" [color]="color" [checked]="checkedPackedStatus" [disabled]="disabled"
-        (change)="PackedStatusChange($event)">
+      <mat-slide-toggle
+        class="example-margin"
+        [color]="color"
+        [checked]="checkedPackedStatus"
+        [disabled]="disabled"
+        (change)="PackedStatusChange($event)"
+      >
       </mat-slide-toggle>
     </div>
   </section>
@@ -65,8 +95,13 @@
       <h4>Dispatched Order</h4>
     </div>
     <div class="toggle">
-      <mat-slide-toggle class="example-margin" [color]="color" [checked]="checkedDispatchedStatus" [disabled]="disabled"
-        (change)="DispatchedStatusChange($event)">
+      <mat-slide-toggle
+        class="example-margin"
+        [color]="color"
+        [checked]="checkedDispatchedStatus"
+        [disabled]="disabled"
+        (change)="DispatchedStatusChange($event)"
+      >
       </mat-slide-toggle>
     </div>
   </section>

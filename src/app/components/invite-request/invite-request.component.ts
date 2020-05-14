@@ -4,11 +4,9 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSnackBar } from '@angular/
 import { Router } from '@angular/router';
 
 @Component({
-  // tslint:disable-next-line: component-selector
   selector: 'show-invite-detail-dialogue',
   templateUrl: './showInviteDetailModal.html',
 })
-// tslint:disable-next-line: component-class-suffix
 export class ShowInviteDetailModal {
   constructor(
     public dialogRef: MatDialogRef<ShowInviteDetailModal>,
@@ -36,6 +34,7 @@ export class InviteRequestComponent implements OnInit {
 
   ngOnInit() { }
 
+  // Actions to be done after approving the invite request
   approveInviteRequest() {
     const data = { requestId: this.inviteRequest.id, approved: true };
     this.retailerService.inviteRequestResponse(data).subscribe((result) => {
@@ -50,6 +49,7 @@ export class InviteRequestComponent implements OnInit {
     });
   }
 
+  // Actions to be done after rejecting the invite request
   rejectInviteRequest() {
     const data = { requestId: this.inviteRequest.id, approved: false };
     this.retailerService.inviteRequestResponse(data).subscribe((result) => {
@@ -64,6 +64,7 @@ export class InviteRequestComponent implements OnInit {
     });
   }
 
+  // Open details of reatiler modal
   openDialog() {
     const dialogRef = this.dialog.open(ShowInviteDetailModal, {
       width: '90%',

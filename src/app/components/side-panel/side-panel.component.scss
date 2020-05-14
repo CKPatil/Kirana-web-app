@@ -16,19 +16,7 @@
     align-items: center;
     box-shadow: 0 8px 8px 0 #00000080;
 
-    // .main-logo-container {
-    //   .main-logo {
-    //     height: 0px;
-    //   }
-    //   flex: 9;
-    // }
-
     .nav-options {
-      // flex: 18;
-      // justify-content: space-around;
-      // display: flex;
-      // flex-direction: column;
-      // margin-bottom: 2em;
       text-align: center;
 
       .nav-option {
@@ -55,23 +43,8 @@
       .nav-option:hover,
       .active {
         background-color: $side-panel-active-color;
-        // border-radius: 5px;
       }
     }
-
-    // .expand-arrow-container {
-    //   flex: 16;
-    //   transition: all 1s;
-    //   display: flex;
-    //   flex-direction: column-reverse;
-
-    //   span {
-
-    //     i {
-    //       color: #333344;
-    //     }
-    //   }
-    // }
   }
 }
 

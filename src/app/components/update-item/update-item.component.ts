@@ -12,55 +12,6 @@ import { MatSnackBar } from "@angular/material";
 import { PRODUCTS_UNITS } from "./../../constants/constants";
 
 @Component({
-  selector: "app-update-item",
-  templateUrl: "./update-item.component.html",
-  styleUrls: ["./update-item.component.scss"],
-})
-export class UpdateItemComponent {
-  @Input() variant: any;
-  // @Input() unit: any;
-
-  constructor(
-    public dialog: MatDialog,
-    private productService: ProductsService,
-    private router: Router,
-    private _snackbar: MatSnackBar
-  ) {}
-
-  // for variant detail Update
-  openDialog() {
-    const dialogRef = this.dialog.open(UpdateItemModal, {
-      width: "350px",
-      data: { variant: this.variant },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.productService
-          .updateProduct(result, "?id=" + this.variant.p_id)
-          .subscribe(
-            (result) => {
-              this._snackbar.open("Product Variant Detail Updated", "", {
-                duration: 5000,
-              });
-              this.router
-                .navigateByUrl("/login", { skipLocationChange: true })
-                .then(() => {
-                  this.router.navigate(["/items"]);
-                });
-            },
-            (error) => {
-              this._snackbar.open("Error Occured, try after sometime.", "", {
-                duration: 5000,
-              });
-            }
-          );
-      }
-    });
-  }
-}
-
-@Component({
   selector: "app-add-items-dialogue",
   templateUrl: "./updateItemModal.html",
 })
@@ -72,7 +23,7 @@ export class UpdateItemModal {
     price: ["", [Validators.required, Validators.min(0)]],
   });
 
-  products_unit = PRODUCTS_UNITS
+  productsUnit = PRODUCTS_UNITS;
 
   constructor(
     public dialogRef: MatDialogRef<UpdateItemModal>,
@@ -89,5 +40,52 @@ export class UpdateItemModal {
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+}
+@Component({
+  selector: "app-update-item",
+  templateUrl: "./update-item.component.html",
+  styleUrls: ["./update-item.component.scss"],
+})
+export class UpdateItemComponent {
+  @Input() variant: any;
+
+  constructor(
+    public dialog: MatDialog,
+    private productService: ProductsService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {}
+
+  // for variant detail Update
+  openDialog() {
+    const dialogRef = this.dialog.open(UpdateItemModal, {
+      width: "350px",
+      data: { variant: this.variant },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.productService
+          .updateProduct(result, "?id=" + this.variant.p_id)
+          .subscribe(
+            () => {
+              this.snackBar.open("Product Variant Detail Updated", "", {
+                duration: 5000,
+              });
+              this.router
+                .navigateByUrl("/login", { skipLocationChange: true })
+                .then(() => {
+                  this.router.navigate(["/items"]);
+                });
+            },
+            (error) => {
+              this.snackBar.open("Error Occured, try after sometime.", "", {
+                duration: 5000,
+              });
+            }
+          );
+      }
+    });
   }
 }

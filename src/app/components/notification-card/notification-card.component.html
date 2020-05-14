@@ -24,8 +24,10 @@
       >&nbsp;&nbsp;&nbsp;{{ notification.customer_phone }}
     </div>
     <div class="col-12" style="margin-top: 10px;">
-      <i class="fa fa-home" style="font-size: 20px; vertical-align: bottom;"></i
-      >
+      <i
+        class="fa fa-home"
+        style="font-size: 20px; vertical-align: bottom;"
+      ></i>
       &nbsp;&nbsp;{{ notification.customer_adress_details.line1 }},
       {{ notification.customer_adress_details.line2 }},{{
         notification.customer_adress_details.city
@@ -36,10 +38,10 @@
       <br />
     </div>
     <div class="col-12">
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        {{ notification.customer_adress_details.state }}-{{
-          notification.customer_adress_details.pincode
-        }}
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      {{ notification.customer_adress_details.state }}-{{
+        notification.customer_adress_details.pincode
+      }}
       <p style="float: right;">
         {{ notification.timestamp | date: "shortTime" }}
       </p>

@@ -1,11 +1,10 @@
 import { ResetpasswordService } from './../../services/resetpassword.service';
 import { InteractionService } from 'src/app/services/interaction.service';
-import { Component, Output, Input, EventEmitter, Inject } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { Component, Inject } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { OldPwdValidators } from './old-password.validators';
 import {
   MatSnackBar,
-  MatSnackBarConfig,
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
   MatDialogRef,
@@ -65,14 +64,18 @@ export class ResetPassComponent {
       validator: OldPwdValidators.matchPwds
     });
   }
+
+  // get oldPassword
   get oldPwd() {
     return this.form1.get('oldPwd');
   }
 
+  // get newPassword
    get newPwd() {
     return this.form1.get('newPwd');
   }
 
+  // get confirmPassword
    get confirmPwd() {
     return this.form1.get('confirmPwd');
   }
