@@ -7,7 +7,6 @@ import { LoginComponent } from './pages/login/login.component';
 import { AuthGuard } from './guards/auth/auth.guard';
 import { TransactionsComponent } from './pages/transactions/transactions.component';
 import { FeedbacksComponent } from './pages/feedbacks/feedbacks.component';
-import { ResetPassComponent } from './components/reset-pass/reset-pass.component';
 import { NotificationsPageComponent } from './pages/notifications-page/notifications-page.component';
 
 const routes: Routes = [

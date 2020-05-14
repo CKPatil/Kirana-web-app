@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from "@angular/core";
   name: "formatTime",
 })
 export class FormatTimePipe implements PipeTransform {
-  //for MM:SS format
+  // for MM:SS format
   transform(value: number): string {
     const minutes: number = Math.floor(value / 60);
     return (
