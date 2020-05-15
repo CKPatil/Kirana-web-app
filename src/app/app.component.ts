@@ -60,7 +60,6 @@ export class AppComponent {
     this.notificationsPageComponent.ngOnInit();
 
     this.refreshInterval = setInterval(() => {
-      console.log("Refreshing...");
       this.rertailerService.getAllInvitationRequestsFromServer();
       this.transitionService.getOrdersFromServer();
     }, 60000);
