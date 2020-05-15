@@ -10,7 +10,7 @@ import { MatSnackBar } from "@angular/material";
 export class ItemsComponent {
   searchText;
   allProducts: any = [];
-  productsData: any = { categories: [], sub_categories: {}, brands: {} }
+  productsData: any = { categories: [], sub_categories: {}, brands: {} };
 
   constructor(
     private productService: ProductsService,
@@ -31,7 +31,7 @@ export class ItemsComponent {
 
   // to get the categories, subcategories and Brand and send to add Item Component from All Products Data
   prepareDataForNewItem() {
-    let data = { categories: [], sub_categories: {}, brands: {} };
+    const data = { categories: [], sub_categories: {}, brands: {} };
     this.allProducts.forEach((val) => {
       if (!data.categories.includes(val.category)) {
         data.categories.push(val.category);

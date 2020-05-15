@@ -39,21 +39,25 @@ export class FeedbacksComponent implements OnInit {
     this.filteredData = this.allFeedbacks;
   }
 
+  // filtering based on rating
   onRatingFilterChange(value: string) {
-    this.filters.rating = parseInt(value);
+    this.filters.rating = parseInt(value, 10);
     this.filter();
   }
 
+  // filtering based on reatailer
   onRetailerFilterChange(value: string) {
     this.filters.vendor_name = value;
     this.filter();
   }
 
+  // filtering based on date
   onDateFilterChange(value: Date) {
     this.filters.date = this.parseDate(value);
     this.filter();
   }
 
+  // filtering based on all dates
   filter() {
     this.filteredData = this.multiFilter.transform(
       this.allFeedbacks,
@@ -61,6 +65,7 @@ export class FeedbacksComponent implements OnInit {
     );
   }
 
+  // reset all filters
   resetFilter() {
     this.filters = {};
     this.searchRetail = "";
@@ -69,6 +74,7 @@ export class FeedbacksComponent implements OnInit {
     this.filter();
   }
 
+  // get feedback from the service
   getAllFeedbacks() {
     this.feedbackService.getAllFeedbacks().subscribe(
       (result: any) => {
@@ -94,13 +100,14 @@ export class FeedbacksComponent implements OnInit {
     );
   }
 
+  // converting date to required format(dd/mm/yyyy);
   parseDate = (d) => {
     d = new Date(d);
     let date = d.getDate();
     date = ("" + date).length === 1 ? "" + 0 + date : date;
     let month = d.getMonth();
-    month = ("" + month).length == 1 ? "" + 0 + month : month;
-    let year = d.getFullYear();
+    month = ("" + month).length === 1 ? "" + 0 + month : month;
+    const year = d.getFullYear();
     return `${date}/${month}/${year}`;
-  };
+  }
 }

@@ -27,8 +27,9 @@ export class FeedbackService {
       environment.backend_end_point + environment.imageUpload;
   }
 
+  // get all the feedbacks from database
   getAllFeedbacks() {
-    let feedbackURL = environment.backend_end_point + environment.feedbackURL;
+    const feedbackURL = environment.backend_end_point + environment.feedbackURL;
     return this.http
       .get(feedbackURL, {
         headers: this.httpOptions,

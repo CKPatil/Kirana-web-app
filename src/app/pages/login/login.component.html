@@ -5,20 +5,10 @@
       [ngClass]="{ 'flex-row-reverse': isRegister }"
     >
       <div class="left-container col-12 col-lg-4">
-        <!-- [ngClass]="{
-            'left-half-border-radius': !isRegister,
-            'right-half-border-radius': isRegister
-          }" -->
         <img src="./../../../assets/logo.png" alt="Logo" class="logo mb-2" />
         <div class="login-welcome">
           <h1>Welcome!</h1>
         </div>
-        <!-- <div class=" d-none d-md-block">
-            <button class="login-btn left-btn" (click)="registerClicked()">
-              {{ registerBtn }}
-            </button>
-            <h6>{{ btnInfo }}</h6>
-          </div> -->
       </div>
       <div class="col-12 col-lg-8 right-container">
         <h1 class="mb-lg-4">{{ loginBtn }} to Kirana</h1>
@@ -32,9 +22,6 @@
                   formControlName="username"
                   autocomplete="off"
                 />
-                <!-- <mat-error *ngIf="loginForm.controls['username']?.status == 'INVALID' && !loginForm.controls['username']?.errors?.required">
-                    Please enter a valid Username
-                  </mat-error> -->
                 <mat-error
                   *ngIf="
                     loginForm.controls['username']?.errors?.required &&

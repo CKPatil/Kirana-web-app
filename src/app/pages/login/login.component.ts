@@ -3,7 +3,7 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from "@angular/material/dialog";
-import { Component, OnInit, Inject, Output } from "@angular/core";
+import { Component, OnInit, Inject } from "@angular/core";
 import {
   FormControl,
   FormGroupDirective,
@@ -11,14 +11,10 @@ import {
   Validators,
   FormBuilder,
   FormGroup,
-  // ReactiveFormsModule,
 } from "@angular/forms";
 import { AuthService } from "../../services/auth.service";
-//import { SharedLoginService } from '../../services/sharedLogin.service';
 import { ErrorStateMatcher } from "@angular/material/core";
 import { Router } from "@angular/router";
-// import { filter } from "rxjs/operators";
-// import { EventEmitter } from "@angular/core";
 import { OldPwdValidators } from "./olPwdvalidator.component";
 import { MatSnackBar } from "@angular/material";
 import { timer, Subscription } from "rxjs";
@@ -74,7 +70,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private _snackbar: MatSnackBar,
-    public dialog: MatDialog // protected commonUtil: CommonUtil
+    public dialog: MatDialog
   ) {
     this.loginForm = this.fb.group({
       username: ["", [Validators.required]],
@@ -82,9 +78,6 @@ export class LoginComponent implements OnInit {
         "",
         [
           Validators.required,
-          // Validators.pattern(
-          //   "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$"
-          // ),
         ],
       ],
     });
@@ -114,13 +107,11 @@ export class LoginComponent implements OnInit {
 
   public existingLogin() {
     this.isLogin = this.isLogin ? false : true;
-    // this.loginForm.controls.emailId.setValue(null);
-    // this.loginForm.controls.password.setValue(null);
   }
 
-  togglePasswordView(e){
-    if(!e.target.matches('button')){
-      this.hide = !this.hide
+  togglePasswordView(e) {
+    if (!e.target.matches('button')) {
+      this.hide = !this.hide;
     }
   }
 
@@ -129,7 +120,6 @@ export class LoginComponent implements OnInit {
       const data = Object.assign({}, this.loginForm.value);
       this.authService.login(data).subscribe(
         (response) => {
-          // console.log(response.body);
           localStorage.setItem("userId", response.body["userId"]);
           localStorage.setItem("userType", response.body["userType"]);
           localStorage.setItem("emailId", response.body["emailId"]);
@@ -141,11 +131,9 @@ export class LoginComponent implements OnInit {
         },
         (error) => {
           this.errorMessage = "Please enter valid credentials";
-          // alert(this.errorMessage);
           this._snackbar.open(this.errorMessage, "", {
             duration: 5000,
           });
-          // this.commonUtil.openErrorSnackBar(this.errorMessage);
         }
       );
     } else {
@@ -168,12 +156,10 @@ export class LoginComponent implements OnInit {
   }
 
   public signUp() {
-    // this.loginForm.controls.companyType.setValue(this.role);
     const data = Object.assign({}, this.loginForm.value);
     this.authService.signUp(data).subscribe(
       (response) => {
         const message = response.body["message"] + ", Please login now";
-        // this.commonUtil.openSnackBar(message);
         this.loginForm.controls.emailId.setValue(null);
         this.loginForm.controls.password.setValue(null);
         this.existingLogin();
@@ -182,17 +168,7 @@ export class LoginComponent implements OnInit {
           this.loginForm.controls.confirmPassword.value
         );
       },
-      (error) => {
-        if (error.status === 403) {
-          // this.commonUtil.openErrorSnackBar(
-          //   'Invitation link expired, please contact admin'
-          // );
-        } else if (error.error && error.error.message) {
-          // this.commonUtil.openErrorSnackBar(error.error.message);
-        } else {
-          // this.commonUtil.openErrorSnackBar('Error');
-        }
-      }
+      (error) => {}
     );
   }
 
@@ -211,7 +187,7 @@ export class LoginComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        let resetPassword = {
+        const resetPassword = {
           otp: "string",
           phone: result.value.phone,
           password: "string",
@@ -222,8 +198,8 @@ export class LoginComponent implements OnInit {
         };
         this.authService.forgotPassword(data, "").subscribe(
           (response: any) => {
-            if (response.body.message == "otp sent") {
-              let userId = response.body.user_id;
+            if (response.body.message === "otp sent") {
+              const userId = response.body.user_id;
               const otpDialog = this.dialog.open(OTPComponent, {
                 width: "90%",
                 maxWidth: "30em",
@@ -314,17 +290,9 @@ export class LoginComponent implements OnInit {
 })
 export class ForgotPasswordDialog {
   form;
-
-  // res: any;
-  // otpDialogRef: MatDialogRef<OTPComponent>;
-  // onSubmit = new EventEmitter();
-  // onClick() {}
-
   constructor(
-    // private authService: AuthService,
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<ForgotPasswordDialog>,
-    // public otpDialog: MatDialogRef<OTPComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {
     this.form = this.fb.group({
@@ -335,12 +303,6 @@ export class ForgotPasswordDialog {
   onNoClick(): void {
     this.dialogRef.close();
   }
-
-  // ngOnInit() {
-  // }
-  // submit(form) {
-  //   this.dialogRef.close(`${form.value.phone}`);
-  // }
 }
 
 // OTP dialog box
@@ -350,11 +312,6 @@ export class ForgotPasswordDialog {
   styleUrls: ["./otp.component.scss"],
 })
 export class OTPComponent {
-  // otp: string;
-  // userId: string;
-  // res: any;
-
-  // onSendOTP = new EventEmitter();
 
   constructor(
     public authService: AuthService,
@@ -384,10 +341,6 @@ export class OTPComponent {
   ngOnDestroy() {
     this.countDown = null;
   }
-  // submit(form) {
-  //   this.dialogRef.close(`${form.value.otp}`);
-  //   const data = Object.assign({}, this.form.value);
-  // }
 }
 
 // UpdatePassword Dialog box
@@ -410,19 +363,15 @@ export class UpdatePasswordComponent {
         "",
         Validators.compose([
           Validators.required,
-          // check whether the entered password has a number
           OldPwdValidators.patternValidator(/\d/, {
             hasNumber: true,
           }),
-          // check whether the entered password has upper case letter
           OldPwdValidators.patternValidator(/[A-Z]/, {
             hasCapitalCase: true,
           }),
-          // check whether the entered password has a lower case letter
           OldPwdValidators.patternValidator(/[a-z]/, {
             hasSmallCase: true,
           }),
-          // check whether the entered password has a special character
           OldPwdValidators.patternValidator(
             /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/,
             {
@@ -432,16 +381,6 @@ export class UpdatePasswordComponent {
           Validators.minLength(8),
         ]),
       ],
-
-      // newPwd: [
-      //   "",
-      //   [
-      //     Validators.required,
-      //     Validators.pattern(
-      //       "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$"
-      //     ),
-      //   ],
-      // ],
       confirmPwd: ["", Validators.required],
     },
     {

@@ -19,6 +19,8 @@ export class ResetpasswordService {
   buildURLS() {
     this.productsURL = environment.backend_end_point + environment.resetPassURL;
   }
+
+  // reset password service
   addNewPassword(data): Observable<any> {
     return this.http.put<any>(this.productsURL, JSON.stringify(data), {
       headers: this.httpOptions,

@@ -9,7 +9,6 @@ import {
   Component,
   OnInit,
   ViewChild,
-  AfterContentChecked,
   Inject,
 } from '@angular/core';
 import { InteractionService } from 'src/app/services/interaction.service';
@@ -28,13 +27,10 @@ export interface Retailer {
   recentActivity: string;
 }
 
-
 @Component({
-  // tslint:disable-next-line: component-selector
   selector: 'blockConformationDialog',
   templateUrl: 'blockConformationDialog.html',
 })
-// tslint:disable-next-line: component-class-suffix
 export class BlockConformationDialog {
   constructor(
     public dialogRef: MatDialogRef<BlockConformationDialog>,
@@ -94,10 +90,11 @@ export class RetailerComponent implements OnInit {
 
     });
   }
-  // tslint:disable-next-line: use-lifecycle-interface
   ngAfterContentChecked() {
     this.comp2val = this.sharedService.comp2Val;
   }
+
+  // apply filters to reatilers list
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     if (filterValue) {
@@ -105,6 +102,7 @@ export class RetailerComponent implements OnInit {
     }
   }
 
+  // block retailer confirmation dialog
   openConfirmBlockDialog(vendorId, set) {
     const dialogRef = this.dialog.open(BlockConformationDialog, {
       width: '20em',
@@ -142,6 +140,5 @@ export class RetailerComponent implements OnInit {
       }
     });
   }
-
 }
 

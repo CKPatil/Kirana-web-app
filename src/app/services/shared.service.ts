@@ -27,5 +27,4 @@ export class SharedService {
     this.comp2Val = val;
     this._comp2ValueBS.next(this.comp2Val);
   }
-
 }

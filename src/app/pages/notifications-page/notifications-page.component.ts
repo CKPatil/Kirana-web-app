@@ -1,4 +1,3 @@
-import { Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TransactionService } from 'src/app/services/transaction.service';
 import { RetailerService } from './../../services/retailer.service';
@@ -10,7 +9,6 @@ import { RetailerService } from './../../services/retailer.service';
 export class NotificationsPageComponent implements OnInit, OnDestroy {
   constructor(
     private transactionService: TransactionService,
-    private router: Router,
     private retailerService: RetailerService
   ) {}
 
@@ -52,8 +50,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
   invitationStatus: any;
   inviteStatus: any;
   invite = false;
-  // tslint:disable-next-line: variable-name
-  new_ = false;
+  _new = false;
   cancel = false;
   packed = false;
   dispatch = false;
@@ -97,6 +94,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
       this.newNotify();
     }, 60000);
   }
+  // Process all notifications in their respective category
   newNotify() {
     if (this.newOrderStatus == 'false' && this.cancelOrderStatus == 'false' && this.criticalOrderStatus == 'false' &&
       this.inviteStatus == 'false' && this.packedOrderStatus == 'false' && this.dispatchedOrderStatus == 'false') {
@@ -144,6 +142,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
     });
   }
 
+  // Processing the new order notifications
   newOrderFun() {
     this.newLen = 0;
     for (let i = 0; i < this.orderedNotifications.length; i++) {
@@ -156,6 +155,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
     }
   }
 
+    // Processing the cancel order notifications
   cancelOrderFun() {
     this.cancelLen = 0;
     for (let i = 0; i < this.cancelNotifications.length; i++) {
@@ -168,6 +168,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
     }
   }
 
+    // Processing the critical order notifications
   criticalOrderFun() {
     this.time = new Date().getTime();
     this.notifications.forEach((element) => {
@@ -216,6 +217,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
     }
   }
 
+    // Processing the packed order notifications
   packedOrderFun() {
     this.packedLen = 0;
     for (let i = 0; i < this.packedNotifications.length ; i++) {
@@ -228,6 +230,7 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
     }
   }
 
+    // Processing the dispatched order notifications
   dispatchedFun() {
     this.dispatchLen = 0;
     for (let i = 0; i < this.dispatchedNotifications.length; i++) {
@@ -239,26 +242,32 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
       this.dispatchedChecked = false;
     }
   }
+
+  // Call all notification service from transactions service
   onChecked(status) {
     this.transactionService.readAllNotifications(status)
       .subscribe( (res) => {
         this.transactionService.getOrdersFromServer();
       });
   }
+
+  // invite request button toggling
   onReq() {
     this.invite = !this.invite;
     if (this.invite === true) {
-      this.new_ = false;
+      this._new = false;
       this.critical = false;
       this.cancel = false;
       this.dispatch = false;
       this.packed = false;
     }
   }
+
+  // new notification button toggling
   onNew() {
     this.isNew = true;
-    this.new_ = !this.new_;
-    if (this.new_ === true) {
+    this._new = !this._new;
+    if (this._new === true) {
       this.critical = false;
       this.cancel = false;
       this.dispatch = false;
@@ -266,6 +275,8 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
       this.invite = false;
     }
   }
+
+  // critical notification button toggling
   onCritical() {
     this.critical = !this.critical;
     if (this.critical === true) {
@@ -273,9 +284,11 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
       this.dispatch = false;
       this.packed = false;
       this.invite = false;
-      this.new_ = false;
+      this._new = false;
     }
   }
+
+  // cancel notification button toggling
   onCancel() {
     this.isCancel = true;
     this.cancel = !this.cancel;
@@ -283,27 +296,31 @@ export class NotificationsPageComponent implements OnInit, OnDestroy {
       this.dispatch = false;
       this.packed = false;
       this.invite = false;
-      this.new_ = false;
+      this._new = false;
       this.critical = false;
     }
   }
+
+  // dispatch notification button toggling
   onDispatch() {
     this.isDispatch = true;
     this.dispatch = !this.dispatch;
     if (this.dispatch === true) {
       this.packed = false;
       this.invite = false;
-      this.new_ = false;
+      this._new = false;
       this.critical = false;
       this.cancel = false;
     }
   }
+
+  // packed notification button toggling
   onPacked() {
     this.isDispatch = true;
     this.packed = !this.packed;
     if (this.packed === true) {
       this.invite = false;
-      this.new_ = false;
+      this._new = false;
       this.critical = false;
       this.cancel = false;
       this.dispatch = false;

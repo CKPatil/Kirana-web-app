@@ -1,10 +1,7 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { InteractionService } from "src/app/services/interaction.service";
 import { analytics } from "./../../constants/mockup-data";
 import { TransactionService } from "./../../services/transaction.service";
 import { RetailerService } from "./../../services/retailer.service";
-
-import { EmptyError } from "rxjs";
 
 @Component({
   selector: "app-dashboard",
@@ -12,7 +9,6 @@ import { EmptyError } from "rxjs";
   styleUrls: ["./dashboard.component.scss"],
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  // isSidePanelExpanded: boolean;
   analytics: { name: string; count: number }[];
   allTransactions: any;
   orderStatus = "Packed";
@@ -47,9 +43,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // this.interaction.expandedStatus$.subscribe((res) => {
-    //   this.isSidePanelExpanded = res;
-    // });
 
     // to get the invitaition request from the observer from the service
     this.retailerService.observeInviteRequests.subscribe((result) => {
@@ -59,6 +52,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.analytics = analytics;
 
     this.currentDate = new Date();
+
+    // get all transactions from the service
     this.transactionService.observeOrders.subscribe((res: any) => {
       this.isDataAvailable = false;
       this.allTransactions = res;
@@ -83,25 +78,25 @@ export class DashboardComponent implements OnInit, OnDestroy {
         if (
           element.remaining_time > 0 &&
           element.remaining_time <= 30 &&
-          (element.status == "Packed" ||
-            element.status == "Ordered" ||
-            element.status == "Dispatched")
+          (element.status === "Packed" ||
+            element.status === "Ordered" ||
+            element.status === "Dispatched")
         ) {
           this.criticalOrders.push(element);
         }
-        if (element.status == "Packed") {
+        if (element.status === "Packed") {
           this.packedOrders.push(element);
         }
-        if (element.status == "Ordered") {
+        if (element.status === "Ordered") {
           this.recentOrders.push(element);
         }
-        if (element.status == "Dispatched") {
+        if (element.status === "Dispatched") {
           this.dispatchedOrders.push(element);
         }
-        if (element.status == "Delivered") {
+        if (element.status === "Delivered") {
           this.deliveredOrders.push(element);
         }
-        if (element.status == "Cancelled") {
+        if (element.status === "Cancelled") {
           this.cancelledOrders.push(element);
         }
       });
@@ -116,11 +111,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.analytics[3].count = this.deliveredOrders.length;
     });
 
+    // get all retailers from retailer service
     this.retailerService.getAllRetailers().subscribe((res) => {
       this.allRetailers = res.body;
       this.analytics[4].count = this.allRetailers.length;
     });
 
+    // refresh page after every 1 min
     this.refresh = setTimeout(() => {
       this.ngOnInit();
     }, 60000);

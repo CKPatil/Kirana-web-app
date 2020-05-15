@@ -1,6 +1,5 @@
 <div class="outer">
   <div class="dashboard-container">
-    <!-- [ngClass]="{ 'is-side-panel-expanded': isSidePanelExpanded }" -->
     <div class="head-section">
       <h2 class="text-center font-weight-bold">Dashboard</h2>
     </div>
@@ -13,41 +12,62 @@
       <div class="packed-orders-container" id="packedOrders">
         <mat-card>
           <h5><b>Packed Orders</b></h5>
-          <app-recent-orders *ngIf="isDataAvailable" [tableData]="packedOrders"></app-recent-orders>
+          <app-recent-orders
+            *ngIf="isDataAvailable"
+            [tableData]="packedOrders"
+          ></app-recent-orders>
         </mat-card>
       </div>
       <div class="packed-orders-container" id="dispatchedOrders">
         <mat-card>
           <h5><b>Dispatched Orders</b></h5>
-          <app-recent-orders *ngIf="isDataAvailable" [tableData]="dispatchedOrders"></app-recent-orders>
+          <app-recent-orders
+            *ngIf="isDataAvailable"
+            [tableData]="dispatchedOrders"
+          ></app-recent-orders>
         </mat-card>
       </div>
       <div class="packed-orders-container">
         <mat-card>
           <h5><b>Delivered Orders</b></h5>
-          <app-recent-orders *ngIf="isDataAvailable" [tableData]="deliveredOrders"></app-recent-orders>
+          <app-recent-orders
+            *ngIf="isDataAvailable"
+            [tableData]="deliveredOrders"
+          ></app-recent-orders>
         </mat-card>
       </div>
       <div class="urgent-orders-container" id="criticalOrders">
         <mat-card>
           <h5><b>Critical Orders</b></h5>
-          <app-recent-orders *ngIf="isDataAvailable" [tableData]="criticalOrders"></app-recent-orders>
+          <app-recent-orders
+            *ngIf="isDataAvailable"
+            [tableData]="criticalOrders"
+          ></app-recent-orders>
         </mat-card>
       </div>
       <div class="urgent-orders-container" id="cancelOrders">
         <mat-card>
           <h5><b>Cancelled Orders</b></h5>
-          <app-recent-orders *ngIf="isDataAvailable" [tableData]="cancelledOrders"></app-recent-orders>
+          <app-recent-orders
+            *ngIf="isDataAvailable"
+            [tableData]="cancelledOrders"
+          ></app-recent-orders>
         </mat-card>
       </div>
       <div class="third-container row mt-3">
         <div class="recent-orders-container col-12 col-lg-8 p-0" id="newOrders">
           <mat-card>
             <h5><b>Recent Orders</b></h5>
-            <app-recent-orders *ngIf="isDataAvailable" [tableData]="recentOrders"></app-recent-orders>
+            <app-recent-orders
+              *ngIf="isDataAvailable"
+              [tableData]="recentOrders"
+            ></app-recent-orders>
           </mat-card>
         </div>
-        <div class="invite-requests-container col-12 col-lg-4 p-0 mt-2 mt-lg-0" id="inviteRequest">
+        <div
+          class="invite-requests-container col-12 col-lg-4 p-0 mt-2 mt-lg-0"
+          id="inviteRequest"
+        >
           <mat-card>
             <h5><b>Invite Requests</b></h5>
             <div class="invite-requests mt-3" *ngFor="let i of inviteRequests">

@@ -11,15 +11,9 @@ export class AuthService {
   public LoginData: any;
   private httpOptions = new HttpHeaders({ 'Content-Type': 'application/json'});
 
-  constructor(private http: HttpClient) {
-    // setInterval(() => {
-    //   console.log('called');
-    //   const refreshToken = localStorage.getItem('refresh');
-    //   this.refreshToken({refresh: refreshToken}).subscribe((res) => {
-    //     console.log(res);
-    //   }); }, 1000 * 60 * 0.1);
-  }
+  constructor(private http: HttpClient) {}
 
+  // signup service
   signUp(data) {
     const url = environment.backend_end_point + environment.signUpURL;
 
@@ -35,6 +29,7 @@ export class AuthService {
       );
   }
 
+  // refresh token service
   refreshToken(data) {
     const url = environment.backend_end_point + environment.refreshURL;
     return this.http
@@ -49,6 +44,7 @@ export class AuthService {
       );
   }
 
+  // login service
   login(data) {
     const url = environment.backend_end_point + environment.tokenURL;
     return this.http
@@ -63,8 +59,9 @@ export class AuthService {
       );
   }
 
-  forgotPassword(data,param) {
-    const url = environment.backend_end_point + environment.forgotPassword+param;
+  // forgot password on login page
+  forgotPassword(data, param) {
+    const url = environment.backend_end_point + environment.forgotPassword + param;
 
     return this.http
       .post(url, JSON.stringify(data), {
@@ -78,8 +75,9 @@ export class AuthService {
       );
   }
 
-  sendOTP(data,param){
-    const url = environment.backend_end_point + environment.forgotPassword+param;
+  // OTP req
+  sendOTP(data, param) {
+    const url = environment.backend_end_point + environment.forgotPassword + param;
 
     return this.http
       .put(url, JSON.stringify(data), {
@@ -92,8 +90,9 @@ export class AuthService {
       );
   }
 
-  updatePassword(data,param){
-    const url = environment.backend_end_point + environment.updatePassword+param;
+  // update new password
+  updatePassword(data, param) {
+    const url = environment.backend_end_point + environment.updatePassword + param;
 
     return this.http
       .post(url, JSON.stringify(data), {
@@ -107,27 +106,17 @@ export class AuthService {
       );
   }
 
-  // resetPassword(data, token) {
-  //   var url = environment.api_Base_URL + environment.resetPassword;
-  //   var body = JSON.stringify(data);
-  //   localStorage.setItem('token', token);
-  //   return this.http
-  //     .post(url, body, { headers: this.httpOptions, observe: 'response' })
-  //     .pipe(
-  //       catchError(error => {
-  //         return throwError(error);
-  //       })
-  //     );
-  // }
-
+  // receive login data
   loggedIn() {
     return !!localStorage.getItem('user');
   }
 
+  // set login data
   setLoginData(data) {
     this.LoginData = data;
   }
 
+  // get login data
   getLoginData() {
     if (this.LoginData) {
       return this.LoginData;

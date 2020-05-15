@@ -12,10 +12,7 @@ import { transactions } from "../constants/mockup-data";
 })
 export class TransactionService {
   getAllTransactionsURL: any;
-  // tempURL: any;
   httpOptions;
-  // orderType;
-  // getUpdateOrderStatusURL: string;
   buildURLS() {
     this.getAllTransactionsURL =
       environment.backend_end_point + environment.orders;
@@ -29,6 +26,7 @@ export class TransactionService {
     this.observeOrders = new BehaviorSubject(this.allOrders);
   }
 
+  // authorization token
   refreshHttpOptions() {
     const token = localStorage.getItem("access");
     this.httpOptions = new HttpHeaders({
@@ -37,37 +35,10 @@ export class TransactionService {
     });
   }
 
-  // getAllOrders(): Observable<Transaction[]> {
-  //   return this.http
-  //     .get<Transaction[]>(this.getAllTransactionsURL, {
-  //       headers: this.httpOptions,
-  //     })
-  //     .pipe(
-  //       catchError((error) => {
-  //         return throwError(error);
-  //       })
-  //     );
-  // }
-  // getNextOrders(id) {
-  //   return this.http
-  //     .post(this.getAllTransactionsURL, JSON.stringify(id), {
-  //       headers: this.httpOptions,
-  //       observe: "response",
-  //     })
-  //     .pipe(
-  //       catchError((error) => {
-  //         return throwError(error);
-  //       })
-  //     );
-  // }
-
-  // getAllTransactions() {
-  //   return transactions;
-  // }
-
+  // update the order
   updateOrderStatus(orderId, orderStatusCode) {
     this.refreshHttpOptions();
-    let updateURL =
+    const updateURL =
       environment.backend_end_point +
       environment.order +
       `?order_id=${orderId}&status=${orderStatusCode}`;
@@ -87,7 +58,6 @@ export class TransactionService {
       );
   }
 
-  // ////////////// NEW CODE
   allOrders;
   observeOrders;
 
@@ -95,6 +65,7 @@ export class TransactionService {
     this.observeOrders.next(this.allOrders);
   }
 
+  // get all orders from database
   getOrdersFromServer() {
     this.refreshHttpOptions();
     this.http
@@ -118,6 +89,7 @@ export class TransactionService {
       );
   }
 
+  // mark particular particular notification as read
   readNotification(orderId) {
     const getReadNotification = environment.backend_end_point
           + environment.readNotification + `/?order_id=${orderId}`;
@@ -131,8 +103,9 @@ export class TransactionService {
         return throwError(error);
       })
     );
-
   }
+
+  // mark notifications with particular status as read
   readAllNotifications(status) {
     const getAllNotifications = environment.backend_end_point + environment.readAllNotifications +
     `/?status=${status}`;
@@ -147,5 +120,4 @@ export class TransactionService {
       })
     );
   }
-  // ///////////// END NEW CODE
 }

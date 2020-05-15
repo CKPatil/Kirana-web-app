@@ -27,6 +27,7 @@ export class ProductsService {
       environment.backend_end_point + environment.imageUpload;
   }
 
+  // get all products list
   getAllProducts() {
     return this.http
       .get(this.productsURL, {
@@ -40,6 +41,7 @@ export class ProductsService {
       );
   }
 
+  // add a particular new product
   addProduct(data) {
     return this.http
       .post(this.productsURL, JSON.stringify(data), {
@@ -53,6 +55,7 @@ export class ProductsService {
       );
   }
 
+  // upload a new image
   uploadImage(data) {
     const token = localStorage.getItem("access");
     return this.http
@@ -69,6 +72,7 @@ export class ProductsService {
       );
   }
 
+  // delete a particular product
   deleteProduct(data) {
     return this.http
       .delete(this.productsURL + data, {
@@ -80,6 +84,8 @@ export class ProductsService {
         })
       );
   }
+
+  // update a particular new product
   updateProduct(data, query) {
     return this.http
       .put(this.productsURL + query, data, {
@@ -92,8 +98,9 @@ export class ProductsService {
       );
   }
 
+  // disable a particular variant
   toogleDisableVariant(productId: number, status: number) {
-    let URL =
+    const URL =
       environment.backend_end_point +
       environment.disableVariant +
       `?id=${productId}&status=${status}`;

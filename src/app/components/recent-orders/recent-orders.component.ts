@@ -80,8 +80,8 @@ export class RecentOrdersComponent implements OnInit, OnChanges {
     this.tableData.forEach((element) => {
       if (
         element.remaining_time < 0 ||
-        element.status == "Delivered" ||
-        element.status == "Cancelled" ||
+        element.status === "Delivered" ||
+        element.status === "Cancelled" ||
         element.remaining_time === "-"
       ) {
         element.remaining_time = "-";

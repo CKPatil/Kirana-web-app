@@ -19,26 +19,11 @@ export class RetailerService {
   }
   getAllRetailerURL: string;
   httpOptions: any;
-  // // to get the invitation requests from the server
-  // getAllInvitationRequests() {
-  //   let inviteUrl = environment.backend_end_point + environment.inviteURL;
-  //   return this.http
-  //     .get(inviteUrl, {
-  //       headers: this.httpOptions,
-  //       observe: "response",
-  //     })
-  //     .pipe(
-  //       catchError((error) => {
-  //         return throwError(error);
-  //       })
-  //     );
-  // }
-
-  // //////////////// NEW CODE
 
   allInviteRequests;
   observeInviteRequests;
 
+  // authorization token
   refreshHttpOptions() {
     const token = localStorage.getItem('access');
     this.httpOptions = new HttpHeaders({
@@ -62,6 +47,7 @@ export class RetailerService {
       );
   }
 
+  // block a particular retailer
   blockVendor(vendorId, set) {
     const getBlockRetailersURL = environment.backend_end_point +
     environment.blockVendorURL + `?v_id=${vendorId}&set=${set}`;
@@ -106,8 +92,7 @@ export class RetailerService {
     this.observeInviteRequests.next(this.allInviteRequests);
   }
 
-  // ////////////// END NEW CODE
-
+  // invite request response
   inviteRequestResponse(data) {
     this.refreshHttpOptions();
     const inviteRespnseUrl =
