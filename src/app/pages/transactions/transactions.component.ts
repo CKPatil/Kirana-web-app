@@ -40,7 +40,7 @@ export class TransactionsComponent implements OnInit, OnDestroy {
   retailerFilteredOptions: Observable<string[]>;
   statusFilteredOptions: Observable<string[]>;
 
-  // filter retailer in transcations page 
+  // filter retailer in transcations page
   private _retailerfilter(value: string): string[] {
     const retailerFilterValue = value.toLocaleLowerCase();
     return this.retailers.filter((retailer) =>
