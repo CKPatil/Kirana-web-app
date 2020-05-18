@@ -4,7 +4,6 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](http://kiranamysore.com/)
 # Getting Started
-***
 ### Clone the repo
 
 ```sh
@@ -26,3 +25,6 @@ Navigate to `http://localhost:4200/.` The app will automatically reload if you c
 
 ### Building the project
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+
+
+![image info](./assets/dataflow.png)
