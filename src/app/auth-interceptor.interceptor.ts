@@ -22,7 +22,7 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
     if(token){
       request=request.clone({
         setHeaders:{
-          "access":token
+          Authorization: "Bearer " + token
         }
       })
     }
@@ -34,17 +34,17 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
           let param={
             refresh:localStorage.getItem("refresh")
           }
-          return this.authService.refreshToken(param).subscribe(data=>{
+          this.authService.refreshToken(param).subscribe(data=>{
+            
             let token1=data.body["access"];
             localStorage.setItem("access",token1);
             request=request.clone({
               setHeaders:{
-                "access":token1
+                Authorization: "Bearer " + token1
               }
             });
             return next.handle(request).pipe(catchError(err=>{
-              console.log(err);
-              throwError(err);
+              return throwError(err);
             }))        
           })
         }else{
