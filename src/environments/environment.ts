@@ -18,7 +18,7 @@ export const environment = {
   signUpURL: 'user/signUp/',
   loginURL: 'login/',
   tokenURL: 'api/token/',
-  refreshURL: 'api/token/refresh',
+  refreshURL: 'api/token/refresh/',
   inviteURL: "api/v1/vendor_request/",
   inviteResponseURL: "api/v1/vendor_registration/",
   feedbackURL:"api/v1/ratings/",

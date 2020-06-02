@@ -91,7 +91,6 @@ export class RetailerComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.allRetailers);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
-
     });
   }
   // tslint:disable-next-line: use-lifecycle-interface

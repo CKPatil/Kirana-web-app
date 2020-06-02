@@ -41,7 +41,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatDividerModule} from '@angular/material/divider';
 import { AnalyticContainerComponent } from './components/analytic-container/analytic-container.component';
 import { RecentOrdersComponent } from './components/recent-orders/recent-orders.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InviteRequestComponent, ShowInviteDetailModal } from './components/invite-request/invite-request.component';
 import { ItemCardComponent, SelectVarietyDialog, SelectImageDialog, EditProductDetailDialog, ImageSliderDialog, DeleteConformationDialog } from './components/item-card/item-card.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
@@ -73,6 +73,8 @@ import { TransactionsCardComponent, ChooseOrderStatusDialog } from './components
 import { FormatTimePipe } from './pipes/formatTime.pipe';
 import { NotificationCardComponent } from './components/notification-card/notification-card.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { AuthInterceptorInterceptor } from './auth-interceptor.interceptor';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -161,7 +163,12 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     [AuthGuard, FilterPipe],
     {provide: MAT_DATE_LOCALE, useValue: 'en-IN'},
     SharedService,
-    DatePipe
+    DatePipe,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
