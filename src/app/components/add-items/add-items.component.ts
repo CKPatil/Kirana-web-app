@@ -60,7 +60,7 @@ export class AddItemsComponent {
           },
           (error) => {
             this._snackbar.open(
-              "Could not able to add the Item, Retry after sometime.",
+              "Could not add the Item, Retry after sometime.",
               "",
               {
                 duration: 5000,
