@@ -32,7 +32,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { SidePanelComponent } from './components/side-panel/side-panel.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { DialogAddItemComponent } from './components/add-items/add-items.component';
-import { RetailerComponent, BlockConformationDialog } from './pages/retailer/retailer.component';
+import { RetailerComponent, BlockConformationDialog, HideConformationDialog } from './pages/retailer/retailer.component';
 import { ItemsComponent } from './pages/items/items.component';
 import { TransactionsComponent } from './pages/transactions/transactions.component';
 import { LoginComponent, ForgotPasswordDialog, OTPComponent, UpdatePasswordComponent } from './pages/login/login.component';
@@ -110,6 +110,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     DeleteConformationDialog,
     FormatTimePipe,
     BlockConformationDialog,
+    HideConformationDialog,
     NotificationCardComponent
   ],
   entryComponents: [

@@ -61,6 +61,7 @@ export class RetailerComponent implements OnInit {
     'profit',
     'address',
     'blocked',
+    'hide',
   ];
   allRetailers: any;
   dataSource;
@@ -143,5 +144,61 @@ export class RetailerComponent implements OnInit {
     });
   }
 
+  openConfirmHideDialog(vendorId, hide) {
+    const dialogRef = this.dialog.open(HideConformationDialog, {
+      width: '20em',
+      data: hide,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.retailerService.hideVendor(vendorId, hide)
+          .subscribe((res) => {
+            this.blockMsg = res;
+            if (this.blockMsg.message === 'vendor hidden') {
+              this.snackbar.open('Retailer Hidden', '', {
+                duration: 2000,
+                panelClass: 'snackbar',
+              });
+            } else {
+              this.snackbar.open('Retailer visible', '', {
+                duration: 2000,
+                panelClass: 'snackbar',
+              });
+            }
+            this.router
+              .navigateByUrl('/login', { skipLocationChange: true })
+              .then(() => {
+                this.router.navigate(['/retailer']);
+              });
+          },
+            (error) => {
+              this.snackbar.open('Error Occured, Try after sometime.', '', {
+                duration: 5000,
+              });
+            }
+          );
+      }
+    });
+  }
+
 }
 
+
+
+@Component({
+  // tslint:disable-next-line: component-selector
+  selector: 'hideConformationDialog',
+  templateUrl: 'hideConformationDialog.html',
+})
+// tslint:disable-next-line: component-class-suffix
+export class HideConformationDialog {
+  constructor(
+    public dialogRef: MatDialogRef<HideConformationDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
