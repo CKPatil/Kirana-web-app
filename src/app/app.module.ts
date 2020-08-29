@@ -69,7 +69,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatChipsModule} from '@angular/material/chips';
-import { TransactionsCardComponent, ChooseOrderStatusDialog } from './components/transactions-card/transactions-card.component';
+import { TransactionsCardComponent, ChooseOrderStatusDialog, OrderInfoDialog } from './components/transactions-card/transactions-card.component';
 import { FormatTimePipe } from './pipes/formatTime.pipe';
 import { NotificationCardComponent } from './components/notification-card/notification-card.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -83,6 +83,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     ItemsComponent,
     TransactionsComponent,
     ChooseOrderStatusDialog,
+    OrderInfoDialog,
     TransactionsCardComponent,
     LoginComponent,
     AnalyticContainerComponent,
