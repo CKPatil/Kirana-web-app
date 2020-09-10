@@ -25,7 +25,12 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "_redirects",
+                "input": "src",
+                "output": "/"
+              }
             ],
             "styles": [
               "src/styles.scss"
@@ -120,6 +125,14 @@
             "production": {
               "devServerTarget": "kirana-web-app:serve:production"
             }
+          }
+        },
+        "deploy": {
+          "builder": "@netlify-builder/deploy:deploy",
+          "options": {
+            "outputPath": "dist/kirana-web-app",
+            "netlifyToken": "c265cd30f828a71f31f618bc1e0fed9f29b49eba22d9b1ee0cea2d0388d6496b",
+            "siteId": "ad9e63b3-638f-4c8a-8dd0-d3821742ff68"
           }
         }
       }
