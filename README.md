@@ -1,30 +1,27 @@
 # KiranaWebApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.1.
-
-[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](http://kiranamysore.com/)
-# Getting Started
-### Clone the repo
+- To clone the repo and Install the dependencies
 
 ```sh
-$ git clone https://github.com/CKPatil/Kirana-web-app.git
-$ cd Kirana-web-app
+git clone https://github.com/CKPatil/Kirana-web-app.git
+
+cd Kirana-web-app
+
+git checkout Layout
+
+npm i
 ```
 
-### Install npm packages
-
-Make sure you have the **Angular CLI** installed globally. We use npm to manage the dependencies, so we strongly recommend you to use it.
-Install the `npm` packages described in the `package.json` and verify that it works:
+- To Start the Development Server
+  - After starting go to [http://localhost:4200/](http://localhost:4200/)
 
 ```sh
-$ npm install 
-$ ng serve
+npm run start
 ```
 
-Navigate to `http://localhost:4200/.` The app will automatically reload if you change any of the source files.
+- For Pushing the code to netlify
+  - Package Used [@netlify-builder](https://www.npmjs.com/package/@netlify-builder/deploy)
 
-### Building the project
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-
-![image info](assets/dataflow.png)
+```sh
+npm run deploy
+```
