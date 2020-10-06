@@ -77,6 +77,21 @@ export class RetailerService {
       );
   }
 
+  hideVendor(vendorId, hide) {
+    const getBlockRetailersURL = environment.backend_end_point +
+    environment.hideVendorURL + `?v_id=${vendorId}&hide=${hide}`;
+    this.refreshHttpOptions();
+    return this.http
+      .put(getBlockRetailersURL, {}, {
+        headers: this.httpOptions,
+      })
+      .pipe(
+        catchError((error) => {
+          return throwError(error);
+        })
+      );
+  }
+
   // to get the invite request from the server and save to observable
   getAllInvitationRequestsFromServer() {
     this.refreshHttpOptions();

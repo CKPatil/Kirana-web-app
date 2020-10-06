@@ -59,6 +59,14 @@ export class TransactionsCardComponent {
       }
     });
   }
+
+  onenOrderInfodialog() {
+    const dialogRef = this.dialog.open(OrderInfoDialog, {
+      width: "40em",
+      data: this.item,
+    });
+    dialogRef.afterClosed().subscribe((result) => {});
+  }
 }
 
 // //////////// Select the Status Dialog
@@ -77,6 +85,20 @@ export class ChooseOrderStatusDialog {
   statuses;
   selectedValue;
 
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: "orderInfoDialog",
+  templateUrl: "orderInfoDialog.html",
+})
+export class OrderInfoDialog {
+  constructor(
+    public dialogRef: MatDialogRef<OrderInfoDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
   onNoClick(): void {
     this.dialogRef.close();
   }

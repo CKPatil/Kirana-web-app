@@ -6,6 +6,7 @@
 export const environment = {
   production: false,
   backend_end_point: 'https://kiranamysore.com/',
+  // backend_end_point: 'http://localhost:8000/',
   port_number: '8000',
   userDetails: 'api/v1/userDetails/',
   order: "api/v1/vendor/order/",
@@ -26,6 +27,7 @@ export const environment = {
   notification: 'api/v1/vendor/order/',
   disableVariant: "api/v1/disabled_products/",
   blockVendorURL: 'api/v1/block_vendor/',
+  hideVendorURL: 'api/v1/hide_vendor/',
   readNotification: 'api/v1/read_notification',
   readAllNotifications: 'api/v1/read_all'
 };

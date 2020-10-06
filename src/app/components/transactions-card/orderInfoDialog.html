@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="row">
+    <h1 mat-dialog-title class="col-11 text-center font-weight-bold">Order Details</h1>
+    <div mat-dialog-actions class="col-1">
+      <button mat-icon-button color="primary" [mat-dialog-close]="" style="position: relative; top: -2.2em;">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
+<div mat-dialog-content class="container m-0">
+  <div class="row">
+    <div class="col-12 row text-center">
+      <div class="col-9">
+        <h3 mat-dialog-title class="font-weight-bold">Payment type</h3>
+      </div>
+      <div class="col-3">
+        <h3 mat-dialog-title class="font-weight-bold">{{data.payment_type}}</h3>
+      </div>
+    </div>
+
+    <div class="col-12 row font-weight-bold">
+      <div class="col-7">Items</div>
+      <div class="col-3">Quantity</div>
+      <div class="col-2">Price</div>
+    </div>
+    <div class="col-12 row p-0 m-0" style="height: 20em;overflow-y: auto;">
+      <div class="col-12 row my-2 p-0" *ngFor="let product of data.products;let i=index;">
+        <div class="col-7"><b>{{i+1}}</b> - {{product}}</div>
+        <div class="col-3 text-center">
+          × {{data.quantity[i]}}
+        </div>
+        <div class="col-2 text-center"><b>{{data.prices[i]}}</b></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<mat-dialog-actions>
+  <div class="row justify-content-around text-center w-100">
+    <div class="col-3">
+      <h3 mat-dialog-title class="font-weight-bold">Total</h3>
+    </div>
+    <div class="col-3">
+      <h3 mat-dialog-title  class="font-weight-bold">{{data.price}}</h3>
+    </div>
+  </div>
+  <!-- <button mat-button mat-dialog-close>Close</button> -->
+</mat-dialog-actions>

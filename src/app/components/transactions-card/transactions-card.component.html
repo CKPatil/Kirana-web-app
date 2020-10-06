@@ -1,6 +1,10 @@
 <mat-card class="mat-elevation-z6">
   <div class="row justify-content-between align-items-center px-3 mb-4">
     <h5><b>{{ item.retailer_name | titlecase }}</b></h5>
+    <!-- <mat-icon aria-hidden="false" aria-label="Info Button">info</mat-icon> -->
+    <button (click)="onenOrderInfodialog()" mat-icon-button aria-label="Info Button">
+      <mat-icon>info</mat-icon>
+    </button>
   </div>
   <div class="row justify-content-center" style="font-size: 90%;">
     <div class="col-6 font-weight-bold pr-0">
@@ -39,22 +43,13 @@
     </div>
     <div class="col-12">
       <div *ngIf='item.status != "Payment failure"'>
-        <button
-          class="btn text-white d-block w-100"
-          [ngClass]="item.status"
-          (click)="openChooseOrderStatusDialog()"
-        >
+        <button class="btn text-white d-block w-100" [ngClass]="item.status" (click)="openChooseOrderStatusDialog()">
           Order {{ item.status }}
         </button>
       </div>
       <div *ngIf='item.status == "Payment failure"'>
-        <button
-          class="btn text-white d-block w-100"
-          [ngClass]="item.status"
-          (click)="openChooseOrderStatusDialog()"
-          disabled
-          style="background-color:indigo; cursor: default;"
-        >
+        <button class="btn text-white d-block w-100" [ngClass]="item.status" (click)="openChooseOrderStatusDialog()"
+          disabled style="background-color:indigo; cursor: default;">
           Order Payment Failure
         </button>
       </div>
