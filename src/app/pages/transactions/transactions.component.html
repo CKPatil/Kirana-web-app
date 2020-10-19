@@ -47,24 +47,37 @@
         </div>
       </div>
       <!-- Paginator Container -->
-      <div>
+      <!-- <div>
         <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
           (page)="pageEvent = $event">
         </mat-paginator>
+      </div> -->
+      <div class="text-right">
+        <pagination-controls  id="listing_pagination" maxSize="5"
+
+        directionLinks="true"
+        
+        (pageChange)="page = $event"></pagination-controls>
       </div>
       <!-- Transactions Container -->
       <div *ngIf="pageEvent" class="row justify-content-center">
+        
         <div class="col-12 col-sm-8 col-md-6 col-lg-4" *ngFor="
             let i = index;
-            let item of: allTransaction.slice(
-              pageEvent.pageIndex * pageEvent.pageSize,
-              (pageEvent.pageIndex + 1) * pageEvent.pageSize
-            )
+            let item of: allTransaction| paginate: { id: 'listing_pagination',
+
+            itemsPerPage: pageSize,
+        
+            currentPage: page,
+        
+            totalItems: length }
               | filter: retailerControl.value
               | filter: statusControl.value
               | filter: parseDate(dateControl.value);
           ">
+         
           <app-transactions-card [item]="item"></app-transactions-card>
+          
         </div>
       </div>
     </mat-card>

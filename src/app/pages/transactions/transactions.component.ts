@@ -23,6 +23,8 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute
   ) {
     // this.isSidePanelExpanded = this.interaction.getExpandedStatus();
+    
+    
   }
   mypipe = new Ng2SearchPipe()
 
@@ -75,6 +77,7 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     // this.interaction.expandedStatus$.subscribe((res) => {
     //   this.isSidePanelExpanded = res;
     // });
+    
     this.getTransactionHistory();
     // to set the filter from the query
     this.route.queryParams.subscribe(query => {
@@ -98,7 +101,12 @@ export class TransactionsComponent implements OnInit, OnDestroy {
   //   }
   // }
 
+  page(event){
+    return
+  }
+
   getTransactionHistory() {
+    
     this.transactionService.observeOrders.subscribe((res) => {
       this.allTransaction = res;
       this.pageEvent = {
@@ -107,7 +115,7 @@ export class TransactionsComponent implements OnInit, OnDestroy {
         length: this.allTransaction.length,
       };
       this.length = this.allTransaction.length;
-
+      console.log(this.pageEvent);
       for (let i = 0; i < this.allTransaction.length; i++) {
         this.allTransaction[i].orderDate = this.parseDate(
           this.allTransaction[i].timestamp
