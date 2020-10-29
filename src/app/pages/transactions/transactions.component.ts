@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Ng2SearchPipe } from 'ng2-search-filter';
 import { STATUSES } from './../../constants/constants'
 
+
 @Component({
   selector: 'app-transactions',
   templateUrl: './transactions.component.html',
@@ -32,7 +33,8 @@ export class TransactionsComponent implements OnInit, OnDestroy {
   pageSize = 25;
   pageSizeOptions: number[] = [25, 50, 100];
   length;
-
+  page:number=1;
+  
   // searchRetail: any;
   // searchStatus: any;
   // searchDate: any;
@@ -51,6 +53,7 @@ export class TransactionsComponent implements OnInit, OnDestroy {
   retailerControl = new FormControl();
   statusControl = new FormControl();
   dateControl = new FormControl();
+  dateControl_to = new FormControl();
 
   // date: Date[] = [];
   orderDate: string[] = [];
@@ -100,10 +103,8 @@ export class TransactionsComponent implements OnInit, OnDestroy {
   //     this.searchDate = '';
   //   }
   // }
+  
 
-  page(event){
-    return
-  }
 
   getTransactionHistory() {
     
@@ -115,7 +116,7 @@ export class TransactionsComponent implements OnInit, OnDestroy {
         length: this.allTransaction.length,
       };
       this.length = this.allTransaction.length;
-      console.log(this.pageEvent);
+      
       for (let i = 0; i < this.allTransaction.length; i++) {
         this.allTransaction[i].orderDate = this.parseDate(
           this.allTransaction[i].timestamp
@@ -152,6 +153,10 @@ export class TransactionsComponent implements OnInit, OnDestroy {
       this.dateControl.valueChanges.subscribe(() => {
         this.getItemLengthAfterFilter()
       })
+      this.dateControl_to.valueChanges.subscribe(() => {
+        this.getItemLengthAfterFilter()
+      })
+      
     });
   }
 
@@ -160,6 +165,8 @@ export class TransactionsComponent implements OnInit, OnDestroy {
   }
 
   getItemLengthAfterFilter() {
+    
+    this.page=1
     let result = this.mypipe.transform(this.allTransaction, this.retailerControl.value);
     let result1 = this.mypipe.transform(result, this.statusControl.value);
     let result2 = this.mypipe.transform(result1, this.parseDate(this.dateControl.value));
@@ -170,6 +177,7 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     this.statusControl.setValue('');
     this.retailerControl.setValue('');
     this.dateControl.setValue('');
+    this.dateControl_to.setValue('');
     this.length = this.allTransaction.length;
   }
 

@@ -81,6 +81,8 @@ export class ChooseOrderStatusDialog {
   ) {
     this.statuses = STATUSES;
     this.selectedValue = STATUSES.indexOf(this.data);
+    
+    
   }
   statuses;
   selectedValue;
