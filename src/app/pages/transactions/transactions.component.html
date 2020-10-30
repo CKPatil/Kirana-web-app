@@ -31,8 +31,7 @@
           <div class="col-6 col-sm-4 col-md-3">
             <mat-form-field class="example-full-width">
               <mat-label>From</mat-label>
-              <input matInput [formControl]="dateControl" [matDatepicker]="picker"
-              placeholder="MM/DD/YYYY" />
+              <input matInput [formControl]="dateControl" [matDatepicker]="picker" placeholder="MM/DD/YYYY" />
               <!-- (dateInput)="dateChanged($event)"
               (dateChange)="dateChanged($event)" -->
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -42,8 +41,7 @@
           <div class="col-6 col-sm-4 col-md-3">
             <mat-form-field class="example-full-width">
               <mat-label>To</mat-label>
-              <input matInput [formControl]="dateControl_to" [matDatepicker]="picker_to"
-              placeholder="MM/DD/YYYY" />
+              <input matInput [formControl]="dateControl_to" [matDatepicker]="picker_to" placeholder="MM/DD/YYYY" />
               <!-- (dateInput)="dateChanged($event)"
               (dateChange)="dateChanged($event)" -->
               <mat-datepicker-toggle matSuffix [for]="picker_to"></mat-datepicker-toggle>
@@ -55,7 +53,7 @@
               Reset
             </button>
           </div>
-          
+
         </div>
       </div>
       <!-- Paginator Container -->
@@ -65,23 +63,21 @@
         </mat-paginator>
       </div> -->
       <div class="text-right">
-        <pagination-controls  id="listing_pagination" maxSize="5"
-
-        directionLinks="true"
-        
-        (pageChange)="page = $event"></pagination-controls>
+        <pagination-controls id="listing_pagination" maxSize="5" directionLinks="true" (pageChange)="page = $event">
+        </pagination-controls>
       </div>
       <!-- Transactions Container -->
       <div *ngIf="pageEvent" class="row justify-content-center">
-        
+
         <div class="col-12 col-sm-8 col-md-6 col-lg-4" *ngFor="
             let i = index;
             let item of: allTransaction
               |filter:retailerControl.value
               |filter:statusControl.value
+              
               | searchDates: parseDate(dateControl.value):parseDate(dateControl_to.value)
                 :retailerControl.value:statusControl.value
-                |paginate: { id: 'listing_pagination',
+              |paginate: { id: 'listing_pagination',
 
                itemsPerPage: pageSize,
           
@@ -89,8 +85,13 @@
           
                totalItems: length }
           ">
-            <app-transactions-card [item]="item"></app-transactions-card>
+          <app-transactions-card [item]="item"></app-transactions-card>
         </div>
+      </div>
+      <div class="text-center">
+        <button mat-flat-button color="primary" (click)="exportexcel()">
+          Export to Excel
+        </button>
       </div>
     </mat-card>
   </div>
