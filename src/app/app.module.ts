@@ -51,6 +51,7 @@ import { FeedbackCardComponent } from './components/feedback-card/feedback-card.
 import { AddItemsComponent } from './components/add-items/add-items.component';
 import { SharedService } from './services/shared.service';
 import { UpdateItemComponent, UpdateItemModal } from './components/update-item/update-item.component';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -73,6 +74,7 @@ import { TransactionsCardComponent, ChooseOrderStatusDialog, OrderInfoDialog } f
 import { FormatTimePipe } from './pipes/formatTime.pipe';
 import { NotificationCardComponent } from './components/notification-card/notification-card.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { SearchDatesPipe } from './pipes/search-dates.pipe';
 @NgModule({
   declarations: [
     AppComponent,
@@ -112,7 +114,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     FormatTimePipe,
     BlockConformationDialog,
     HideConformationDialog,
-    NotificationCardComponent
+    NotificationCardComponent,
+    SearchDatesPipe,
   ],
   entryComponents: [
     DialogComponent
@@ -120,6 +123,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
   imports: [
     BrowserModule,
     MatBadgeModule,
+    NgxPaginationModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,

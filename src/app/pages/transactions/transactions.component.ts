@@ -9,20 +9,29 @@ import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute } from '@angular/router';
 import { Ng2SearchPipe } from 'ng2-search-filter';
 import { STATUSES } from './../../constants/constants'
+import * as XLSX from 'xlsx'; 
+import { ExcelService } from 'src/app/services/excel.service';
+import { SearchDatesPipe } from 'src/app/pipes/search-dates.pipe';
 
 @Component({
   selector: 'app-transactions',
   templateUrl: './transactions.component.html',
   styleUrls: ['./transactions.component.scss'],
+  providers:[SearchDatesPipe]
 })
 export class TransactionsComponent implements OnInit, OnDestroy {
+  
 
   constructor(
     // private interaction: InteractionService,
     private transactionService: TransactionService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private excelService:ExcelService,
+    private searchDates:SearchDatesPipe
   ) {
     // this.isSidePanelExpanded = this.interaction.getExpandedStatus();
+    
+    
     
     
   }
@@ -32,6 +41,13 @@ export class TransactionsComponent implements OnInit, OnDestroy {
   pageSize = 25;
   pageSizeOptions: number[] = [25, 50, 100];
   length;
+  page:number=1;
+  fileName= 'ExcelSheet.xlsx';  
+
+  result:any
+  result1:any
+  result2:any
+  result3: any='';
 
   // searchRetail: any;
   // searchStatus: any;
@@ -51,6 +67,7 @@ export class TransactionsComponent implements OnInit, OnDestroy {
   retailerControl = new FormControl();
   statusControl = new FormControl();
   dateControl = new FormControl();
+  dateControl_to = new FormControl();
 
   // date: Date[] = [];
   orderDate: string[] = [];
@@ -64,6 +81,7 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     return this.retailers.filter((retailer) =>
       retailer.toLocaleLowerCase().includes(retailerFilterValue)
     );
+    
   }
 
   private _statusFilter(value: string): string[] {
@@ -79,6 +97,7 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     // });
     
     this.getTransactionHistory();
+    
     // to set the filter from the query
     this.route.queryParams.subscribe(query => {
       if (query.retailer) {
@@ -100,11 +119,8 @@ export class TransactionsComponent implements OnInit, OnDestroy {
   //     this.searchDate = '';
   //   }
   // }
-
-  page(event){
-    return
-  }
-
+  
+  
   getTransactionHistory() {
     
     this.transactionService.observeOrders.subscribe((res) => {
@@ -115,7 +131,6 @@ export class TransactionsComponent implements OnInit, OnDestroy {
         length: this.allTransaction.length,
       };
       this.length = this.allTransaction.length;
-      console.log(this.pageEvent);
       for (let i = 0; i < this.allTransaction.length; i++) {
         this.allTransaction[i].orderDate = this.parseDate(
           this.allTransaction[i].timestamp
@@ -136,7 +151,7 @@ export class TransactionsComponent implements OnInit, OnDestroy {
 
       this.statusFilteredOptions = this.statusControl.valueChanges.pipe(
         startWith(''),
-        map((value) => this._statusFilter(value))
+        map((value) => this._statusFilter(value)) 
       );
       this.retailerFilteredOptions = this.retailerControl.valueChanges.pipe(
         startWith(''),
@@ -152,6 +167,10 @@ export class TransactionsComponent implements OnInit, OnDestroy {
       this.dateControl.valueChanges.subscribe(() => {
         this.getItemLengthAfterFilter()
       })
+      this.dateControl_to.valueChanges.subscribe(() => {
+        this.getItemLengthAfterFilter()
+      })
+      
     });
   }
 
@@ -159,17 +178,31 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     return status;
   }
 
+  exportexcel(): void 
+  {
+    if(this.result3.length!=0){
+      this.excelService.exportAsExcelFile(this.result3, 'sample');
+    }else{
+      this.excelService.exportAsExcelFile(this.allTransaction, 'sample');
+    }
+  }
+
+
   getItemLengthAfterFilter() {
-    let result = this.mypipe.transform(this.allTransaction, this.retailerControl.value);
-    let result1 = this.mypipe.transform(result, this.statusControl.value);
-    let result2 = this.mypipe.transform(result1, this.parseDate(this.dateControl.value));
-    this.length = result2.length;
+    this.page=1
+    this.result = this.mypipe.transform(this.allTransaction, this.retailerControl.value);
+    this.result1 = this.mypipe.transform(this.result, this.statusControl.value);
+    this.result2 = this.mypipe.transform(this.result1, this.parseDate(this.dateControl.value));
+    this.result3= this.searchDates.transform(this.allTransaction,this.parseDate(this.dateControl.value),this.parseDate(this.dateControl_to.value),this.retailerControl.value,this.statusControl.value)
+    this.length = this.result3.length;
+
   }
 
   onReset() {
     this.statusControl.setValue('');
     this.retailerControl.setValue('');
     this.dateControl.setValue('');
+    this.dateControl_to.setValue('');
     this.length = this.allTransaction.length;
   }
 
