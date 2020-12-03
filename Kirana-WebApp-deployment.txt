@@ -1,4 +1,0 @@
-# for deployment to Netlify
-
-- ng deploy
-- this will build and deploy the app automatically
