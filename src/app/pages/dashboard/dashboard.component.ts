@@ -74,20 +74,22 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.deliveryTime = new Date(
           element.timestamp.getTime() + 2 * 60 * 60 * 1000
         );
+    
         this.timeDiff = this.deliveryTime - this.currentDate;
         this.timeDiff = this.timeDiff / 1000 / 60 / 60;
         this.timeDiff = this.timeDiff.toFixed(2);
         this.timeDiffMins = this.timeDiff * 60;
         element.remaining_time = +this.timeDiffMins.toFixed(0);
-
         if (
-          element.remaining_time > 0 &&
+          
           element.remaining_time <= 30 &&
           (element.status == "Packed" ||
             element.status == "Ordered" ||
             element.status == "Dispatched")
         ) {
+          
           this.criticalOrders.push(element);
+          
         }
         if (element.status == "Packed") {
           this.packedOrders.push(element);
