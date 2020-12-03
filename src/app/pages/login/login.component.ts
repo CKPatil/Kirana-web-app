@@ -213,12 +213,12 @@ export class LoginComponent implements OnInit {
       if (result) {
         let resetPassword = {
           otp: "string",
-          phone: result.value.phone,
+          phone: "9538840774",
           password: "string",
         };
         const data = {
           reset_method: "mobile",
-          phone: result.value.phone,
+          phone: resetPassword.phone,
         };
         this.authService.forgotPassword(data, "").subscribe(
           (response: any) => {
@@ -261,7 +261,7 @@ export class LoginComponent implements OnInit {
                                   },
                                   (error) => {
                                     this._snackbar.open(
-                                      "Error Occured, try after sometime",
+                                      "Error Occurred, try after sometime",
                                       "",
                                       {
                                         duration: 5000,
@@ -279,7 +279,7 @@ export class LoginComponent implements OnInit {
                       },
                       (error) => {
                         this._snackbar.open(
-                          "Error Occured, try after sometime",
+                          "Error Occurred, try after sometime",
                           "",
                           {
                             duration: 5000,
@@ -296,7 +296,7 @@ export class LoginComponent implements OnInit {
             }
           },
           (error) => {
-            this._snackbar.open("Error Occured, try after sometime", "", {
+            this._snackbar.open("Error Occurred, try after sometime", "", {
               duration: 5000,
             });
           }
@@ -313,34 +313,21 @@ export class LoginComponent implements OnInit {
   styleUrls: ["./forgotPasswordDialog.component.scss"],
 })
 export class ForgotPasswordDialog {
-  form;
-
-  // res: any;
-  // otpDialogRef: MatDialogRef<OTPComponent>;
-  // onSubmit = new EventEmitter();
-  // onClick() {}
+  // form;
 
   constructor(
-    // private authService: AuthService,
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<ForgotPasswordDialog>,
-    // public otpDialog: MatDialogRef<OTPComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {
-    this.form = this.fb.group({
-      phone: ["", [Validators.required]],
-    });
+    // this.form = this.fb.group({
+    //   phone: ["", [Validators.required]],
+    // });
   }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
-
-  // ngOnInit() {
-  // }
-  // submit(form) {
-  //   this.dialogRef.close(`${form.value.phone}`);
-  // }
 }
 
 // OTP dialog box
